@@ -13,6 +13,9 @@ fn main() {
 }
 
 #[tauri::command]
-fn memory() -> models::Memory {
-    Metrics::new().memory().unwrap()
+fn memory() -> Result<models::Memory, String> {
+    match Metrics::new().memory() {
+        Ok(mem) => Ok(mem),
+        Err(_) => Err("Error while getting memory info".to_string()),
+    }
 }

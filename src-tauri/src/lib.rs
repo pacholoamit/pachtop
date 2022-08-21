@@ -16,10 +16,10 @@ impl Metrics {
         Metrics { sys: System::new() }
     }
 
-    pub fn memory(&self) -> Result<Memory, Box<dyn Error>> {
+    pub fn memory(&self) -> Result<Memory, std::io::Error> {
         let mem = match self.sys.memory() {
             Ok(mem) => mem,
-            Err(e) => return Err(Box::new(e)),
+            Err(e) => return Err(e),
         };
 
         let mem = Memory {
