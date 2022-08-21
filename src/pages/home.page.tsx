@@ -1,6 +1,5 @@
-import { invoke, TauriCommand } from "@/lib";
 import { Text, Title } from "@mantine/core";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useGetMetrics from "../hooks/useGetMetrics";
 
 const HomePage = () => {
@@ -14,6 +13,7 @@ const HomePage = () => {
           <Text>Free: {m.free} </Text>
           <Text>Used: {m.used} </Text>
           <Text>Total: {m.total} </Text>
+          <Text>Timestamp: {m.timestamp} </Text>
         </React.Fragment>
       ))}
     </>
