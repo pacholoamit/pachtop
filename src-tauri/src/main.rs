@@ -6,6 +6,7 @@ use app::{models, Metrics};
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_window_state::Builder::default().build())
         .invoke_handler(tauri::generate_handler![memory])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
