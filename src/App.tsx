@@ -1,9 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import { invoke } from "@tauri-apps/api";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [result, setResult] = useState<string>("");
+
+  const onClick = async () => {
+    const result = (await invoke("hello_world")) as string;
+    setResult(result);
+  };
 
   return (
     <div className="App">
@@ -17,9 +23,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <button onClick={onClick}>Result is {result}</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -28,7 +32,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
