@@ -3,7 +3,6 @@ interface AppProvider {
 }
 
 const AppProvider: React.FC<AppProvider> = ({ children }) => {
-  console.log("hello world 2");
   return <>{children}</>;
 };
 
