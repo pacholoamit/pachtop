@@ -1,7 +1,12 @@
-extern crate systemstat;
-use std::time::Duration;
-use systemstat::*;
+pub mod models;
 
+extern crate systemstat;
+use models::Memory;
+use std::error::Error;
+use std::time::Duration;
+use systemstat::{
+    BTreeMap, CPULoad, DelayedMeasurement, Filesystem, Network, Platform, Swap, System,
+};
 pub struct Metrics {
     pub sys: systemstat::platform::PlatformImpl,
 }
@@ -11,11 +16,19 @@ impl Metrics {
         Metrics { sys: System::new() }
     }
 
-    pub fn memory(&self) -> Memory {
-        match self.sys.memory() {
+    pub fn memory(&self) -> Result<Memory, Box<dyn Error>> {
+        let mem = match self.sys.memory() {
             Ok(mem) => mem,
-            Err(e) => panic!("\nMemory error: {}", e),
-        }
+            Err(e) => return Err(Box::new(e)),
+        };
+
+        let mem = Memory {
+            free: mem.free.as_u64(),
+            total: mem.total.as_u64(),
+            used: mem.total.as_u64() - mem.free.as_u64(),
+        };
+
+        Ok(mem)
     }
 
     pub fn mounts(&self) -> Vec<Filesystem> {
