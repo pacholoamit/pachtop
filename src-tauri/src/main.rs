@@ -3,8 +3,17 @@
     windows_subsystem = "windows"
 )]
 use app::{models, Metrics};
-
+use std::thread;
 fn main() {
+    thread::spawn(|| {
+        let metrics = Metrics::new();
+        loop {
+            let mem = metrics.memory().unwrap();
+            println!("{:?}", mem);
+            thread::sleep(std::time::Duration::from_secs(1));
+        }
+    });
+
     tauri::Builder::default()
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .invoke_handler(tauri::generate_handler![memory])
