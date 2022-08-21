@@ -2,7 +2,6 @@ pub mod models;
 
 extern crate systemstat;
 use models::Memory;
-use std::error::Error;
 use std::time::Duration;
 use systemstat::{
     BTreeMap, CPULoad, DelayedMeasurement, Filesystem, Network, Platform, Swap, System,

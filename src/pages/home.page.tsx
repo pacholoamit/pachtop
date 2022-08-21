@@ -1,14 +1,23 @@
 import { invoke, TauriCommand } from "@/lib";
-import { useState, useEffect } from "react";
+import { Text, Title } from "@mantine/core";
+import React, { useState, useEffect } from "react";
+import useGetMetrics from "../hooks/useGetMetrics";
 
 const HomePage = () => {
-  const [data, setData] = useState<string>("");
+  const { memory } = useGetMetrics();
 
-  useEffect(() => {
-    invoke(TauriCommand.Memory).then((res) => setData(res as string));
-    console.log(data);
-  }, []);
-  return <h1>Home page!</h1>;
+  return (
+    <>
+      <Title>Home Page</Title>
+      {memory?.map((m, i) => (
+        <React.Fragment key={i}>
+          <Text>Free: {m.free} </Text>
+          <Text>Used: {m.used} </Text>
+          <Text>Total: {m.total} </Text>
+        </React.Fragment>
+      ))}
+    </>
+  );
 };
 
 export default HomePage;
