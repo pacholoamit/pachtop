@@ -1,4 +1,15 @@
-import { Text, Title } from "@mantine/core";
+import { Text, Title as TextTitle } from "@mantine/core";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
 import React from "react";
 import useGetMetrics from "@/hooks/useGetMetrics";
@@ -7,6 +18,17 @@ interface IMemoryChart {}
 
 const MemoryChart: React.FC<IMemoryChart> = ({}) => {
   const { memory } = useGetMetrics();
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Filler,
+    Legend
+  );
 
   const data = {
     labels: memory.map((m) => m.timestamp),
@@ -40,7 +62,8 @@ const MemoryChart: React.FC<IMemoryChart> = ({}) => {
 const HomePage = () => {
   return (
     <>
-      <Title>Home Page</Title>
+      <TextTitle>Home Page</TextTitle>
+      <MemoryChart />
       {/* {memory?.map((m, i) => (
         <React.Fragment key={i}>
           <Text>Free: {m.free} </Text>
