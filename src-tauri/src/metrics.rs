@@ -12,7 +12,7 @@ use tauri::State;
 pub fn get_memory(state: State<'_, MetricsState>) -> Result<Memory, String> {
     match state.0.lock().unwrap().memory() {
         Ok(mem) => Ok(mem),
-        Err(_) => Err("Error while getting memory info".to_string()),
+        Err(e) => Err(String::from("Memory error: ") + e.to_string().as_str()),
     }
 }
 
