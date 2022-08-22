@@ -1,23 +1,27 @@
-pub mod models;
-
 extern crate systemstat;
-use models::Memory;
-use std::time::Duration;
-use std::time::{SystemTime, UNIX_EPOCH};
-use systemstat::{
-    BTreeMap, CPULoad, DelayedMeasurement, Filesystem, Network, Platform, Swap, System,
-};
+use crate::models::Memory;
 
-pub struct Metrics {
-    pub sys: systemstat::platform::PlatformImpl,
+use std::time::{SystemTime, UNIX_EPOCH};
+use systemstat::{Platform, System};
+
+#[tauri::command]
+pub fn get_memory() -> Result<Memory, String> {
+    match Metrics::new().memory() {
+        Ok(mem) => Ok(mem),
+        Err(_) => Err("Error while getting memory info".to_string()),
+    }
+}
+
+struct Metrics {
+    sys: systemstat::platform::PlatformImpl,
 }
 
 impl Metrics {
-    pub fn new() -> Self {
+    fn new() -> Self {
         Metrics { sys: System::new() }
     }
 
-    pub fn memory(&self) -> Result<Memory, std::io::Error> {
+    fn memory(&self) -> Result<Memory, std::io::Error> {
         let mem = match self.sys.memory() {
             Ok(mem) => mem,
             Err(e) => return Err(e),
