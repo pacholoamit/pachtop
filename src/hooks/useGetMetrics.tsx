@@ -7,9 +7,8 @@ const useGetMetrics = () => {
 
   useEffect(() => {
     const requestMetrics = async () => {
-      await invoke(TauriCommand.Memory).then((res) =>
-        setMemory((prev) => [...prev, res as Memory])
-      );
+      const mem = await invoke(TauriCommand.Memory);
+      setMemory((prev) => [...prev, mem as Memory]);
     };
 
     const interval = setInterval(requestMetrics, 1000);
