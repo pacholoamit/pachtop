@@ -12,12 +12,11 @@ const useGetMetrics = () => {
       );
     };
 
-    const interval = setInterval(async () => await requestMetrics(), 1000);
+    const interval = setInterval(requestMetrics, 1000);
     return () => clearInterval(interval);
   }, []);
-  return {
-    memory,
-  };
+
+  return { memory };
 };
 
 export default useGetMetrics;

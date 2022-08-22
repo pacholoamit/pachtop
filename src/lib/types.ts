@@ -1,5 +1,5 @@
 export enum TauriCommand {
-  Memory = "memory",
+  Memory = "get_memory",
 }
 
 export interface Memory {

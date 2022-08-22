@@ -1,14 +1,26 @@
 extern crate systemstat;
 use crate::models::Memory;
 
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::{
+    sync::{Arc, Mutex},
+    time::{SystemTime, UNIX_EPOCH},
+};
 use systemstat::{Platform, System};
+use tauri::State;
 
 #[tauri::command]
-pub fn get_memory() -> Result<Memory, String> {
-    match Metrics::new().memory() {
+pub fn get_memory(state: State<'_, MetricsState>) -> Result<Memory, String> {
+    match state.0.lock().unwrap().memory() {
         Ok(mem) => Ok(mem),
         Err(_) => Err("Error while getting memory info".to_string()),
+    }
+}
+
+pub struct MetricsState(Arc<Mutex<Metrics>>);
+
+impl Default for MetricsState {
+    fn default() -> Self {
+        MetricsState(Arc::new(Mutex::new(Metrics { sys: System::new() })))
     }
 }
 
@@ -17,10 +29,6 @@ struct Metrics {
 }
 
 impl Metrics {
-    fn new() -> Self {
-        Metrics { sys: System::new() }
-    }
-
     fn memory(&self) -> Result<Memory, std::io::Error> {
         let mem = match self.sys.memory() {
             Ok(mem) => mem,
