@@ -1,5 +1,6 @@
 use crate::models::Memory;
 
+use byte_unit::{Byte, ByteUnit};
 use chrono::prelude::*;
 use std::sync::{Arc, Mutex};
 use sysinfo::{System, SystemExt};
@@ -26,6 +27,11 @@ struct Metrics {
 
 impl Metrics {
     fn memory(&self) -> Memory {
+        let free_b = Byte::from_unit(self.sys.free_memory() as f64, ByteUnit::KB)
+            .unwrap()
+            .get_adjusted_unit(ByteUnit::GB);
+
+        dbg!(&free_b);
         let free = bytes_to_size(self.sys.free_memory());
         let total = bytes_to_size(self.sys.total_memory());
         let used = bytes_to_size(self.sys.used_memory());
