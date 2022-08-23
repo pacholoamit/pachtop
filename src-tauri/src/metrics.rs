@@ -2,10 +2,7 @@ extern crate systemstat;
 use crate::models::Memory;
 
 use chrono::prelude::*;
-use std::{
-    sync::{Arc, Mutex},
-    time::{SystemTime, UNIX_EPOCH},
-};
+use std::sync::{Arc, Mutex};
 use systemstat::{ByteSize, Platform, System};
 use tauri::State;
 
@@ -36,8 +33,8 @@ impl Metrics {
             Err(e) => return Err(e),
         };
 
-        let total = bytes_to_mb(&mem.total);
-        let free = bytes_to_mb(&mem.free);
+        let total = bytes_to_size(&mem.total);
+        let free = bytes_to_size(&mem.free);
 
         let mem = Memory {
             free,
@@ -54,6 +51,6 @@ fn get_timestamp() -> String {
     Local::now().time().to_string()
 }
 
-fn bytes_to_mb(bytes: &ByteSize) -> u64 {
+fn bytes_to_size(bytes: &ByteSize) -> u64 {
     bytes.as_u64() / 1024 / 1024
 }

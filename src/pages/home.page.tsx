@@ -41,21 +41,21 @@ const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
     labels: memory.map((m) => m.timestamp),
     datasets: [
       {
-        label: "Ram Used",
+        label: "Ram Used (MB)",
         fill: true,
         data: memory.map((m) => m.used),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         yAxisID: "used",
       },
-      {
-        label: "Ram Free",
-        fill: true,
-        data: memory.map((m) => m.free),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        yAxisID: "free",
-      },
+      // {
+      //   label: "Ram Free",
+      //   fill: true,
+      //   data: memory.map((m) => m.free),
+      //   borderColor: "rgb(255, 99, 132)",
+      //   backgroundColor: "rgba(255, 99, 132, 0.5)",
+      //   yAxisID: "free",
+      // },
     ],
   };
 
@@ -76,14 +76,15 @@ const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
         display: true,
         position: "left" as const,
       },
-      free: {
-        type: "linear" as const,
-        display: true,
-        position: "right" as const,
-        grid: {
-          drawOnChartArea: false,
-        },
-      },
+      // free: {
+      //   stacked: true,
+      //   type: "linear" as const,
+      //   display: true,
+      //   position: "right" as const,
+      //   grid: {
+      //     drawOnChartArea: false,
+      //   },
+      // },
     },
   };
 
