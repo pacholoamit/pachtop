@@ -21,6 +21,7 @@ tauri = { version = "1.0.5", features = ["api-all"] }
 tauri-plugin-window-state = "0.1"
 chrono = "0.4.22"
 sysinfo = "0.25.3"
+byte-unit = "4.0.14"
 
 
 
