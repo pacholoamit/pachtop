@@ -6,5 +6,5 @@ export interface Memory {
   free: number;
   total: number;
   used: number;
-  timestamp: number;
+  timestamp: string;
 }

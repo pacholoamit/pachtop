@@ -1,6 +1,7 @@
 extern crate systemstat;
 use crate::models::Memory;
 
+use chrono::prelude::*;
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
@@ -42,18 +43,15 @@ impl Metrics {
             free,
             total,
             used: &total - &free,
-            timestamp: get_timestamp_as_secs(),
+            timestamp: get_timestamp(),
         };
 
         Ok(mem)
     }
 }
 
-fn get_timestamp_as_secs() -> u64 {
-    SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("Error getting system time")
-        .as_secs()
+fn get_timestamp() -> String {
+    Local::now().time().to_string()
 }
 
 fn bytes_to_mb(bytes: &ByteSize) -> u64 {
