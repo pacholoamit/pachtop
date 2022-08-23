@@ -53,7 +53,7 @@ fn get_timestamp() -> String {
 fn kb_to_size(kb: u64, dest_unit: ByteUnit) -> String {
     Byte::from_unit(kb as f64, ByteUnit::KB)
         .unwrap()
-        .get_adjusted_unit(dest_unit)
+        .get_adjusted_unit(dest_unit) // * Possibly modify Memory struct to hold unit & value for result of get_adjusted_unit
         .to_string()
 }
 
