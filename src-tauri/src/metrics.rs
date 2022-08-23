@@ -1,10 +1,8 @@
-extern crate systemstat;
 use crate::models::Memory;
 
 use chrono::prelude::*;
 use std::sync::{Arc, Mutex};
 use sysinfo::{System, SystemExt};
-
 use tauri::State;
 
 #[tauri::command]
