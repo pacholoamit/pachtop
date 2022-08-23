@@ -26,10 +26,14 @@ struct Metrics {
 }
 
 impl Metrics {
+    // *Possibly find way to make conversion of ByteUnits dynamic through
+    // *config file
     fn memory(&self) -> Memory {
         let free_b = kb_to_size(self.sys.free_memory(), ByteUnit::GB);
 
         dbg!(&free_b);
+        // *Refactor implementation below to be like above
+
         let free = bytes_to_size(self.sys.free_memory());
         let total = bytes_to_size(self.sys.total_memory());
         let used = bytes_to_size(self.sys.used_memory());
