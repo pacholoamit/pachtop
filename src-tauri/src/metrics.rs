@@ -13,8 +13,8 @@ pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
-impl Default for MetricsState {
-    fn default() -> Self {
+impl MetricsState {
+    pub fn new() -> Self {
         let mut sys = System::new_all();
         sys.refresh_all();
         MetricsState(Arc::new(Mutex::new(Metrics { sys })))
