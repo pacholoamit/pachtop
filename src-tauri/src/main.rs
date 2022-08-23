@@ -7,6 +7,7 @@ mod metrics;
 mod models;
 
 use metrics::MetricsState;
+
 fn main() {
     tauri::Builder::default()
         .manage(MetricsState::default())

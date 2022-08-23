@@ -1,3 +1,3 @@
 export const bytesToMegabytes = (bytes: number) => {
-  return bytes / 1024 / 1024;
+  return bytes / 1000000;
 };
