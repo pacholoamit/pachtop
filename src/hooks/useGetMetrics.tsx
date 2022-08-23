@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useQueue } from "@mantine/hooks";
 import { invoke } from "@/lib";
 import { Memory, TauriCommand } from "@/lib/types";
 
@@ -12,17 +11,20 @@ const useGetMetrics = () => {
     const requestMetrics = async () => {
       const mem = await invoke(TauriCommand.Memory);
 
-      if (memory.length < arrayLength) {
+      if (memory.length >= arrayLength) {
+        setMemory((prev) => [...prev.slice(1), mem as Memory]);
+      } else {
         setMemory((prev) => [...prev, mem as Memory]);
       }
-      setMemory((prev) => [...prev.slice(1), mem as Memory]);
+      console.log(memory.length);
     };
 
     const interval = setInterval(requestMetrics, requestInterval);
-    return () => clearInterval(interval);
-  }, []);
 
-  return { memory };
+    return () => clearInterval(interval);
+  }, [memory]);
+
+  return { memory, setMemory };
 };
 
 export default useGetMetrics;

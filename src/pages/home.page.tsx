@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useGetMetrics from "@/hooks/useGetMetrics";
 
 import { Text, Title as TextTitle } from "@mantine/core";
@@ -14,12 +14,17 @@ import {
   Filler,
   Legend,
 } from "chart.js";
-import { bytesToMegabytes } from "@/utils";
 
-interface IMemoryChart {}
+interface IMemoryChart {
+  setLength: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const MemoryChart: React.FC<IMemoryChart> = ({}) => {
+const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
   const { memory } = useGetMetrics();
+
+  useEffect(() => {
+    setLength(memory.length);
+  }, [memory.length]);
 
   ChartJS.register(
     CategoryScale,
@@ -38,7 +43,7 @@ const MemoryChart: React.FC<IMemoryChart> = ({}) => {
       {
         label: "Ram Used",
         fill: true,
-        data: memory.map((m) => bytesToMegabytes(m.used)),
+        data: memory.map((m) => m.used),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         yAxisID: "used",
@@ -46,7 +51,7 @@ const MemoryChart: React.FC<IMemoryChart> = ({}) => {
       {
         label: "Ram Free",
         fill: true,
-        data: memory.map((m) => bytesToMegabytes(m.free)),
+        data: memory.map((m) => m.free),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         yAxisID: "free",
@@ -86,18 +91,11 @@ const MemoryChart: React.FC<IMemoryChart> = ({}) => {
 };
 
 const HomePage = () => {
+  const [length, setLength] = React.useState(0);
   return (
     <>
-      <TextTitle>Home Page</TextTitle>
-      <MemoryChart />
-      {/* {memory?.map((m, i) => (
-        <React.Fragment key={i}>
-          <Text>Free: {m.free} </Text>
-          <Text>Used: {m.used} </Text>
-          <Text>Total: {m.total} </Text>
-          <Text>Timestamp: {m.timestamp} </Text>
-        </React.Fragment>
-      ))} */}
+      <TextTitle>RAM chart length: {length.toString()}</TextTitle>
+      <MemoryChart setLength={setLength} />
     </>
   );
 };

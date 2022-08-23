@@ -5,7 +5,7 @@ use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use systemstat::{Platform, System};
+use systemstat::{ByteSize, Platform, System};
 use tauri::State;
 
 #[tauri::command]
@@ -35,17 +35,27 @@ impl Metrics {
             Err(e) => return Err(e),
         };
 
-        let timestamp = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .expect("Error getting system time");
+        let total = bytes_to_mb(&mem.total);
+        let free = bytes_to_mb(&mem.free);
 
         let mem = Memory {
-            free: mem.free.as_u64(),
-            total: mem.total.as_u64(),
-            used: mem.total.as_u64() - mem.free.as_u64(),
-            timestamp: timestamp.as_secs(),
+            free,
+            total,
+            used: &total - &free,
+            timestamp: get_timestamp_as_secs(),
         };
 
         Ok(mem)
     }
+}
+
+fn get_timestamp_as_secs() -> u64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Error getting system time")
+        .as_secs()
+}
+
+fn bytes_to_mb(bytes: &ByteSize) -> u64 {
+    bytes.as_u64() / 1024 / 1024
 }
