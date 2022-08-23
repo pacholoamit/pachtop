@@ -27,9 +27,7 @@ struct Metrics {
 
 impl Metrics {
     fn memory(&self) -> Memory {
-        let free_b = Byte::from_unit(self.sys.free_memory() as f64, ByteUnit::KB)
-            .unwrap()
-            .get_adjusted_unit(ByteUnit::GB);
+        let free_b = kb_to_size(self.sys.free_memory(), ByteUnit::GB);
 
         dbg!(&free_b);
         let free = bytes_to_size(self.sys.free_memory());
@@ -46,6 +44,13 @@ impl Metrics {
 
 fn get_timestamp() -> String {
     Local::now().time().to_string()
+}
+
+fn kb_to_size(kb: u64, dest_unit: ByteUnit) -> String {
+    Byte::from_unit(kb as f64, ByteUnit::KB)
+        .unwrap()
+        .get_adjusted_unit(dest_unit)
+        .to_string()
 }
 
 fn bytes_to_size(bytes: u64) -> u64 {
