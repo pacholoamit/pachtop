@@ -3,47 +3,40 @@ use crate::models::Memory;
 
 use chrono::prelude::*;
 use std::sync::{Arc, Mutex};
-use systemstat::{ByteSize, Platform, System};
+use sysinfo::{System, SystemExt};
+
 use tauri::State;
 
 #[tauri::command]
-pub fn get_memory(state: State<'_, MetricsState>) -> Result<Memory, String> {
-    match state.0.lock().unwrap().memory() {
-        Ok(mem) => Ok(mem),
-        Err(e) => Err(String::from("Memory error: ") + e.to_string().as_str()),
-    }
+pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
+    state.0.lock().unwrap().memory()
 }
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
 impl Default for MetricsState {
     fn default() -> Self {
-        MetricsState(Arc::new(Mutex::new(Metrics { sys: System::new() })))
+        let mut sys = System::new_all();
+        sys.refresh_all();
+        MetricsState(Arc::new(Mutex::new(Metrics { sys })))
     }
 }
 
 struct Metrics {
-    sys: systemstat::platform::PlatformImpl,
+    sys: System,
 }
 
 impl Metrics {
-    fn memory(&self) -> Result<Memory, std::io::Error> {
-        let mem = match self.sys.memory() {
-            Ok(mem) => mem,
-            Err(e) => return Err(e),
-        };
-
-        let total = bytes_to_size(&mem.total);
-        let free = bytes_to_size(&mem.free);
-
-        let mem = Memory {
+    fn memory(&self) -> Memory {
+        let free = bytes_to_size(self.sys.free_memory());
+        let total = bytes_to_size(self.sys.total_memory());
+        let used = bytes_to_size(self.sys.used_memory());
+        Memory {
             free,
             total,
-            used: &total - &free,
+            used,
             timestamp: get_timestamp(),
-        };
-
-        Ok(mem)
+        }
     }
 }
 
@@ -51,6 +44,6 @@ fn get_timestamp() -> String {
     Local::now().time().to_string()
 }
 
-fn bytes_to_size(bytes: &ByteSize) -> u64 {
-    bytes.as_u64() / 1024 / 1024
+fn bytes_to_size(bytes: u64) -> u64 {
+    bytes / 1024 / 1024
 }
