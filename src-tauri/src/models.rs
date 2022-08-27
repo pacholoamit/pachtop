@@ -1,8 +1,15 @@
+use byte_unit::ByteUnit;
 use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Memory {
-    pub free: u64,
-    pub total: u64,
-    pub used: u64,
+    pub free: ByteUnitValue,
+    pub total: ByteUnitValue,
+    pub used: ByteUnitValue,
     pub timestamp: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ByteUnitValue {
+    pub value: f64,
+    pub unit: ByteUnit,
 }

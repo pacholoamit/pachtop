@@ -24,6 +24,7 @@ const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
 
   useEffect(() => {
     setLength(memory.length);
+    console.log(memory);
   }, [memory.length]);
 
   ChartJS.register(
@@ -43,7 +44,7 @@ const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
       {
         label: "Ram Used (MB)",
         fill: true,
-        data: memory.map((m) => m.used),
+        data: memory.map((m) => m.used.value),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         yAxisID: "used",
