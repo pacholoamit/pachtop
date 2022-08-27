@@ -1,4 +1,4 @@
-use crate::models::{ByteUnitValue, Memory};
+use crate::models::Memory;
 
 use byte_unit::{Byte, ByteUnit};
 use chrono::prelude::*;
@@ -37,6 +37,7 @@ impl Metrics {
             free,
             total,
             used,
+            unit,
             timestamp: current_time(),
         }
     }
@@ -47,13 +48,9 @@ fn current_time() -> String {
     now.format("%H:%M:%S").to_string()
 }
 
-fn kb_to_size(kb: u64, dest_unit: &ByteUnit) -> ByteUnitValue {
-    let adjusted_size = Byte::from_unit(kb as f64, ByteUnit::KB)
+fn kb_to_size(kb: u64, dest_unit: &ByteUnit) -> f64 {
+    Byte::from_unit(kb as f64, ByteUnit::KB)
         .unwrap()
-        .get_adjusted_unit(*dest_unit);
-
-    ByteUnitValue {
-        value: adjusted_size.get_value(),
-        unit: adjusted_size.get_unit(),
-    }
+        .get_adjusted_unit(*dest_unit)
+        .get_value()
 }
