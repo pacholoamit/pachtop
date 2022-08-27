@@ -15,6 +15,7 @@ import {
 
 interface AreaChartProps {
   labels: string[];
+  chartLabel: string;
   data: number[];
   borderColor: string;
   backgroundColor: string;
@@ -36,7 +37,7 @@ const AreaChart: React.FC<AreaChartProps> = (props) => {
     labels: props.labels,
     datasets: [
       {
-        label: "Ram Usage (GB)",
+        label: props.chartLabel,
         fill: true,
         data: props.data,
         borderColor: props.borderColor,
