@@ -20,6 +20,7 @@ const useGetMetrics = () => {
     };
 
     const interval = setInterval(requestMetrics, requestInterval);
+    console.log(memory[0]);
 
     return () => clearInterval(interval);
   }, [memory]);
