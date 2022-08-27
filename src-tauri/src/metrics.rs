@@ -1,6 +1,6 @@
 use crate::models::Memory;
 
-use byte_unit::{Byte, ByteUnit};
+use byte_unit::{AdjustedByte, Byte, ByteUnit};
 use chrono::prelude::*;
 use std::sync::{Arc, Mutex};
 use sysinfo::{System, SystemExt};
@@ -26,21 +26,23 @@ struct Metrics {
 }
 
 impl Metrics {
-    // *Possibly find way to make conversion of ByteUnits dynamic through
-    // *config file
     fn memory(&self) -> Memory {
-        let free_b = kb_to_size(self.sys.free_memory(), ByteUnit::GB);
+        let unit = ByteUnit::GB;
+        let free_b = kb_to_size(self.sys.free_memory(), &unit);
 
         dbg!(&free_b);
         // *Refactor implementation below to be like above
 
-        let free = bytes_to_size(self.sys.free_memory());
-        let total = bytes_to_size(self.sys.total_memory());
-        let used = bytes_to_size(self.sys.used_memory());
+        let free = kb_to_size(self.sys.free_memory(), &unit);
+        let total = kb_to_size(self.sys.total_memory(), &unit);
+        let used = kb_to_size(self.sys.used_memory(), &unit);
+
+        dbg!(&free);
+
         Memory {
-            free,
-            total,
-            used,
+            free: 1,
+            total: 1,
+            used: 1,
             timestamp: get_timestamp(),
         }
     }
@@ -50,11 +52,10 @@ fn get_timestamp() -> String {
     Local::now().time().to_string()
 }
 
-fn kb_to_size(kb: u64, dest_unit: ByteUnit) -> String {
+fn kb_to_size(kb: u64, dest_unit: &ByteUnit) -> AdjustedByte {
     Byte::from_unit(kb as f64, ByteUnit::KB)
         .unwrap()
-        .get_adjusted_unit(dest_unit) // * Possibly modify Memory struct to hold unit & value for result of get_adjusted_unit
-        .to_string()
+        .get_adjusted_unit(dest_unit.clone()) // * Possibly modify Memory struct to hold unit & value for result of get_adjusted_unit
 }
 
 fn bytes_to_size(bytes: u64) -> u64 {
