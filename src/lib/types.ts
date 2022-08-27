@@ -7,7 +7,7 @@ export interface Memory {
   free: ByteUnitValue;
   total: ByteUnitValue;
   used: ByteUnitValue;
-  timestamp: ByteUnitValue;
+  timestamp: string;
 }
 
 export interface ByteUnitValue {

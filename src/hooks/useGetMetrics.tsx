@@ -5,7 +5,7 @@ import { Memory, TauriCommand } from "@/lib/types";
 const useGetMetrics = () => {
   const [memory, setMemory] = useState<Memory[]>([]);
   const requestInterval = 1000; // 1 second
-  const arrayLength = 1000; // items
+  const arrayLength = 10; // items
 
   useEffect(() => {
     const requestMetrics = async () => {
