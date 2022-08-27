@@ -57,7 +57,3 @@ fn kb_to_size(kb: u64, dest_unit: &ByteUnit) -> AdjustedByte {
         .unwrap()
         .get_adjusted_unit(dest_unit.clone()) // * Possibly modify Memory struct to hold unit & value for result of get_adjusted_unit
 }
-
-fn bytes_to_size(bytes: u64) -> u64 {
-    bytes / 1024 / 1024
-}
