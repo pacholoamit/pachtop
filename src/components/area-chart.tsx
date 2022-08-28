@@ -11,12 +11,15 @@ import {
   Tooltip,
   Filler,
   Legend,
+  ChartData,
 } from "chart.js";
 import useGetMetrics from "@/hooks/useGetMetrics";
 import { Memory } from "@/lib/types";
 
 interface RamUsedProps {
   memory: Memory[];
+  chartLabels: string[];
+  chartData: number[];
 }
 
 ChartJS.register(
@@ -31,7 +34,7 @@ ChartJS.register(
 );
 
 const AreaChart: React.FC<RamUsedProps> = (props) => {
-  const { memory } = props;
+  const { memory, chartData, chartLabels } = props;
   // const { memory } = useGetMetrics();
 
   ChartJS.register(
@@ -46,12 +49,12 @@ const AreaChart: React.FC<RamUsedProps> = (props) => {
   );
 
   const data = {
-    labels: memory.map((m) => m.timestamp),
+    labels: chartLabels,
     datasets: [
       {
         label: "Ram Used (MB)",
         fill: true,
-        data: memory.map((m) => m.used),
+        data: chartData,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         yAxisID: "used2",
