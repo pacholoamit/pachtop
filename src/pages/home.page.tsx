@@ -14,18 +14,17 @@ import {
   Filler,
   Legend,
 } from "chart.js";
+import AreaChart from "@/components/area-chart";
 
 interface IMemoryChart {
-  setLength: React.Dispatch<React.SetStateAction<number>>;
+  // memory: Memory[];
+  // setLength: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
+const MemoryChart: React.FC<IMemoryChart> = (props) => {
+  // const { memory } = props;
   const { memory } = useGetMetrics();
-
-  useEffect(() => {
-    setLength(memory.length);
-    console.log(memory);
-  }, [memory.length]);
+  console.log(memory.length);
 
   ChartJS.register(
     CategoryScale,
@@ -49,14 +48,6 @@ const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         yAxisID: "used",
       },
-      // {
-      //   label: "Ram Free",
-      //   fill: true,
-      //   data: memory.map((m) => m.free),
-      //   borderColor: "rgb(255, 99, 132)",
-      //   backgroundColor: "rgba(255, 99, 132, 0.5)",
-      //   yAxisID: "free",
-      // },
     ],
   };
 
@@ -77,15 +68,6 @@ const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
         display: true,
         position: "left" as const,
       },
-      // free: {
-      //   stacked: true,
-      //   type: "linear" as const,
-      //   display: true,
-      //   position: "right" as const,
-      //   grid: {
-      //     drawOnChartArea: false,
-      //   },
-      // },
     },
   };
 
@@ -93,11 +75,19 @@ const MemoryChart: React.FC<IMemoryChart> = ({ setLength }) => {
 };
 
 const HomePage = () => {
-  const [length, setLength] = React.useState(0);
+  const { memory } = useGetMetrics();
+  const chartLabel = `Ram usage ${memory.pop()?.unit ?? ""}`;
   return (
     <>
-      <TextTitle>RAM chart length: {length.toString()}</TextTitle>
-      <MemoryChart setLength={setLength} />
+      <TextTitle>RAM chart</TextTitle>
+      <AreaChart
+        labels={memory.map((m) => m.timestamp)}
+        data={memory.map((m) => m.used)}
+        chartLabel={chartLabel}
+        backgroundColor={"rgba(53, 162, 235, 0.5)"}
+        borderColor={"rgb(53, 162, 235)"}
+      />
+      <MemoryChart />
     </>
   );
 };
