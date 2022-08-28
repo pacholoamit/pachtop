@@ -13,8 +13,9 @@ const useGetMetrics = () => {
 
       if (memory.length >= arrayLength) {
         setMemory((prev) => [...prev.slice(1), mem]);
+      } else {
+        setMemory((prev) => [...prev, mem]);
       }
-      setMemory((prev) => [...prev, mem]);
     };
 
     const interval = setInterval(requestMetrics, requestInterval);

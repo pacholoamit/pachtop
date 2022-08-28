@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import useGetMetrics from "@/hooks/useGetMetrics";
+import React from "react";
 
-import { Text, Title as TextTitle } from "@mantine/core";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -14,18 +12,27 @@ import {
   Filler,
   Legend,
 } from "chart.js";
+import useGetMetrics from "@/hooks/useGetMetrics";
+import { Memory } from "../../../lib/types";
 
-import { Memory } from "@/lib/types";
-import RamUsedChart from "../features/RAM/components/ram-used-chart";
-
-interface IMemoryChart {
-  // memory: Memory[];
-  // setLength: React.Dispatch<React.SetStateAction<number>>;
+interface RamUsedProps {
+  memory: Memory[];
 }
 
-const MemoryChart: React.FC<IMemoryChart> = (props) => {
-  // const { memory } = props;
-  const { memory } = useGetMetrics();
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
+
+const RamUsedChart: React.FC<RamUsedProps> = (props) => {
+  const { memory } = props;
+  // const { memory } = useGetMetrics();
 
   ChartJS.register(
     CategoryScale,
@@ -74,17 +81,4 @@ const MemoryChart: React.FC<IMemoryChart> = (props) => {
 
   return <Line data={data} options={options} />;
 };
-
-const HomePage = () => {
-  const { memory } = useGetMetrics();
-  return (
-    <>
-      <TextTitle>RAM chart</TextTitle>
-
-      {/* <MemoryChart /> */}
-      <RamUsedChart memory={memory} />
-    </>
-  );
-};
-
-export default HomePage;
+export default RamUsedChart;
