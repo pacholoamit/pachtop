@@ -13,7 +13,7 @@ import {
   Legend,
 } from "chart.js";
 import useGetMetrics from "@/hooks/useGetMetrics";
-import { Memory } from "../../../lib/types";
+import { Memory } from "@/lib/types";
 
 interface RamUsedProps {
   memory: Memory[];
@@ -30,7 +30,7 @@ ChartJS.register(
   Legend
 );
 
-const RamUsedChart: React.FC<RamUsedProps> = (props) => {
+const AreaChart: React.FC<RamUsedProps> = (props) => {
   const { memory } = props;
   // const { memory } = useGetMetrics();
 
@@ -81,4 +81,4 @@ const RamUsedChart: React.FC<RamUsedProps> = (props) => {
 
   return <Line data={data} options={options} />;
 };
-export default RamUsedChart;
+export default AreaChart;

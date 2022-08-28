@@ -16,7 +16,7 @@ import {
 } from "chart.js";
 
 import { Memory } from "@/lib/types";
-import RamUsedChart from "../features/RAM/components/ram-used-chart";
+import AreaChart from "@/components/area-chart";
 
 interface IMemoryChart {
   // memory: Memory[];
@@ -82,7 +82,7 @@ const HomePage = () => {
       <TextTitle>RAM chart</TextTitle>
 
       {/* <MemoryChart /> */}
-      <RamUsedChart memory={memory} />
+      <AreaChart memory={memory} />
     </>
   );
 };
