@@ -16,6 +16,9 @@ import {
 interface AreaChartProps {
   labels: string[];
   data: number[];
+  backgroundColor?: string;
+  borderColor?: string;
+  label: string;
 }
 
 ChartJS.register(
@@ -29,9 +32,13 @@ ChartJS.register(
   Legend
 );
 
-const AreaChart: React.FC<AreaChartProps> = (props) => {
-  const { data, labels } = props;
-
+const AreaChart: React.FC<AreaChartProps> = ({
+  data,
+  labels,
+  label,
+  backgroundColor = "rgba(53, 162, 235, 0.5)",
+  borderColor = "rgb(53, 162, 235)",
+}) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -47,11 +54,11 @@ const AreaChart: React.FC<AreaChartProps> = (props) => {
     labels,
     datasets: [
       {
-        label: "Ram Used (MB)",
+        label,
         fill: true,
         data,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor,
+        backgroundColor,
         yAxisID: "chart",
       },
     ],
@@ -62,7 +69,7 @@ const AreaChart: React.FC<AreaChartProps> = (props) => {
     elements: {
       point: {
         borderWidth: 0,
-        radius: 0, //Removes point
+        radius: 0, // Makes points invisible unless hovered
         backgroundColor: "rgba(0,0,0,0)",
       },
     },
