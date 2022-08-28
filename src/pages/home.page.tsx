@@ -15,6 +15,8 @@ import {
   Legend,
 } from "chart.js";
 import AreaChart from "@/components/area-chart";
+import AreaChartApex from "@/components/area-chart-apex";
+import { Memory } from "@/lib/types";
 
 interface IMemoryChart {
   // memory: Memory[];
@@ -24,7 +26,6 @@ interface IMemoryChart {
 const MemoryChart: React.FC<IMemoryChart> = (props) => {
   // const { memory } = props;
   const { memory } = useGetMetrics();
-  console.log(memory.length);
 
   ChartJS.register(
     CategoryScale,
@@ -77,6 +78,7 @@ const MemoryChart: React.FC<IMemoryChart> = (props) => {
 const HomePage = () => {
   const { memory } = useGetMetrics();
   const chartLabel = `Ram usage ${memory.pop()?.unit ?? ""}`;
+
   return (
     <>
       <TextTitle>RAM chart</TextTitle>
@@ -86,6 +88,11 @@ const HomePage = () => {
         chartLabel={chartLabel}
         backgroundColor={"rgba(53, 162, 235, 0.5)"}
         borderColor={"rgb(53, 162, 235)"}
+      />
+      <AreaChartApex
+        memory={memory}
+        data={memory.map((m) => m.used)}
+        timestamps={memory.map((m) => m.timestamp)}
       />
       <MemoryChart />
     </>

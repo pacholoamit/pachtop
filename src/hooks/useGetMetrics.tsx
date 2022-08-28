@@ -10,20 +10,17 @@ const useGetMetrics = () => {
   useEffect(() => {
     const requestMetrics = async () => {
       const mem = (await invoke(TauriCommand.Memory)) as Memory;
-      console.log(mem);
 
       if (memory.length >= arrayLength) {
         setMemory((prev) => [...prev.slice(1), mem]);
-      } else {
-        setMemory((prev) => [...prev, mem]);
       }
+      setMemory((prev) => [...prev, mem]);
     };
 
     const interval = setInterval(requestMetrics, requestInterval);
-    console.log(memory[0]);
 
     return () => clearInterval(interval);
-  }, [memory]);
+  }, []);
 
   return { memory };
 };
