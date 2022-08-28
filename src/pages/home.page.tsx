@@ -10,9 +10,8 @@ const HomePage = () => {
       <Title>RAM chart</Title>
 
       <AreaChart
-        memory={memory}
-        chartData={memory.map((m) => m.used)}
-        chartLabels={memory.map((m) => m.timestamp)}
+        data={memory.map((m) => m.used)}
+        labels={memory.map((m) => m.timestamp)}
       />
     </>
   );

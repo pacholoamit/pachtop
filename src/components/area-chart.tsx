@@ -11,15 +11,11 @@ import {
   Tooltip,
   Filler,
   Legend,
-  ChartData,
 } from "chart.js";
-import useGetMetrics from "@/hooks/useGetMetrics";
-import { Memory } from "@/lib/types";
 
-interface RamUsedProps {
-  memory: Memory[];
-  chartLabels: string[];
-  chartData: number[];
+interface AreaChartProps {
+  labels: string[];
+  data: number[];
 }
 
 ChartJS.register(
@@ -33,9 +29,8 @@ ChartJS.register(
   Legend
 );
 
-const AreaChart: React.FC<RamUsedProps> = (props) => {
-  const { memory, chartData, chartLabels } = props;
-  // const { memory } = useGetMetrics();
+const AreaChart: React.FC<AreaChartProps> = (props) => {
+  const { data, labels } = props;
 
   ChartJS.register(
     CategoryScale,
@@ -48,22 +43,29 @@ const AreaChart: React.FC<RamUsedProps> = (props) => {
     Legend
   );
 
-  const data = {
-    labels: chartLabels,
+  const chartData = {
+    labels,
     datasets: [
       {
         label: "Ram Used (MB)",
         fill: true,
-        data: chartData,
+        data,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
-        yAxisID: "used2",
+        yAxisID: "chart",
       },
     ],
   };
 
   const options = {
     responsive: true,
+    elements: {
+      point: {
+        borderWidth: 0,
+        radius: 0, //Removes point
+        backgroundColor: "rgba(0,0,0,0)",
+      },
+    },
     plugins: {
       legend: {
         position: "top" as const,
@@ -74,7 +76,7 @@ const AreaChart: React.FC<RamUsedProps> = (props) => {
       },
     },
     scales: {
-      used2: {
+      chart: {
         type: "linear" as const,
         display: true,
         position: "left" as const,
@@ -82,6 +84,6 @@ const AreaChart: React.FC<RamUsedProps> = (props) => {
     },
   };
 
-  return <Line data={data} options={options} />;
+  return <Line data={chartData} options={options} />;
 };
 export default AreaChart;
