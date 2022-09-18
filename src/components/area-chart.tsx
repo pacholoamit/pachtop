@@ -11,7 +11,7 @@ import {
   Filler,
   Legend,
 } from "chart.js";
-import { Card } from "@mantine/core";
+import { Card, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 
 export interface AreaChartProps {
@@ -41,7 +41,10 @@ ChartJS.register(
 );
 
 const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
-  const isLarge = useMediaQuery("(min-width: 1200px)");
+  const { breakpoints } = useMantineTheme();
+  const isXLarge = useMediaQuery(`(min-width: ${breakpoints.xl}px)`);
+  const isSmall = useMediaQuery(`(max-width: ${breakpoints.md}px)`);
+
   const chartData = {
     labels,
     datasets: datasets.map((dataset) => dataset),
@@ -100,7 +103,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       xAxis: {
         ticks: {
           color: "#8192ac",
-          maxTicksLimit: isLarge ? 10 : 5,
+          maxTicksLimit: isXLarge || isSmall ? 10 : 5,
           autoSkip: true,
           maxRotation: 0,
         },
