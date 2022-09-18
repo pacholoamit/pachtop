@@ -34,14 +34,14 @@ const HomePage = () => {
       <Grid gutter="xl">
         <Grid.Col span={6}>
           <Stack>
-            <Card>
+            <Card style={{ height: "300px" }}>
               <AreaChart
                 title="RAM chart"
                 labels={memory.map((mem) => mem.timestamp.split(" "))}
                 datasets={datasets}
               />
             </Card>
-            <Card>
+            <Card style={{ height: "300px" }}>
               <AreaChart
                 title="RAM chart"
                 labels={memory.map((mem) => mem.timestamp.split(" "))}

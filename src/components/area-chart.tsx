@@ -47,6 +47,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     animation: {
       duration: 0, // Turn off animation
     },
