@@ -28,7 +28,7 @@ struct Metrics {
 impl Metrics {
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
-        let unit = ByteUnit::GiB;
+        let unit = ByteUnit::GB;
         let free = kb_to_size(self.sys.free_memory(), &unit);
         let total = kb_to_size(self.sys.total_memory(), &unit);
         let used = kb_to_size(self.sys.used_memory(), &unit);

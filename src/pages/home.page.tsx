@@ -30,20 +30,17 @@ const HomePage = () => {
       <Grid gutter="xl">
         <Grid.Col span={6}>
           <Stack>
-            <Card style={{ height: "300px" }} shadow="xl" p={"xl"}>
-              <AreaChart
-                title="RAM chart"
-                labels={memory.map((mem) => mem.timestamp.split(" "))}
-                datasets={datasets}
-              />
-            </Card>
-            <Card style={{ height: "300px" }} shadow="xl" p={"xl"}>
-              <AreaChart
-                title="RAM chart"
-                labels={memory.map((mem) => mem.timestamp.split(" "))}
-                datasets={datasets}
-              />
-            </Card>
+            <AreaChart
+              title="Random Access Memory (RAM)"
+              labels={memory.map((mem) => mem.timestamp.split(" "))}
+              datasets={datasets}
+            />
+
+            <AreaChart
+              title="Random Access Memory (RAM)"
+              labels={memory.map((mem) => mem.timestamp.split(" "))}
+              datasets={datasets}
+            />
           </Stack>
         </Grid.Col>
         <Grid.Col span={6}>

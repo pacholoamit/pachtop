@@ -11,6 +11,7 @@ import {
   Filler,
   Legend,
 } from "chart.js";
+import { Card } from "@mantine/core";
 
 export interface AreaChartProps {
   title: string;
@@ -75,7 +76,13 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       title: {
         display: true,
         text: title,
-        color: "white",
+        color: "#dce1e8",
+        align: "start" as const,
+        font: {
+          family: "Roboto",
+          weight: "bold",
+          size: 18,
+        },
       },
     },
     scales: {
@@ -102,6 +109,10 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     },
   };
 
-  return <Line data={chartData as any} options={options as any} />;
+  return (
+    <Card style={{ height: "300px" }} shadow="xl" p={"xl"}>
+      <Line data={chartData as any} options={options as any} />
+    </Card>
+  );
 };
 export default AreaChart;
