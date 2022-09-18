@@ -32,12 +32,9 @@ struct Metrics {
 impl Metrics {
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
-
         let free = bytes_to_size(self.sys.free_memory(), &self.target_unit);
         let total = bytes_to_size(self.sys.total_memory(), &self.target_unit);
         let used = bytes_to_size(self.sys.used_memory(), &self.target_unit);
-
-        println!("{}", &free);
 
         Memory {
             free,
