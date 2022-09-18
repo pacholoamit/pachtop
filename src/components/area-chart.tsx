@@ -50,6 +50,14 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     animation: {
       duration: 0, // Turn off animation
     },
+    tooltip: {
+      mode: "index",
+    },
+    interaction: {
+      mode: "nearest",
+      axis: "x",
+      intersect: false,
+    },
     elements: {
       point: {
         borderWidth: 0,
