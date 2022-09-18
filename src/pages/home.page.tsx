@@ -4,7 +4,7 @@ import AreaChart, {
   DatasetOptions,
 } from "@/components/area-chart";
 
-import { Grid, Stack, Title } from "@mantine/core";
+import { Card, Grid, Stack, Title } from "@mantine/core";
 
 const HomePage = () => {
   const { memory } = useGetMetrics();
@@ -34,16 +34,20 @@ const HomePage = () => {
       <Grid gutter="xl">
         <Grid.Col span={6}>
           <Stack>
-            <AreaChart
-              title="RAM chart"
-              labels={memory.map((mem) => mem.timestamp.split(" "))}
-              datasets={datasets}
-            />
-            <AreaChart
-              title="RAM chart"
-              labels={memory.map((mem) => mem.timestamp.split(" "))}
-              datasets={datasets}
-            />
+            <Card>
+              <AreaChart
+                title="RAM chart"
+                labels={memory.map((mem) => mem.timestamp.split(" "))}
+                datasets={datasets}
+              />
+            </Card>
+            <Card>
+              <AreaChart
+                title="RAM chart"
+                labels={memory.map((mem) => mem.timestamp.split(" "))}
+                datasets={datasets}
+              />
+            </Card>
           </Stack>
         </Grid.Col>
         <Grid.Col span={6}>
