@@ -15,7 +15,7 @@ import {
 
 export interface AreaChartProps {
   title: string;
-  labels: string[];
+  labels: string[] | string[][];
   datasets: DatasetOptions[];
 }
 
@@ -80,7 +80,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       },
       xAxis: {
         ticks: {
-          maxTicksLimit: 5,
+          maxTicksLimit: 8,
+          autoSkip: true,
+          maxRotation: 0,
         },
       },
     },
