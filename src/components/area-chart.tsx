@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -69,18 +68,26 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     plugins: {
       legend: {
         position: "top" as const,
+        labels: {
+          color: "#8192ac",
+        },
       },
       title: {
         display: true,
         text: title,
+        color: "white",
       },
     },
     scales: {
       yAxis: {
         min: 0,
+        ticks: {
+          color: "#8192ac",
+        },
       },
       xAxis: {
         ticks: {
+          color: "#8192ac",
           maxTicksLimit: 8,
           autoSkip: true,
           maxRotation: 0,

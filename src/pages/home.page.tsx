@@ -1,8 +1,5 @@
 import useGetMetrics from "@/hooks/useGetMetrics";
-import AreaChart, {
-  AreaChartProps,
-  DatasetOptions,
-} from "@/components/area-chart";
+import AreaChart, { DatasetOptions } from "@/components/area-chart";
 
 import { Card, Grid, Stack, Title } from "@mantine/core";
 
