@@ -28,7 +28,7 @@ const HomePage = () => {
   return (
     <>
       <Grid gutter="xl">
-        <Grid.Col span={6}>
+        <Grid.Col md={6} sm={12}>
           <Stack>
             <AreaChart
               title="Random Access Memory (RAM)"
@@ -43,7 +43,7 @@ const HomePage = () => {
             />
           </Stack>
         </Grid.Col>
-        <Grid.Col span={6}>
+        <Grid.Col md={6} sm={12}>
           <Title>Welcome to Pachtop</Title>
         </Grid.Col>
       </Grid>

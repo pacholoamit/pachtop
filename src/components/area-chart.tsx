@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { Card } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 export interface AreaChartProps {
   title: string;
@@ -40,6 +41,7 @@ ChartJS.register(
 );
 
 const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
+  const isLarge = useMediaQuery("(min-width: 1200px)");
   const chartData = {
     labels,
     datasets: datasets.map((dataset) => dataset),
@@ -98,7 +100,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       xAxis: {
         ticks: {
           color: "#8192ac",
-          maxTicksLimit: 8,
+          maxTicksLimit: isLarge ? 10 : 5,
           autoSkip: true,
           maxRotation: 0,
         },
