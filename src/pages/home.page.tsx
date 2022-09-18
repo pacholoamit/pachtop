@@ -34,6 +34,7 @@ const HomePage = () => {
       <Title>RAM chart</Title>
 
       <AreaChart
+        title="RAM chart"
         labels={memory.map((mem) => mem.timestamp)}
         datasets={datasets}
       />

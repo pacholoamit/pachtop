@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 
 export interface AreaChartProps {
+  title: string;
   labels: string[];
   datasets: DatasetOptions[];
 }
@@ -38,7 +39,7 @@ ChartJS.register(
   Legend
 );
 
-const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets }) => {
+const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
   const chartData = {
     labels,
     datasets: datasets.map((dataset) => dataset),
@@ -46,6 +47,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets }) => {
 
   const options = {
     responsive: true,
+    animation: {
+      duration: 0, // Turn off animation
+    },
     elements: {
       point: {
         borderWidth: 0,
@@ -59,7 +63,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets }) => {
       },
       title: {
         display: true,
-        text: "RAM metrics",
+        text: title,
       },
     },
     scales: {
