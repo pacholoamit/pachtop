@@ -1,4 +1,4 @@
-use crate::models::Memory;
+use crate::models::{Memory, Swap};
 
 use byte_unit::{Byte, ByteUnit};
 use chrono::prelude::*;
@@ -9,6 +9,11 @@ use tauri::State;
 #[tauri::command]
 pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
     state.0.lock().unwrap().memory()
+}
+
+#[tauri::command]
+pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
+    state.0.lock().unwrap().swap()
 }
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
@@ -34,6 +39,22 @@ impl Metrics {
         let used = kb_to_size(self.sys.used_memory(), &unit);
 
         Memory {
+            unit,
+            free,
+            total,
+            used,
+            timestamp: current_time(),
+        }
+    }
+
+    fn swap(&mut self) -> Swap {
+        self.sys.refresh_memory();
+        let unit = ByteUnit::GB;
+        let total = kb_to_size(self.sys.total_swap(), &unit);
+        let used = kb_to_size(self.sys.used_swap(), &unit);
+        let free = kb_to_size(self.sys.free_swap(), &unit);
+
+        Swap {
             unit,
             free,
             total,

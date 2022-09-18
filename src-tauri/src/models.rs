@@ -8,3 +8,12 @@ pub struct Memory {
     pub used: f64,
     pub timestamp: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Swap {
+    pub unit: ByteUnit,
+    pub free: f64,
+    pub total: f64,
+    pub used: f64,
+    pub timestamp: String,
+}
