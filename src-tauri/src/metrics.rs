@@ -33,7 +33,6 @@ impl Metrics {
         let total = kb_to_size(self.sys.total_memory(), &unit);
         let used = kb_to_size(self.sys.used_memory(), &unit);
 
-        println!("timestamp {}", current_time());
         Memory {
             unit,
             free,
