@@ -19,48 +19,46 @@ pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
 impl MetricsState {
-    pub fn new() -> Self {
-        let mut sys = System::new_all();
-        sys.refresh_all();
-        MetricsState(Arc::new(Mutex::new(Metrics { sys })))
+    pub fn new(sys: System, target_unit: ByteUnit) -> Self {
+        MetricsState(Arc::new(Mutex::new(Metrics { sys, target_unit })))
     }
 }
 
 struct Metrics {
     sys: System,
+    target_unit: ByteUnit,
 }
 
 impl Metrics {
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
-        let unit = ByteUnit::GB;
-        let free = kb_to_size(self.sys.free_memory(), &unit);
-        let total = kb_to_size(self.sys.total_memory(), &unit);
-        let used = kb_to_size(self.sys.used_memory(), &unit);
+
+        let free = bytes_to_size(self.sys.free_memory(), &self.target_unit);
+        let total = bytes_to_size(self.sys.total_memory(), &self.target_unit);
+        let used = bytes_to_size(self.sys.used_memory(), &self.target_unit);
+
+        println!("{}", &self.sys.total_memory());
 
         Memory {
-            unit,
             free,
             total,
             used,
+            unit: self.target_unit,
             timestamp: current_time(),
         }
     }
 
     fn swap(&mut self) -> Swap {
         self.sys.refresh_memory();
-        let unit = ByteUnit::GB;
-        let total = kb_to_size(self.sys.total_swap(), &unit);
-        let used = kb_to_size(self.sys.used_swap(), &unit);
-        let free = kb_to_size(self.sys.free_swap(), &unit);
-
-        println!("{} {} {}", total, used, free);
+        let total = bytes_to_size(self.sys.total_swap(), &self.target_unit);
+        let used = bytes_to_size(self.sys.used_swap(), &self.target_unit);
+        let free = bytes_to_size(self.sys.free_swap(), &self.target_unit);
 
         Swap {
-            unit,
             free,
             total,
             used,
+            unit: self.target_unit,
             timestamp: current_time(),
         }
     }
@@ -71,8 +69,8 @@ fn current_time() -> String {
     now.format("%H:%M:%S %Y-%m-%d").to_string()
 }
 
-fn kb_to_size(kb: u64, dest_unit: &ByteUnit) -> f64 {
-    Byte::from_unit(kb as f64, ByteUnit::KB)
+fn bytes_to_size(bytes: u64, dest_unit: &ByteUnit) -> f64 {
+    Byte::from_unit(bytes as f64, ByteUnit::B)
         .unwrap()
         .get_adjusted_unit(*dest_unit)
         .get_value()
