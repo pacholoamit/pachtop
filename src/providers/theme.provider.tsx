@@ -14,7 +14,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
         "#A6A7AB",
         "#909296",
         "#5C5F66",
-        "#373A40",
+        "#324363", // Card Borders
         "#2C2E33",
         "#152847", // Card colors
         "#070f2c", // Background colors
