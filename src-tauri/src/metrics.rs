@@ -46,7 +46,7 @@ impl Metrics {
 
 fn current_time() -> String {
     let now = Local::now();
-    now.format("%Y-%m-%d %H:%M:%S").to_string()
+    now.format("%H:%M:%S %Y-%m-%d").to_string()
 }
 
 fn kb_to_size(kb: u64, dest_unit: &ByteUnit) -> f64 {
