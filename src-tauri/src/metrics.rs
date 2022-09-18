@@ -54,6 +54,8 @@ impl Metrics {
         let used = kb_to_size(self.sys.used_swap(), &unit);
         let free = kb_to_size(self.sys.free_swap(), &unit);
 
+        println!("{} {} {}", total, used, free);
+
         Swap {
             unit,
             free,
