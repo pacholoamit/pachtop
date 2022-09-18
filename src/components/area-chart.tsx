@@ -78,6 +78,11 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       yAxis: {
         min: 0,
       },
+      xAxis: {
+        ticks: {
+          maxTicksLimit: 5,
+        },
+      },
     },
   };
 

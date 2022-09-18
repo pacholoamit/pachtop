@@ -33,6 +33,7 @@ impl Metrics {
         let total = kb_to_size(self.sys.total_memory(), &unit);
         let used = kb_to_size(self.sys.used_memory(), &unit);
 
+        println!("timestamp {}", current_time());
         Memory {
             unit,
             free,
@@ -45,7 +46,7 @@ impl Metrics {
 
 fn current_time() -> String {
     let now = Local::now();
-    now.format("%H:%M:%S").to_string()
+    now.format("%Y-%m-%d %H:%M:%S").to_string()
 }
 
 fn kb_to_size(kb: u64, dest_unit: &ByteUnit) -> f64 {
