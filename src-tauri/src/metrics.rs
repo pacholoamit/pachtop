@@ -37,7 +37,7 @@ impl Metrics {
         let total = bytes_to_size(self.sys.total_memory(), &self.target_unit);
         let used = bytes_to_size(self.sys.used_memory(), &self.target_unit);
 
-        println!("{}", &self.sys.total_memory());
+        println!("{}", &free);
 
         Memory {
             free,
@@ -70,8 +70,10 @@ fn current_time() -> String {
 }
 
 fn bytes_to_size(bytes: u64, dest_unit: &ByteUnit) -> f64 {
-    Byte::from_unit(bytes as f64, ByteUnit::B)
+    let result = Byte::from_unit(bytes as f64, ByteUnit::B)
         .unwrap()
         .get_adjusted_unit(*dest_unit)
-        .get_value()
+        .get_value();
+
+    (result * 100.0).round() / 100.0 // round to 2 decimal places
 }
