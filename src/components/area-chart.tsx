@@ -84,6 +84,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
         ticks: {
           color: "#8192ac",
         },
+        grid: {
+          color: "#263858",
+        },
       },
       xAxis: {
         ticks: {
@@ -91,6 +94,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
           maxTicksLimit: 8,
           autoSkip: true,
           maxRotation: 0,
+        },
+        grid: {
+          color: "#263858",
         },
       },
     },
