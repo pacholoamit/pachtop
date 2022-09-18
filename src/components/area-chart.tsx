@@ -39,39 +39,10 @@ ChartJS.register(
 );
 
 const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets }) => {
-  const datasetArray = datasets.map((dataset) => ({
-    datasets: {
-      label: dataset.label,
-      data: dataset.data,
-      backgroundColor: dataset.backgroundColor,
-      borderColor: dataset.borderColor,
-      yAxisID: dataset.yAxisId || "y",
-      fill: dataset.fill || false,
-    },
-  }));
-
   const chartData = {
     labels,
     datasets: datasets.map((dataset) => dataset),
   };
-
-  // const chartData = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       label,
-  //       fill: true,
-  //       data,
-  //       borderColor,
-  //       backgroundColor,
-  //       yAxisID: "chart",
-  //     },
-  //     {
-  //       label: "Total RAM",
-  //       fill: true,
-  //     },
-  //   ],
-  // };
 
   const options = {
     responsive: true,
@@ -92,14 +63,12 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets }) => {
       },
     },
     scales: {
-      chart: {
-        type: "linear" as const,
-        display: true,
-        position: "left" as const,
+      yAxis: {
+        min: 0,
       },
     },
   };
 
-  return <Line data={chartData as any} options={options} />;
+  return <Line data={chartData as any} options={options as any} />;
 };
 export default AreaChart;
