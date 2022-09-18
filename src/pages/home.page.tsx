@@ -12,6 +12,14 @@ const HomePage = () => {
 
   const datasets: DatasetOptions[] = [
     {
+      label: `Ram Total ${unit}`,
+      data: memory.map((mem) => mem.total),
+      backgroundColor: "rgba(255, 99, 132, 0.2)",
+      borderColor: "rgba(255, 99, 132, 1)",
+      fill: true,
+      yAxisId: "ram-total",
+    },
+    {
       label: `Ram Used ${unit}`,
       data: memory.map((mem) => mem.used),
       backgroundColor: "rgba(53, 162, 235, 0.5)",
