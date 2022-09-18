@@ -13,12 +13,18 @@ import {
   Legend,
 } from "chart.js";
 
-interface AreaChartProps {
+export interface AreaChartProps {
   labels: string[];
-  data: number[];
-  backgroundColor?: string;
-  borderColor?: string;
+  datasets: DatasetOptions[];
+}
+
+export interface DatasetOptions {
   label: string;
+  fill: boolean;
+  data: number[];
+  backgroundColor: string;
+  borderColor: string;
+  yAxisId: string;
 }
 
 ChartJS.register(
@@ -32,37 +38,40 @@ ChartJS.register(
   Legend
 );
 
-const AreaChart: React.FC<AreaChartProps> = ({
-  data,
-  labels,
-  label,
-  backgroundColor = "rgba(53, 162, 235, 0.5)",
-  borderColor = "rgb(53, 162, 235)",
-}) => {
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Filler,
-    Legend
-  );
+const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets }) => {
+  const datasetArray = datasets.map((dataset) => ({
+    datasets: {
+      label: dataset.label,
+      data: dataset.data,
+      backgroundColor: dataset.backgroundColor,
+      borderColor: dataset.borderColor,
+      yAxisID: dataset.yAxisId || "y",
+      fill: dataset.fill || false,
+    },
+  }));
 
   const chartData = {
     labels,
-    datasets: [
-      {
-        label,
-        fill: true,
-        data,
-        borderColor,
-        backgroundColor,
-        yAxisID: "chart",
-      },
-    ],
+    datasets: datasets.map((dataset) => dataset),
   };
+
+  // const chartData = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       label,
+  //       fill: true,
+  //       data,
+  //       borderColor,
+  //       backgroundColor,
+  //       yAxisID: "chart",
+  //     },
+  //     {
+  //       label: "Total RAM",
+  //       fill: true,
+  //     },
+  //   ],
+  // };
 
   const options = {
     responsive: true,
@@ -91,6 +100,6 @@ const AreaChart: React.FC<AreaChartProps> = ({
     },
   };
 
-  return <Line data={chartData} options={options} />;
+  return <Line data={chartData as any} options={options} />;
 };
 export default AreaChart;
