@@ -9,7 +9,7 @@ export interface Memory {
   free: number;
   total: number;
   used: number;
-  timestamp: string;
+  timestamp: number;
 }
 
 export interface Swap {
@@ -17,5 +17,5 @@ export interface Swap {
   free: number;
   total: number;
   used: number;
-  timestamp: string;
+  timestamp: number;
 }

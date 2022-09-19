@@ -11,13 +11,15 @@ import {
   Filler,
   Legend,
   Decimation,
+  TimeScale,
 } from "chart.js";
+import "chartjs-adapter-luxon";
 import { Card, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 
 export interface AreaChartProps {
   title: string;
-  labels: string[] | string[][];
+  labels: string[] | string[][] | number[];
   datasets: DatasetOptions[];
 }
 
@@ -39,7 +41,8 @@ ChartJS.register(
   Tooltip,
   Filler,
   Legend,
-  Decimation
+  Decimation,
+  TimeScale
 );
 
 const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
@@ -107,6 +110,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
         },
       },
       xAxis: {
+        type: "time",
         ticks: {
           color: "#8192ac",
           maxTicksLimit: isXLarge || isSmall ? 10 : 5,

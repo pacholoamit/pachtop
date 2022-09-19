@@ -61,9 +61,8 @@ impl Metrics {
     }
 }
 
-fn current_time() -> String {
-    let now = Local::now();
-    now.format("%H:%M:%S %Y-%m-%d").to_string()
+fn current_time() -> i64 {
+    DateTime::timestamp(&Local::now())
 }
 
 fn bytes_to_size(bytes: u64, dest_unit: &ByteUnit) -> f64 {

@@ -9,7 +9,7 @@ const HomePage = () => {
   const ramDatasets: DatasetOptions[] = [
     {
       label: `Ram Used ${unit}`,
-      data: memory.map((mem) => mem.used),
+      data: memory.map((mem) => ({ x: mem.timestamp, y: mem.used })),
       backgroundColor: "rgba(10, 167, 147, 0.45)",
       borderColor: "rgba(10, 167, 147, 1)",
       fill: true,
@@ -20,11 +20,11 @@ const HomePage = () => {
   const swapDatasets: DatasetOptions[] = [
     {
       label: `Swap Used ${unit}`,
-      data: swap.map((swap) => swap.used),
+      data: swap.map((swap) => ({ x: swap.timestamp, y: swap.used })),
       backgroundColor: "rgba(53, 162, 235, 0.45)",
       borderColor: "rgba(53, 162, 235)",
       fill: true,
-      yAxisId: "ram-used",
+      yAxisId: "swap-used",
     },
   ];
 
@@ -35,13 +35,13 @@ const HomePage = () => {
           <Stack>
             <AreaChart
               title="Random Access Memory (RAM)"
-              labels={memory.map((mem) => mem.timestamp.split(" "))}
+              labels={memory.map((mem) => mem.timestamp)}
               datasets={ramDatasets}
             />
 
             <AreaChart
               title="Swap Memory"
-              labels={swap.map((swap) => swap.timestamp.split(" "))}
+              labels={swap.map((swap) => swap.timestamp)}
               datasets={swapDatasets}
             />
           </Stack>
