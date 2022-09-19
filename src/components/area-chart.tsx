@@ -24,7 +24,7 @@ export interface AreaChartProps {
 export interface DatasetOptions {
   label: string;
   fill: boolean;
-  data: number[];
+  data: number[] | any[];
   backgroundColor: string;
   borderColor: string;
   yAxisId: string;
@@ -55,9 +55,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    animation: {
-      duration: 0, // Turn off animation
-    },
+    parsing: false,
+    animation: false,
+
     tooltip: {
       mode: "index",
     },
@@ -75,7 +75,6 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     },
     plugins: {
       decimation: {
-        enabled: true,
         algorithm: "lttb",
         samples: 150,
       },
@@ -113,6 +112,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
           maxTicksLimit: isXLarge || isSmall ? 10 : 5,
           autoSkip: true,
           maxRotation: 0,
+          // source: "auto",
         },
         grid: {
           color: "#263858",

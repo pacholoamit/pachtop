@@ -1,9 +1,9 @@
 import useGetMetrics from "@/hooks/useGetMetrics";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
-import { Card, Grid, Stack, Title } from "@mantine/core";
+import { Grid, Stack, Title } from "@mantine/core";
 
 const HomePage = () => {
-  const { memory, swap } = useGetMetrics({interval: 1000, maxLength: 86400});
+  const { memory, swap } = useGetMetrics({ interval: 1000, maxLength: 86400 });
   const unit = memory.slice(-1)[0]?.unit;
 
   const ramDatasets: DatasetOptions[] = [
