@@ -92,7 +92,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     },
     scales: {
       yAxis: {
-        min: 0,
+        // min: 0,
         ticks: {
           color: "#8192ac",
         },
