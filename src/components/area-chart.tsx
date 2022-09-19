@@ -123,7 +123,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
 
         ticks: {
           color: "#8192ac",
-          maxTicksLimit: isXLarge || isSmall ? 10 : 5,
+          maxTicksLimit: isXLarge || isSmall ? 8 : 4,
           autoSkip: true,
           maxRotation: 0,
           source: "auto",

@@ -8,8 +8,13 @@ const useMediaQuery = () => {
     `(max-width: ${theme.breakpoints.lg}px)`
   );
 
+  const isSmallerThanMd = useMantineMediaQuery(
+    `(max-width: ${theme.breakpoints.md}px)`
+  );
+
   return {
     isSmallerThanLg,
+    isSmallerThanMd,
   };
 };
 

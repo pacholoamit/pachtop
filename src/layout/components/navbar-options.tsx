@@ -16,8 +16,8 @@ interface NavbarOptionProps {
 }
 
 const NavbarOption: React.FC<NavbarOptionProps> = ({ icon, label }) => {
-  const { isSmallerThanLg } = useMediaQuery();
-  const position = isSmallerThanLg ? "center" : "left";
+  const { isSmallerThanMd } = useMediaQuery();
+  const position = isSmallerThanMd ? "center" : "left";
 
   const sx = (theme: MantineTheme) => ({
     display: "block",
@@ -34,7 +34,7 @@ const NavbarOption: React.FC<NavbarOptionProps> = ({ icon, label }) => {
     <UnstyledButton sx={sx}>
       <Group position={position}>
         <ThemeIcon variant="gradient">{icon}</ThemeIcon>
-        <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
+        <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
           <Text>{label}</Text>
         </MediaQuery>
       </Group>

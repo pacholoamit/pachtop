@@ -1,5 +1,4 @@
 import Navbar from "@/layout/components/navbar";
-import Header from "@/layout/components/header";
 import {
   AppShell,
   Card,
@@ -19,13 +18,7 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <AppShell
-      styles={styles}
-      navbarOffsetBreakpoint="sm"
-      navbar={<Navbar />}
-      padding={"xl"}
-    >
-      {/* <Header /> */}
+    <AppShell styles={styles} navbar={<Navbar />} padding={"xl"}>
       <Card style={{ backgroundColor: theme.colors.dark[7] }} radius={"md"}>
         <Outlet />
       </Card>
