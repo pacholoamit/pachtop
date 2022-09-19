@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Navbar as MantineNavbar, Text } from "@mantine/core";
+import { Image, Navbar as MantineNavbar, Navbar } from "@mantine/core";
+import logo from "/logo-white.png";
 
 const AppNavbar = () => {
   const [opened, setOpened] = useState(false);
@@ -10,7 +11,9 @@ const AppNavbar = () => {
       hidden={!opened}
       width={{ sm: 80, lg: 230 }}
     >
-      <Text>Application navbar</Text>
+      <Navbar.Section style={{ marginLeft: "auto", marginRight: "auto" }}>
+        <Image src={logo} alt="Logo" />
+      </Navbar.Section>
     </MantineNavbar>
   );
 };
