@@ -32,6 +32,9 @@ const HomePage = () => {
   return (
     <>
       <Grid gutter="xl">
+        <Grid.Col span={12}>
+          <SystemInfo />
+        </Grid.Col>
         <Grid.Col md={6} sm={12}>
           <Stack>
             <AreaChart
@@ -47,9 +50,7 @@ const HomePage = () => {
             />
           </Stack>
         </Grid.Col>
-        <Grid.Col md={6} sm={12}>
-          <SystemInfo />
-        </Grid.Col>
+        <Grid.Col md={6} sm={12}></Grid.Col>
       </Grid>
     </>
   );
