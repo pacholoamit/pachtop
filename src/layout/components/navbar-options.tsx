@@ -1,10 +1,14 @@
-import { UnstyledButton, Group, ThemeIcon, Text } from "@mantine/core";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import { IconAlertCircle, IconLayoutDashboard } from "@tabler/icons";
 import {
-  IconAlertCircle,
-  IconDatabase,
-  IconLayoutDashboard,
-  IconMessages,
-} from "@tabler/icons";
+  UnstyledButton,
+  Group,
+  ThemeIcon,
+  Text,
+  MediaQuery,
+  MantineTheme,
+  Tooltip,
+} from "@mantine/core";
 
 interface NavbarOptionProps {
   icon: React.ReactNode;
@@ -12,22 +16,27 @@ interface NavbarOptionProps {
 }
 
 const NavbarOption: React.FC<NavbarOptionProps> = ({ icon, label }) => {
+  const { isSmallerThanLg } = useMediaQuery();
+  const position = isSmallerThanLg ? "center" : "left";
+
+  const sx = (theme: MantineTheme) => ({
+    display: "block",
+    width: "100%",
+    padding: theme.spacing.xs,
+    borderRadius: theme.radius.sm,
+    color: theme.colors.dark[0],
+    "&:hover": {
+      backgroundColor: theme.colors.dark[6],
+    },
+  });
+
   return (
-    <UnstyledButton
-      sx={(theme) => ({
-        display: "block",
-        width: "100%",
-        padding: theme.spacing.xs,
-        borderRadius: theme.radius.sm,
-        color: theme.colors.dark[0],
-        "&:hover": {
-          backgroundColor: theme.colors.dark[6],
-        },
-      })}
-    >
-      <Group>
+    <UnstyledButton sx={sx}>
+      <Group position={position}>
         <ThemeIcon variant="gradient">{icon}</ThemeIcon>
-        <Text>{label}</Text>
+        <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
+          <Text>{label}</Text>
+        </MediaQuery>
       </Group>
     </UnstyledButton>
   );
@@ -41,7 +50,7 @@ const NavbarOptions = () => {
     },
     {
       icon: <IconAlertCircle size={16} />,
-      label: "Metrics",
+      label: "Processes",
     },
   ];
 

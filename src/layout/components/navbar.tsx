@@ -10,7 +10,7 @@ import {
 
 const AppNavbar = () => {
   return (
-    <MantineNavbar p="sm" hiddenBreakpoint="sm" width={{ sm: 80, lg: 230 }}>
+    <MantineNavbar p="sm" hiddenBreakpoint="sm" width={{ sm: 73, lg: 230 }}>
       <Navbar.Section ml={"auto"} mr={"auto"}>
         <Image src={logo} alt="Logo" withPlaceholder />
       </Navbar.Section>
