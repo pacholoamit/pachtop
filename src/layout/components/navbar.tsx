@@ -8,7 +8,7 @@ const AppNavbar = () => {
       p="md"
       hiddenBreakpoint="sm"
       hidden={!opened}
-      width={{ sm: 80, lg: 300 }}
+      width={{ sm: 80, lg: 230 }}
     >
       <Text>Application navbar</Text>
     </MantineNavbar>
