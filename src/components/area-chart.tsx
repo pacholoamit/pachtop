@@ -15,7 +15,8 @@ import {
 } from "chart.js";
 
 import { Card, useMantineTheme } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+// import { useMediaQuery } from "@mantine/hooks";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import "chartjs-adapter-luxon";
 
 export interface AreaChartProps {
@@ -47,9 +48,10 @@ ChartJS.register(
 );
 
 const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
-  const { breakpoints } = useMantineTheme();
-  const isXLarge = useMediaQuery(`(min-width: ${breakpoints.xl}px)`);
-  const isSmall = useMediaQuery(`(max-width: ${breakpoints.md}px)`);
+  const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
+
+  const maxTicksLimit =
+    isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
 
   const chartData = {
     labels,
@@ -123,7 +125,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
 
         ticks: {
           color: "#8192ac",
-          maxTicksLimit: isXLarge || isSmall ? 8 : 4,
+          maxTicksLimit: maxTicksLimit,
           autoSkip: true,
           maxRotation: 0,
           source: "auto",

@@ -12,9 +12,19 @@ const useMediaQuery = () => {
     `(max-width: ${theme.breakpoints.md}px)`
   );
 
+  const isLargerThanXl = useMantineMediaQuery(
+    `(min-width: ${theme.breakpoints.xl}px)`
+  );
+
+  const isSmallerThanXs = useMantineMediaQuery(
+    `(max-width: ${theme.breakpoints.xs}px)`
+  );
+
   return {
     isSmallerThanLg,
     isSmallerThanMd,
+    isLargerThanXl,
+    isSmallerThanXs,
   };
 };
 
