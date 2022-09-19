@@ -21,7 +21,6 @@ pub struct Swap {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SysInfo {
-    pub name: String,
     pub kernel_version: String,
     pub os_version: String,
     pub hostname: String,

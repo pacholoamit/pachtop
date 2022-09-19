@@ -7,7 +7,6 @@ export enum TauriCommand {
 // typescript interfaces/types from models.rs
 
 export interface SysInfo {
-  name: string;
   hostname: string;
   kernelVersion: string;
   osVersion: string;

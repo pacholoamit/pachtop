@@ -14,10 +14,9 @@ const SystemInfo = () => {
       <Text weight={"bold"} size="lg" color={"#dce1e8"}>
         System Information
       </Text>
-      <Text>Name: {sysInfo?.name}</Text>
+      <Text>OS: {sysInfo?.osVersion}</Text>
       <Text>Host Name: {sysInfo?.hostname}</Text>
       <Text>Kernel: {sysInfo?.kernelVersion}</Text>
-      <Text>OS: {sysInfo?.osVersion}</Text>
     </Card>
   );
 };

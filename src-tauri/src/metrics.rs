@@ -41,14 +41,13 @@ impl Metrics {
     fn sysinfo(&mut self) -> SysInfo {
         self.sys.refresh_all();
 
-        let name = self.sys.name().unwrap_or_else(|| "Unknown".to_string());
         let kernel_version = self
             .sys
             .kernel_version()
             .unwrap_or_else(|| "Unknown".to_string());
         let os_version = self
             .sys
-            .os_version()
+            .long_os_version()
             .unwrap_or_else(|| "Unknown".to_string());
         let hostname = self
             .sys
@@ -56,7 +55,6 @@ impl Metrics {
             .unwrap_or_else(|| "Unknown".to_string());
 
         SysInfo {
-            name,
             kernel_version,
             os_version,
             hostname,
