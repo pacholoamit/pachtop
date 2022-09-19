@@ -1,6 +1,7 @@
 import useGetMetrics from "@/hooks/useGetMetrics";
+import SystemInfo from "@/components/system-info";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
-import { Grid, Stack, Title } from "@mantine/core";
+import { Grid, Stack } from "@mantine/core";
 
 const HomePage = () => {
   const { memory, swap } = useGetMetrics({ interval: 1000, maxLength: 86400 });
@@ -47,7 +48,7 @@ const HomePage = () => {
           </Stack>
         </Grid.Col>
         <Grid.Col md={6} sm={12}>
-          <Title>Welcome to Pachtop</Title>
+          <SystemInfo />
         </Grid.Col>
       </Grid>
     </>
