@@ -13,7 +13,7 @@ import {
   Decimation,
   TimeScale,
 } from "chart.js";
-import "chartjs-adapter-luxon";
+
 import { Card, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 
@@ -60,7 +60,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     maintainAspectRatio: false,
     parsing: false,
     animation: false,
-
+    spanGaps: true,
     tooltip: {
       mode: "index",
     },
@@ -79,8 +79,8 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     plugins: {
       decimation: {
         enabled: true,
-        algorithm: "lttb",
-        samples: 10,
+        algorithm: "min-max" as const,
+        samples: 150,
       },
       legend: {
         position: "top" as const,

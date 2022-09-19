@@ -1,7 +1,7 @@
 use crate::models::{Memory, Swap};
 
 use byte_unit::{Byte, ByteUnit};
-use chrono::prelude::*;
+
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
