@@ -1,9 +1,18 @@
 export enum TauriCommand {
   Memory = "get_memory",
   Swap = "get_swap",
+  SysInfo = "get_sysinfo",
 }
 
 // typescript interfaces/types from models.rs
+
+export interface SysInfo {
+  name: string;
+  hostname: string;
+  kernelVersion: string;
+  osVersion: string;
+  timestamp: number;
+}
 export interface Memory {
   unit: string;
   free: number;

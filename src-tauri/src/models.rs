@@ -17,3 +17,13 @@ pub struct Swap {
     pub used: f64,
     pub timestamp: i64,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SysInfo {
+    pub name: String,
+    pub kernel_version: String,
+    pub os_version: String,
+    pub hostname: String,
+    pub timestamp: i64,
+}

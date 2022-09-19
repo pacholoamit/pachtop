@@ -19,6 +19,7 @@ fn main() {
         .manage(MetricsState::new(sys, target_unit))
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
+            metrics::get_sysinfo,
             metrics::get_memory,
             metrics::get_swap
         ])

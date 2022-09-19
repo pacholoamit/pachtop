@@ -1,6 +1,5 @@
 import logo from "/logo-white.png";
 import NavbarOptions from "@/layout/components/navbar-options";
-import { useState } from "react";
 import {
   Image,
   Navbar as MantineNavbar,

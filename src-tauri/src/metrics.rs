@@ -1,4 +1,4 @@
-use crate::models::{Memory, Swap};
+use crate::models::{Memory, Swap, SysInfo};
 
 use byte_unit::{Byte, ByteUnit};
 
@@ -8,6 +8,11 @@ use std::{
 };
 use sysinfo::{System, SystemExt};
 use tauri::State;
+
+#[tauri::command]
+pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
+    state.0.lock().unwrap().sysinfo()
+}
 
 #[tauri::command]
 pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
@@ -33,6 +38,31 @@ struct Metrics {
 }
 
 impl Metrics {
+    fn sysinfo(&mut self) -> SysInfo {
+        self.sys.refresh_all();
+
+        let name = self.sys.name().unwrap_or_else(|| "Unknown".to_string());
+        let kernel_version = self
+            .sys
+            .kernel_version()
+            .unwrap_or_else(|| "Unknown".to_string());
+        let os_version = self
+            .sys
+            .os_version()
+            .unwrap_or_else(|| "Unknown".to_string());
+        let hostname = self
+            .sys
+            .host_name()
+            .unwrap_or_else(|| "Unknown".to_string());
+
+        SysInfo {
+            name,
+            kernel_version,
+            os_version,
+            hostname,
+            timestamp: current_time(),
+        }
+    }
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
         let free = bytes_to_size(self.sys.free_memory(), &self.target_unit);
