@@ -3,15 +3,15 @@ import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { Card, Grid, Stack, Title } from "@mantine/core";
 
 const HomePage = () => {
-  const { memory, swap } = useGetMetrics();
+  const { memory, swap } = useGetMetrics({interval: 1000, maxLength: 86400});
   const unit = memory.slice(-1)[0]?.unit;
 
   const ramDatasets: DatasetOptions[] = [
     {
       label: `Ram Used ${unit}`,
       data: memory.map((mem) => mem.used),
-      backgroundColor: "rgba(8,141,124,0.5)",
-      borderColor: "rgba(8,141,124,1)",
+      backgroundColor: "rgba(10, 167, 147, 0.45)",
+      borderColor: "rgba(10, 167, 147, 1)",
       fill: true,
       yAxisId: "ram-used",
     },
@@ -21,7 +21,7 @@ const HomePage = () => {
     {
       label: `Swap Used ${unit}`,
       data: swap.map((swap) => swap.used),
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      backgroundColor: "rgba(53, 162, 235, 0.45)",
       borderColor: "rgba(53, 162, 235)",
       fill: true,
       yAxisId: "ram-used",
