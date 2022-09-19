@@ -10,6 +10,7 @@ import {
   Tooltip,
   Filler,
   Legend,
+  Decimation,
 } from "chart.js";
 import { Card, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
@@ -37,7 +38,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  Legend
+  Legend,
+  Decimation
 );
 
 const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
@@ -72,6 +74,11 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       },
     },
     plugins: {
+      decimation: {
+        enabled: true,
+        algorithm: "lttb",
+        samples: 150,
+      },
       legend: {
         position: "top" as const,
         labels: {
