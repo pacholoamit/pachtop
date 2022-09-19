@@ -41,10 +41,10 @@ const NavbarOptions = () => {
     },
     {
       icon: <IconAlertCircle size={16} />,
-      label: "Open Issues",
+      label: "Metrics",
     },
-    { icon: <IconMessages size={16} />, label: "Discussions" },
-    { icon: <IconDatabase size={16} />, label: "Databases" },
+    { icon: <IconMessages size={16} />, label: "DNS" },
+    { icon: <IconDatabase size={16} />, label: "Storage" },
   ];
 
   const navbarOptions = options.map((option) => (
