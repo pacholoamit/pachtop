@@ -2,7 +2,10 @@ use crate::models::{Memory, Swap};
 
 use byte_unit::{Byte, ByteUnit};
 use chrono::prelude::*;
-use std::sync::{Arc, Mutex};
+use std::{
+    sync::{Arc, Mutex},
+    time::{SystemTime, UNIX_EPOCH},
+};
 use sysinfo::{System, SystemExt};
 use tauri::State;
 
@@ -62,7 +65,9 @@ impl Metrics {
 }
 
 fn current_time() -> i64 {
-    DateTime::timestamp(&Local::now())
+    let start = SystemTime::now();
+    let since_the_epoch = start.duration_since(UNIX_EPOCH);
+    since_the_epoch.unwrap().as_millis() as i64
 }
 
 fn bytes_to_size(bytes: u64, dest_unit: &ByteUnit) -> f64 {

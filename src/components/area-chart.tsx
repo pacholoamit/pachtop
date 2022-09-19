@@ -78,8 +78,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     },
     plugins: {
       decimation: {
+        enabled: true,
         algorithm: "lttb",
-        samples: 150,
+        samples: 10,
       },
       legend: {
         position: "top" as const,
@@ -111,12 +112,19 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       },
       xAxis: {
         type: "time",
+        time: {
+          round: "seconds",
+          displayFormats: {
+            second: "HH:mm a",
+          },
+        },
+
         ticks: {
           color: "#8192ac",
           maxTicksLimit: isXLarge || isSmall ? 10 : 5,
           autoSkip: true,
           maxRotation: 0,
-          // source: "auto",
+          source: "auto",
         },
         grid: {
           color: "#263858",
