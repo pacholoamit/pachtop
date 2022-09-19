@@ -118,7 +118,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     <Card
       style={{ height: "300px" }}
       shadow="xl"
-      p="xl"
+      p="sm"
       radius={"md"}
       withBorder
     >
