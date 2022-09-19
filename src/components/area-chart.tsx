@@ -16,6 +16,7 @@ import {
 
 import { Card, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import "chartjs-adapter-luxon";
 
 export interface AreaChartProps {
   title: string;
@@ -115,7 +116,8 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
         time: {
           round: "seconds",
           displayFormats: {
-            second: "HH:mm a",
+            millisecond: "hh:mm a",
+            second: "hh:mm a",
           },
         },
 
