@@ -1,12 +1,25 @@
 use byte_unit::ByteUnit;
 use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Timestamp(pub i64);
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Memory {
     pub unit: ByteUnit,
     pub free: f64,
     pub total: f64,
     pub used: f64,
-    pub timestamp: i64,
+    pub timestamp: Timestamp,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct GlobalCpu {
+    pub unit: ByteUnit,
+    pub free: f64,
+    pub total: f64,
+    pub used: f64,
+    pub timestamp: Timestamp,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -15,7 +28,7 @@ pub struct Swap {
     pub free: f64,
     pub total: f64,
     pub used: f64,
-    pub timestamp: i64,
+    pub timestamp: Timestamp,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -26,5 +39,5 @@ pub struct SysInfo {
     pub hostname: String,
     pub core_count: String,
     pub disk_count: String,
-    pub timestamp: i64,
+    pub timestamp: Timestamp,
 }

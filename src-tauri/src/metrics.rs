@@ -1,15 +1,20 @@
-use crate::models::{Memory, Swap, SysInfo};
+use crate::models::{Memory, Swap, SysInfo, Timestamp};
 use byte_unit::{Byte, ByteUnit};
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{System, SystemExt};
+use sysinfo::{Cpu, CpuExt, System, SystemExt};
 use tauri::State;
 
 #[tauri::command]
 pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
     state.0.lock().unwrap().sysinfo()
+}
+
+#[tauri::command]
+pub fn get_global_cpu(state: State<'_, MetricsState>) {
+    let cpus = state.0.lock().unwrap().cpu();
 }
 
 #[tauri::command]
@@ -54,8 +59,22 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+
+    fn global_cpu(&mut self) {
+        self.sys.refresh_cpu();
+
+        let cpu = self.sys.global_cpu_info();
+        let cpu_usage = cpu.cpu_usage();
+        let cpu_brand = cpu.brand();
+        let cpu_frequency = cpu.frequency();
+        let cpu_name = cpu.name();
+        let cpu_vendor = cpu.vendor_id();
+
+        self.sys.global_cpu_info().cpu_usage();
+    }
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
+        self.sys.refresh_cpu();
         let free = bytes_to_size(self.sys.free_memory(), &self.target_unit);
         let total = bytes_to_size(self.sys.total_memory(), &self.target_unit);
         let used = bytes_to_size(self.sys.used_memory(), &self.target_unit);
@@ -85,10 +104,10 @@ impl Metrics {
     }
 }
 
-fn current_time() -> i64 {
+fn current_time() -> Timestamp {
     let start = SystemTime::now();
     let since_the_epoch = start.duration_since(UNIX_EPOCH);
-    since_the_epoch.unwrap().as_millis() as i64
+    Timestamp(since_the_epoch.unwrap().as_secs() as i64)
 }
 
 fn bytes_to_size(bytes: u64, dest_unit: &ByteUnit) -> f64 {
