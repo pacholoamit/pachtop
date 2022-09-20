@@ -9,7 +9,7 @@ mod models;
 use byte_unit::ByteUnit;
 use metrics::MetricsState;
 use sysinfo::{System, SystemExt};
-use tauri::{CustomMenuItem, SystemTrayMenu, SystemTrayMenuItem, SystemTray};
+use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayMenu, SystemTrayMenuItem};
 
 fn main() {
     let target_unit = ByteUnit::GB;
@@ -23,7 +23,6 @@ fn main() {
         .add_item(hide);
     let tray = SystemTray::new().with_menu(tray_menu);
 
-
     sys.refresh_all();
 
     tauri::Builder::default()
@@ -34,6 +33,24 @@ fn main() {
         //     _ => (),
         // })
         .system_tray(tray)
+        .on_system_tray_event(|app, event| match event {
+            tauri::SystemTrayEvent::MenuItemClick { id, .. } => {
+                let item_handle = app.tray_handle().get_item(&id);
+                let window = app.get_window("main").unwrap();
+
+                match id.as_str() {
+                    "quit" => {
+                        window.close().unwrap();
+                    }
+                    "hide" => {
+                        window.hide().unwrap();
+                        item_handle.set_title("Show").unwrap();
+                    }
+                    _ => {}
+                }
+            }
+            _ => {}
+        })
         .manage(MetricsState::new(sys, target_unit))
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
