@@ -60,7 +60,9 @@
         "resizable": true,
         "title": "pachtop",
         "alwaysOnTop": true,
-        "width": 800
+        "width": 800,
+        "minWidth": 450,
+        "decorations": true
       }
     ]
   }
