@@ -83,7 +83,8 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
       decimation: {
         enabled: true,
         algorithm: "min-max" as const,
-        samples: 150,
+        samples: 60,
+        threshold: 60,
       },
       legend: {
         position: "top" as const,
@@ -105,7 +106,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     },
     scales: {
       yAxis: {
-        // min: 0,
+        min: 0,
         ticks: {
           color: "#8192ac",
         },
@@ -129,6 +130,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
           autoSkip: true,
           maxRotation: 0,
           source: "auto",
+          align: "end",
         },
         grid: {
           color: "#263858",
