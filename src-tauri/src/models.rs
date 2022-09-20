@@ -14,11 +14,13 @@ pub struct Memory {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GlobalCpu {
-    pub unit: ByteUnit,
-    pub free: f64,
-    pub total: f64,
-    pub used: f64,
+    pub cpu_usage: f32,
+    pub cpu_brand: String,
+    pub cpu_frequency: u64,
+    pub cpu_name: String,
+    pub cpu_vendor: String,
     pub timestamp: Timestamp,
 }
 

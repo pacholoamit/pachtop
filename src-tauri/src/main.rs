@@ -56,8 +56,9 @@ fn main() {
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
             metrics::get_sysinfo,
+            metrics::get_global_cpu,
             metrics::get_memory,
-            metrics::get_swap
+            metrics::get_swap,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
