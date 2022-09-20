@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "@/pages/home.page";
+import DashboardPage from "@/pages/dashboard.page";
 import Layout from "@/layout";
 
 const AppRoutes: React.FC = () => {
@@ -7,7 +7,7 @@ const AppRoutes: React.FC = () => {
     <Router>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<DashboardPage />} />
         </Route>
       </Routes>
     </Router>

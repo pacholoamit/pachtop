@@ -1,7 +1,5 @@
 use crate::models::{Memory, Swap, SysInfo};
-
 use byte_unit::{Byte, ByteUnit};
-
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
@@ -41,23 +39,18 @@ impl Metrics {
     fn sysinfo(&mut self) -> SysInfo {
         self.sys.refresh_all();
 
-        let kernel_version = self
-            .sys
-            .kernel_version()
-            .unwrap_or_else(|| "Unknown".to_string());
-        let os_version = self
-            .sys
-            .long_os_version()
-            .unwrap_or_else(|| "Unknown".to_string());
-        let hostname = self
-            .sys
-            .host_name()
-            .unwrap_or_else(|| "Unknown".to_string());
+        let kernel_version = self.sys.kernel_version().unwrap();
+        let os_version = self.sys.long_os_version().unwrap();
+        let hostname = self.sys.host_name().unwrap();
+        let core_count = self.sys.physical_core_count().unwrap().to_string();
+        let disk_count = self.sys.disks().len().to_string();
 
         SysInfo {
             kernel_version,
             os_version,
             hostname,
+            core_count,
+            disk_count,
             timestamp: current_time(),
         }
     }

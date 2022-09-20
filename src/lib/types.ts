@@ -10,6 +10,8 @@ export interface SysInfo {
   hostname: string;
   kernelVersion: string;
   osVersion: string;
+  coreCount: string;
+  diskCount: string;
   timestamp: number;
 }
 export interface Memory {

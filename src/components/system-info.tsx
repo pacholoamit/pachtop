@@ -17,6 +17,8 @@ const SystemInfo = () => {
       <Text>OS: {sysInfo?.osVersion}</Text>
       <Text>Host Name: {sysInfo?.hostname}</Text>
       <Text>Kernel: {sysInfo?.kernelVersion}</Text>
+      <Text>CPUs: {sysInfo?.coreCount}</Text>
+      <Text>Disks: {sysInfo?.diskCount}</Text>
     </Card>
   );
 };

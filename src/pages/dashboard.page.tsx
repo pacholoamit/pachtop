@@ -3,7 +3,7 @@ import SystemInfo from "@/components/system-info";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { Grid, Stack } from "@mantine/core";
 
-const HomePage = () => {
+const DashboardPage = () => {
   const { memory, swap } = useGetMetrics({ interval: 1000, maxLength: 86400 });
   const unit = memory.slice(-1)[0]?.unit;
 
@@ -56,4 +56,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default DashboardPage;
