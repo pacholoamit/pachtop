@@ -4,7 +4,7 @@ use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{CpuExt, System, SystemExt};
+use sysinfo::{CpuExt, Networks, System, SystemExt};
 
 use tauri::State;
 
@@ -27,6 +27,11 @@ pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
 pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
     state.0.lock().unwrap().swap()
 }
+
+// #[tauri::command]
+// pub fn get_networks(state: State<'_, MetricsState>) -> Networks {
+//     state.0.lock().unwrap().networks()
+// }
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
@@ -80,6 +85,7 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
         let free = bytes_to_size(&self.sys.free_memory(), &self.target_unit);
@@ -101,6 +107,13 @@ impl Metrics {
         let used = bytes_to_size(&self.sys.used_swap(), &self.target_unit);
         let free = bytes_to_size(&self.sys.free_swap(), &self.target_unit);
 
+        self.sys.refresh_networks();
+        let networks = self.sys.networks();
+
+        for (name, network) in networks {
+            println!("{}: {:#?}", name, network);
+        }
+
         Swap {
             free,
             total,
@@ -109,6 +122,19 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+
+    // fn networks(&mut self) -> Networks {
+    //     self.sys.refresh_networks();
+    //     let networks = self.sys.networks_mut();
+
+    //     // let results = networks
+    //     //     .into_iter()
+    //     //     .map(|(name, network)| {
+    //     //         let name = String::from(name);
+    //     //     })
+    //     //     .collect();
+
+    // }
 }
 
 fn current_time() -> Timestamp {

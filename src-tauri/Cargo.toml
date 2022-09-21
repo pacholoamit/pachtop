@@ -1,9 +1,9 @@
 [package]
 name = "app"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
+description = "Cross-platform (Linux, WIndows, MacOS) Desktop GUI system monitor"
+authors = ["Pacholo Amit"]
+license = "MIT"
 repository = ""
 default-run = "app"
 edition = "2021"
