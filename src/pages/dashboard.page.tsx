@@ -4,12 +4,14 @@ import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { Grid, Stack } from "@mantine/core";
 
 const DashboardPage = () => {
-  const { memory, swap } = useGetMetrics({ interval: 1000, maxLength: 86400 });
-  const unit = memory.slice(-1)[0]?.unit;
+  const { memory, swap, globalCpu } = useGetMetrics({
+    interval: 1000,
+    maxLength: 86400,
+  });
 
   const ramDatasets: DatasetOptions[] = [
     {
-      label: `Ram Used ${unit}`,
+      label: `Ram Used ${memory.slice(-1)[0]?.unit}`,
       data: memory.map((mem) => ({ x: mem.timestamp, y: mem.used })),
       backgroundColor: "rgba(10, 167, 147, 0.45)",
       borderColor: "rgba(10, 167, 147, 1)",
@@ -20,12 +22,23 @@ const DashboardPage = () => {
 
   const swapDatasets: DatasetOptions[] = [
     {
-      label: `Swap Used ${unit}`,
+      label: `Swap Used ${memory.slice(-1)[0]?.unit}`,
       data: swap.map((swap) => ({ x: swap.timestamp, y: swap.used })),
       backgroundColor: "rgba(53, 162, 235, 0.45)",
       borderColor: "rgba(53, 162, 235)",
       fill: true,
       yAxisId: "swap-used",
+    },
+  ];
+
+  const globalCpuDatasets: DatasetOptions[] = [
+    {
+      label: "CPU Usage (%)",
+      data: globalCpu.map((cpu) => ({ x: cpu.timestamp, y: cpu.cpuUsage })),
+      backgroundColor: "rgba(255, 99, 132, 0.45)",
+      borderColor: "rgba(255, 99, 132, 1)",
+      fill: true,
+      yAxisId: "cpu-usage",
     },
   ];
 
@@ -50,7 +63,13 @@ const DashboardPage = () => {
             />
           </Stack>
         </Grid.Col>
-        <Grid.Col md={6} sm={12}></Grid.Col>
+        <Grid.Col md={6} sm={12}>
+          <AreaChart
+            title="CPU Usage"
+            labels={globalCpu.map((cpu) => cpu.timestamp)}
+            datasets={globalCpuDatasets}
+          />
+        </Grid.Col>
       </Grid>
     </>
   );
