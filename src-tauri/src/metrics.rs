@@ -124,11 +124,9 @@ impl Metrics {
             .networks()
             .into_iter()
             .map(|(name, network)| {
-                println!("{:#?}", network.received());
-
                 let name = name.to_owned();
-                let received = bytes_to_size(&network.received(), &self.target_unit);
-                let transmitted = bytes_to_size(&network.transmitted(), &self.target_unit);
+                let received = bytes_to_size(&network.received(), &ByteUnit::KB);
+                let transmitted = bytes_to_size(&network.transmitted(), &ByteUnit::KB);
 
                 Network {
                     name,
@@ -140,12 +138,6 @@ impl Metrics {
             })
             .collect();
 
-        // let results = networks
-        //     .into_iter()
-        //     .map(|(name, network)| {
-        //         let name = String::from(name);
-        //     })
-        //     .collect();
         networks
     }
 }

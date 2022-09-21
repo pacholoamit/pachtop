@@ -21,6 +21,8 @@ const useGetMetrics = ({ interval, maxLength }: UseGetMetricsOptions) => {
       const globalCpu = (await invoke(TauriCommand.GlobalCpu)) as GlobalCpu;
       const network = (await invoke(TauriCommand.Networks)) as Network[];
 
+      console.log({ network });
+
       if (memory.length >= maxLength) {
         console.log(mem.timestamp);
         setMemory((prev) => [...prev.slice(1), mem]);

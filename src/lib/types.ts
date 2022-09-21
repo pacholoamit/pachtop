@@ -48,5 +48,6 @@ export interface Network {
   name: string;
   received: number;
   transmitted: number;
+  unit: string;
   timestamp: Timestamp;
 }

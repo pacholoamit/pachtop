@@ -2,12 +2,15 @@ import useGetMetrics from "@/hooks/useGetMetrics";
 import SystemInfo from "@/components/system-info";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { Grid, Stack } from "@mantine/core";
+import { useEffect } from "react";
 
 const DashboardPage = () => {
-  const { memory, swap, globalCpu } = useGetMetrics({
+  const { memory, swap, globalCpu, networks } = useGetMetrics({
     interval: 1000,
     maxLength: 86400,
   });
+
+  const xAxisMin = Date.now() - 86400;
 
   const ramDatasets: DatasetOptions[] = [
     {
@@ -42,6 +45,20 @@ const DashboardPage = () => {
     },
   ];
 
+  const networksDatasets: DatasetOptions[] = [
+    {
+      label: "Networks",
+      data: networks.map((network) => ({
+        x: network[0].timestamp,
+        y: network[0].transmitted,
+      })),
+      backgroundColor: "rgba(255, 99, 132, 0.45)",
+      borderColor: "rgba(255, 99, 132, 1)",
+      fill: true,
+      yAxisId: "networks",
+    },
+  ];
+
   return (
     <>
       <Grid gutter="xl">
@@ -54,14 +71,14 @@ const DashboardPage = () => {
               title="Random Access Memory (RAM)"
               labels={memory.map((mem) => mem.timestamp)}
               datasets={ramDatasets}
-              xAxisMin={memory[0]?.timestamp - 360000}
+              xAxisMin={xAxisMin}
             />
 
             <AreaChart
               title="Swap Memory"
               labels={swap.map((swap) => swap.timestamp)}
               datasets={swapDatasets}
-              xAxisMin={swap[0]?.timestamp - 360000}
+              xAxisMin={xAxisMin}
             />
           </Stack>
         </Grid.Col>
@@ -70,7 +87,13 @@ const DashboardPage = () => {
             title="CPU Usage"
             labels={globalCpu.map((cpu) => cpu.timestamp)}
             datasets={globalCpuDatasets}
-            xAxisMin={globalCpu[0]?.timestamp - 360000}
+            xAxisMin={xAxisMin}
+          />
+          <AreaChart
+            title="Network Usage"
+            labels={networks[0]?.map((net) => net.timestamp)}
+            datasets={networksDatasets}
+            xAxisMin={xAxisMin}
           />
         </Grid.Col>
       </Grid>
