@@ -9,8 +9,6 @@ const DashboardPage = () => {
     maxLength: 86400,
   });
 
-
-
   const ramDatasets: DatasetOptions[] = [
     {
       label: `Ram Used ${memory.slice(-1)[0]?.unit}`,
@@ -56,12 +54,14 @@ const DashboardPage = () => {
               title="Random Access Memory (RAM)"
               labels={memory.map((mem) => mem.timestamp)}
               datasets={ramDatasets}
+              xAxisMin={memory[0]?.timestamp - 360000}
             />
 
             <AreaChart
               title="Swap Memory"
               labels={swap.map((swap) => swap.timestamp)}
               datasets={swapDatasets}
+              xAxisMin={swap[0]?.timestamp - 360000}
             />
           </Stack>
         </Grid.Col>
@@ -70,6 +70,7 @@ const DashboardPage = () => {
             title="CPU Usage"
             labels={globalCpu.map((cpu) => cpu.timestamp)}
             datasets={globalCpuDatasets}
+            xAxisMin={globalCpu[0]?.timestamp - 360000}
           />
         </Grid.Col>
       </Grid>

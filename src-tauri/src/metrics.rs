@@ -5,6 +5,7 @@ use std::{
     time::{SystemTime, UNIX_EPOCH},
 };
 use sysinfo::{CpuExt, System, SystemExt};
+
 use tauri::State;
 
 #[tauri::command]
@@ -113,7 +114,7 @@ impl Metrics {
 fn current_time() -> Timestamp {
     let start = SystemTime::now();
     let since_the_epoch = start.duration_since(UNIX_EPOCH);
-    Timestamp(since_the_epoch.unwrap().as_secs() as i64)
+    Timestamp(since_the_epoch.unwrap().as_millis() as i64)
 }
 
 fn bytes_to_size(bytes: &u64, &dest_unit: &ByteUnit) -> f64 {

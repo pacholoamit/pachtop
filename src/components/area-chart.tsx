@@ -21,6 +21,7 @@ import "chartjs-adapter-luxon";
 export interface AreaChartProps {
   title: string;
   labels: string[] | string[][] | number[];
+  xAxisMin?: any;
   datasets: DatasetOptions[];
 }
 
@@ -46,7 +47,12 @@ ChartJS.register(
   TimeScale
 );
 
-const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
+const AreaChart: React.FC<AreaChartProps> = ({
+  labels,
+  datasets,
+  title,
+  xAxisMin,
+}) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
 
   const maxTicksLimit =
@@ -81,7 +87,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     plugins: {
       decimation: {
         enabled: true,
-        algorithm: "lttb" as const,
+        algorithm: "min-max" as const,
         samples: 60,
         threshold: 60,
       },
@@ -114,6 +120,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
         },
       },
       xAxis: {
+        min: xAxisMin ?? undefined,
         type: "time",
         time: {
           round: "seconds",
