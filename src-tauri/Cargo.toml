@@ -22,6 +22,7 @@ tauri-plugin-window-state = "0.1"
 # chrono = "0.4.22" // May no longer be needed
 sysinfo = "0.26.2"
 byte-unit = { version ="4.0.14", features = ["serde"] }
+tauri-plugin-log = { git = "https://github.com/tauri-apps/tauri-plugin-log", branch="dev"}
 
 
 
