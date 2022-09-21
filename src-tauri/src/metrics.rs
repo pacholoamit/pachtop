@@ -81,9 +81,9 @@ impl Metrics {
     }
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
-        let free = bytes_to_size(self.sys.free_memory(), &self.target_unit);
-        let total = bytes_to_size(self.sys.total_memory(), &self.target_unit);
-        let used = bytes_to_size(self.sys.used_memory(), &self.target_unit);
+        let free = bytes_to_size(&self.sys.free_memory(), &self.target_unit);
+        let total = bytes_to_size(&self.sys.total_memory(), &self.target_unit);
+        let used = bytes_to_size(&self.sys.used_memory(), &self.target_unit);
 
         Memory {
             free,
@@ -96,9 +96,9 @@ impl Metrics {
 
     fn swap(&mut self) -> Swap {
         self.sys.refresh_memory();
-        let total = bytes_to_size(self.sys.total_swap(), &self.target_unit);
-        let used = bytes_to_size(self.sys.used_swap(), &self.target_unit);
-        let free = bytes_to_size(self.sys.free_swap(), &self.target_unit);
+        let total = bytes_to_size(&self.sys.total_swap(), &self.target_unit);
+        let used = bytes_to_size(&self.sys.used_swap(), &self.target_unit);
+        let free = bytes_to_size(&self.sys.free_swap(), &self.target_unit);
 
         Swap {
             free,
@@ -116,8 +116,8 @@ fn current_time() -> Timestamp {
     Timestamp(since_the_epoch.unwrap().as_secs() as i64)
 }
 
-fn bytes_to_size(bytes: u64, &dest_unit: &ByteUnit) -> f64 {
-    let result = Byte::from_unit(bytes as f64, ByteUnit::B)
+fn bytes_to_size(bytes: &u64, &dest_unit: &ByteUnit) -> f64 {
+    let result = Byte::from_unit(*bytes as f64, ByteUnit::B)
         .unwrap()
         .get_adjusted_unit(dest_unit)
         .get_value();
