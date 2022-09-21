@@ -45,6 +45,7 @@ pub struct SysInfo {
 }
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Network {
+    pub unit: ByteUnit,
     pub name: String,
     pub received: f64,
     pub transmitted: f64,

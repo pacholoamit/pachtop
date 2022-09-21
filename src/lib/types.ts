@@ -3,6 +3,7 @@ export enum TauriCommand {
   Swap = "get_swap",
   SysInfo = "get_sysinfo",
   GlobalCpu = "get_global_cpu",
+  Networks = "get_networks",
 }
 
 // typescript interfaces/types from models.rs
@@ -40,5 +41,12 @@ export interface Swap {
   free: number;
   total: number;
   used: number;
+  timestamp: Timestamp;
+}
+
+export interface Network {
+  name: string;
+  received: number;
+  transmitted: number;
   timestamp: Timestamp;
 }

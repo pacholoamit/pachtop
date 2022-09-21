@@ -124,7 +124,7 @@ impl Metrics {
             .networks()
             .into_iter()
             .map(|(name, network)| {
-                println!("{:#?}", network);
+                println!("{:#?}", network.received());
 
                 let name = name.to_owned();
                 let received = bytes_to_size(&network.received(), &self.target_unit);
@@ -134,6 +134,7 @@ impl Metrics {
                     name,
                     received,
                     transmitted,
+                    unit: self.target_unit,
                     timestamp: current_time(),
                 }
             })
