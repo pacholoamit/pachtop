@@ -1,10 +1,10 @@
-use crate::models::{GlobalCpu, Memory, Swap, SysInfo, Timestamp};
+use crate::models::{GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
 use byte_unit::{Byte, ByteUnit};
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{CpuExt, Networks, System, SystemExt};
+use sysinfo::{CpuExt, NetworkExt, System, SystemExt};
 
 use tauri::State;
 
@@ -28,10 +28,10 @@ pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
     state.0.lock().unwrap().swap()
 }
 
-// #[tauri::command]
-// pub fn get_networks(state: State<'_, MetricsState>) -> Networks {
-//     state.0.lock().unwrap().networks()
-// }
+#[tauri::command]
+pub fn get_networks(state: State<'_, MetricsState>) -> Vec<Network> {
+    state.0.lock().unwrap().networks()
+}
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
@@ -107,13 +107,6 @@ impl Metrics {
         let used = bytes_to_size(&self.sys.used_swap(), &self.target_unit);
         let free = bytes_to_size(&self.sys.free_swap(), &self.target_unit);
 
-        self.sys.refresh_networks();
-        let networks = self.sys.networks();
-
-        for (name, network) in networks {
-            println!("{}: {:#?}", name, network);
-        }
-
         Swap {
             free,
             total,
@@ -123,18 +116,37 @@ impl Metrics {
         }
     }
 
-    // fn networks(&mut self) -> Networks {
-    //     self.sys.refresh_networks();
-    //     let networks = self.sys.networks_mut();
+    fn networks(&mut self) -> Vec<Network> {
+        self.sys.refresh_networks();
 
-    //     // let results = networks
-    //     //     .into_iter()
-    //     //     .map(|(name, network)| {
-    //     //         let name = String::from(name);
-    //     //     })
-    //     //     .collect();
+        let networks: Vec<Network> = self
+            .sys
+            .networks()
+            .into_iter()
+            .map(|(name, network)| {
+                println!("{:#?}", network);
 
-    // }
+                let name = name.to_owned();
+                let received = bytes_to_size(&network.received(), &self.target_unit);
+                let transmitted = bytes_to_size(&network.transmitted(), &self.target_unit);
+
+                Network {
+                    name,
+                    received,
+                    transmitted,
+                    timestamp: current_time(),
+                }
+            })
+            .collect();
+
+        // let results = networks
+        //     .into_iter()
+        //     .map(|(name, network)| {
+        //         let name = String::from(name);
+        //     })
+        //     .collect();
+        networks
+    }
 }
 
 fn current_time() -> Timestamp {

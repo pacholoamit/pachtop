@@ -43,3 +43,10 @@ pub struct SysInfo {
     pub disk_count: String,
     pub timestamp: Timestamp,
 }
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Network {
+    pub name: String,
+    pub received: f64,
+    pub transmitted: f64,
+    pub timestamp: Timestamp,
+}

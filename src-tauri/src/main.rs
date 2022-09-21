@@ -66,6 +66,7 @@ fn main() {
             metrics::get_global_cpu,
             metrics::get_memory,
             metrics::get_swap,
+            metrics::get_networks
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
