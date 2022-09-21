@@ -14,8 +14,7 @@ import {
   TimeScale,
 } from "chart.js";
 
-import { Card, useMantineTheme } from "@mantine/core";
-// import { useMediaQuery } from "@mantine/hooks";
+import { Card } from "@mantine/core";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import "chartjs-adapter-luxon";
 
@@ -82,7 +81,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
     plugins: {
       decimation: {
         enabled: true,
-        algorithm: "min-max" as const,
+        algorithm: "lttb" as const,
         samples: 60,
         threshold: 60,
       },

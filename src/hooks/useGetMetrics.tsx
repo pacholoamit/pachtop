@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@/lib";
 import { GlobalCpu, Memory, Swap, TauriCommand } from "@/lib/types";
-import { trace, attachConsole } from "tauri-plugin-log-api";
 
 interface UseGetMetricsOptions {
   interval: number;
@@ -18,9 +17,7 @@ const useGetMetrics = ({ interval, maxLength }: UseGetMetricsOptions) => {
       const mem = (await invoke(TauriCommand.Memory)) as Memory;
       const swap = (await invoke(TauriCommand.Swap)) as Swap;
       const globalCpu = (await invoke(TauriCommand.GlobalCpu)) as GlobalCpu;
-      await attachConsole();
 
-      trace("Hello");
       if (memory.length >= maxLength) {
         console.log(mem.timestamp);
         setMemory((prev) => [...prev.slice(1), mem]);
