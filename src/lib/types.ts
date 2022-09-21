@@ -6,20 +6,32 @@ export enum TauriCommand {
 
 // typescript interfaces/types from models.rs
 
+type Timestamp = number;
+
 export interface SysInfo {
   hostname: string;
   kernelVersion: string;
   osVersion: string;
   coreCount: string;
   diskCount: string;
-  timestamp: number;
+  timestamp: Timestamp;
 }
+
 export interface Memory {
   unit: string;
   free: number;
   total: number;
   used: number;
-  timestamp: number;
+  timestamp: Timestamp;
+}
+
+export interface GlobalCpu {
+  cpuUsage: number;
+  cpuBrand: string;
+  cpuFrequency: number;
+  cpuName: string;
+  cpuVendor: string;
+  timestamp: Timestamp;
 }
 
 export interface Swap {
@@ -27,5 +39,5 @@ export interface Swap {
   free: number;
   total: number;
   used: number;
-  timestamp: number;
+  timestamp: Timestamp;
 }
