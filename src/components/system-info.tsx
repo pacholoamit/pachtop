@@ -1,8 +1,9 @@
-import { Card, Text } from "@mantine/core";
+import { Card, Space, Text } from "@mantine/core";
 import useGetSysinfo from "@/hooks/useGetSysinfo";
 
 const SystemInfo = () => {
-  const { sysInfo } = useGetSysinfo();
+  const { sysInfo, globalCpu } = useGetSysinfo();
+
   return (
     <Card
       style={{ height: "300px" }}
@@ -17,8 +18,12 @@ const SystemInfo = () => {
       <Text>OS: {sysInfo?.osVersion}</Text>
       <Text>Host Name: {sysInfo?.hostname}</Text>
       <Text>Kernel: {sysInfo?.kernelVersion}</Text>
-      <Text>CPUs: {sysInfo?.coreCount}</Text>
-      <Text>Disks: {sysInfo?.diskCount}</Text>
+      <Space h="xl" />
+      <Text weight={"bold"} size="lg" color={"#dce1e8"}>
+        CPU Information:
+      </Text>
+      <Text>Brand: {globalCpu?.cpuBrand}</Text>
+      <Text>Vendor: {globalCpu?.cpuVendor}</Text>
     </Card>
   );
 };

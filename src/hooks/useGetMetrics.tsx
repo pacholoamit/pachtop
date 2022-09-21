@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@/lib";
 import { GlobalCpu, Memory, Swap, TauriCommand } from "@/lib/types";
+import logger from "@/lib/logger";
 
 interface UseGetMetricsOptions {
   interval: number;
