@@ -13,7 +13,7 @@ interface UniqueNetwork {
 }
 
 interface UniqueNetworkData {
-  transmitted: number;
+  received: number;
   timestamp: number;
 }
 
@@ -66,7 +66,7 @@ const DashboardPage = () => {
             name: network.name,
             data: [
               {
-                transmitted: network.transmitted,
+                received: network.received,
                 timestamp: network.timestamp,
               },
             ],
@@ -77,26 +77,23 @@ const DashboardPage = () => {
         setUniqueNetworks((prev) => {
           prev[i].data.push({
             timestamp: network.timestamp,
-            transmitted: network.transmitted,
+            received: network.received,
           });
           return prev;
         });
       }
     });
   }, [networks]);
-  const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
-  const randomRGB = () => `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
 
   let networkDatasets: DatasetOptions[] = uniqueNetworks.map((network) => ({
-    label: `${network.name} Transmitted`,
+    label: `${network.name}`,
     data: network.data.map((data) => ({
       x: data.timestamp,
-      y: data.transmitted,
+      y: data.received,
     })),
-    backgroundColor: randomRGB(),
-    borderColor: randomRGB(),
+
     fill: true,
-    yAxisId: "network-transmitted",
+    yAxisId: "network-received",
   }));
 
   return (
@@ -130,7 +127,7 @@ const DashboardPage = () => {
               xAxisMin={xAxisMin}
             />
             <AreaChart
-              title="Network Usage"
+              title="Network Received"
               labels={uniqueNetworks.map(
                 (network) => network.data[0].timestamp
               )}

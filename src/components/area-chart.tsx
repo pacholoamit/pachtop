@@ -30,8 +30,8 @@ export interface DatasetOptions {
   label: string;
   fill: boolean;
   data: number[] | any[];
-  backgroundColor: string;
-  borderColor: string;
+  backgroundColor?: string;
+  borderColor?: string;
   yAxisId: string;
 }
 
