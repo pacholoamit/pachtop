@@ -1,10 +1,11 @@
-use crate::models::{Memory, Swap, SysInfo, Timestamp};
+use crate::models::{GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
 use byte_unit::{Byte, ByteUnit};
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{Cpu, CpuExt, System, SystemExt};
+use sysinfo::{CpuExt, NetworkExt, System, SystemExt};
+
 use tauri::State;
 
 #[tauri::command]
@@ -13,8 +14,8 @@ pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
 }
 
 #[tauri::command]
-pub fn get_global_cpu(state: State<'_, MetricsState>) {
-    let cpus = state.0.lock().unwrap().cpu();
+pub fn get_global_cpu(state: State<'_, MetricsState>) -> GlobalCpu {
+    state.0.lock().unwrap().global_cpu()
 }
 
 #[tauri::command]
@@ -25,6 +26,11 @@ pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
 #[tauri::command]
 pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
     state.0.lock().unwrap().swap()
+}
+
+#[tauri::command]
+pub fn get_networks(state: State<'_, MetricsState>) -> Vec<Network> {
+    state.0.lock().unwrap().networks()
 }
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
@@ -60,24 +66,31 @@ impl Metrics {
         }
     }
 
-    fn global_cpu(&mut self) {
+    fn global_cpu(&mut self) -> GlobalCpu {
         self.sys.refresh_cpu();
 
         let cpu = self.sys.global_cpu_info();
         let cpu_usage = cpu.cpu_usage();
-        let cpu_brand = cpu.brand();
-        let cpu_frequency = cpu.frequency();
-        let cpu_name = cpu.name();
-        let cpu_vendor = cpu.vendor_id();
+        let cpu_brand = cpu.brand().to_owned();
+        let cpu_frequency = cpu.frequency().to_owned();
+        let cpu_name = cpu.name().to_owned();
+        let cpu_vendor = cpu.vendor_id().to_owned();
 
-        self.sys.global_cpu_info().cpu_usage();
+        GlobalCpu {
+            cpu_usage,
+            cpu_brand,
+            cpu_frequency,
+            cpu_name,
+            cpu_vendor,
+            timestamp: current_time(),
+        }
     }
+
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
-        self.sys.refresh_cpu();
-        let free = bytes_to_size(self.sys.free_memory(), &self.target_unit);
-        let total = bytes_to_size(self.sys.total_memory(), &self.target_unit);
-        let used = bytes_to_size(self.sys.used_memory(), &self.target_unit);
+        let free = bytes_to_size(&self.sys.free_memory(), &self.target_unit);
+        let total = bytes_to_size(&self.sys.total_memory(), &self.target_unit);
+        let used = bytes_to_size(&self.sys.used_memory(), &self.target_unit);
 
         Memory {
             free,
@@ -90,9 +103,9 @@ impl Metrics {
 
     fn swap(&mut self) -> Swap {
         self.sys.refresh_memory();
-        let total = bytes_to_size(self.sys.total_swap(), &self.target_unit);
-        let used = bytes_to_size(self.sys.used_swap(), &self.target_unit);
-        let free = bytes_to_size(self.sys.free_swap(), &self.target_unit);
+        let total = bytes_to_size(&self.sys.total_swap(), &self.target_unit);
+        let used = bytes_to_size(&self.sys.used_swap(), &self.target_unit);
+        let free = bytes_to_size(&self.sys.free_swap(), &self.target_unit);
 
         Swap {
             free,
@@ -102,18 +115,43 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+
+    fn networks(&mut self) -> Vec<Network> {
+        self.sys.refresh_networks();
+
+        let networks: Vec<Network> = self
+            .sys
+            .networks()
+            .into_iter()
+            .map(|(name, network)| {
+                let name = name.to_owned();
+                let received = bytes_to_size(&network.received(), &ByteUnit::KB);
+                let transmitted = bytes_to_size(&network.transmitted(), &ByteUnit::KB);
+
+                Network {
+                    name,
+                    received,
+                    transmitted,
+                    unit: ByteUnit::KB,
+                    timestamp: current_time(),
+                }
+            })
+            .collect();
+
+        networks
+    }
 }
 
 fn current_time() -> Timestamp {
     let start = SystemTime::now();
     let since_the_epoch = start.duration_since(UNIX_EPOCH);
-    Timestamp(since_the_epoch.unwrap().as_secs() as i64)
+    Timestamp(since_the_epoch.unwrap().as_millis() as i64)
 }
 
-fn bytes_to_size(bytes: u64, dest_unit: &ByteUnit) -> f64 {
-    let result = Byte::from_unit(bytes as f64, ByteUnit::B)
+fn bytes_to_size(bytes: &u64, &dest_unit: &ByteUnit) -> f64 {
+    let result = Byte::from_unit(*bytes as f64, ByteUnit::B)
         .unwrap()
-        .get_adjusted_unit(*dest_unit)
+        .get_adjusted_unit(dest_unit)
         .get_value();
 
     (result * 100.0).round() / 100.0 // round to 2 decimal places

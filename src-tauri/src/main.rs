@@ -12,6 +12,7 @@ use sysinfo::{System, SystemExt};
 use tauri::{
     CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem,
 };
+use tauri_plugin_log::{LogTarget, LoggerBuilder};
 
 fn main() {
     let target_unit = ByteUnit::GB;
@@ -24,6 +25,11 @@ fn main() {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(hide);
     let tray = SystemTray::new().with_menu(tray_menu);
+
+    let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
+    let logger_plugin = LoggerBuilder::default()
+        .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
+        .build();
 
     sys.refresh_all();
 
@@ -53,11 +59,14 @@ fn main() {
             _ => {}
         })
         .manage(MetricsState::new(sys, target_unit))
-        .plugin(tauri_plugin_window_state::Builder::default().build())
+        .plugin(window_state_plugin)
+        .plugin(logger_plugin)
         .invoke_handler(tauri::generate_handler![
             metrics::get_sysinfo,
+            metrics::get_global_cpu,
             metrics::get_memory,
-            metrics::get_swap
+            metrics::get_swap,
+            metrics::get_networks
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

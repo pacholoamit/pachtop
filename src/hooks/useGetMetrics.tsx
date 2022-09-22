@@ -1,27 +1,26 @@
 import { useEffect, useState } from "react";
-import { invoke } from "@/lib";
-import { Memory, Swap, TauriCommand } from "@/lib/types";
+import { invoke, TauriCommand } from "@/lib";
 
-interface UseGetMetricsOptions {
+interface useGetMetricsOptions {
   interval: number;
   maxLength: number;
 }
 
-const useGetMetrics = ({ interval, maxLength }: UseGetMetricsOptions) => {
-  const [memory, setMemory] = useState<Memory[]>([]);
-  const [swap, setSwap] = useState<Swap[]>([]);
+const useGetMetrics = <T extends {}>(
+  command: TauriCommand,
+  opts?: useGetMetricsOptions
+): [T[], React.Dispatch<React.SetStateAction<T[]>>] => {
+  const { interval = 1000, maxLength = 86400 } = opts || {};
+  const [state, setState] = useState<T[]>([]);
 
   useEffect(() => {
     const requestMetrics = async () => {
-      const mem = (await invoke(TauriCommand.Memory)) as Memory;
-      const swap = (await invoke(TauriCommand.Swap)) as Swap;
+      const data = (await invoke(command)) as T;
 
-      if (memory.length >= maxLength) {
-        setMemory((prev) => [...prev.slice(1), mem]);
-        setSwap((prev) => [...prev.slice(1), swap]);
+      if (state.length >= maxLength) {
+        setState((prev) => [...prev.slice(1), data]);
       } else {
-        setMemory((prev) => [...prev, mem]);
-        setSwap((prev) => [...prev, swap]);
+        setState((prev) => [...prev, data]);
       }
     };
 
@@ -30,7 +29,7 @@ const useGetMetrics = ({ interval, maxLength }: UseGetMetricsOptions) => {
     return () => clearInterval(timer);
   }, []);
 
-  return { memory, swap };
+  return [state, setState];
 };
 
 export default useGetMetrics;

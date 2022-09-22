@@ -14,23 +14,24 @@ import {
   TimeScale,
 } from "chart.js";
 
-import { Card, useMantineTheme } from "@mantine/core";
-// import { useMediaQuery } from "@mantine/hooks";
+import { Card } from "@mantine/core";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import "chartjs-adapter-luxon";
 
 export interface AreaChartProps {
   title: string;
   labels: string[] | string[][] | number[];
+  xAxisMin?: any;
   datasets: DatasetOptions[];
+  stacked?: boolean;
 }
 
 export interface DatasetOptions {
   label: string;
   fill: boolean;
   data: number[] | any[];
-  backgroundColor: string;
-  borderColor: string;
+  backgroundColor?: string;
+  borderColor?: string;
   yAxisId: string;
 }
 
@@ -47,7 +48,13 @@ ChartJS.register(
   TimeScale
 );
 
-const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
+const AreaChart: React.FC<AreaChartProps> = ({
+  labels,
+  datasets,
+  title,
+  xAxisMin = undefined,
+  stacked = false,
+}) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
 
   const maxTicksLimit =
@@ -115,7 +122,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ labels, datasets, title }) => {
         },
       },
       xAxis: {
+        min: xAxisMin,
         type: "time",
+        stacked,
         time: {
           round: "seconds",
           displayFormats: {
