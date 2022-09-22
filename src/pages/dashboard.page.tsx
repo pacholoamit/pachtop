@@ -8,6 +8,20 @@ import { Grid, Stack } from "@mantine/core";
 
 const xAxisMin = Date.now() - 86400;
 
+const LeftMetricsStack = () => (
+  <Stack>
+    <MemoryChart xAxisMin={xAxisMin} />
+    <SwapChart xAxisMin={xAxisMin} />
+  </Stack>
+);
+
+const RightMetricsStack = () => (
+  <Stack>
+    <GlobalCpuChart xAxisMin={xAxisMin} />
+    <NetworksChart xAxisMin={xAxisMin} />
+  </Stack>
+);
+
 const DashboardPage = () => {
   return (
     <Grid gutter="xl">
@@ -15,16 +29,10 @@ const DashboardPage = () => {
         <SystemInfo />
       </Grid.Col>
       <Grid.Col md={6} sm={12}>
-        <Stack>
-          <MemoryChart xAxisMin={xAxisMin} />
-          <SwapChart xAxisMin={xAxisMin} />
-        </Stack>
+        <LeftMetricsStack />
       </Grid.Col>
       <Grid.Col md={6} sm={12}>
-        <Stack>
-          <GlobalCpuChart xAxisMin={xAxisMin} />
-          <NetworksChart xAxisMin={xAxisMin} />
-        </Stack>
+        <RightMetricsStack />
       </Grid.Col>
     </Grid>
   );
