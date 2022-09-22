@@ -2,15 +2,27 @@ import useGetMetrics from "@/hooks/useGetMetrics";
 import SystemInfo from "@/components/system-info";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { Grid, Stack } from "@mantine/core";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Network } from "@/lib/types";
+
+const xAxisMin = Date.now() - 86400;
+
+interface UniqueNetwork {
+  name: string;
+  data: UniqueNetworkData[];
+}
+
+interface UniqueNetworkData {
+  transmitted: number;
+  timestamp: number;
+}
 
 const DashboardPage = () => {
+  const [uniqueNetworks, setUniqueNetworks] = useState<UniqueNetwork[]>([]);
   const { memory, swap, globalCpu, networks } = useGetMetrics({
     interval: 1000,
     maxLength: 86400,
   });
-
-  const xAxisMin = Date.now() - 86400;
 
   const ramDatasets: DatasetOptions[] = [
     {
@@ -45,19 +57,47 @@ const DashboardPage = () => {
     },
   ];
 
-  const networksDatasets: DatasetOptions[] = [
-    {
-      label: "Networks",
-      data: networks.map((network) => ({
-        x: network[0].timestamp,
-        y: network[0].transmitted,
-      })),
-      backgroundColor: "rgba(255, 99, 132, 0.45)",
-      borderColor: "rgba(255, 99, 132, 1)",
-      fill: true,
-      yAxisId: "networks",
-    },
-  ];
+  useEffect(() => {
+    networks.at(-1)?.filter((network) => {
+      if (!uniqueNetworks.some((n) => n?.name === network.name)) {
+        setUniqueNetworks((prev) => [
+          ...prev,
+          {
+            name: network.name,
+            data: [
+              {
+                transmitted: network.transmitted,
+                timestamp: network.timestamp,
+              },
+            ],
+          },
+        ]);
+      } else {
+        const i = uniqueNetworks.findIndex((n) => n?.name === network.name);
+        setUniqueNetworks((prev) => {
+          prev[i].data.push({
+            timestamp: network.timestamp,
+            transmitted: network.transmitted,
+          });
+          return prev;
+        });
+      }
+    });
+  }, [networks]);
+  const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+  const randomRGB = () => `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
+
+  let networkDatasets: DatasetOptions[] = uniqueNetworks.map((network) => ({
+    label: `${network.name} Transmitted`,
+    data: network.data.map((data) => ({
+      x: data.timestamp,
+      y: data.transmitted,
+    })),
+    backgroundColor: randomRGB(),
+    borderColor: randomRGB(),
+    fill: true,
+    yAxisId: "network-transmitted",
+  }));
 
   return (
     <>
@@ -73,7 +113,6 @@ const DashboardPage = () => {
               datasets={ramDatasets}
               xAxisMin={xAxisMin}
             />
-
             <AreaChart
               title="Swap Memory"
               labels={swap.map((swap) => swap.timestamp)}
@@ -83,18 +122,23 @@ const DashboardPage = () => {
           </Stack>
         </Grid.Col>
         <Grid.Col md={6} sm={12}>
-          <AreaChart
-            title="CPU Usage"
-            labels={globalCpu.map((cpu) => cpu.timestamp)}
-            datasets={globalCpuDatasets}
-            xAxisMin={xAxisMin}
-          />
-          <AreaChart
-            title="Network Usage"
-            labels={networks[0]?.map((net) => net.timestamp)}
-            datasets={networksDatasets}
-            xAxisMin={xAxisMin}
-          />
+          <Stack>
+            <AreaChart
+              title="CPU Usage"
+              labels={globalCpu.map((cpu) => cpu.timestamp)}
+              datasets={globalCpuDatasets}
+              xAxisMin={xAxisMin}
+            />
+            <AreaChart
+              title="Network Usage"
+              labels={uniqueNetworks.map(
+                (network) => network.data[0].timestamp
+              )}
+              datasets={networkDatasets}
+              xAxisMin={xAxisMin}
+              stacked={true}
+            />
+          </Stack>
         </Grid.Col>
       </Grid>
     </>

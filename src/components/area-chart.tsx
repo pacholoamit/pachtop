@@ -23,6 +23,7 @@ export interface AreaChartProps {
   labels: string[] | string[][] | number[];
   xAxisMin?: any;
   datasets: DatasetOptions[];
+  stacked?: boolean;
 }
 
 export interface DatasetOptions {
@@ -51,7 +52,8 @@ const AreaChart: React.FC<AreaChartProps> = ({
   labels,
   datasets,
   title,
-  xAxisMin,
+  xAxisMin = undefined,
+  stacked = false,
 }) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
 
@@ -120,8 +122,9 @@ const AreaChart: React.FC<AreaChartProps> = ({
         },
       },
       xAxis: {
-        min: xAxisMin ?? undefined,
+        min: xAxisMin,
         type: "time",
+        stacked,
         time: {
           round: "seconds",
           displayFormats: {

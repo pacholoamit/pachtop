@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@/lib";
 import { GlobalCpu, Memory, Network, Swap, TauriCommand } from "@/lib/types";
-import logger from "@/lib/logger";
 
 interface UseGetMetricsOptions {
   interval: number;
@@ -20,8 +19,6 @@ const useGetMetrics = ({ interval, maxLength }: UseGetMetricsOptions) => {
       const swap = (await invoke(TauriCommand.Swap)) as Swap;
       const globalCpu = (await invoke(TauriCommand.GlobalCpu)) as GlobalCpu;
       const network = (await invoke(TauriCommand.Networks)) as Network[];
-
-      console.log({ network });
 
       if (memory.length >= maxLength) {
         console.log(mem.timestamp);
