@@ -6,20 +6,18 @@ import { ChartProps } from "@/features/metrics/utils/types";
 
 interface MemoryChartProps extends ChartProps {}
 
-const MemoryChart: React.FC<MemoryChartProps> = ({
-  xAxisMin,
-}: MemoryChartProps) => {
+const MemoryChart: React.FC<MemoryChartProps> = ({ xAxisMin }) => {
   const [memory] = useGetMetrics<Memory>(TauriCommand.Memory);
   const title = "Random Access Memory (RAM)";
   const labels = memory.map((mem) => mem.timestamp);
   const datasets: DatasetOptions[] = [
     {
-      label: `Ram Used (${memory.slice(-1)[0]?.unit})`,
+      label: `RAM Used (${memory.slice(-1)[0]?.unit})`,
       data: memory.map((mem) => ({ x: mem.timestamp, y: mem.used })),
       backgroundColor: "rgba(10, 167, 147, 0.45)",
       borderColor: "rgba(10, 167, 147, 1)",
       fill: true,
-      yAxisId: "ram-used",
+      yAxisId: "ram-usage",
     },
   ];
   return (
