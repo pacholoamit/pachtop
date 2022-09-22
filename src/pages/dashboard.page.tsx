@@ -1,10 +1,11 @@
-import useGetMetrics from "@/hooks/useGetMetrics";
+import useGetMetrics from "@/hooks/useGetMetrics2";
 import SystemInfo from "@/components/system-info";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { Grid, Stack } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 import { Memory, Network, TauriCommand } from "@/lib/types";
-import useRequestMetrics from "@/hooks/useRequestMetrics";
+import useRequestMetrics from "@/hooks/useGetMetrics";
+import MemoryChart from "@/features/metrics/components/memory-chart";
 
 interface UniqueNetwork {
   name: string;
@@ -109,12 +110,7 @@ const DashboardPage = () => {
         </Grid.Col>
         <Grid.Col md={6} sm={12}>
           <Stack>
-            <AreaChart
-              title="Random Access Memory (RAM)"
-              labels={memory.map((mem) => mem.timestamp)}
-              datasets={ramDatasets}
-              xAxisMin={xAxisMin}
-            />
+            <MemoryChart xAxisMin={xAxisMin} />
             <AreaChart
               title="Swap Memory"
               labels={swap.map((swap) => swap.timestamp)}
