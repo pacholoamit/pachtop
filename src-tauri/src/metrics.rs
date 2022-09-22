@@ -132,7 +132,7 @@ impl Metrics {
                     name,
                     received,
                     transmitted,
-                    unit: self.target_unit,
+                    unit: ByteUnit::KB,
                     timestamp: current_time(),
                 }
             })

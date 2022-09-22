@@ -5,10 +5,9 @@ import { Grid, Stack } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 import { Network } from "@/lib/types";
 
-const xAxisMin = Date.now() - 86400;
-
 interface UniqueNetwork {
   name: string;
+  unit: string;
   data: UniqueNetworkData[];
 }
 
@@ -16,6 +15,8 @@ interface UniqueNetworkData {
   received: number;
   timestamp: number;
 }
+
+const xAxisMin = Date.now() - 86400;
 
 const DashboardPage = () => {
   const [uniqueNetworks, setUniqueNetworks] = useState<UniqueNetwork[]>([]);
@@ -26,7 +27,7 @@ const DashboardPage = () => {
 
   const ramDatasets: DatasetOptions[] = [
     {
-      label: `Ram Used ${memory.slice(-1)[0]?.unit}`,
+      label: `Ram Used (${memory.slice(-1)[0]?.unit})`,
       data: memory.map((mem) => ({ x: mem.timestamp, y: mem.used })),
       backgroundColor: "rgba(10, 167, 147, 0.45)",
       borderColor: "rgba(10, 167, 147, 1)",
@@ -37,7 +38,7 @@ const DashboardPage = () => {
 
   const swapDatasets: DatasetOptions[] = [
     {
-      label: `Swap Used ${memory.slice(-1)[0]?.unit}`,
+      label: `Swap Used (${memory.slice(-1)[0]?.unit})`,
       data: swap.map((swap) => ({ x: swap.timestamp, y: swap.used })),
       backgroundColor: "rgba(53, 162, 235, 0.45)",
       borderColor: "rgba(53, 162, 235)",
@@ -64,6 +65,7 @@ const DashboardPage = () => {
           ...prev,
           {
             name: network.name,
+            unit: network.unit,
             data: [
               {
                 received: network.received,
@@ -86,12 +88,13 @@ const DashboardPage = () => {
   }, [networks]);
 
   let networkDatasets: DatasetOptions[] = uniqueNetworks.map((network) => ({
-    label: `${network.name}`,
+    label: `${network.name} (${network.unit})`,
     data: network.data.map((data) => ({
       x: data.timestamp,
       y: data.received,
     })),
-
+    backgroundColor: "rgba(255,215,120,0.4)",
+    borderColor: "rgba(255,215,120,1)",
     fill: true,
     yAxisId: "network-received",
   }));
