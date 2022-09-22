@@ -3,7 +3,8 @@ import SystemInfo from "@/components/system-info";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { Grid, Stack } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
-import { Network } from "@/lib/types";
+import { Memory, Network, TauriCommand } from "@/lib/types";
+import useRequestMetrics from "@/hooks/useRequestMetrics";
 
 interface UniqueNetwork {
   name: string;
@@ -20,7 +21,8 @@ const xAxisMin = Date.now() - 86400;
 
 const DashboardPage = () => {
   const [uniqueNetworks, setUniqueNetworks] = useState<UniqueNetwork[]>([]);
-  const { memory, swap, globalCpu, networks } = useGetMetrics({
+  const [memory] = useRequestMetrics<Memory>(TauriCommand.Memory);
+  const { swap, globalCpu, networks } = useGetMetrics({
     interval: 1000,
     maxLength: 86400,
   });
