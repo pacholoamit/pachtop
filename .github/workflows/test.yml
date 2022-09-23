@@ -1,7 +1,7 @@
 name: "test"
 on:
   workflow_dispatch:
-  push: { branches: ["master", "staging"] }
+  push: { branches: ["staging"] }
 
 jobs:
   test-tauri:
