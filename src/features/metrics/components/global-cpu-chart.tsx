@@ -3,11 +3,16 @@ import useGetMetrics from "@/hooks/useGetMetrics";
 import { TauriCommand } from "@/lib";
 import { GlobalCpu } from "@/lib/types";
 import { ChartProps } from "@/features/metrics/utils/types";
+import useSignalMetrics from "@/features/metrics/signals/useSignalMetrics";
 
 interface GlobalCpuChartProps extends ChartProps {}
 
 const GlobalCpuChart: React.FC<GlobalCpuChartProps> = ({ xAxisMin }) => {
-  const [globalCpu] = useGetMetrics<GlobalCpu>(TauriCommand.GlobalCpu);
+  // const [globalCpu] = useGetMetrics<GlobalCpu>(TauriCommand.GlobalCpu);
+  const [{ value: globalCpu }] = useSignalMetrics<GlobalCpu>(
+    TauriCommand.GlobalCpu
+  );
+
   const title = "CPU Usage";
   const labels = globalCpu.map((cpu) => cpu.timestamp);
   const datasets: DatasetOptions[] = [
