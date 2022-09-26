@@ -16,6 +16,7 @@ export const createMetricsSignal = <T extends {}>(
 
   if (once) {
     invoke<T>(command).then((data) => (metrics.value = [data]));
+    return metrics;
   }
 
   effect(() => {
