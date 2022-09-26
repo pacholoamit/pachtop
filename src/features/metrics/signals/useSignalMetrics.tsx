@@ -25,7 +25,6 @@ const useSignalMetrics = <T extends {}>(
       }
     };
 
-    console.log(metrics);
     const timer = setInterval(requestMetrics, interval);
 
     return () => clearInterval(timer);
