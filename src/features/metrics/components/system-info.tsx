@@ -5,7 +5,6 @@ const latestInfo = sysInfo.value[0];
 const latestGlobalCpu = globalCpu.value[0];
 
 const SystemInfo = () => {
-  console.log(latestInfo);
   return (
     <Card
       style={{ height: "300px" }}
