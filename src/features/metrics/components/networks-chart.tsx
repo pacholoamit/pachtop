@@ -43,7 +43,6 @@ const net = computed(() => {
 const NetworksChart: React.FC<NetworksChartProps> = ({ xAxisMin }) => {
   const title = "Network Received";
   const labels = net.value.map((network) => network.data[0].timestamp);
-
   const datasets: DatasetOptions[] = net.value.map((network) => ({
     label: `${network.name} (${network.unit})`,
     data: network.data.map((data) => ({
