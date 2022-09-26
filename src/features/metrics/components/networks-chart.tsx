@@ -4,6 +4,8 @@ import { TauriCommand } from "@/lib";
 import { Network } from "@/lib/types";
 import { ChartProps } from "@/features/metrics/utils/types";
 import { useState, useEffect } from "react";
+import { computed, effect, signal } from "@preact/signals-react";
+import { networks } from "@/features/metrics/signals";
 
 interface NetworksChartProps extends ChartProps {}
 
@@ -18,13 +20,31 @@ interface UniqueNetworkData {
   timestamp: number;
 }
 
-const NetworksChart: React.FC<NetworksChartProps> = ({ xAxisMin }) => {
-  const [networks] = useGetMetrics<Network[]>(TauriCommand.Networks);
-  const [uniqueNetworks, setUniqueNetworks] = useState<UniqueNetwork[]>([]);
-  const title = "Network Received";
-  const labels = uniqueNetworks.map((network) => network.data[0].timestamp);
+const uniqueNetworks: UniqueNetwork[] = [];
 
-  const datasets: DatasetOptions[] = uniqueNetworks.map((network) => ({
+const net = computed(() => {
+  networks.value.at(-1)?.filter((network) => {
+    if (!uniqueNetworks.find((unique) => unique.name === network.name)) {
+      uniqueNetworks.push({
+        name: network.name,
+        unit: network.unit,
+        data: [{ received: network.received, timestamp: network.timestamp }],
+      });
+    }
+    const index = uniqueNetworks.findIndex((u) => u.name === network.name);
+    uniqueNetworks[index].data.push({
+      received: network.received,
+      timestamp: network.timestamp,
+    });
+  });
+  return uniqueNetworks;
+});
+
+const NetworksChart: React.FC<NetworksChartProps> = ({ xAxisMin }) => {
+  const title = "Network Received";
+  const labels = net.value.map((network) => network.data[0].timestamp);
+
+  const datasets: DatasetOptions[] = net.value.map((network) => ({
     label: `${network.name} (${network.unit})`,
     data: network.data.map((data) => ({
       x: data.timestamp,
@@ -35,35 +55,6 @@ const NetworksChart: React.FC<NetworksChartProps> = ({ xAxisMin }) => {
     fill: true,
     yAxisId: "network-received",
   }));
-
-  useEffect(() => {
-    networks.at(-1)?.filter((network) => {
-      if (!uniqueNetworks.some((n) => n?.name === network.name)) {
-        setUniqueNetworks((prev) => [
-          ...prev,
-          {
-            name: network.name,
-            unit: network.unit,
-            data: [
-              {
-                received: network.received,
-                timestamp: network.timestamp,
-              },
-            ],
-          },
-        ]);
-      } else {
-        const i = uniqueNetworks.findIndex((n) => n?.name === network.name);
-        setUniqueNetworks((prev) => {
-          prev[i].data.push({
-            timestamp: network.timestamp,
-            received: network.received,
-          });
-          return prev;
-        });
-      }
-    });
-  }, [networks]);
 
   return (
     <AreaChart
