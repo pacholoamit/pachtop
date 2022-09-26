@@ -1,14 +1,12 @@
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
-import logger from "@/lib/logger";
 
 interface MemoryChartProps extends ChartProps {}
 
 const MemoryChart: React.FC<MemoryChartProps> = ({ xAxisMin }) => {
   const { memory } = useMetricsContext();
 
-  logger.info("Render");
   const title = "Random Access Memory (RAM)";
   const labels = memory.map((mem) => mem.timestamp);
   const datasets: DatasetOptions[] = [
