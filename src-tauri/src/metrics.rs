@@ -127,7 +127,7 @@ impl Metrics {
                 let name = name.to_owned();
                 let received = bytes_to_size(&network.received(), &ByteUnit::KB);
                 let transmitted = bytes_to_size(&network.transmitted(), &ByteUnit::KB);
-                println!("{}: {} {}", name, received, transmitted);
+
                 Network {
                     name,
                     received,
