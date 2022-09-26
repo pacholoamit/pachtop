@@ -1,5 +1,7 @@
 import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
-import { GlobalCpu, Memory, Network, Swap, TauriCommand } from "@/lib/types";
+import useRequestNetworks from "@/features/metrics/hooks/useRequestNetworks";
+import { GlobalCpu, Memory, Swap, TauriCommand } from "@/lib/types";
+import { UniqueNetwork } from "@/features/metrics/utils/types";
 import { createContext } from "react";
 
 interface MetricsProviderProps {
@@ -9,21 +11,21 @@ interface MetricsContext {
   globalCpu: GlobalCpu[];
   memory: Memory[];
   swap: Swap[];
-  network: Network[][];
+  networks: UniqueNetwork[];
 }
 
 export const MetricsContext = createContext<MetricsContext>({
   globalCpu: [],
   memory: [],
   swap: [],
-  network: [],
+  networks: [],
 });
 
 const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
   const [globalCpu] = useRequestMetrics<GlobalCpu>(TauriCommand.GlobalCpu);
   const [memory] = useRequestMetrics<Memory>(TauriCommand.Memory);
   const [swap] = useRequestMetrics<Swap>(TauriCommand.Swap);
-  const [network] = useRequestMetrics<Network[]>(TauriCommand.Networks);
+  const [networks] = useRequestNetworks();
 
   return (
     <MetricsContext.Provider
@@ -31,7 +33,7 @@ const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
         globalCpu,
         memory,
         swap,
-        network,
+        networks,
       }}
     >
       {children}

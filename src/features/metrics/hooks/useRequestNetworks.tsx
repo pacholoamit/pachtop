@@ -1,15 +1,15 @@
-import { computed, ReadonlySignal } from "@preact/signals-react";
+import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
+import { UniqueNetwork } from "@/features/metrics/utils/types";
 import { TauriCommand } from "@/lib";
 import { Network } from "@/lib/types";
-import { createMetricsSignal } from "@/features/metrics/signals/create-metrics-signal";
-import { UniqueNetwork } from "@/features/metrics/utils/types";
+import { useEffect, useState } from "react";
 
-const createNetworkSignal = (): ReadonlySignal<UniqueNetwork[]> => {
-  const networks = createMetricsSignal<Network[]>(TauriCommand.Networks);
-  const uniqueNetworks: UniqueNetwork[] = [];
+const useRequestNetworks = () => {
+  const [networks] = useRequestMetrics<Network[]>(TauriCommand.Networks);
+  const [uniqueNetworks, setUniqueNetworks] = useState<UniqueNetwork[]>([]);
 
-  return computed(() => {
-    networks.value.at(-1)?.filter((network) => {
+  useEffect(() => {
+    networks.at(-1)?.filter((network) => {
       // If the network name is not in the uniqueNetworks array, add it
       if (!uniqueNetworks.find((unique) => unique.name === network.name)) {
         uniqueNetworks.push({
@@ -25,8 +25,9 @@ const createNetworkSignal = (): ReadonlySignal<UniqueNetwork[]> => {
         timestamp: network.timestamp,
       });
     });
-    return uniqueNetworks;
-  });
+  }, [networks]);
+
+  return [uniqueNetworks];
 };
 
-export default createNetworkSignal;
+export default useRequestNetworks;
