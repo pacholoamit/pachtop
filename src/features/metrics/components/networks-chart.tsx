@@ -24,6 +24,7 @@ const uniqueNetworks: UniqueNetwork[] = [];
 
 const net = computed(() => {
   networks.value.at(-1)?.filter((network) => {
+    // If the network name is not in the uniqueNetworks array, add it
     if (!uniqueNetworks.find((unique) => unique.name === network.name)) {
       uniqueNetworks.push({
         name: network.name,
@@ -31,6 +32,7 @@ const net = computed(() => {
         data: [{ received: network.received, timestamp: network.timestamp }],
       });
     }
+    // If the network name is in the uniqueNetworks array, update the data
     const index = uniqueNetworks.findIndex((u) => u.name === network.name);
     uniqueNetworks[index].data.push({
       received: network.received,
