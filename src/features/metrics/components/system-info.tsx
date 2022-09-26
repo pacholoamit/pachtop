@@ -1,8 +1,8 @@
 import { Card, Space, Text } from "@mantine/core";
 import { sysInfo, globalCpu } from "@/features/metrics/signals";
 
-const latestInfo = sysInfo.value.at(-1);
-const latestGlobalCpu = globalCpu.value.at(-1);
+const latestInfo = sysInfo.value[0];
+const latestGlobalCpu = globalCpu.value[0];
 
 const SystemInfo = () => {
   console.log(latestInfo);
