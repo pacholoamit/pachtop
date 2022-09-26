@@ -3,7 +3,7 @@
     
   </a>
   <p align="center">
-   <img width="150" height="150" src="https://github.com/pacholoamit/pachtop/blob/master/public/logo-white.png" alt="Logo">
+   <img width="230" height="230" src="https://github.com/pacholoamit/pachtop/blob/master/public/logo-white.png" alt="Logo">
   </p>
   <h1 align="center"><b>Pachtop</b></h1>
   <p align="center">
