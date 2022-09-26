@@ -16,6 +16,7 @@
     "@preact/signals-react": "^1.1.0",
     "@tabler/icons": "^1.96.0",
     "@tauri-apps/api": "^1.0.2",
+    "@types/luxon": "^3.0.1",
     "chart.js": "^3.9.1",
     "chartjs-adapter-luxon": "^1.2.0",
     "luxon": "^3.0.3",

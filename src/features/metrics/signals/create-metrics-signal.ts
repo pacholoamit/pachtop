@@ -3,15 +3,20 @@ import { invoke } from "@tauri-apps/api";
 import { TauriCommand } from "@/lib";
 
 export interface SignalMetricsOptions {
-  interval: number;
-  maxSamples: number;
+  interval?: number;
+  maxSamples?: number;
+  once?: boolean;
 }
 export const createMetricsSignal = <T extends {}>(
   command: TauriCommand,
   opts?: SignalMetricsOptions
 ): Signal<T[]> => {
-  const { interval = 1000, maxSamples = 86400 } = opts || {};
+  const { interval = 1000, maxSamples = 86400, once = false } = opts || {};
   const metrics = signal<T[]>([]);
+
+  if (once) {
+    invoke<T>(command).then((data) => (metrics.value = [data]));
+  }
 
   effect(() => {
     const update = async () => {

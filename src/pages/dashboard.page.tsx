@@ -1,4 +1,4 @@
-import SystemInfo from "@/components/system-info";
+import SystemInfo from "@/features/metrics/components/system-info";
 import MemoryChart from "@/features/metrics/components/memory-chart";
 import SwapChart from "@/features/metrics/components/swap-chart";
 import GlobalCpuChart from "@/features/metrics/components/global-cpu-chart";
