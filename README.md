@@ -21,9 +21,7 @@
     <p align="center">
     <img src="https://img.shields.io/github/workflow/status/pacholoamit/pachtop/test/master" />
     <img src="https://img.shields.io/github/license/pacholoamit/pachtop" />
-    <a href="https://github.com/pacholoamit/pachtop/releases">
-      <img src="https://img.shields.io/github/v/release/pacholoamit/pachtop">
-    </a>
+    <img src="https://img.shields.io/github/v/release/pacholoamit/pachtop">
   </p>
 </p>
 Pachtop is a cross-platform desktop application built with Rust that allows you to monitor your system resources in real time 
@@ -37,6 +35,7 @@ Pachtop is a cross-platform desktop application built with Rust that allows you 
 Please see the <a href="https://github.com/pacholoamit/pachtop/releases">releases</a> page for the latest version. Pachtop is available for <i>Windows, MacOS & Linux</i>.
 
 # Features
+
 - [x] CPU Usage
 - [x] Memory Usage
 - [x] Network Usage
@@ -46,4 +45,3 @@ Please see the <a href="https://github.com/pacholoamit/pachtop/releases">release
 - [ ] Persistent metrics over time
 - [ ] Battery Usage?
 - [ ] GPU Usage?
-
