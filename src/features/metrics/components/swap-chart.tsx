@@ -1,16 +1,17 @@
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
-import { swap } from "@/features/metrics/signals";
+import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 
 interface SwapChartProps extends ChartProps {}
 
 const SwapChart: React.FC<SwapChartProps> = ({ xAxisMin }) => {
+  const { swap } = useMetricsContext();
   const title = "Swap Memory";
-  const labels = swap.value.map((swap) => swap.timestamp);
+  const labels = swap.map((swap) => swap.timestamp);
   const datasets: DatasetOptions[] = [
     {
-      label: `Swap Memory Used (${swap.value.slice(-1)[0]?.unit})`,
-      data: swap.value.map((swap) => ({ x: swap.timestamp, y: swap.used })),
+      label: `Swap Memory Used (${swap.slice(-1)[0]?.unit})`,
+      data: swap.map((swap) => ({ x: swap.timestamp, y: swap.used })),
       backgroundColor: "rgba(53, 162, 235, 0.45)",
       borderColor: "rgba(53, 162, 235)",
       fill: true,
@@ -18,12 +19,14 @@ const SwapChart: React.FC<SwapChartProps> = ({ xAxisMin }) => {
     },
   ];
   return (
-    <AreaChart
-      title={title}
-      labels={labels}
-      xAxisMin={xAxisMin}
-      datasets={datasets}
-    />
+    <>
+      <AreaChart
+        title={title}
+        labels={labels}
+        xAxisMin={xAxisMin}
+        datasets={datasets}
+      />
+    </>
   );
 };
 

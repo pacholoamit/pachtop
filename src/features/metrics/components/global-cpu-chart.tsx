@@ -1,16 +1,18 @@
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
-import { globalCpu } from "@/features/metrics/signals";
+import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 
 interface GlobalCpuChartProps extends ChartProps {}
 
 const GlobalCpuChart: React.FC<GlobalCpuChartProps> = ({ xAxisMin }) => {
+  const { globalCpu } = useMetricsContext();
+
   const title = "CPU Usage";
-  const labels = globalCpu.value.map((cpu) => cpu.timestamp);
+  const labels = globalCpu.map((cpu) => cpu.timestamp);
   const datasets: DatasetOptions[] = [
     {
       label: `CPU Usage (%)`,
-      data: globalCpu.value.map((cpu) => ({
+      data: globalCpu.map((cpu) => ({
         x: cpu.timestamp,
         y: cpu.cpuUsage,
       })),
