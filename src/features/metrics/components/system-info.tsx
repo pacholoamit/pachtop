@@ -1,10 +1,9 @@
+import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import { Card, Space, Text } from "@mantine/core";
-import { sysInfo, globalCpu } from "@/features/metrics/signals";
-
-const latestInfo = sysInfo.value[0];
-const latestGlobalCpu = globalCpu.value[0];
 
 const SystemInfo = () => {
+  const { globalCpu, sysInfo } = useMetricsContext();
+
   return (
     <Card
       style={{ height: "300px" }}
@@ -16,15 +15,15 @@ const SystemInfo = () => {
       <Text weight={"bold"} size="lg" color={"#dce1e8"}>
         System Information
       </Text>
-      <Text>OS: {latestInfo?.osVersion}</Text>
-      <Text>Host Name: {latestInfo?.hostname}</Text>
-      <Text>Kernel: {latestInfo?.kernelVersion}</Text>
+      <Text>OS: {sysInfo.at(-1)?.osVersion}</Text>
+      <Text>Host Name: {sysInfo.at(-1)?.hostname}</Text>
+      <Text>Kernel: {sysInfo.at(-1)?.kernelVersion}</Text>
       <Space h="xl" />
       <Text weight={"bold"} size="lg" color={"#dce1e8"}>
         CPU Information:
       </Text>
-      <Text>Brand: {latestGlobalCpu?.cpuBrand}</Text>
-      <Text>Vendor: {latestGlobalCpu?.cpuVendor}</Text>
+      <Text>Brand: {globalCpu.at(-1)?.cpuBrand}</Text>
+      <Text>Vendor: {globalCpu.at(-1)?.cpuVendor}</Text>
     </Card>
   );
 };
