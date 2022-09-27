@@ -31,7 +31,7 @@ Pachtop is a cross-platform desktop application built with Rust that allows you 
     <br/>
     <img src="https://rust-reportcard.xuri.me/badge/github.com/pacholoamit/pachtop" />
     <img src="https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg" />
-    <img src="https://img.shields.io/github/workflow/status/pacholoamit/pachtop/test/master" />
+    <img src="https://img.shields.io/github/workflow/status/pacholoamit/pachtop/release/release" />
     <img src="https://img.shields.io/github/license/pacholoamit/pachtop" />
     <img src="https://img.shields.io/github/v/release/pacholoamit/pachtop">
 </p>
