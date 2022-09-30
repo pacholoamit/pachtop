@@ -19,7 +19,7 @@
     </a>
     <br />
 </p>
-Pachtop is a cross-platform desktop application built with Rust that allows you to monitor your system resources in real time 
+Pachtop is a cross-platform desktop application built with Rust that allows you to monitor your system resources in real time.
 <br/>
 <br/>
 
@@ -39,7 +39,7 @@ Pachtop is a cross-platform desktop application built with Rust that allows you 
 
 # Installation
 
-Please see the <a href="https://github.com/pacholoamit/pachtop/releases">releases</a> page for the latest version. Pachtop is available for <i>Windows, MacOS & Linux</i>.
+Please see the <a href="https://github.com/pacholoamit/pachtop/releases">releases</a> page for the latest version. Pachtop is available for <i>Windows, MacOS & Linux</i>
 
 # Features
 
