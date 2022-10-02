@@ -1,7 +1,7 @@
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
-import { Card, Grid, Space, Text } from "@mantine/core";
-import ReactApexChart from "react-apexcharts";
 import GradientRadialChart from "@/components/gradient-radial-chart";
+import Card from "@/components/card";
+import { Grid, Space, Text } from "@mantine/core";
 
 const MemoryRadialChart = () => {
   const { memory } = useMetricsContext();
@@ -18,13 +18,7 @@ const SystemInfo = () => {
   return (
     <Grid gutter={"xl"}>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <Card
-          style={{ height: "310px" }}
-          shadow="xl"
-          p="sm"
-          radius={"md"}
-          withBorder
-        >
+        <Card style={{ height: "310px" }}>
           <Text weight={"bold"} size="lg" color={"#dce1e8"}>
             System Information
           </Text>
@@ -40,13 +34,7 @@ const SystemInfo = () => {
         </Card>
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <Card
-          style={{ height: "310px" }}
-          shadow="xl"
-          p="xs"
-          radius={"md"}
-          withBorder
-        >
+        <Card style={{ height: "310px" }}>
           <MemoryRadialChart />
         </Card>
       </Grid.Col>

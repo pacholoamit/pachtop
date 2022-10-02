@@ -8,6 +8,10 @@ import { Grid, Stack } from "@mantine/core";
 
 const xAxisMin = Date.now() - 86400;
 
+const TopMetricsSection = () => {
+  return <SystemInfo />;
+};
+
 const LeftMetricsStack = () => (
   <Stack>
     <MemoryChart xAxisMin={xAxisMin} />
@@ -26,7 +30,7 @@ const DashboardPage = () => {
   return (
     <Grid gutter="xl">
       <Grid.Col span={12}>
-        <SystemInfo />
+        <TopMetricsSection />
       </Grid.Col>
       <Grid.Col md={6} sm={12}>
         <LeftMetricsStack />

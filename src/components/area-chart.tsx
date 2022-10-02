@@ -14,7 +14,7 @@ import {
   TimeScale,
 } from "chart.js";
 
-import { Card } from "@mantine/core";
+import Card from "@/components/card";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import "chartjs-adapter-luxon";
 
@@ -149,13 +149,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
   };
 
   return (
-    <Card
-      style={{ height: "300px" }}
-      shadow="xl"
-      p="sm"
-      radius={"md"}
-      withBorder
-    >
+    <Card>
       <Line data={chartData as any} options={options as any} />
     </Card>
   );
