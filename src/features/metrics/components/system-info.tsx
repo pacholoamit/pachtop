@@ -87,15 +87,15 @@ const SystemInfo = () => {
   const { globalCpu, sysInfo } = useMetricsContext();
 
   return (
-    <Card
-      style={{ minHeight: "300px" }}
-      shadow="xl"
-      p="sm"
-      radius={"md"}
-      withBorder
-    >
-      <Grid gutter={"xs"}>
-        <Grid.Col span={3}>
+    <Grid gutter={"xl"}>
+      <Grid.Col span={3}>
+        <Card
+          style={{ minHeight: "310px" }}
+          shadow="xl"
+          p="sm"
+          radius={"md"}
+          withBorder
+        >
           <Text weight={"bold"} size="lg" color={"#dce1e8"}>
             System Information
           </Text>
@@ -108,18 +108,42 @@ const SystemInfo = () => {
           </Text>
           <Text>Brand: {globalCpu.at(-1)?.cpuBrand}</Text>
           <Text>Vendor: {globalCpu.at(-1)?.cpuVendor}</Text>
-        </Grid.Col>
-        <Grid.Col md={4} lg={3}>
+        </Card>
+      </Grid.Col>
+      <Grid.Col md={4} lg={3}>
+        <Card
+          style={{ minHeight: "310px" }}
+          shadow="xl"
+          p="sm"
+          radius={"md"}
+          withBorder
+        >
           <MemoryRadialChart />
-        </Grid.Col>
-        <Grid.Col md={4} lg={3}>
+        </Card>
+      </Grid.Col>
+      <Grid.Col md={4} lg={3}>
+        <Card
+          style={{ minHeight: "310px" }}
+          shadow="xl"
+          p="sm"
+          radius={"md"}
+          withBorder
+        >
           <MemoryRadialChart />
-        </Grid.Col>
-        <Grid.Col md={4} lg={3}>
+        </Card>
+      </Grid.Col>
+      <Grid.Col md={4} lg={3}>
+        <Card
+          style={{ minHeight: "310px" }}
+          shadow="xl"
+          p="sm"
+          radius={"md"}
+          withBorder
+        >
           <MemoryRadialChart />
-        </Grid.Col>
-      </Grid>
-    </Card>
+        </Card>
+      </Grid.Col>
+    </Grid>
   );
 };
 
