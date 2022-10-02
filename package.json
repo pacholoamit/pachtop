@@ -15,7 +15,6 @@
     "@mantine/hooks": "^5.2.0",
     "@tabler/icons": "^1.96.0",
     "@tauri-apps/api": "^1.0.2",
-    "@types/luxon": "^3.0.1",
     "chart.js": "^3.9.1",
     "chartjs-adapter-luxon": "^1.2.0",
     "luxon": "^3.0.3",
@@ -26,6 +25,7 @@
     "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#dev"
   },
   "devDependencies": {
+    "@types/luxon": "^3.0.1",
     "@tauri-apps/cli": "^1.0.5",
     "@types/node": "^18.7.8",
     "@types/react": "^18.0.17",
