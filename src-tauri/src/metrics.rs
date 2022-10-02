@@ -81,10 +81,6 @@ impl Metrics {
         let name = cpu.name().to_owned();
         let vendor = cpu.vendor_id().to_owned();
 
-        for cpu in self.sys.cpus() {
-            println!("{:#?}", cpu)
-        }
-
         GlobalCpu {
             usage,
             brand,

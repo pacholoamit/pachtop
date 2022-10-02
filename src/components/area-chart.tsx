@@ -105,7 +105,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
         color: "#dce1e8",
         align: "start" as const,
         font: {
-          family: "Roboto",
+          family: "Roboto, Arial, sans-serif",
           weight: "bold",
           size: 18,
         },

@@ -6,7 +6,7 @@ interface IThemeProvider {
 
 const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
   const theme: MantineThemeOverride = {
-    fontFamily: "Roboto",
+    fontFamily: "Roboto, Arial, sans-serif",
     colorScheme: "dark",
     colors: {
       dark: [

@@ -5,6 +5,7 @@ import GlobalCpuChart from "@/features/metrics/components/global-cpu-chart";
 import NetworksChart from "@/features/metrics/components/networks-chart";
 import MemoryRadialChart from "@/features/metrics/components/memory-radial-chart";
 import SwapRadialChart from "@/features/metrics/components/swap-radial-chart";
+import CpusBarChart from "@/features/metrics/components/cpus-bar-chart";
 
 import { Grid, Stack } from "@mantine/core";
 
@@ -21,6 +22,9 @@ const TopMetricsSection = () => {
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <SwapRadialChart />
+      </Grid.Col>
+      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+        <CpusBarChart />
       </Grid.Col>
     </Grid>
   );
