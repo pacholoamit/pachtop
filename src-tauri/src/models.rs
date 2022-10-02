@@ -10,6 +10,7 @@ pub struct Memory {
     pub free: f64,
     pub total: f64,
     pub used: f64,
+    pub used_percentage: f64,
     pub timestamp: Timestamp,
 }
 

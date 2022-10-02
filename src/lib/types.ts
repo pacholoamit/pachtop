@@ -24,6 +24,7 @@ export interface Memory {
   free: number;
   total: number;
   used: number;
+  used_percentage: number;
   timestamp: Timestamp;
 }
 

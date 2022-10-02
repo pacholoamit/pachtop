@@ -96,6 +96,7 @@ impl Metrics {
             free,
             total,
             used,
+            used_percentage: get_percentage(&self.sys.used_memory(), &self.sys.total_memory()),
             unit: self.target_unit,
             timestamp: current_time(),
         }
@@ -146,6 +147,11 @@ fn current_time() -> Timestamp {
     let start = SystemTime::now();
     let since_the_epoch = start.duration_since(UNIX_EPOCH);
     Timestamp(since_the_epoch.unwrap().as_millis() as i64)
+}
+
+fn get_percentage(value: &u64, total: &u64) -> f64 {
+    let percentage = (*value as f64 / *total as f64) * 100.0;
+    (percentage * 100.0).round() / 100.0
 }
 
 fn bytes_to_size(bytes: &u64, &dest_unit: &ByteUnit) -> f64 {

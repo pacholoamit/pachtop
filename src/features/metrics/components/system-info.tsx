@@ -6,6 +6,8 @@ import ReactApexChart from "react-apexcharts";
 const MemoryRadialChart = () => {
   const { memory } = useMetricsContext();
 
+  useEffect(() => console.log(memory.at(-1)?.used_percentage), [memory]);
+
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: "radialBar",
@@ -78,7 +80,7 @@ const MemoryRadialChart = () => {
   };
 
   const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [
-    memory?.at(-1)?.used || 0,
+    memory?.at(-1)?.used_percentage || 0,
   ];
   return <ReactApexChart options={options} series={series} type="radialBar" />;
 };
@@ -88,7 +90,7 @@ const SystemInfo = () => {
 
   return (
     <Grid gutter={"xl"}>
-      <Grid.Col span={3}>
+      <Grid.Col sm={6} md={6} lg={3}>
         <Card
           style={{ minHeight: "310px" }}
           shadow="xl"
@@ -110,29 +112,7 @@ const SystemInfo = () => {
           <Text>Vendor: {globalCpu.at(-1)?.cpuVendor}</Text>
         </Card>
       </Grid.Col>
-      <Grid.Col md={4} lg={3}>
-        <Card
-          style={{ minHeight: "310px" }}
-          shadow="xl"
-          p="sm"
-          radius={"md"}
-          withBorder
-        >
-          <MemoryRadialChart />
-        </Card>
-      </Grid.Col>
-      <Grid.Col md={4} lg={3}>
-        <Card
-          style={{ minHeight: "310px" }}
-          shadow="xl"
-          p="sm"
-          radius={"md"}
-          withBorder
-        >
-          <MemoryRadialChart />
-        </Card>
-      </Grid.Col>
-      <Grid.Col md={4} lg={3}>
+      <Grid.Col sm={6} md={6} lg={3}>
         <Card
           style={{ minHeight: "310px" }}
           shadow="xl"
