@@ -12,3 +12,12 @@ export interface UniqueNetworkData {
   received: number;
   timestamp: number;
 }
+
+export interface UniqueCpu {
+  name: string;
+  data: UniqueCpuData[];
+}
+export interface UniqueCpuData {
+  timestamp: number;
+  usage: number;
+}

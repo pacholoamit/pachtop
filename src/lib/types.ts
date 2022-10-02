@@ -4,6 +4,7 @@ export enum TauriCommand {
   SysInfo = "get_sysinfo",
   GlobalCpu = "get_global_cpu",
   Networks = "get_networks",
+  Cpus = "get_cpus",
 }
 
 // typescript interfaces/types from models.rs
@@ -34,6 +35,12 @@ export interface GlobalCpu {
   frequency: number;
   name: string;
   vendor: string;
+  timestamp: Timestamp;
+}
+
+export interface Cpu {
+  name: string;
+  usage: number;
   timestamp: Timestamp;
 }
 

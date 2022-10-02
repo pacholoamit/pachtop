@@ -14,7 +14,7 @@ const GlobalCpuChart: React.FC<GlobalCpuChartProps> = ({ xAxisMin }) => {
       label: `CPU Usage (%)`,
       data: globalCpu.map((cpu) => ({
         x: cpu.timestamp,
-        y: cpu.cpuUsage,
+        y: cpu.usage,
       })),
       backgroundColor: "rgba(255, 99, 132, 0.45)",
       borderColor: "rgba(255, 99, 132, 1)",
