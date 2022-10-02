@@ -149,7 +149,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
   };
 
   return (
-    <Card>
+    <Card style={{ height: "300px" }}>
       <Line data={chartData as any} options={options as any} />
     </Card>
   );

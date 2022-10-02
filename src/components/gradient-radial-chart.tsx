@@ -1,4 +1,5 @@
 import ReactApexChart from "react-apexcharts";
+import Card from "@/components/card";
 
 interface GradientRadialChartProps {
   series: ApexAxisChartSeries | ApexNonAxisChartSeries;
@@ -81,12 +82,14 @@ const GradientRadialChart: React.FC<GradientRadialChartProps> = (props) => {
   };
 
   return (
-    <ReactApexChart
-      options={options}
-      series={series}
-      type="radialBar"
-      height={"310px"}
-    />
+    <Card>
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="radialBar"
+        height={"305px"}
+      />
+    </Card>
   );
 };
 
