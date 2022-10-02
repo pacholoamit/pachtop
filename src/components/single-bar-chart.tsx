@@ -1,6 +1,5 @@
 import ReactApexChart from "react-apexcharts";
 
-
 interface SingleBarChartProps {
   series: SeriesData;
 }
@@ -49,7 +48,7 @@ const SingleBarChart: React.FC<SingleBarChartProps> = ({ series }) => {
       floating: true,
       align: "right",
       offsetY: 0,
-      text: series.data[0].toString(),
+      text: series.data[0].toString() + "%",
       style: {
         fontSize: "20px",
         color: "#f0f0f0",
@@ -60,9 +59,7 @@ const SingleBarChart: React.FC<SingleBarChartProps> = ({ series }) => {
     tooltip: {
       enabled: false,
     },
-    xaxis: {
-      categories: ["Process 2"],
-    },
+
     yaxis: {
       max: 100,
     },
@@ -75,14 +72,12 @@ const SingleBarChart: React.FC<SingleBarChartProps> = ({ series }) => {
     },
   };
   return (
-  
-      <ReactApexChart
-        options={options}
-        series={seriesData}
-        type="bar"
-        height={70}
-      />
-
+    <ReactApexChart
+      options={options}
+      series={seriesData}
+      type="bar"
+      height={70}
+    />
   );
 };
 
