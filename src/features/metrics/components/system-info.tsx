@@ -1,93 +1,15 @@
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
-import { Card, Center, Grid, Space, Stack, Text } from "@mantine/core";
-import { useEffect } from "react";
+import { Card, Grid, Space, Text } from "@mantine/core";
 import ReactApexChart from "react-apexcharts";
+import GradientRadialChart from "@/components/gradient-radial-chart";
 
 const MemoryRadialChart = () => {
   const { memory } = useMetricsContext();
 
-  const options: ApexCharts.ApexOptions = {
-    chart: {
-      type: "radialBar",
-    },
-    plotOptions: {
-      radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: "70%",
-          background: "#152847",
-          image: undefined,
-          imageOffsetX: 0,
-          imageOffsetY: 0,
-          position: "front",
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24,
-          },
-        },
-        track: {
-          background: "#324363",
-          strokeWidth: "67%",
-          margin: 0, // margin is in pixels
-          dropShadow: {
-            enabled: true,
-            top: -3,
-            left: 0,
-            blur: 4,
-            opacity: 0.35,
-          },
-        },
-        dataLabels: {
-          show: true,
-          name: {
-            offsetY: -10,
-            show: true,
-            color: "#f0f0f0",
-            fontSize: "17px",
-          },
-          value: {
-            color: "#f0f0f0",
-            fontSize: "24px",
-            show: true,
-          },
-        },
-      },
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        shade: "dark",
-        type: "horizontal",
-        shadeIntensity: 0.5,
-        gradientToColors: ["#ABE5A1"],
-        inverseColors: true,
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 100],
-      },
-    },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["RAM Usage"],
-  };
-
   const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [
     memory?.at(-1)?.used_percentage || 0,
   ];
-  return (
-    <ReactApexChart
-      options={options}
-      series={series}
-      type="radialBar"
-      height={"310px"}
-    />
-  );
+  return <GradientRadialChart labels={["RAM Usage"]} series={series} />;
 };
 
 const SystemInfo = () => {
@@ -97,7 +19,7 @@ const SystemInfo = () => {
     <Grid gutter={"xl"}>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <Card
-          style={{ minHeight: "310px" }}
+          style={{ height: "310px" }}
           shadow="xl"
           p="sm"
           radius={"md"}
@@ -119,7 +41,7 @@ const SystemInfo = () => {
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <Card
-          style={{ minHeight: "310px" }}
+          style={{ height: "310px" }}
           shadow="xl"
           p="xs"
           radius={"md"}
