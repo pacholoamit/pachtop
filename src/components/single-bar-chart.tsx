@@ -1,4 +1,5 @@
 import ReactApexChart from "react-apexcharts";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 interface SingleBarChartProps {
   series: SeriesData;
@@ -10,6 +11,8 @@ interface SeriesData {
 }
 
 const SingleBarChart: React.FC<SingleBarChartProps> = ({ series }) => {
+  const { isLargerThanXl } = useMediaQuery();
+  // const width = isLargerThanXl ? 350 : "100%";
   const seriesData: ApexAxisChartSeries = [series];
   const options: ApexCharts.ApexOptions = {
     chart: {
@@ -77,6 +80,7 @@ const SingleBarChart: React.FC<SingleBarChartProps> = ({ series }) => {
       series={seriesData}
       type="bar"
       height={70}
+      // width={width}
     />
   );
 };
