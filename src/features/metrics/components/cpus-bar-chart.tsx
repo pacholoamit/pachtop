@@ -1,7 +1,7 @@
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import SingleBarChart from "@/components/single-bar-chart";
 import Card from "@/components/card";
-import { useEffect } from "react";
+import { ScrollArea } from "@mantine/core";
 
 const CpusBarChart = () => {
   const { cpus } = useMetricsContext();
@@ -13,9 +13,11 @@ const CpusBarChart = () => {
 
   return (
     <Card>
-      {series?.map((s) => (
-        <SingleBarChart series={s} key={s.name} />
-      ))}
+      <ScrollArea type="scroll">
+        {series?.map((s) => (
+          <SingleBarChart series={s} key={s.name} />
+        ))}
+      </ScrollArea>
     </Card>
   );
 };
