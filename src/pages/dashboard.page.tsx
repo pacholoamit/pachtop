@@ -24,14 +24,14 @@ const TopMetricsSection = () => {
 };
 
 const LeftMetricsStack = () => (
-  <Stack>
+  <Stack spacing={"xl"}>
     <MemoryChart xAxisMin={xAxisMin} />
     <SwapChart xAxisMin={xAxisMin} />
   </Stack>
 );
 
 const RightMetricsStack = () => (
-  <Stack>
+  <Stack spacing={"xl"}>
     <GlobalCpuChart xAxisMin={xAxisMin} />
     <NetworksChart xAxisMin={xAxisMin} />
   </Stack>
