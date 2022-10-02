@@ -29,11 +29,11 @@ export interface Memory {
 }
 
 export interface GlobalCpu {
-  cpuUsage: number;
-  cpuBrand: string;
-  cpuFrequency: number;
-  cpuName: string;
-  cpuVendor: string;
+  usage: number;
+  brand: string;
+  frequency: number;
+  name: string;
+  vendor: string;
   timestamp: Timestamp;
 }
 

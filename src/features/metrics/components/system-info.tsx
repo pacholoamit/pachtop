@@ -18,8 +18,8 @@ const SystemInfo = () => {
       <Text weight={"bold"} size="lg" color={"#dce1e8"}>
         CPU Information:
       </Text>
-      <Text>Brand: {globalCpu.at(-1)?.cpuBrand}</Text>
-      <Text>Vendor: {globalCpu.at(-1)?.cpuVendor}</Text>
+      <Text>Brand: {globalCpu.at(-1)?.brand}</Text>
+      <Text>Vendor: {globalCpu.at(-1)?.vendor}</Text>
     </Card>
   );
 };

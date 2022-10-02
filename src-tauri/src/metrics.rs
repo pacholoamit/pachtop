@@ -1,4 +1,4 @@
-use crate::models::{GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
+use crate::models::{Cpu, GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
 use byte_unit::{Byte, ByteUnit};
 use std::{
     sync::{Arc, Mutex},
@@ -16,6 +16,11 @@ pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
 #[tauri::command]
 pub fn get_global_cpu(state: State<'_, MetricsState>) -> GlobalCpu {
     state.0.lock().unwrap().global_cpu()
+}
+
+#[tauri::command]
+pub fn get_cpus(state: State<'_, MetricsState>) -> Vec<Cpu> {
+    state.0.lock().unwrap().cpus()
 }
 
 #[tauri::command]
@@ -70,20 +75,44 @@ impl Metrics {
         self.sys.refresh_cpu();
 
         let cpu = self.sys.global_cpu_info();
-        let cpu_usage = cpu.cpu_usage();
-        let cpu_brand = cpu.brand().to_owned();
-        let cpu_frequency = cpu.frequency().to_owned();
-        let cpu_name = cpu.name().to_owned();
-        let cpu_vendor = cpu.vendor_id().to_owned();
+        let usage = cpu.cpu_usage();
+        let brand = cpu.brand().to_owned();
+        let frequency = cpu.frequency().to_owned();
+        let name = cpu.name().to_owned();
+        let vendor = cpu.vendor_id().to_owned();
+
+        for cpu in self.sys.cpus() {
+            println!("{:#?}", cpu)
+        }
 
         GlobalCpu {
-            cpu_usage,
-            cpu_brand,
-            cpu_frequency,
-            cpu_name,
-            cpu_vendor,
+            usage,
+            brand,
+            frequency,
+            name,
+            vendor,
             timestamp: current_time(),
         }
+    }
+
+    fn cpus(&mut self) -> Vec<Cpu> {
+        let cpus: Vec<Cpu> = self
+            .sys
+            .cpus()
+            .into_iter()
+            .map(|cpu| {
+                let name = cpu.name().to_owned();
+                let usage = cpu.cpu_usage().to_owned();
+
+                Cpu {
+                    name,
+                    usage,
+                    timestamp: current_time(),
+                }
+            })
+            .collect();
+
+        cpus
     }
 
     fn memory(&mut self) -> Memory {

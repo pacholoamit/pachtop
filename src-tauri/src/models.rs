@@ -18,11 +18,19 @@ pub struct Memory {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GlobalCpu {
-    pub cpu_usage: f32,
-    pub cpu_brand: String,
-    pub cpu_frequency: u64,
-    pub cpu_name: String,
-    pub cpu_vendor: String,
+    pub usage: f32,
+    pub brand: String,
+    pub frequency: u64,
+    pub name: String,
+    pub vendor: String,
+    pub timestamp: Timestamp,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Cpu {
+    pub name: String,
+    pub usage: f32,
     pub timestamp: Timestamp,
 }
 
