@@ -1,15 +1,17 @@
 import ReactApexChart from "react-apexcharts";
-import Card from "@/components/card";
 
-interface BarChartProps {}
 
-const BarChart: React.FC<BarChartProps> = () => {
-  const series: ApexAxisChartSeries = [
-    {
-      name: "Process 2",
-      data: [80],
-    },
-  ];
+interface SingleBarChartProps {
+  series: SeriesData;
+}
+
+interface SeriesData {
+  name: string;
+  data: number[];
+}
+
+const SingleBarChart: React.FC<SingleBarChartProps> = ({ series }) => {
+  const seriesData: ApexAxisChartSeries = [series];
   const options: ApexCharts.ApexOptions = {
     chart: {
       stacked: true,
@@ -35,7 +37,7 @@ const BarChart: React.FC<BarChartProps> = () => {
       floating: true,
       offsetX: -10,
       offsetY: 5,
-      text: "Process 2",
+      text: series.name,
       style: {
         fontSize: "16px",
         color: "#f0f0f0",
@@ -47,7 +49,7 @@ const BarChart: React.FC<BarChartProps> = () => {
       floating: true,
       align: "right",
       offsetY: 0,
-      text: "80%",
+      text: series.data[0].toString(),
       style: {
         fontSize: "20px",
         color: "#f0f0f0",
@@ -73,15 +75,15 @@ const BarChart: React.FC<BarChartProps> = () => {
     },
   };
   return (
-    <Card>
+  
       <ReactApexChart
         options={options}
-        series={series}
+        series={seriesData}
         type="bar"
         height={70}
       />
-    </Card>
+
   );
 };
 
-export default BarChart;
+export default SingleBarChart;

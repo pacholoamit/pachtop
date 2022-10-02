@@ -18,13 +18,13 @@ const TopMetricsSection = () => {
         <SystemInfo />
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
+        <CpusBarChart />
+      </Grid.Col>
+      <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <MemoryRadialChart />
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <SwapRadialChart />
-      </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <CpusBarChart />
       </Grid.Col>
     </Grid>
   );

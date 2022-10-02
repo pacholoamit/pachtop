@@ -1,9 +1,9 @@
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
-import BarChart from "@/components/bar-chart";
-
+import SingleBarChart from "@/components/single-bar-chart";
+import Card from "@/components/card";
 import { useEffect } from "react";
 
-const CpusRadialChart = () => {
+const CpusBarChart = () => {
   const { cpus } = useMetricsContext();
 
   const series = cpus.map((cpu) => ({
@@ -11,8 +11,13 @@ const CpusRadialChart = () => {
     data: [cpu.data.at(-1)?.usage || 0],
   }));
 
-  useEffect(() => console.log(series), [series]);
-  return <BarChart />;
+  return (
+    <Card>
+      {series?.map((s) => (
+        <SingleBarChart series={s} key={s.name} />
+      ))}
+    </Card>
+  );
 };
 
-export default CpusRadialChart;
+export default CpusBarChart;
