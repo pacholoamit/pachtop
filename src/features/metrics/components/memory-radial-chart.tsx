@@ -5,7 +5,7 @@ const MemoryRadialChart = () => {
   const { memory } = useMetricsContext();
 
   const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [
-    memory?.at(-1)?.used_percentage || 0,
+    memory?.at(-1)?.usedPercentage || 0,
   ];
   return <GradientRadialChart labels={["RAM Usage"]} series={series} />;
 };

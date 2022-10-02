@@ -112,6 +112,7 @@ impl Metrics {
             free,
             total,
             used,
+            used_percentage: get_percentage(&self.sys.used_swap(), &self.sys.total_swap()),
             unit: self.target_unit,
             timestamp: current_time(),
         }

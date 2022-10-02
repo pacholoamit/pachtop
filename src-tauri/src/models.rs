@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 pub struct Timestamp(pub i64);
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Memory {
     pub unit: ByteUnit,
     pub free: f64,
@@ -26,11 +27,13 @@ pub struct GlobalCpu {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Swap {
     pub unit: ByteUnit,
     pub free: f64,
     pub total: f64,
     pub used: f64,
+    pub used_percentage: f64,
     pub timestamp: Timestamp,
 }
 
@@ -45,6 +48,7 @@ pub struct SysInfo {
     pub timestamp: Timestamp,
 }
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Network {
     pub unit: ByteUnit,
     pub name: String,

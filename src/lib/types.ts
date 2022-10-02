@@ -24,7 +24,7 @@ export interface Memory {
   free: number;
   total: number;
   used: number;
-  used_percentage: number;
+  usedPercentage: number;
   timestamp: Timestamp;
 }
 
@@ -42,6 +42,7 @@ export interface Swap {
   free: number;
   total: number;
   used: number;
+  usedPercentage: number;
   timestamp: Timestamp;
 }
 
