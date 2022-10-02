@@ -76,7 +76,7 @@ const MemoryRadialChart = () => {
     stroke: {
       lineCap: "round",
     },
-    labels: ["Memory Used GB"],
+    labels: ["RAM Used"],
   };
 
   const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [
