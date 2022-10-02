@@ -6,7 +6,6 @@ import NetworksChart from "@/features/metrics/components/networks-chart";
 import MemoryRadialChart from "@/features/metrics/components/memory-radial-chart";
 
 import { Grid, Stack } from "@mantine/core";
-import Card from "@/components/card";
 
 const xAxisMin = Date.now() - 86400;
 
