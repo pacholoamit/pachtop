@@ -98,11 +98,12 @@ impl Metrics {
             .into_iter()
             .map(|cpu| {
                 let name = cpu.name().to_owned();
-                let usage = cpu.cpu_usage().to_owned();
+                let usage = cpu.cpu_usage().to_owned() as u64;
+                let total = 100;
 
                 Cpu {
                     name,
-                    usage,
+                    usage: get_percentage(&usage, &total),
                     timestamp: current_time(),
                 }
             })

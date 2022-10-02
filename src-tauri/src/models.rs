@@ -30,7 +30,7 @@ pub struct GlobalCpu {
 #[serde(rename_all = "camelCase")]
 pub struct Cpu {
     pub name: String,
-    pub usage: f32,
+    pub usage: f64,
     pub timestamp: Timestamp,
 }
 
