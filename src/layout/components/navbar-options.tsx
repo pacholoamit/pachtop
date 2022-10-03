@@ -1,5 +1,9 @@
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { IconAlertCircle, IconLayoutDashboard } from "@tabler/icons";
+import {
+  IconAlertCircle,
+  IconLayoutDashboard,
+  IconServer,
+} from "@tabler/icons";
 import {
   UnstyledButton,
   Group,
@@ -7,15 +11,17 @@ import {
   Text,
   MediaQuery,
   MantineTheme,
-  Tooltip,
 } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 interface NavbarOptionProps {
   icon: React.ReactNode;
   label: string;
+  onClick?: () => void;
 }
 
-const NavbarOption: React.FC<NavbarOptionProps> = ({ icon, label }) => {
+const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
+  const { icon, label, onClick } = props;
   const { isSmallerThanMd } = useMediaQuery();
   const position = isSmallerThanMd ? "center" : "left";
 
@@ -31,7 +37,7 @@ const NavbarOption: React.FC<NavbarOptionProps> = ({ icon, label }) => {
   });
 
   return (
-    <UnstyledButton sx={sx}>
+    <UnstyledButton sx={sx} onClick={onClick}>
       <Group position={position}>
         <ThemeIcon variant="gradient">{icon}</ThemeIcon>
         <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
@@ -43,14 +49,17 @@ const NavbarOption: React.FC<NavbarOptionProps> = ({ icon, label }) => {
 };
 
 const NavbarOptions = () => {
-  const options = [
+  const navigate = useNavigate();
+  const options: NavbarOptionProps[] = [
     {
       icon: <IconLayoutDashboard size={16} />,
       label: "Dashboard",
+      onClick: () => navigate("/"),
     },
     {
-      icon: <IconAlertCircle size={16} />,
-      label: "Processes",
+      icon: <IconServer size={16} />,
+      label: "Storage",
+      onClick: () => navigate("/storage"),
     },
   ];
 
