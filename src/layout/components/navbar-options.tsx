@@ -3,6 +3,8 @@ import {
   IconAlertCircle,
   IconLayoutDashboard,
   IconServer,
+  IconArticle,
+  IconCpu,
 } from "@tabler/icons";
 import {
   UnstyledButton,
@@ -62,8 +64,13 @@ const NavbarOptions = () => {
       onClick: () => navigate("/storage"),
     },
     {
-      icon: <IconAlertCircle size={16} />,
+      icon: <IconCpu size={16} />,
       label: "Processes",
+      onClick: () => {},
+    },
+    {
+      icon: <IconArticle size={16} />,
+      label: "Logs",
       onClick: () => {},
     },
   ];

@@ -9,6 +9,11 @@ const GradientRadialChart: React.FC<GradientRadialChartProps> = (props) => {
   const { series, labels } = props;
 
   const options: ApexCharts.ApexOptions = {
+    chart: {
+      animations: {
+        enabled: false,
+      },
+    },
     plotOptions: {
       radialBar: {
         startAngle: -135,
