@@ -129,6 +129,7 @@ impl Metrics {
                 let used = total - free;
                 let file_system = disk.file_system().to_owned();
                 let is_removable = disk.is_removable();
+                let mount_point = disk.mount_point().to_owned();
                 let disk_type = match disk.type_() {
                     sysinfo::DiskType::HDD => "HDD".to_owned(),
                     sysinfo::DiskType::SSD => "SSD".to_owned(),
@@ -140,6 +141,7 @@ impl Metrics {
                     free,
                     used,
                     total,
+                    mount_point,
                     file_system,
                     is_removable,
                     disk_type,

@@ -1,4 +1,7 @@
-use std::ffi::{OsStr, OsString};
+use std::{
+    ffi::{OsStr, OsString},
+    path::PathBuf,
+};
 
 use byte_unit::ByteUnit;
 use serde::{Deserialize, Serialize};
@@ -76,6 +79,7 @@ pub struct Disk {
     pub free: f64,
     pub total: f64,
     pub used: f64,
+    pub mount_point: PathBuf,
     pub file_system: Vec<u8>,
     pub disk_type: String,
     pub is_removable: bool,

@@ -1,4 +1,4 @@
-import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
+import useRequestMetrics from "@/hooks/useRequestMetrics";
 import { UniqueCpu } from "@/features/metrics/utils/types";
 import { TauriCommand } from "@/lib";
 import { Cpu } from "@/lib/types";

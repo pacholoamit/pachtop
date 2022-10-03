@@ -1,4 +1,4 @@
-import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
+import useRequestMetrics from "@/hooks/useRequestMetrics";
 import { UniqueNetwork } from "@/features/metrics/utils/types";
 import { TauriCommand } from "@/lib";
 import { Network } from "@/lib/types";
