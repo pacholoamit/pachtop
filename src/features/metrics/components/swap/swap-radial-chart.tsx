@@ -4,9 +4,7 @@ import GradientRadialChart from "@/components/gradient-radial-chart";
 const SwapRadialChart = () => {
   const { swap } = useMetricsContext();
 
-  const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [
-    swap?.at(-1)?.usedPercentage || 0,
-  ];
+  const series = [swap?.at(-1)?.usedPercentage || 0];
   return <GradientRadialChart labels={["Swap Usage"]} series={series} />;
 };
 

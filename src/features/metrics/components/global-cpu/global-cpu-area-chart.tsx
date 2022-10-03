@@ -2,9 +2,11 @@ import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 
-interface GlobalCpuChartProps extends ChartProps {}
+interface GlobalCpuAreaChartProps extends ChartProps {}
 
-const GlobalCpuChart: React.FC<GlobalCpuChartProps> = ({ xAxisMin }) => {
+const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
+  xAxisMin,
+}) => {
   const { globalCpu } = useMetricsContext();
 
   const title = "CPU Usage";
@@ -32,4 +34,4 @@ const GlobalCpuChart: React.FC<GlobalCpuChartProps> = ({ xAxisMin }) => {
   );
 };
 
-export default GlobalCpuChart;
+export default GlobalCpuAreaChart;

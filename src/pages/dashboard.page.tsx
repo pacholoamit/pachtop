@@ -1,11 +1,11 @@
 import SystemInfo from "@/features/metrics/components/system-info";
-import MemoryChart from "@/features/metrics/components/memory-chart";
-import SwapChart from "@/features/metrics/components/swap-chart";
-import GlobalCpuChart from "@/features/metrics/components/global-cpu-chart";
-import NetworksChart from "@/features/metrics/components/networks-chart";
-import MemoryRadialChart from "@/features/metrics/components/memory-radial-chart";
-import SwapRadialChart from "@/features/metrics/components/swap-radial-chart";
-import CpusBarChart from "@/features/metrics/components/cpus-bar-chart";
+import MemoryAreaChart from "@/features/metrics/components/memory/memory-area-chart";
+import SwapAreaChart from "@/features/metrics/components/swap/swap-area-chart";
+import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu-area-chart";
+import NetworksAreaChart from "@/features/metrics/components/networks/networks-area-chart";
+import MemoryRadialChart from "@/features/metrics/components/memory/memory-radial-chart";
+import SwapRadialChart from "@/features/metrics/components/swap/swap-radial-chart";
+import CpusBarChart from "@/features/metrics/components/cpus/cpus-bar-chart";
 
 import { Grid, Stack } from "@mantine/core";
 
@@ -33,15 +33,15 @@ const TopMetricsSection = () => {
 
 const LeftMetricsStack = () => (
   <Stack spacing={"xl"}>
-    <MemoryChart xAxisMin={xAxisMin} />
-    <SwapChart xAxisMin={xAxisMin} />
+    <MemoryAreaChart xAxisMin={xAxisMin} />
+    <SwapAreaChart xAxisMin={xAxisMin} />
   </Stack>
 );
 
 const RightMetricsStack = () => (
   <Stack spacing={"xl"}>
-    <GlobalCpuChart xAxisMin={xAxisMin} />
-    <NetworksChart xAxisMin={xAxisMin} />
+    <GlobalCpuAreaChart xAxisMin={xAxisMin} />
+    <NetworksAreaChart xAxisMin={xAxisMin} />
   </Stack>
 );
 

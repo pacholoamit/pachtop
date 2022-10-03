@@ -2,9 +2,9 @@ import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 
-interface NetworksChartProps extends ChartProps {}
+interface NetworksAreaChartProps extends ChartProps {}
 
-const NetworksChart: React.FC<NetworksChartProps> = ({ xAxisMin }) => {
+const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
   const { networks } = useMetricsContext();
   const title = "Network Received";
   const labels = networks.map((network) => network.data[0].timestamp);
@@ -30,4 +30,4 @@ const NetworksChart: React.FC<NetworksChartProps> = ({ xAxisMin }) => {
   );
 };
 
-export default NetworksChart;
+export default NetworksAreaChart;

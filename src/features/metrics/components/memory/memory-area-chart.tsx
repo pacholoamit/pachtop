@@ -2,9 +2,9 @@ import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 
-interface MemoryChartProps extends ChartProps {}
+interface MemoryAreaChartProps extends ChartProps {}
 
-const MemoryChart: React.FC<MemoryChartProps> = ({ xAxisMin }) => {
+const MemoryAreaChart: React.FC<MemoryAreaChartProps> = ({ xAxisMin }) => {
   const { memory } = useMetricsContext();
 
   const title = "Random Access Memory (RAM)";
@@ -29,4 +29,4 @@ const MemoryChart: React.FC<MemoryChartProps> = ({ xAxisMin }) => {
   );
 };
 
-export default MemoryChart;
+export default MemoryAreaChart;

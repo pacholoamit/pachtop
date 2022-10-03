@@ -4,9 +4,7 @@ import GradientRadialChart from "@/components/gradient-radial-chart";
 const MemoryRadialChart = () => {
   const { memory } = useMetricsContext();
 
-  const series: ApexAxisChartSeries | ApexNonAxisChartSeries = [
-    memory?.at(-1)?.usedPercentage || 0,
-  ];
+  const series = [memory?.at(-1)?.usedPercentage || 0];
   return <GradientRadialChart labels={["RAM Usage"]} series={series} />;
 };
 
