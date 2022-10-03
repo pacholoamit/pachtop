@@ -41,6 +41,9 @@ Pachtop is a cross-platform desktop application built with Rust that allows you 
 
 Please see the <a href="https://github.com/pacholoamit/pachtop/releases">releases</a> page for the latest version. Pachtop is available for <i>Windows, MacOS & Linux</i>
 
+# Motivation
+The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan.github.io/Stacer-Web/) which is a comprehensive System optimizer and monitoring solution. Although, Pachtop does not implement any system optimizer functionality (yet!), It provides more in-depth metrics and information about your system. I wanted to create a similar application to Stacer but with a more modern UI and a more robust codebase. I also wanted to learn Rust and this seemed like a good opportunity to do so. If you hadn't guessed, Pachtop is named after the legendary [top](https://en.wikipedia.org/wiki/Top_(software)) linux program that displays information about CPU and memory utilization.
+
 # Features
 
 - [x] CPU Usage
