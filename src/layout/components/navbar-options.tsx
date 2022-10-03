@@ -61,6 +61,11 @@ const NavbarOptions = () => {
       label: "Storage",
       onClick: () => navigate("/storage"),
     },
+    {
+      icon: <IconAlertCircle size={16} />,
+      label: "Processes",
+      onClick: () => {},
+    },
   ];
 
   const navbarOptions = options.map((option) => (
