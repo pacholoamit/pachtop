@@ -10,6 +10,6 @@ const createLogger = async () => {
   };
 };
 
-const logger = await createLogger();
+const logger = createLogger();
 
 export default logger;
