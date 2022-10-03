@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import DashboardPage from "@/pages/dashboard.page";
+import DashboardPage from "@/features/metrics/pages/dashboard.page";
 import Layout from "@/layout";
 
 const AppRoutes: React.FC = () => {
