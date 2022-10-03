@@ -118,14 +118,15 @@ impl Metrics {
     fn disks(&mut self) -> Vec<Disk> {
         self.sys.refresh_disks_list();
 
+        let unit = ByteUnit::GiB;
         let disks: Vec<Disk> = self
             .sys
             .disks()
             .into_iter()
             .map(|disk| {
                 let name = Box::new(disk.name().to_owned());
-                let total = bytes_to_size(&disk.total_space(), &self.target_unit);
-                let free = bytes_to_size(&disk.available_space(), &self.target_unit);
+                let total = bytes_to_size(&disk.total_space(), &unit);
+                let free = bytes_to_size(&disk.available_space(), &unit);
                 let used = total - free;
                 let file_system = disk.file_system().to_owned();
                 let is_removable = disk.is_removable();
@@ -135,6 +136,8 @@ impl Metrics {
                     sysinfo::DiskType::SSD => "SSD".to_owned(),
                     _ => "Unknown".to_owned(),
                 };
+
+                // println!("{:?} {}", name, &disk.total_space());
 
                 Disk {
                     name,
