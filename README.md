@@ -42,11 +42,20 @@ Pachtop is a cross-platform desktop application built with Rust that allows you 
 Please see the <a href="https://github.com/pacholoamit/pachtop/releases">releases</a> page for the latest version. Pachtop is available for <i>Windows, MacOS & Linux</i>
 
 # Motivation
-The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan.github.io/Stacer-Web/) which is a comprehensive System optimizer and monitoring solution. Although, Pachtop does not implement any system optimizer functionality (yet!), It provides more in-depth metrics and information about your system. I wanted to create a similar application to Stacer but with a more modern UI and a more robust codebase. I also wanted to learn Rust and this seemed like a good opportunity to do so. If you hadn't guessed, Pachtop is named after the legendary [top](https://en.wikipedia.org/wiki/Top_(software)) linux program that displays information about CPU and memory utilization.
+The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan.github.io/Stacer-Web/) which is a comprehensive System optimizer and monitoring solution. Although, Pachtop does not implement any system optimizer functionality (yet!), It provides more in-depth metrics and information about your system. I wanted to create a similar application to Stacer but with a more modern UI and a more robust codebase. I also wanted to learn Rust and this seemed like a good opportunity to do so. If you hadn't guessed, Pachtop is named after the legendary [top](https://en.wikipedia.org/wiki/Top_(software)) linux program that displays information about CPU and memory utilization. Pachtop will always remain open-source and free to use.
 
-# Features
+# Architecture
+Pachtop is built with what I'd like to call the **"VRRTT"** stack (Vite, Rust, React, Typescript, Tauri.) 
 
-- [x] CPU Usage
+- **Vite** is a frontend build tool that uses **Rollup** under the hood. It's blazing fast and has a lot of cool features like hot module reloading and code splitting.
+- **Rust** is a systems programming language that is blazing fast and memory efficient. It's also very easy to learn and has a great community.
+- **React** is a popular frontend library that is used by many companies like Facebook, Netflix, Uber, etc. It's very easy to learn and has a lot of great features.
+- **Typescript** is a superset of Javascript that adds static typing to Javascript. It's very easy to learn and has a lot of great features.
+- **Tauri** is a framework that allows you to build desktop applications with web technologies. Tauri allows us to create a pure Rust native OS webview, without the overhead of your average Electron app. This brings the bundle size and average memory usage down dramatically. It also contributes to a more native feel, especially on macOS due to Safari's close integration with the OS.
+
+# Features & Roadmap
+
+- [x] Aggregate CPU usage & per-core CPU usage metrics
 - [x] Memory Usage
 - [x] Network Usage
 - [x] System Information
