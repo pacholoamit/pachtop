@@ -1,11 +1,7 @@
-use std::{
-    ffi::{OsStr, OsString},
-    path::PathBuf,
-};
+use std::{ffi::OsString, path::PathBuf};
 
 use byte_unit::ByteUnit;
 use serde::{Deserialize, Serialize};
-use sysinfo::DiskType;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Timestamp(pub i64);

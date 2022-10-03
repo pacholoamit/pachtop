@@ -60,8 +60,8 @@ const NavbarOptions = () => {
     },
     {
       icon: <IconServer size={16} />,
-      label: "Storage",
-      onClick: () => navigate("/storage"),
+      label: "Disks",
+      onClick: () => navigate("/disks"),
     },
     {
       icon: <IconCpu size={16} />,

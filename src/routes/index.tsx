@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashboardPage from "@/features/metrics/pages/dashboard.page";
-import StoragePage from "@/features/storage/pages/storage.page";
+import DisksPage from "@/features/disks/pages/disks.page";
 import Layout from "@/layout";
 
 const AppRoutes: React.FC = () => {
@@ -9,7 +9,7 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<DashboardPage />} />
-          <Route path="/storage" element={<StoragePage />} />
+          <Route path="/disks" element={<DisksPage />} />
         </Route>
       </Routes>
     </Router>
