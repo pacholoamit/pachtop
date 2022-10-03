@@ -1,5 +1,8 @@
+use std::ffi::{OsStr, OsString};
+
 use byte_unit::ByteUnit;
 use serde::{Deserialize, Serialize};
+use sysinfo::DiskType;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Timestamp(pub i64);
@@ -62,5 +65,19 @@ pub struct Network {
     pub name: String,
     pub received: f64,
     pub transmitted: f64,
+    pub timestamp: Timestamp,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Disk {
+    pub name: Box<OsString>,
+    pub unit: ByteUnit,
+    pub free: f64,
+    pub total: f64,
+    pub used: f64,
+    pub file_system: Vec<u8>,
+    pub disk_type: String,
+    pub is_removable: bool,
     pub timestamp: Timestamp,
 }

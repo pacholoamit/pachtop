@@ -47,11 +47,12 @@ The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan
 # Architecture
 Pachtop is built with what I'd like to call the **"VRRTT"** stack (Vite, Rust, React, Typescript, Tauri.) 
 
-- **Vite** is a frontend build tool that uses **Rollup** under the hood. It's blazing fast and has a lot of cool features like hot module reloading and code splitting.
-- **Rust** is a systems programming language that is blazing fast and memory efficient. It's also very easy to learn and has a great community.
-- **React** is a popular frontend library that is used by many companies like Facebook, Netflix, Uber, etc. It's very easy to learn and has a lot of great features.
+- **Vite** is a frontend build tool that uses **Rollup** under the hood. It's *blazingly fast* and has a lot of cool features like hot module reloading and code splitting.
+- **Rust** is a systems programming language that is *blazingly fast* and memory efficient. Rust is also a very safe language and has a lot of cool features like ownership and borrowing which subsitutues the need for garbage collection.
+- **React** is a popular frontend library that is used by many companies like Facebook, Netflix, Uber, etc.
 - **Typescript** is a superset of Javascript that adds static typing to Javascript. It's very easy to learn and has a lot of great features.
 - **Tauri** is a framework that allows you to build desktop applications with web technologies. Tauri allows us to create a pure Rust native OS webview, without the overhead of your average Electron app. This brings the bundle size and average memory usage down dramatically. It also contributes to a more native feel, especially on macOS due to Safari's close integration with the OS.
+- **SysInfo** is a Rust crate that provides system information. This crate is used to get information about the system's CPU, memory, disks, network, and processes. This is what Pachtop uses to get the system metrics on different operating systems.
 
 # Features & Roadmap
 

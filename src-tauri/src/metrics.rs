@@ -1,11 +1,10 @@
-use crate::models::{Cpu, GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
+use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
 use byte_unit::{Byte, ByteUnit};
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{CpuExt, NetworkExt, System, SystemExt};
-
+use sysinfo::{CpuExt, DiskExt, NetworkExt, System, SystemExt};
 use tauri::State;
 
 #[tauri::command]
@@ -36,6 +35,10 @@ pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
 #[tauri::command]
 pub fn get_networks(state: State<'_, MetricsState>) -> Vec<Network> {
     state.0.lock().unwrap().networks()
+}
+#[tauri::command]
+pub fn get_disks(state: State<'_, MetricsState>) -> Vec<Disk> {
+    state.0.lock().unwrap().disks()
 }
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
@@ -112,6 +115,42 @@ impl Metrics {
         cpus
     }
 
+    fn disks(&mut self) -> Vec<Disk> {
+        self.sys.refresh_disks_list();
+
+        let disks: Vec<Disk> = self
+            .sys
+            .disks()
+            .into_iter()
+            .map(|disk| {
+                let name = Box::new(disk.name().to_owned());
+                let total = bytes_to_size(&disk.total_space(), &self.target_unit);
+                let free = bytes_to_size(&disk.available_space(), &self.target_unit);
+                let used = total - free;
+                let file_system = disk.file_system().to_owned();
+                let is_removable = disk.is_removable();
+                let disk_type = match disk.type_() {
+                    sysinfo::DiskType::HDD => "HDD".to_owned(),
+                    sysinfo::DiskType::SSD => "SSD".to_owned(),
+                    _ => "Unknown".to_owned(),
+                };
+
+                Disk {
+                    name,
+                    free,
+                    used,
+                    total,
+                    file_system,
+                    is_removable,
+                    disk_type,
+                    unit: self.target_unit,
+                    timestamp: current_time(),
+                }
+            })
+            .collect();
+
+        disks
+    }
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
         let free = bytes_to_size(&self.sys.free_memory(), &self.target_unit);

@@ -25,7 +25,6 @@ fn main() {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(hide);
     let tray = SystemTray::new().with_menu(tray_menu);
-
     let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
     let logger_plugin = LoggerBuilder::default()
         .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
@@ -67,7 +66,8 @@ fn main() {
             metrics::get_memory,
             metrics::get_swap,
             metrics::get_networks,
-            metrics::get_cpus
+            metrics::get_cpus,
+            metrics::get_disks
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
