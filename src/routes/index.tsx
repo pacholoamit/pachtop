@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashboardPage from "@/features/metrics/pages/dashboard.page";
-import DisksPage from "@/features/disks/pages/disks.page";
+import DisksPage from "@/features/metrics/pages/disks.page";
 import Layout from "@/layout";
 
 const AppRoutes: React.FC = () => {

@@ -1,4 +1,4 @@
-import useRequestMetrics from "@/hooks/useRequestMetrics";
+import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
 import useRequestNetworks from "@/features/metrics/hooks/useRequestNetworks";
 import useRequestCpus from "@/features/metrics/hooks/useRequestCpus";
 

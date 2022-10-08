@@ -1,3 +1,5 @@
+import { Disk } from "@/lib/types";
+
 export interface ChartProps {
   xAxisMin: number;
 }
@@ -21,3 +23,10 @@ export interface UniqueCpuData {
   timestamp: number;
   usage: number;
 }
+
+export interface UniqueDisk {
+  name: string;
+  data: UniqueDiskData[];
+}
+
+export interface UniqueDiskData extends Partial<Disk> {}
