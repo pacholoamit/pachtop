@@ -1,21 +1,14 @@
 import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
 import useRequestNetworks from "@/features/metrics/hooks/useRequestNetworks";
 import useRequestCpus from "@/features/metrics/hooks/useRequestCpus";
-import useRequestDisks from "@/features/metrics/hooks/useRequestCpus";
+import useRequestDisks from "@/features/metrics/hooks/useRequestDisks";
 import { createContext } from "react";
+import { GlobalCpu, Memory, Swap, SysInfo, TauriCommand } from "@/lib/types";
 import {
   UniqueCpu,
   UniqueDisk,
   UniqueNetwork,
 } from "@/features/metrics/utils/types";
-import {
-  Disk,
-  GlobalCpu,
-  Memory,
-  Swap,
-  SysInfo,
-  TauriCommand,
-} from "@/lib/types";
 
 interface MetricsProviderProps {
   children: React.ReactNode;
@@ -49,7 +42,6 @@ const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
   const [cpus] = useRequestCpus();
   const [disks] = useRequestDisks();
 
-  console.log(disks.at(-1));
   return (
     <MetricsContext.Provider
       value={{

@@ -21,6 +21,8 @@ const useRequestDisks = () => {
       uniqueDisks[index].data.push(disk);
     });
   }, [disks]);
+
+  return [uniqueDisks];
 };
 
 export default useRequestDisks;
