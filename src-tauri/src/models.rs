@@ -69,7 +69,7 @@ pub struct Network {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Disk {
-    pub name: OsString,
+    pub name: String,
     pub unit: ByteUnit,
     pub free: f64,
     pub total: f64,

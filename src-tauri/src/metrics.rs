@@ -69,7 +69,6 @@ impl Metrics {
             os_version,
             hostname,
             core_count,
-
             timestamp: current_time(),
         }
     }
@@ -125,12 +124,10 @@ impl Metrics {
             .disks()
             .into_iter()
             .map(|disk| {
-                let name = disk.name().into();
-                let total = bytes_to_size(&disk.total_space(), &unit);
-                let free = bytes_to_size(&disk.available_space(), &unit);
-                let used = total - free;
-                let is_removable = disk.is_removable();
-                let mount_point = disk.mount_point().to_owned();
+                let name = match disk.name().to_str() {
+                    Some(name) => name.to_owned(),
+                    None => "Unknown".to_owned(),
+                };
                 let disk_type = match disk.type_() {
                     sysinfo::DiskType::HDD => "HDD".to_owned(),
                     sysinfo::DiskType::SSD => "SSD".to_owned(),
@@ -143,6 +140,14 @@ impl Metrics {
                         "Unknown".to_owned()
                     }
                 };
+
+                let total = bytes_to_size(&disk.total_space(), &unit);
+                let free = bytes_to_size(&disk.available_space(), &unit);
+                let used = total - free;
+                let is_removable = disk.is_removable();
+                let mount_point = disk.mount_point().to_owned();
+
+                println!("{}", name);
 
                 Disk {
                     name,
