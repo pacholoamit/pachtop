@@ -54,7 +54,6 @@ pub struct SysInfo {
     pub os_version: String,
     pub hostname: String,
     pub core_count: String,
-    pub disk_count: String,
     pub timestamp: Timestamp,
 }
 #[derive(Debug, Serialize, Deserialize)]

@@ -59,18 +59,17 @@ impl Metrics {
     fn sysinfo(&mut self) -> SysInfo {
         self.sys.refresh_all();
 
-        let kernel_version = self.sys.kernel_version().unwrap();
-        let os_version = self.sys.long_os_version().unwrap();
-        let hostname = self.sys.host_name().unwrap();
-        let core_count = self.sys.physical_core_count().unwrap().to_string();
-        let disk_count = self.sys.disks().len().to_string();
+        let kernel_version = self.sys.kernel_version().unwrap_or("Unknown".to_string());
+        let os_version = self.sys.long_os_version().unwrap_or("Unknown".to_string());
+        let hostname = self.sys.host_name().unwrap_or("Unknown".to_string());
+        let core_count = self.sys.physical_core_count().unwrap_or(0).to_string();
 
         SysInfo {
             kernel_version,
             os_version,
             hostname,
             core_count,
-            disk_count,
+
             timestamp: current_time(),
         }
     }
@@ -130,13 +129,19 @@ impl Metrics {
                 let total = bytes_to_size(&disk.total_space(), &unit);
                 let free = bytes_to_size(&disk.available_space(), &unit);
                 let used = total - free;
-                let file_system = str::from_utf8(disk.file_system()).unwrap().to_owned();
                 let is_removable = disk.is_removable();
                 let mount_point = disk.mount_point().to_owned();
                 let disk_type = match disk.type_() {
                     sysinfo::DiskType::HDD => "HDD".to_owned(),
                     sysinfo::DiskType::SSD => "SSD".to_owned(),
                     _ => "Unknown".to_owned(),
+                };
+                let file_system = match str::from_utf8(disk.file_system()) {
+                    Ok(v) => v.to_owned(),
+                    Err(e) => {
+                        println!("Invalid UTF-8 sequence: {}", e);
+                        "Unknown".to_owned()
+                    }
                 };
 
                 Disk {
