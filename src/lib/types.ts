@@ -68,8 +68,8 @@ export interface Disk {
   free: number;
   total: number;
   used: number;
-  mountPoint: unknown;
-  fileSystem: unknown;
+  mountPoint: string;
+  fileSystem: string;
   diskType: string;
   isRemovable: boolean;
   timestamp: Timestamp;

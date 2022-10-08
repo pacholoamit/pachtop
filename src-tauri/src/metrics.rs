@@ -117,6 +117,7 @@ impl Metrics {
 
     fn disks(&mut self) -> Vec<Disk> {
         self.sys.refresh_disks_list();
+        self.sys.refresh_disks();
 
         let unit = ByteUnit::GiB;
         let disks: Vec<Disk> = self
@@ -136,8 +137,6 @@ impl Metrics {
                     sysinfo::DiskType::SSD => "SSD".to_owned(),
                     _ => "Unknown".to_owned(),
                 };
-
-                // println!("{:?} {}", name, &disk.total_space());
 
                 Disk {
                     name,
