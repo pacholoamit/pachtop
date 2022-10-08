@@ -17,7 +17,6 @@ export interface SysInfo {
   kernelVersion: string;
   osVersion: string;
   coreCount: string;
-  diskCount: string;
   timestamp: Timestamp;
 }
 
