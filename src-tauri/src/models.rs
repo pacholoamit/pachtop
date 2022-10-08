@@ -1,7 +1,6 @@
 use std::{ffi::OsString, path::PathBuf};
 
 use byte_unit::ByteUnit;
-use bytes::Bytes;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
