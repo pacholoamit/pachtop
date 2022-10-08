@@ -14,15 +14,12 @@ const useRequestCpus = () => {
       if (!uniqueCpus.find((unique) => unique.name === cpu.name)) {
         uniqueCpus.push({
           name: cpu.name,
-          data: [{ usage: cpu.usage, timestamp: cpu.timestamp }],
+          data: [cpu],
         });
       }
       // If the cpu name is in the uniqueCpus array, update the data
       const index = uniqueCpus.findIndex((u) => u.name === cpu.name);
-      uniqueCpus[index].data.push({
-        usage: cpu.usage,
-        timestamp: cpu.timestamp,
-      });
+      uniqueCpus[index].data.push(cpu);
     });
   }, [cpus]);
 

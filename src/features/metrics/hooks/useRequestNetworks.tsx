@@ -15,15 +15,12 @@ const useRequestNetworks = () => {
         uniqueNetworks.push({
           name: network.name,
           unit: network.unit,
-          data: [{ received: network.received, timestamp: network.timestamp }],
+          data: [network],
         });
       }
       // If the network name is in the uniqueNetworks array, update the data
       const index = uniqueNetworks.findIndex((u) => u.name === network.name);
-      uniqueNetworks[index].data.push({
-        received: network.received,
-        timestamp: network.timestamp,
-      });
+      uniqueNetworks[index].data.push(network);
     });
   }, [networks]);
 

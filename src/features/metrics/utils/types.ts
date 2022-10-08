@@ -1,4 +1,4 @@
-import { Disk } from "@/lib/types";
+import { Cpu, Disk, Network } from "@/lib/types";
 
 export interface ChartProps {
   xAxisMin: number;
@@ -10,23 +10,17 @@ export interface UniqueNetwork {
   data: UniqueNetworkData[];
 }
 
-export interface UniqueNetworkData {
-  received: number;
-  timestamp: number;
-}
+export interface UniqueNetworkData extends Network {}
 
 export interface UniqueCpu {
   name: string;
   data: UniqueCpuData[];
 }
-export interface UniqueCpuData {
-  timestamp: number;
-  usage: number;
-}
+export interface UniqueCpuData extends Cpu {}
 
 export interface UniqueDisk {
   name: string;
   data: UniqueDiskData[];
 }
 
-export interface UniqueDiskData extends Partial<Disk> {}
+export interface UniqueDiskData extends Disk {}
