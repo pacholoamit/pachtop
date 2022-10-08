@@ -1,5 +1,7 @@
 use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
 use byte_unit::{Byte, ByteUnit};
+use bytes::Bytes;
+use std::str;
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
@@ -125,11 +127,12 @@ impl Metrics {
             .disks()
             .into_iter()
             .map(|disk| {
-                let name = Box::new(disk.name().to_owned());
+                let name = disk.name().into();
                 let total = bytes_to_size(&disk.total_space(), &unit);
                 let free = bytes_to_size(&disk.available_space(), &unit);
                 let used = total - free;
-                let file_system = disk.file_system().to_owned();
+                // let file_system = Bytes::copy_from_slice(disk.file_system()).to_string_lossy();
+                let file_system = str::from_utf8(disk.file_system()).unwrap().to_owned();
                 let is_removable = disk.is_removable();
                 let mount_point = disk.mount_point().to_owned();
                 let disk_type = match disk.type_() {
@@ -137,6 +140,8 @@ impl Metrics {
                     sysinfo::DiskType::SSD => "SSD".to_owned(),
                     _ => "Unknown".to_owned(),
                 };
+
+                println!("{:?}", Bytes::copy_from_slice(disk.file_system()));
 
                 Disk {
                     name,

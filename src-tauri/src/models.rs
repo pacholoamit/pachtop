@@ -1,6 +1,7 @@
 use std::{ffi::OsString, path::PathBuf};
 
 use byte_unit::ByteUnit;
+use bytes::Bytes;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -70,13 +71,13 @@ pub struct Network {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Disk {
-    pub name: Box<OsString>,
+    pub name: OsString,
     pub unit: ByteUnit,
     pub free: f64,
     pub total: f64,
     pub used: f64,
     pub mount_point: PathBuf,
-    pub file_system: Vec<u8>,
+    pub file_system: String,
     pub disk_type: String,
     pub is_removable: bool,
     pub timestamp: Timestamp,
