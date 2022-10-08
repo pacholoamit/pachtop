@@ -1,9 +1,13 @@
 import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
 import useRequestNetworks from "@/features/metrics/hooks/useRequestNetworks";
 import useRequestCpus from "@/features/metrics/hooks/useRequestCpus";
-
-import { UniqueCpu, UniqueNetwork } from "@/features/metrics/utils/types";
+import useRequestDisks from "@/features/metrics/hooks/useRequestCpus";
 import { createContext } from "react";
+import {
+  UniqueCpu,
+  UniqueDisk,
+  UniqueNetwork,
+} from "@/features/metrics/utils/types";
 import {
   Disk,
   GlobalCpu,
@@ -23,7 +27,7 @@ interface MetricsContext {
   sysInfo: SysInfo[];
   networks: UniqueNetwork[];
   cpus: UniqueCpu[];
-  disks: Disk[];
+  disks: UniqueDisk[];
 }
 
 export const MetricsContext = createContext<MetricsContext>({
@@ -43,8 +47,7 @@ const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
   const [networks] = useRequestNetworks();
   const [sysInfo] = useRequestMetrics<SysInfo>(TauriCommand.SysInfo);
   const [cpus] = useRequestCpus();
-
-  const [disks] = useRequestMetrics<Disk>(TauriCommand.Disks); //  Move this to features/disks
+  const [disks] = useRequestDisks();
 
   console.log(disks.at(-1));
   return (
