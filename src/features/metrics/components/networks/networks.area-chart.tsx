@@ -28,6 +28,8 @@ const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
     },
   };
 
+  const yAxisTicksCallback = (value: number) => formatBytes(value);
+
   return (
     <AreaChart
       title={title}
@@ -35,6 +37,7 @@ const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
       xAxisMin={xAxisMin}
       datasets={datasets}
       callbacks={callbacks}
+      yAxisTicksCallback={yAxisTicksCallback}
     />
   );
 };

@@ -26,6 +26,8 @@ const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
       return `${label}: ${value}`;
     },
   };
+  const yAxisTicksCallback = (value: number) => formatBytes(value);
+
   return (
     <>
       <AreaChart
@@ -34,6 +36,7 @@ const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
         xAxisMin={xAxisMin}
         datasets={datasets}
         callbacks={callbacks}
+        yAxisTicksCallback={yAxisTicksCallback}
       />
     </>
   );

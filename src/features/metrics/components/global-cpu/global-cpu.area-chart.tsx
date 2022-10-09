@@ -32,6 +32,7 @@ const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
       return `${label}: ${value}%`;
     },
   };
+  const yAxisTicksCallback = (value: number) => value.toFixed(2) + "%";
   return (
     <AreaChart
       title={title}
