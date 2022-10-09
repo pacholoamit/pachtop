@@ -23,6 +23,9 @@ export interface AreaChartProps {
   labels: string[] | string[][] | number[];
   xAxisMin?: any;
   datasets: DatasetOptions[];
+  callbacks?: {
+    label?: (context: any) => string;
+  };
   stacked?: boolean;
 }
 
@@ -54,6 +57,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
   title,
   xAxisMin = undefined,
   stacked = false,
+  callbacks,
 }) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
 
@@ -89,27 +93,28 @@ const AreaChart: React.FC<AreaChartProps> = ({
     plugins: {
       tooltip: {
         mode: "index",
-        callbacks: {
-          label: (context: any) => {
-            let label = context.dataset.label || "";
+        callbacks,
+        // callbacks: {
+        //   label: (context: any) => {
+        //     let label = context.dataset.label || "";
 
-            if (label) {
-              label += ": ";
-            }
-            if (context.parsed.y !== null) {
-              if (context.parsed.y > 1000000000) {
-                label += (context.parsed.y / 1000000000).toFixed(2) + " GB";
-              } else if (context.parsed.y > 1000000) {
-                label += (context.parsed.y / 1000000).toFixed(2) + " MB";
-              } else if (context.parsed.y > 1000) {
-                label += (context.parsed.y / 1000).toFixed(2) + " KB";
-              } else {
-                label += context.parsed.y.toFixed(2) + " B";
-              }
-            }
-            return label;
-          },
-        },
+        //     if (label) {
+        //       label += ": ";
+        //     }
+        //     if (context.parsed.y !== null) {
+        //       if (context.parsed.y > 1000000000) {
+        //         label += (context.parsed.y / 1000000000).toFixed(2) + " GB";
+        //       } else if (context.parsed.y > 1000000) {
+        //         label += (context.parsed.y / 1000000).toFixed(2) + " MB";
+        //       } else if (context.parsed.y > 1000) {
+        //         label += (context.parsed.y / 1000).toFixed(2) + " KB";
+        //       } else {
+        //         label += context.parsed.y.toFixed(2) + " B";
+        //       }
+        //     }
+        //     return label;
+        //   },
+        // },
       },
       decimation: {
         enabled: true,
