@@ -1,6 +1,7 @@
+import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
+import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 
 interface SwapAreaChartProps extends ChartProps {}
 
@@ -18,6 +19,13 @@ const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
       yAxisId: "swap-usage",
     },
   ];
+  const callbacks = {
+    label: (context: any) => {
+      const label = context.dataset.label || "";
+      const value = formatBytes(context.parsed.y);
+      return `${label}: ${value}`;
+    },
+  };
   return (
     <>
       <AreaChart
@@ -25,6 +33,7 @@ const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
         labels={labels}
         xAxisMin={xAxisMin}
         datasets={datasets}
+        callbacks={callbacks}
       />
     </>
   );
