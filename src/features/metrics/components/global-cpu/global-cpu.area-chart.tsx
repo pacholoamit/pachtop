@@ -13,7 +13,7 @@ const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
   const labels = globalCpu.map((cpu) => cpu.timestamp);
   const datasets: DatasetOptions[] = [
     {
-      label: `CPU Usage (%)`,
+      label: `CPU Usage`,
       data: globalCpu.map((cpu) => ({
         x: cpu.timestamp,
         y: cpu.usage,
