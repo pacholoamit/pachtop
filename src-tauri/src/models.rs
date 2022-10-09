@@ -1,4 +1,4 @@
-use std::{ffi::OsString, path::PathBuf};
+use std::path::PathBuf;
 
 use byte_unit::ByteUnit;
 use serde::{Deserialize, Serialize};
