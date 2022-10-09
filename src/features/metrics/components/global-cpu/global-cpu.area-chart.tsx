@@ -24,12 +24,21 @@ const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
       yAxisId: "global-cpu-usage",
     },
   ];
+
+  const callbacks = {
+    label: (context: any) => {
+      const label = context.dataset.label || "";
+      const value = context.parsed.y.toFixed(2);
+      return `${label}: ${value}%`;
+    },
+  };
   return (
     <AreaChart
       title={title}
       labels={labels}
       xAxisMin={xAxisMin}
       datasets={datasets}
+      callbacks={callbacks}
     />
   );
 };
