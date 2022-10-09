@@ -1,4 +1,6 @@
 import React from "react";
+import Card from "@/components/card";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -14,8 +16,6 @@ import {
   TimeScale,
 } from "chart.js";
 
-import Card from "@/components/card";
-import useMediaQuery from "@/hooks/useMediaQuery";
 import "chartjs-adapter-luxon";
 
 export interface AreaChartProps {
@@ -87,6 +87,25 @@ const AreaChart: React.FC<AreaChartProps> = ({
       },
     },
     plugins: {
+      tooltip: {
+        mode: "index",
+        callbacks: {
+          label: (context: any) => {
+            let label = context.dataset.label || "";
+
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label += new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(context.parsed.y);
+            }
+            return label;
+          },
+        },
+      },
       decimation: {
         enabled: true,
         algorithm: "min-max" as const,

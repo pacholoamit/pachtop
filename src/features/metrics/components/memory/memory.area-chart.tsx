@@ -11,7 +11,7 @@ const MemoryAreaChart: React.FC<MemoryAreaChartProps> = ({ xAxisMin }) => {
   const labels = memory.map((mem) => mem.timestamp);
   const datasets: DatasetOptions[] = [
     {
-      label: `RAM Used (${memory.slice(-1)[0]?.unit})`,
+      label: `RAM Used`,
       data: memory.map((mem) => ({ x: mem.timestamp, y: mem.used })),
       backgroundColor: "rgba(10, 167, 147, 0.45)",
       borderColor: "rgba(10, 167, 147, 1)",

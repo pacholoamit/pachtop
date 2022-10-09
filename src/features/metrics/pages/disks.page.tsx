@@ -4,10 +4,6 @@ import { useEffect } from "react";
 const DisksPage = () => {
   const { disks } = useMetricsContext();
 
-  useEffect(() => {
-    console.log(disks);
-  }, [disks]);
-
   return <h1>Disks</h1>;
 };
 

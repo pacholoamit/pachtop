@@ -8,7 +8,6 @@ const useRequestDisks = () => {
   const [uniqueDisks, setUniqueDisks] = useState<UniqueDisk[]>([]);
 
   useEffect(() => {
-    console.log(disks.at(-1));
     disks.at(-1)?.filter((disk) => {
       // If the disk name is not in the uniqueDisks array, add it
       if (!uniqueDisks.find((unique) => unique.name === disk.name)) {
