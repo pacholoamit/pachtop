@@ -104,7 +104,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
               } else if (context.parsed.y > 1000) {
                 label += (context.parsed.y / 1000).toFixed(2) + " KB";
               } else {
-                label += context.parsed.y.toFixed(2) + " B";
+                label += context.parsed.y.toFixed(2) + " Bytes";
               }
             }
             return label;
