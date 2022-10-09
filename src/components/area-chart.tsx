@@ -26,7 +26,7 @@ export interface AreaChartProps {
   callbacks?: {
     label?: (context: any) => string;
   };
-  yAxisTicksCallback?: (value: any, index: any, values: any) => string;
+  yAxisTicksCallback?: (value: number, index: any, values: any) => string;
   stacked?: boolean;
 }
 

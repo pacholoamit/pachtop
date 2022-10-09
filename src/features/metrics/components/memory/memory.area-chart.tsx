@@ -27,7 +27,7 @@ const MemoryAreaChart: React.FC<MemoryAreaChartProps> = ({ xAxisMin }) => {
       return `${label}: ${value}`;
     },
   };
-  const yAxisTicksCallback = (value: any) => formatBytes(value);
+  const yAxisTicksCallback = (value: number) => formatBytes(value);
   return (
     <AreaChart
       title={title}
