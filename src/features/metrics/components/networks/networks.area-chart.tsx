@@ -9,7 +9,7 @@ const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
   const title = "Network Received";
   const labels = networks?.map((network) => network.data[0].timestamp);
   const datasets: DatasetOptions[] = networks?.map((network) => ({
-    label: `${network.name} (${network.unit})`,
+    label: network.name,
     data: network.data.map((data) => ({
       x: data.timestamp,
       y: data.received,

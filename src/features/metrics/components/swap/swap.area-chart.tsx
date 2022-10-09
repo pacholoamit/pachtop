@@ -10,7 +10,7 @@ const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
   const labels = swap.map((swap) => swap.timestamp);
   const datasets: DatasetOptions[] = [
     {
-      label: `Swap Memory Used (${swap.slice(-1)[0]?.unit})`,
+      label: `Swap Memory`,
       data: swap.map((swap) => ({ x: swap.timestamp, y: swap.used })),
       backgroundColor: "rgba(53, 162, 235, 0.45)",
       borderColor: "rgba(53, 162, 235)",
