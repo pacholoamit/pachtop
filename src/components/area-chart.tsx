@@ -97,10 +97,15 @@ const AreaChart: React.FC<AreaChartProps> = ({
               label += ": ";
             }
             if (context.parsed.y !== null) {
-              label += new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-              }).format(context.parsed.y);
+              if (context.parsed.y > 1000000000) {
+                label += (context.parsed.y / 1000000000).toFixed(2) + " GB";
+              } else if (context.parsed.y > 1000000) {
+                label += (context.parsed.y / 1000000).toFixed(2) + " MB";
+              } else if (context.parsed.y > 1000) {
+                label += (context.parsed.y / 1000).toFixed(2) + " KB";
+              } else {
+                label += context.parsed.y.toFixed(2) + " B";
+              }
             }
             return label;
           },
