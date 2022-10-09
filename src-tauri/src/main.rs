@@ -6,7 +6,6 @@
 mod metrics;
 mod models;
 
-use byte_unit::ByteUnit;
 use metrics::MetricsState;
 use sysinfo::{System, SystemExt};
 use tauri::{
@@ -15,7 +14,6 @@ use tauri::{
 use tauri_plugin_log::{LogTarget, LoggerBuilder};
 
 fn main() {
-    let target_unit = ByteUnit::GB;
     let mut sys = System::new_all();
 
     let quit = CustomMenuItem::new("quit".to_string(), "Quit");
@@ -57,7 +55,7 @@ fn main() {
             }
             _ => {}
         })
-        .manage(MetricsState::new(sys, target_unit))
+        .manage(MetricsState::new(sys))
         .plugin(window_state_plugin)
         .plugin(logger_plugin)
         .invoke_handler(tauri::generate_handler![

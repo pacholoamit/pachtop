@@ -1,5 +1,4 @@
 use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
-use byte_unit::{Byte, ByteUnit};
 use std::str;
 use std::{
     sync::{Arc, Mutex},
@@ -45,14 +44,13 @@ pub fn get_disks(state: State<'_, MetricsState>) -> Vec<Disk> {
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
 impl MetricsState {
-    pub fn new(sys: System, target_unit: ByteUnit) -> Self {
-        MetricsState(Arc::new(Mutex::new(Metrics { sys, target_unit })))
+    pub fn new(sys: System) -> Self {
+        MetricsState(Arc::new(Mutex::new(Metrics { sys })))
     }
 }
 
 struct Metrics {
     sys: System,
-    target_unit: ByteUnit,
 }
 
 impl Metrics {
@@ -118,7 +116,6 @@ impl Metrics {
         self.sys.refresh_disks_list();
         self.sys.refresh_disks();
 
-        let unit = ByteUnit::GiB;
         let disks: Vec<Disk> = self
             .sys
             .disks()
@@ -141,8 +138,8 @@ impl Metrics {
                     }
                 };
 
-                let total = bytes_to_size(&disk.total_space(), &unit);
-                let free = bytes_to_size(&disk.available_space(), &unit);
+                let total = disk.total_space();
+                let free = disk.available_space();
                 let used = total - free;
                 let is_removable = disk.is_removable();
                 let mount_point = disk.mount_point().to_owned();
@@ -155,7 +152,6 @@ impl Metrics {
                     file_system,
                     is_removable,
                     disk_type,
-                    unit: self.target_unit,
                     timestamp: current_time(),
                 }
             })
@@ -165,32 +161,24 @@ impl Metrics {
     }
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
-        let free = bytes_to_size(&self.sys.free_memory(), &self.target_unit);
-        let total = bytes_to_size(&self.sys.total_memory(), &self.target_unit);
-        let used = bytes_to_size(&self.sys.used_memory(), &self.target_unit);
 
         Memory {
-            free,
-            total,
-            used,
+            free: self.sys.free_memory(),
+            total: self.sys.total_memory(),
+            used: self.sys.used_memory(),
             used_percentage: get_percentage(&self.sys.used_memory(), &self.sys.total_memory()),
-            unit: self.target_unit,
             timestamp: current_time(),
         }
     }
 
     fn swap(&mut self) -> Swap {
         self.sys.refresh_memory();
-        let total = bytes_to_size(&self.sys.total_swap(), &self.target_unit);
-        let used = bytes_to_size(&self.sys.used_swap(), &self.target_unit);
-        let free = bytes_to_size(&self.sys.free_swap(), &self.target_unit);
 
         Swap {
-            free,
-            total,
-            used,
+            free: self.sys.free_swap(),
+            total: self.sys.total_swap(),
+            used: self.sys.used_swap(),
             used_percentage: get_percentage(&self.sys.used_swap(), &self.sys.total_swap()),
-            unit: self.target_unit,
             timestamp: current_time(),
         }
     }
@@ -204,14 +192,11 @@ impl Metrics {
             .into_iter()
             .map(|(name, network)| {
                 let name = name.to_owned();
-                let received = bytes_to_size(&network.received(), &ByteUnit::KB);
-                let transmitted = bytes_to_size(&network.transmitted(), &ByteUnit::KB);
 
                 Network {
                     name,
-                    received,
-                    transmitted,
-                    unit: ByteUnit::KB,
+                    received: network.received(),
+                    transmitted: network.transmitted(),
                     timestamp: current_time(),
                 }
             })
@@ -230,13 +215,4 @@ fn current_time() -> Timestamp {
 fn get_percentage(value: &u64, total: &u64) -> f64 {
     let percentage = (*value as f64 / *total as f64) * 100.0;
     (percentage * 100.0).round() / 100.0
-}
-
-fn bytes_to_size(bytes: &u64, &dest_unit: &ByteUnit) -> f64 {
-    let result = Byte::from_unit(*bytes as f64, ByteUnit::B)
-        .unwrap()
-        .get_adjusted_unit(dest_unit)
-        .get_value();
-
-    (result * 100.0).round() / 100.0 // round to 2 decimal places
 }
