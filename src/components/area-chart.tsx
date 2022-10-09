@@ -26,6 +26,7 @@ export interface AreaChartProps {
   callbacks?: {
     label?: (context: any) => string;
   };
+  yAxisTicksCallback?: (value: any, index: any, values: any) => string;
   stacked?: boolean;
 }
 
@@ -58,6 +59,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
   xAxisMin = undefined,
   stacked = false,
   callbacks,
+  yAxisTicksCallback,
 }) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
 
@@ -124,6 +126,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
         min: 0,
         ticks: {
           color: "#8192ac",
+          callback: yAxisTicksCallback,
         },
         grid: {
           color: "#263858",
