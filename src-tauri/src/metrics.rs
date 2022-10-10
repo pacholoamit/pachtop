@@ -122,7 +122,7 @@ impl Metrics {
             .into_iter()
             .map(|disk| {
                 let name = match disk.name().to_str() {
-                    Some("") => "Unknown".to_owned(),
+                    Some("") => disk.mount_point().to_str().unwrap_or("Unknown").to_owned(),
                     Some(name) => name.to_owned(),
                     None => "Unknown".to_owned(),
                 };
