@@ -33,7 +33,7 @@ const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
       return `${label}: ${value}%`;
     },
   };
-  const yAxisTicksCallback = (value: number) => value.toFixed(2) + "%";
+  const yAxisTicksCallback = (value: number) => value + "%";
   return (
     <Card style={{ height: "300px" }}>
       <AreaChart
@@ -42,6 +42,7 @@ const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
         xAxisMin={xAxisMin}
         datasets={datasets}
         callbacks={callbacks}
+        yAxisTicksCallback={yAxisTicksCallback}
       />
     </Card>
   );
