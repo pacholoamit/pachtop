@@ -122,9 +122,13 @@ impl Metrics {
             .into_iter()
             .map(|disk| {
                 let name = match disk.name().to_str() {
+                    Some("") => "Unknown".to_owned(),
                     Some(name) => name.to_owned(),
                     None => "Unknown".to_owned(),
                 };
+
+                println!("{}", name);
+
                 let disk_type = match disk.type_() {
                     sysinfo::DiskType::HDD => "HDD".to_owned(),
                     sysinfo::DiskType::SSD => "SSD".to_owned(),
