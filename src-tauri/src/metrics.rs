@@ -145,6 +145,7 @@ impl Metrics {
                 let used = total - free;
                 let is_removable = disk.is_removable();
                 let mount_point = disk.mount_point().to_owned();
+
                 Disk {
                     name,
                     free,
