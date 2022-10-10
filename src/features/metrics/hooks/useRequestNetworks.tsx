@@ -14,7 +14,6 @@ const useRequestNetworks = () => {
       if (!uniqueNetworks.find((unique) => unique.name === network.name)) {
         uniqueNetworks.push({
           name: network.name,
-          unit: network.unit,
           data: [network],
         });
       }

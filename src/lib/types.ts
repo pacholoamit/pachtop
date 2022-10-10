@@ -21,7 +21,6 @@ export interface SysInfo {
 }
 
 export interface Memory {
-  unit: string;
   free: number;
   total: number;
   used: number;
@@ -45,7 +44,6 @@ export interface Cpu {
 }
 
 export interface Swap {
-  unit: string;
   free: number;
   total: number;
   used: number;
@@ -57,13 +55,11 @@ export interface Network {
   name: string;
   received: number;
   transmitted: number;
-  unit: string;
   timestamp: Timestamp;
 }
 
 export interface Disk {
   name: string;
-  unit: string;
   free: number;
   total: number;
   used: number;

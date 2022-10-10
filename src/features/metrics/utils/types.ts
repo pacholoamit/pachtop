@@ -6,7 +6,6 @@ export interface ChartProps {
 
 export interface UniqueNetwork {
   name: string;
-  unit: string;
   data: UniqueNetworkData[];
 }
 
