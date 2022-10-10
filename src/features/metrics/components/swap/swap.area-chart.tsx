@@ -1,3 +1,4 @@
+import Card from "@/components/card";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
@@ -29,7 +30,7 @@ const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
   const yAxisTicksCallback = (value: number) => formatBytes(value);
 
   return (
-    <>
+    <Card style={{ height: "300px" }}>
       <AreaChart
         title={title}
         labels={labels}
@@ -38,7 +39,7 @@ const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
         callbacks={callbacks}
         yAxisTicksCallback={yAxisTicksCallback}
       />
-    </>
+    </Card>
   );
 };
 

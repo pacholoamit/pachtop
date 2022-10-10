@@ -1,3 +1,4 @@
+import Card from "@/components/card";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
@@ -31,14 +32,16 @@ const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
   const yAxisTicksCallback = (value: number) => formatBytes(value);
 
   return (
-    <AreaChart
-      title={title}
-      labels={labels}
-      xAxisMin={xAxisMin}
-      datasets={datasets}
-      callbacks={callbacks}
-      yAxisTicksCallback={yAxisTicksCallback}
-    />
+    <Card style={{ height: "300px" }}>
+      <AreaChart
+        title={title}
+        labels={labels}
+        xAxisMin={xAxisMin}
+        datasets={datasets}
+        callbacks={callbacks}
+        yAxisTicksCallback={yAxisTicksCallback}
+      />
+    </Card>
   );
 };
 

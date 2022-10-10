@@ -1,6 +1,7 @@
+import Card from "@/components/card";
+import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 
 interface GlobalCpuAreaChartProps extends ChartProps {}
 
@@ -34,13 +35,15 @@ const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
   };
   const yAxisTicksCallback = (value: number) => value.toFixed(2) + "%";
   return (
-    <AreaChart
-      title={title}
-      labels={labels}
-      xAxisMin={xAxisMin}
-      datasets={datasets}
-      callbacks={callbacks}
-    />
+    <Card style={{ height: "300px" }}>
+      <AreaChart
+        title={title}
+        labels={labels}
+        xAxisMin={xAxisMin}
+        datasets={datasets}
+        callbacks={callbacks}
+      />
+    </Card>
   );
 };
 

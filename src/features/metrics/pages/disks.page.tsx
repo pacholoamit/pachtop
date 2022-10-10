@@ -1,3 +1,4 @@
+import Card from "@/components/card";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
@@ -33,14 +34,15 @@ const DisksPage = () => {
         };
         const yAxisTicksCallback = (value: number) => formatBytes(value);
         return (
-          <AreaChart
-            labels={labels}
-            title={disk.id}
-            key={disk.id}
-            datasets={datasets}
-            callbacks={callbacks}
-            yAxisTicksCallback={yAxisTicksCallback}
-          />
+          <Card style={{ height: "300px" }} key={disk.id}>
+            <AreaChart
+              labels={labels}
+              title={disk.id}
+              datasets={datasets}
+              callbacks={callbacks}
+              yAxisTicksCallback={yAxisTicksCallback}
+            />
+          </Card>
         );
       })}
     </Stack>
