@@ -1,14 +1,14 @@
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { useEffect } from "react";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
+import { Stack } from "@mantine/core";
 
 const DisksPage = () => {
   const { disks } = useMetricsContext();
 
   return (
-    <>
-      <h1>Disks</h1>
+    <Stack spacing="xl">
+      <h2>Disks</h2>
       {disks?.map((disk) => {
         const labels = disk.data.map((data) => data.timestamp);
         const datasets: DatasetOptions[] = [
@@ -43,7 +43,7 @@ const DisksPage = () => {
           />
         );
       })}
-    </>
+    </Stack>
   );
 };
 
