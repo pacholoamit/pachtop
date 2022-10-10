@@ -14,7 +14,7 @@ const DisksPage = () => {
         const labels = disk.data.map((data) => data.timestamp);
         const datasets: DatasetOptions[] = [
           {
-            label: disk.id,
+            label: disk.id + " (Used)",
             data: disk.data.map((data) => ({
               x: data.timestamp,
               y: data.used,
@@ -23,6 +23,17 @@ const DisksPage = () => {
             borderColor: "rgba(255,215,120,1)",
             fill: true,
             yAxisId: "disk-used",
+          },
+          {
+            label: disk.id + " (Free)",
+            data: disk.data.map((data) => ({
+              x: data.timestamp,
+              y: data.free,
+            })),
+            backgroundColor: "rgba(10, 167, 147, 0.45)",
+            borderColor: "rgba(10, 167, 147, 1)",
+            fill: true,
+            yAxisId: "disk-free",
           },
         ];
         const callbacks = {
@@ -41,6 +52,7 @@ const DisksPage = () => {
               datasets={datasets}
               callbacks={callbacks}
               yAxisTicksCallback={yAxisTicksCallback}
+              stacked={true}
             />
           </Card>
         );

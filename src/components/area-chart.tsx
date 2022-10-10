@@ -124,6 +124,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
     scales: {
       yAxis: {
         min: 0,
+        stacked,
         ticks: {
           color: "#8192ac",
           callback: yAxisTicksCallback,
@@ -135,7 +136,6 @@ const AreaChart: React.FC<AreaChartProps> = ({
       xAxis: {
         min: xAxisMin,
         type: "time",
-        stacked,
         time: {
           round: "seconds",
           displayFormats: {
@@ -159,10 +159,6 @@ const AreaChart: React.FC<AreaChartProps> = ({
     },
   };
 
-  return (
-   
-      <Line data={chartData as any} options={options as any} />
-   
-  );
+  return <Line data={chartData as any} options={options as any} />;
 };
 export default AreaChart;
