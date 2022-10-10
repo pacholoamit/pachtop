@@ -127,8 +127,6 @@ impl Metrics {
                     None => "Unknown".to_owned(),
                 };
 
-                println!("{}", name);
-
                 let disk_type = match disk.type_() {
                     sysinfo::DiskType::HDD => "HDD".to_owned(),
                     sysinfo::DiskType::SSD => "SSD".to_owned(),

@@ -19,7 +19,7 @@ export interface UniqueCpu {
 export interface UniqueCpuData extends Cpu {}
 
 export interface UniqueDisk {
-  name: string;
+  id: string;
   data: UniqueDiskData[];
 }
 

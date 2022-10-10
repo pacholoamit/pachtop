@@ -13,7 +13,7 @@ const DisksPage = () => {
         const labels = disk.data.map((data) => data.timestamp);
         const datasets: DatasetOptions[] = [
           {
-            label: disk.name,
+            label: disk.id,
             data: disk.data.map((data) => ({
               x: data.timestamp,
               y: data.used,
@@ -35,8 +35,8 @@ const DisksPage = () => {
         return (
           <AreaChart
             labels={labels}
-            title={disk.name}
-            key={disk.name}
+            title={disk.id}
+            key={disk.id}
             datasets={datasets}
             callbacks={callbacks}
             yAxisTicksCallback={yAxisTicksCallback}

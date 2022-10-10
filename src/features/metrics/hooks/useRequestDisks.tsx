@@ -10,14 +10,14 @@ const useRequestDisks = () => {
   useEffect(() => {
     disks.at(-1)?.filter((disk) => {
       // If the disk name is not in the uniqueDisks array, add it
-      if (!uniqueDisks.find((unique) => unique.name === disk.name)) {
+      if (!uniqueDisks.find((unique) => unique.id === disk.mountPoint)) {
         uniqueDisks.push({
-          name: disk.name,
+          id: disk.mountPoint,
           data: [disk],
         });
       }
       // If the disk name is in the uniqueDisks array, update the data
-      const index = uniqueDisks.findIndex((u) => u.name === disk.name);
+      const index = uniqueDisks.findIndex((u) => u.id === disk.mountPoint);
       uniqueDisks[index].data.push(disk);
     });
   }, [disks]);
