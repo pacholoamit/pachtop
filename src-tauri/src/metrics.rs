@@ -4,7 +4,9 @@ use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{CpuExt, DiskExt, NetworkExt, ProcessExt, System, SystemExt};
+use sysinfo::{
+    CpuExt, DiskExt, NetworkExt, ProcessExt, ProcessRefreshKind, RefreshKind, System, SystemExt,
+};
 use tauri::State;
 
 #[tauri::command]
@@ -193,6 +195,8 @@ impl Metrics {
 
     fn processes(&mut self) -> Vec<Process> {
         self.sys.refresh_processes();
+        self.sys
+            .refresh_specifics(RefreshKind::new().with_processes(ProcessRefreshKind::everything()));
 
         let processes: Vec<Process> = self
             .sys
