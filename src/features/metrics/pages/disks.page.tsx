@@ -1,7 +1,6 @@
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import DiskAreaChart from "@/features/metrics/components/disks/disk.area-chart";
-import { Box, Card, Center, Group, Space, Stack, Text } from "@mantine/core";
-import logger from "../../../lib/logger";
+import { Box, Card, Center, Space, Stack, Text } from "@mantine/core";
 
 const xAxisMin = Date.now() - 86400;
 
