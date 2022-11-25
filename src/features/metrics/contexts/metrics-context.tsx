@@ -51,8 +51,10 @@ const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
   const [cpus] = useRequestCpus();
   const [disks] = useRequestDisks();
   const [processes] = useRequestMetrics<Process>(TauriCommand.Processes, {
-    maxLength: 2,
+    latestOnly: true,
   });
+
+  console.log(processes.length);
 
   return (
     <MetricsContext.Provider
