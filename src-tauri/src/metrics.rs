@@ -4,7 +4,7 @@ use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{CpuExt, DiskExt, NetworkExt, System, SystemExt};
+use sysinfo::{CpuExt, CpuRefreshKind, DiskExt, NetworkExt, RefreshKind, System, SystemExt};
 use tauri::State;
 
 #[tauri::command]
