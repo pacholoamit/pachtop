@@ -73,9 +73,9 @@ export interface Disk {
 
 export interface Process {
   name: string;
-  pid: number;
-  cpuUsage: number;
+  pid: string
+  cpuUsage: string
   memoryUsage: string;
   status: string;
-  timestamp: Timestamp;
+
 }
