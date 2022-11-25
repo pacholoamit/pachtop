@@ -24,22 +24,22 @@ interface MetricsContext {
   globalCpu: GlobalCpu[];
   memory: Memory[];
   swap: Swap[];
-  sysInfo: SysInfo[];
   networks: UniqueNetwork[];
   cpus: UniqueCpu[];
   disks: UniqueDisk[];
-  processes: Process[];
+  sysInfo: SysInfo | null;
+  processes: Process | null;
 }
 
 export const MetricsContext = createContext<MetricsContext>({
   globalCpu: [],
   memory: [],
   swap: [],
-  sysInfo: [],
   networks: [],
   cpus: [],
   disks: [],
-  processes: [],
+  sysInfo: null,
+  processes: null,
 });
 
 const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
@@ -47,10 +47,12 @@ const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
   const [memory] = useRequestMetrics<Memory>(TauriCommand.Memory);
   const [swap] = useRequestMetrics<Swap>(TauriCommand.Swap);
   const [sysInfo] = useRequestMetrics<SysInfo>(TauriCommand.SysInfo);
-  const [processes] = useRequestMetrics<Process>(TauriCommand.Processes);
   const [networks] = useRequestNetworks();
   const [cpus] = useRequestCpus();
   const [disks] = useRequestDisks();
+  const [processes] = useRequestMetrics<Process>(TauriCommand.Processes, {
+    maxLength: 2,
+  });
 
   return (
     <MetricsContext.Provider
@@ -58,11 +60,11 @@ const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
         globalCpu,
         memory,
         swap,
-        sysInfo,
+        sysInfo: sysInfo.at(-1) ?? null,
         networks,
         cpus,
         disks,
-        processes,
+        processes: processes.at(-1) ?? null,
       }}
     >
       {children}
