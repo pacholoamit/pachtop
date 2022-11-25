@@ -206,7 +206,7 @@ impl Metrics {
                 let name = process.name().to_owned();
                 let cpu_usage = process.cpu_usage();
                 let pid = pid.to_string();
-                let memory_usage = process.memory();
+                let memory_usage = format_bytes(process.memory());
 
                 let status = match process.status() {
                     sysinfo::ProcessStatus::Run => "Running".to_owned(),
@@ -263,4 +263,17 @@ fn current_time() -> Timestamp {
 fn get_percentage(value: &u64, total: &u64) -> f64 {
     let percentage = (*value as f64 / *total as f64) * 100.0;
     (percentage * 100.0).round() / 100.0
+}
+
+fn format_bytes(bytes: u64) -> String {
+    let units = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    if bytes == 0 {
+        return "0 B".to_string();
+    }
+    let digit_groups = (bytes as f64).log2() / 10.0;
+    format!(
+        "{:.2} {}",
+        bytes as f64 / 2f64.powf(10.0 * digit_groups.floor()),
+        units[digit_groups.floor() as usize]
+    )
 }

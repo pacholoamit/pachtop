@@ -75,7 +75,7 @@ export interface Process {
   name: string;
   pid: number;
   cpuUsage: number;
-  memoryUsage: number;
+  memoryUsage: string;
   status: string;
   timestamp: Timestamp;
 }

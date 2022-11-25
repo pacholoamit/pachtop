@@ -2,7 +2,6 @@ import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import PageWrapper from "@/components/page-wrapper";
 import { Process } from "@/lib/types";
 import { Button, Card, Group } from "@mantine/core";
-import formatBytes from "@/features/metrics/utils/format-bytes";
 
 interface ProcessComponentProps {
   process: Process;
@@ -14,7 +13,7 @@ const ProcessComponent: React.FC<ProcessComponentProps> = ({ process }) => {
         <Group>
           <h3>{process.name}</h3>
           <p>PID: {process.pid}</p>
-          <p>Memory Usage: {formatBytes(process.memoryUsage)}</p>
+          <p>Memory Usage: {process.memoryUsage}</p>
           <p>CPU Usage: {process.cpuUsage}</p>
           <p>Status: {process.status}</p>
         </Group>
