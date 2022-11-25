@@ -28,7 +28,7 @@ interface MetricsContext {
   cpus: UniqueCpu[];
   disks: UniqueDisk[];
   sysInfo: SysInfo | null;
-  processes: Process | null;
+  processes: Process[];
 }
 
 export const MetricsContext = createContext<MetricsContext>({
@@ -39,22 +39,22 @@ export const MetricsContext = createContext<MetricsContext>({
   cpus: [],
   disks: [],
   sysInfo: null,
-  processes: null,
+  processes: [],
 });
 
 const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
   const [globalCpu] = useRequestMetrics<GlobalCpu>(TauriCommand.GlobalCpu);
   const [memory] = useRequestMetrics<Memory>(TauriCommand.Memory);
   const [swap] = useRequestMetrics<Swap>(TauriCommand.Swap);
-  const [sysInfo] = useRequestMetrics<SysInfo>(TauriCommand.SysInfo);
   const [networks] = useRequestNetworks();
   const [cpus] = useRequestCpus();
   const [disks] = useRequestDisks();
-  const [processes] = useRequestMetrics<Process>(TauriCommand.Processes, {
+  const [sysInfo] = useRequestMetrics<SysInfo>(TauriCommand.SysInfo, {
     latestOnly: true,
   });
-
-  console.log(processes.length);
+  const [processes] = useRequestMetrics<Process[]>(TauriCommand.Processes, {
+    latestOnly: true,
+  });
 
   return (
     <MetricsContext.Provider
@@ -66,7 +66,7 @@ const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
         networks,
         cpus,
         disks,
-        processes: processes.at(-1) ?? null,
+        processes: processes.at(-1) ?? [],
       }}
     >
       {children}
