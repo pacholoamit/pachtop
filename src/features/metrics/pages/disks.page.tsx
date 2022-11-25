@@ -1,5 +1,6 @@
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import DiskAreaChart from "@/features/metrics/components/disks/disk.area-chart";
+import PageWrapper from "@/components/page-wrapper";
 import { Box, Card, Center, Space, Stack, Text } from "@mantine/core";
 
 const xAxisMin = Date.now() - 86400;
@@ -8,9 +9,7 @@ const DisksPage = () => {
   const { disks } = useMetricsContext();
 
   return (
-    <Stack spacing="xl">
-      <h2>Disks</h2>
-
+    <PageWrapper name="Disks">
       {disks?.map((disk) => {
         console.log(disk.data.at(-1)?.isRemovable);
         return (
@@ -36,7 +35,7 @@ const DisksPage = () => {
           </Card>
         );
       })}
-    </Stack>
+    </PageWrapper>
   );
 };
 
