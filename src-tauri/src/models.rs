@@ -74,3 +74,14 @@ pub struct Disk {
     pub is_removable: bool,
     pub timestamp: Timestamp,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Process {
+    pub name: String,
+    pub pid: String,
+    pub cpu_usage: f32,
+    pub memory_usage: u64,
+    pub status: String,
+    pub timestamp: Timestamp,
+}

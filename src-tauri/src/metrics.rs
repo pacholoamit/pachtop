@@ -1,10 +1,10 @@
-use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Swap, SysInfo, Timestamp};
+use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Process, Swap, SysInfo, Timestamp};
 use std::str;
 use std::{
     sync::{Arc, Mutex},
     time::{SystemTime, UNIX_EPOCH},
 };
-use sysinfo::{CpuExt, CpuRefreshKind, DiskExt, NetworkExt, RefreshKind, System, SystemExt};
+use sysinfo::{CpuExt, DiskExt, NetworkExt, ProcessExt, System, SystemExt};
 use tauri::State;
 
 #[tauri::command]
@@ -39,6 +39,11 @@ pub fn get_networks(state: State<'_, MetricsState>) -> Vec<Network> {
 #[tauri::command]
 pub fn get_disks(state: State<'_, MetricsState>) -> Vec<Disk> {
     state.0.lock().unwrap().disks()
+}
+
+#[tauri::command]
+pub fn get_processes(state: State<'_, MetricsState>) -> Vec<Process> {
+    state.0.lock().unwrap().processes()
 }
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
@@ -184,6 +189,42 @@ impl Metrics {
             used_percentage: get_percentage(&self.sys.used_swap(), &self.sys.total_swap()),
             timestamp: current_time(),
         }
+    }
+
+    fn processes(&mut self) -> Vec<Process> {
+        self.sys.refresh_processes();
+
+        let processes: Vec<Process> = self
+            .sys
+            .processes()
+            .into_iter()
+            .map(|(pid, process)| {
+                let name = process.name().to_owned();
+                let cpu_usage = process.cpu_usage();
+                let pid = pid.to_string();
+                let memory_usage = process.memory();
+
+                let status = match process.status() {
+                    sysinfo::ProcessStatus::Run => "Running".to_owned(),
+                    sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
+                    sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
+                    sysinfo::ProcessStatus::Idle => "Idle".to_owned(),
+                    sysinfo::ProcessStatus::Zombie => "Zombie".to_owned(),
+                    _ => "Unknown".to_owned(),
+                };
+
+                Process {
+                    name,
+                    pid,
+                    cpu_usage,
+                    memory_usage,
+                    status,
+                    timestamp: current_time(),
+                }
+            })
+            .collect();
+
+        processes
     }
 
     fn networks(&mut self) -> Vec<Network> {
