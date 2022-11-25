@@ -11,7 +11,6 @@ const DisksPage = () => {
   return (
     <PageWrapper name="Disks">
       {disks?.map((disk) => {
-        console.log(disk.data.at(-1)?.isRemovable);
         return (
           <Card key={disk.id} shadow="xl" p="sm" radius={"md"} withBorder>
             <Stack spacing="xl">
