@@ -11,9 +11,9 @@ const SystemInfo = () => {
         <Text weight={"bold"} size="lg" color={"#dce1e8"}>
           System Information
         </Text>
-        <Text>OS: {sysInfo.at(-1)?.osVersion}</Text>
-        <Text>Host Name: {sysInfo.at(-1)?.hostname}</Text>
-        <Text>Kernel: {sysInfo.at(-1)?.kernelVersion}</Text>
+        <Text>OS: {sysInfo?.osVersion}</Text>
+        <Text>Host Name: {sysInfo?.hostname}</Text>
+        <Text>Kernel: {sysInfo?.kernelVersion}</Text>
         <Space h="xl" />
         <Text weight={"bold"} size="lg" color={"#dce1e8"}>
           CPU Information:

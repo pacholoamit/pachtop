@@ -66,7 +66,7 @@ const NavbarOptions = () => {
     {
       icon: <IconCpu size={16} />,
       label: "Processes",
-      onClick: () => {},
+      onClick: () => {navigate("/processes")},
     },
     {
       icon: <IconArticle size={16} />,

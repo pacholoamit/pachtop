@@ -6,6 +6,7 @@ export enum TauriCommand {
   Networks = "get_networks",
   Cpus = "get_cpus",
   Disks = "get_disks",
+  Processes = "get_processes",
 }
 
 // typescript interfaces/types from models.rs
@@ -67,5 +68,14 @@ export interface Disk {
   fileSystem: string;
   diskType: string;
   isRemovable: boolean;
+  timestamp: Timestamp;
+}
+
+export interface Process {
+  name: string;
+  pid: number;
+  cpuUsage: number;
+  memoryUsage: number;
+  status: string;
   timestamp: Timestamp;
 }
