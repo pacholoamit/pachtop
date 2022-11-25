@@ -9,17 +9,19 @@ export interface UniqueNetwork {
   data: UniqueNetworkData[];
 }
 
-export interface UniqueNetworkData extends Network {}
+export interface UniqueNetworkData extends Network { }
 
 export interface UniqueCpu {
   name: string;
   data: UniqueCpuData[];
 }
-export interface UniqueCpuData extends Cpu {}
+export interface UniqueCpuData extends Cpu { }
 
 export interface UniqueDisk {
   id: string;
   data: UniqueDiskData[];
 }
 
-export interface UniqueDiskData extends Disk {}
+export interface UniqueDiskData extends Disk { }
+
+
