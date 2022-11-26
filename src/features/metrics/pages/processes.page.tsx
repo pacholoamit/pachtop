@@ -1,6 +1,6 @@
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import { Process } from "@/lib/types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 import sortBy from "lodash.sortby";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
@@ -11,7 +11,7 @@ interface ProcessesTableProps {
   processes: Process[];
 }
 
-const ProcessesTable: React.FC<ProcessesTableProps> = ({ processes }) => {
+const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
   const [records, setRecords] = useState(sortBy(processes, "name"));
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
     columnAccessor: "name",
@@ -55,7 +55,7 @@ const ProcessesTable: React.FC<ProcessesTableProps> = ({ processes }) => {
       ]}
     />
   );
-};
+});
 
 const ProcessesPage = () => {
   const { processes } = useMetricsContext();
