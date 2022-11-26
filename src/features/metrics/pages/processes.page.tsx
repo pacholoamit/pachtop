@@ -1,39 +1,68 @@
+import { DataTable, DataTableSortStatus } from "mantine-datatable";
+import { Process } from "@/lib/types";
+import { useState, useEffect, memo } from "react";
+
+import sortBy from "lodash.sortby";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import PageWrapper from "@/components/page-wrapper";
-import { Process } from "@/lib/types";
-import { Button, Card, Group } from "@mantine/core";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 
-interface ProcessComponentProps {
-  process: Process;
+interface ProcessesTableProps {
+  processes: Process[];
 }
-const ProcessComponent: React.FC<ProcessComponentProps> = ({ process }) => {
+
+const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
+  const [records, setRecords] = useState(sortBy(processes, "name"));
+  const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
+    columnAccessor: "name",
+    direction: "asc",
+  });
+
+  useEffect(() => {
+    const data = sortBy(processes, sortStatus.columnAccessor);
+    setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
+  }, [sortStatus]);
+
   return (
-    <Card shadow={"lg"} p="sm" radius={"md"} withBorder>
-      <Group position="apart">
-        <Group>
-          <h3>{process.name}</h3>
-          <p>PID: {process.pid}</p>
-          <p>Memory Usage: {formatBytes(process.memoryUsage)}</p>
-          <p>CPU Usage: {process.cpuUsage}</p>
-          <p>Status: {process.status}</p>
-        </Group>
-        <Group position="right">
-          <Button color={"red"}>Kill</Button>
-        </Group>
-      </Group>
-    </Card>
+    <DataTable
+      striped
+      highlightOnHover
+      records={records}
+      idAccessor="pid"
+      sortStatus={sortStatus}
+      onSortStatusChange={setSortStatus}
+      minHeight={"calc(100vh - 190px)"}
+      columns={[
+        {
+          accessor: "pid",
+          textAlignment: "right",
+          title: "PID",
+          sortable: true,
+        },
+        { accessor: "name", sortable: true },
+        {
+          accessor: "cpuUsage",
+          render: ({ cpuUsage }) => `${Math.round(cpuUsage * 100) / 100}%`,
+          sortable: true,
+          title: "CPU Usage",
+        },
+        {
+          accessor: "memoryUsage",
+          sortable: true,
+          render: ({ memoryUsage }) => formatBytes(memoryUsage),
+        },
+        { accessor: "status", sortable: true },
+      ]}
+    />
   );
-};
+});
 
 const ProcessesPage = () => {
   const { processes } = useMetricsContext();
 
   return (
     <PageWrapper name="Processes">
-      {processes.map((process) => (
-        <ProcessComponent process={process} key={process.pid} />
-      ))}
+      <ProcessesTable processes={processes} />
     </PageWrapper>
   );
 };
