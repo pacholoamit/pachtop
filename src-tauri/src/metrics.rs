@@ -223,7 +223,7 @@ impl Metrics {
                     cpu_usage,
                     memory_usage,
                     status,
-                    // timestamp: current_time(),
+                    timestamp: current_time(),
                 }
             })
             .collect();

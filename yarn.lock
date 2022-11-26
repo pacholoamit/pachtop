@@ -1048,6 +1048,11 @@ magic-string@^0.26.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
+mantine-datatable@^1.7.18:
+  version "1.7.18"
+  resolved "https://registry.yarnpkg.com/mantine-datatable/-/mantine-datatable-1.7.18.tgz#c755c244cbb609fc813cb041495e445f2affcade"
+  integrity sha512-eocxMfpfu/NKeUOux9oLQyHGCSf3EwZPSCzwnyczG8n8TPwfGOnG4U3Giv+HyPKMQeqWWXokWkGIBShUJ20pcA==
+
 ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"

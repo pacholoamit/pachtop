@@ -83,5 +83,5 @@ pub struct Process {
     pub cpu_usage: f32,
     pub memory_usage: String,
     pub status: String,
-    // pub timestamp: Timestamp,
+    pub timestamp: Timestamp,
 }
