@@ -77,5 +77,4 @@ export interface Process {
   cpuUsage: string
   memoryUsage: string;
   status: string;
-  timestamp: Timestamp;
 }

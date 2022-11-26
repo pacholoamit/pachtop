@@ -81,7 +81,6 @@ pub struct Process {
     pub name: String,
     pub pid: String,
     pub cpu_usage: f32,
-    pub memory_usage: String,
+    pub memory_usage: u64,
     pub status: String,
-    pub timestamp: Timestamp,
 }
