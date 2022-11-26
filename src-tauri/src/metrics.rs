@@ -194,9 +194,9 @@ impl Metrics {
     }
 
     fn processes(&mut self) -> Vec<Process> {
-        self.sys.refresh_processes();
         self.sys
             .refresh_specifics(RefreshKind::new().with_processes(ProcessRefreshKind::everything()));
+        let cpu_count = self.sys.physical_core_count().unwrap_or(1);
 
         let processes: Vec<Process> = self
             .sys
@@ -204,7 +204,7 @@ impl Metrics {
             .into_iter()
             .map(|(pid, process)| {
                 let name = process.name().to_owned();
-                let cpu_usage = process.cpu_usage();
+                let cpu_usage = round(process.cpu_usage() / cpu_count as f32);
                 let pid = pid.to_string();
                 let memory_usage = process.memory();
 
@@ -262,4 +262,7 @@ fn current_time() -> Timestamp {
 fn get_percentage(value: &u64, total: &u64) -> f64 {
     let percentage = (*value as f64 / *total as f64) * 100.0;
     (percentage * 100.0).round() / 100.0
+}
+fn round(x: f32) -> f32 {
+    (x * 100.0).round() / 100.0
 }

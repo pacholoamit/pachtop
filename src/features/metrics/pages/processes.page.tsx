@@ -1,6 +1,9 @@
+import { DataTable } from "mantine-datatable";
+
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import PageWrapper from "@/components/page-wrapper";
-import { DataTable } from "mantine-datatable";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import logger from "@/lib/logger";
 
 const ProcessesPage = () => {
   const { processes } = useMetricsContext();
@@ -14,8 +17,16 @@ const ProcessesPage = () => {
         columns={[
           { accessor: "pid", textAlignment: "right", title: "PID" },
           { accessor: "name" },
-          { accessor: "cpuUsage" },
-          { accessor: "memoryUsage" },
+          {
+            accessor: "cpuUsage",
+            render: ({ cpuUsage }) => `${Math.round(cpuUsage * 100) / 100}%`,
+            ellipsis: true,
+            title: "CPU Usage",
+          },
+          {
+            accessor: "memoryUsage",
+            render: ({ memoryUsage }) => formatBytes(memoryUsage),
+          },
           { accessor: "status" },
         ]}
       />
