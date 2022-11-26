@@ -194,8 +194,7 @@ impl Metrics {
     }
 
     fn processes(&mut self) -> Vec<Process> {
-        self.sys
-            .refresh_specifics(RefreshKind::new().with_processes(ProcessRefreshKind::everything()));
+        self.sys.refresh_processes();
         let cpu_count = self.sys.physical_core_count().unwrap_or(1);
 
         let processes: Vec<Process> = self
