@@ -1,51 +1,10 @@
 use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Process, Swap, SysInfo, Timestamp};
 use std::str;
-use std::{
-    sync::{Arc, Mutex},
-    time::{SystemTime, UNIX_EPOCH},
-};
+use std::sync::{Arc, Mutex};
+use std::time::{SystemTime, UNIX_EPOCH};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, ProcessExt, System, SystemExt};
 
 use tauri::State;
-
-#[tauri::command]
-pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
-    state.0.lock().unwrap().sysinfo()
-}
-
-#[tauri::command]
-pub fn get_global_cpu(state: State<'_, MetricsState>) -> GlobalCpu {
-    state.0.lock().unwrap().global_cpu()
-}
-
-#[tauri::command]
-pub fn get_cpus(state: State<'_, MetricsState>) -> Vec<Cpu> {
-    state.0.lock().unwrap().cpus()
-}
-
-#[tauri::command]
-pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
-    state.0.lock().unwrap().memory()
-}
-
-#[tauri::command]
-pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
-    state.0.lock().unwrap().swap()
-}
-
-#[tauri::command]
-pub fn get_networks(state: State<'_, MetricsState>) -> Vec<Network> {
-    state.0.lock().unwrap().networks()
-}
-#[tauri::command]
-pub fn get_disks(state: State<'_, MetricsState>) -> Vec<Disk> {
-    state.0.lock().unwrap().disks()
-}
-
-#[tauri::command]
-pub fn get_processes(state: State<'_, MetricsState>) -> Vec<Process> {
-    state.0.lock().unwrap().processes()
-}
 
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
@@ -225,7 +184,25 @@ impl Metrics {
             })
             .collect();
 
-        processes
+        // TODO: modify processes so it can deliver the grouped processes
+        let mut grouped_processes: Vec<Process> = Vec::new();
+        for process in processes {
+            let mut found = false;
+            for grouped_process in &mut grouped_processes {
+                if grouped_process.name == process.name {
+                    grouped_process.cpu_usage += process.cpu_usage;
+                    grouped_process.memory_usage += process.memory_usage;
+                    found = true;
+                    break;
+                }
+            }
+
+            if !found {
+                grouped_processes.push(process);
+            }
+        }
+
+        grouped_processes
     }
 
     fn networks(&mut self) -> Vec<Network> {
@@ -263,4 +240,43 @@ fn get_percentage(value: &u64, total: &u64) -> f64 {
 }
 fn round(x: f32) -> f32 {
     (x * 100.0).round() / 100.0
+}
+
+#[tauri::command]
+pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
+    state.0.lock().unwrap().sysinfo()
+}
+
+#[tauri::command]
+pub fn get_global_cpu(state: State<'_, MetricsState>) -> GlobalCpu {
+    state.0.lock().unwrap().global_cpu()
+}
+
+#[tauri::command]
+pub fn get_cpus(state: State<'_, MetricsState>) -> Vec<Cpu> {
+    state.0.lock().unwrap().cpus()
+}
+
+#[tauri::command]
+pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
+    state.0.lock().unwrap().memory()
+}
+
+#[tauri::command]
+pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
+    state.0.lock().unwrap().swap()
+}
+
+#[tauri::command]
+pub fn get_networks(state: State<'_, MetricsState>) -> Vec<Network> {
+    state.0.lock().unwrap().networks()
+}
+#[tauri::command]
+pub fn get_disks(state: State<'_, MetricsState>) -> Vec<Disk> {
+    state.0.lock().unwrap().disks()
+}
+
+#[tauri::command]
+pub fn get_processes(state: State<'_, MetricsState>) -> Vec<Process> {
+    state.0.lock().unwrap().processes()
 }
