@@ -1,4 +1,4 @@
-import { Stack } from "@mantine/core";
+import { Stack, Title } from "@mantine/core";
 
 interface PageWrapperProps {
   name: string;
@@ -7,8 +7,8 @@ interface PageWrapperProps {
 
 const PageWrapper: React.FC<PageWrapperProps> = ({ children, name }) => {
   return (
-    <Stack spacing="xl">
-      <h2>{name}</h2>
+    <Stack spacing="lg">
+      <Title>{name}</Title>
       {children}
     </Stack>
   );

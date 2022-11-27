@@ -1,6 +1,7 @@
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import { Process } from "@/lib/types";
 import { useState, useEffect, memo } from "react";
+import { Button } from "@mantine/core";
 
 import sortBy from "lodash.sortby";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
@@ -32,6 +33,7 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
       minHeight={"calc(100vh - 190px)"}
+      height={"90vh"}
       columns={[
         {
           accessor: "pid",
@@ -52,6 +54,15 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
           render: ({ memoryUsage }) => formatBytes(memoryUsage),
         },
         { accessor: "status", sortable: true },
+        {
+          accessor: "actions",
+
+          render: (record, index) => (
+            <Button variant="outline" onClick={() => {}} color="red">
+              Kill
+            </Button>
+          ),
+        },
       ]}
     />
   );
@@ -60,6 +71,7 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
 const ProcessesPage = () => {
   const { processes } = useMetricsContext();
 
+  console.log(processes);
   return (
     <PageWrapper name="Processes">
       <ProcessesTable processes={processes} />
