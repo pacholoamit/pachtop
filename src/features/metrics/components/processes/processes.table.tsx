@@ -1,61 +1,13 @@
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { KillProcessOpts, Process, Command } from "@/lib/types";
+import { Process } from "@/lib/types";
 import { useState, useEffect, memo } from "react";
-import { Button, Modal, TextInput, Text, Group, Space } from "@mantine/core";
+import { Button, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { useDebouncedValue } from "@mantine/hooks";
-import { invoke } from "@/lib";
 
-import notification from "@/utils/notification";
 import sortBy from "lodash.sortby";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import useKillProcess from "@/features/metrics/hooks/useKillProcess";
-
-interface KillProcessVerificationProps {
-  selectedProcess: Process | null;
-  setSelectedProcess: React.Dispatch<React.SetStateAction<Process | null>>;
-  setRecords: React.Dispatch<React.SetStateAction<Process[]>>;
-}
-const KillProcessVerification: React.FC<KillProcessVerificationProps> = ({
-  setSelectedProcess,
-  selectedProcess,
-  setRecords,
-}) => {
-  const [kill] = useKillProcess({
-    onKill() {
-      setRecords((records) =>
-        records.filter((r) => r.pid !== selectedProcess?.pid)
-      );
-    },
-  });
-
-  const onCancel = () => {
-    setSelectedProcess(null);
-  };
-  const onKill = () => {
-    kill(selectedProcess as Process);
-    setSelectedProcess(null);
-  };
-
-  return (
-    <Modal
-      title="Are you sure?"
-      onClose={onCancel}
-      opened={!!selectedProcess}
-      centered
-    >
-      <Space h="md" />
-      <Text> Are you sure you want to kill {selectedProcess?.name}? </Text>
-      <Space h="xl" />
-      <Group position="right">
-        <Button onClick={onCancel}>Cancel</Button>
-        <Button color={"red"} onClick={onKill}>
-          Kill
-        </Button>
-      </Group>
-    </Modal>
-  );
-};
+import KillProcessVerification from "@/features/metrics/components/processes/processes.kill-verification";
 
 interface ProcessesTableProps {
   processes: Process[];
@@ -92,27 +44,6 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
     setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
   }, [sortStatus]);
 
-  const killProcess = async (process: Process) => {
-    const cmd = Command.KillProcess;
-
-    const isKilled = await invoke<KillProcessOpts, boolean>(cmd, {
-      pid: process.pid,
-    });
-
-    if (!isKilled) {
-      notification.error({
-        title: "Error ❌",
-        message: `Failed to kill process ${process.pid}`,
-      });
-      return;
-    }
-
-    setRecords(records.filter((record) => record.pid !== process.pid));
-    notification.success({
-      title: "Process Killed ✅",
-      message: `Process ${process.name} was killed successfully`,
-    });
-  };
   return (
     <>
       <TextInput
