@@ -1,12 +1,14 @@
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { Process } from "@/lib/types";
+import { KillProcessOptions, Process, TauriCommand } from "@/lib/types";
 import { useState, useEffect, memo } from "react";
 import { Button, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { useDebouncedValue } from "@mantine/hooks";
+import { invoke } from "@/lib";
 
 import sortBy from "lodash.sortby";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import logger from "@/lib/logger";
 
 interface ProcessesTableProps {
   processes: Process[];
@@ -81,7 +83,16 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
           {
             accessor: "actions",
             render: (record, index) => (
-              <Button variant="outline" onClick={() => {}} color="red">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  logger.info("Killing process");
+                  invoke<KillProcessOptions>(TauriCommand.Kill_process, {
+                    pid: record.pid.toString(),
+                  });
+                }}
+                color="red"
+              >
                 Kill
               </Button>
             ),

@@ -186,24 +186,26 @@ impl Metrics {
             .collect();
 
         // TODO: modify processes so it can deliver the grouped processes
-        let mut grouped_processes: Vec<Process> = Vec::new();
-        for process in processes {
-            let mut found = false;
-            for grouped_process in &mut grouped_processes {
-                if grouped_process.name == process.name {
-                    grouped_process.cpu_usage += process.cpu_usage;
-                    grouped_process.memory_usage += process.memory_usage;
-                    found = true;
-                    break;
-                }
-            }
+        // let mut grouped_processes: Vec<Process> = Vec::new();
+        // for process in processes {
+        //     let mut found = false;
+        //     for grouped_process in &mut grouped_processes {
+        //         if grouped_process.name == process.name {
+        //             grouped_process.cpu_usage += process.cpu_usage;
+        //             grouped_process.memory_usage += process.memory_usage;
+        //             found = true;
+        //             break;
+        //         }
+        //     }
 
-            if !found {
-                grouped_processes.push(process);
-            }
-        }
+        //     if !found {
+        //         grouped_processes.push(process);
+        //     }
+        // }
 
-        grouped_processes
+        // grouped_processes
+
+        processes
     }
 
     fn networks(&mut self) -> Vec<Network> {
@@ -228,7 +230,10 @@ impl Metrics {
         networks
     }
 
-    fn kill_process(&mut self, pid: usize) -> bool {
+    fn kill_process(&mut self, pid: String) -> bool {
+        let pid = pid.parse::<usize>().unwrap_or(0);
+        println!("Killing process with pid: {}", pid);
+
         let process = match self.sys.process(Pid::from(pid)) {
             Some(process) => process,
             None => return false,
@@ -297,6 +302,6 @@ pub fn get_processes(state: State<'_, MetricsState>) -> Vec<Process> {
 }
 
 #[tauri::command]
-pub fn kill_process(state: State<'_, MetricsState>, pid: usize) -> bool {
+pub fn kill_process(state: State<'_, MetricsState>, pid: String) -> bool {
     state.0.lock().unwrap().kill_process(pid)
 }
