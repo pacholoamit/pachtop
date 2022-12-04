@@ -98,14 +98,14 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
 
     if (!isKilled) {
       return errorNotification({
-        title: "Error",
+        title: "Error ❌",
         message: `Failed to kill process ${process.pid}`,
       });
     }
 
     setRecords(records.filter((record) => record.pid !== process.pid));
     successNotification({
-      title: "Process Killed",
+      title: "Process Killed ✅",
       message: `Process ${process.name} with pid ${process.pid} was killed`,
     });
   };
