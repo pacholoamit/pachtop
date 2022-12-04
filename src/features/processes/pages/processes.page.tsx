@@ -10,6 +10,8 @@ import ProcessesTable from "@/features/processes/components/processes.table";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import PageWrapper from "@/components/page-wrapper";
 
+let renders = 0;
+
 const ProcessesPage = () => {
   const { processes } = useMetricsContext();
   const [query, setQuery] = useState("");
@@ -20,7 +22,7 @@ const ProcessesPage = () => {
     direction: "asc",
   });
 
-  console.log(processes[0]);
+  console.log(renders++);
 
   useEffect(() => {
     const filteredRecords = processes.filter((process) => {
