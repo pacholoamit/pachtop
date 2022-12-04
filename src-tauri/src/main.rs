@@ -5,6 +5,7 @@
 
 mod metrics;
 mod models;
+mod actions;
 
 use metrics::MetricsState;
 use sysinfo::{System, SystemExt};
