@@ -1,7 +1,7 @@
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import { KillProcessOpts, Process, Command } from "@/lib/types";
 import { useState, useEffect, memo } from "react";
-import { Button, TextInput } from "@mantine/core";
+import { Button, Modal, TextInput, Text, Group, Space } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { useDebouncedValue } from "@mantine/hooks";
 import { invoke } from "@/lib";
@@ -9,6 +9,53 @@ import { invoke } from "@/lib";
 import notification from "@/utils/notification";
 import sortBy from "lodash.sortby";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import useKillProcess from "@/features/metrics/hooks/useKillProcess";
+
+interface KillProcessVerificationProps {
+  selectedProcess: Process | null;
+  setSelectedProcess: React.Dispatch<React.SetStateAction<Process | null>>;
+  setRecords: React.Dispatch<React.SetStateAction<Process[]>>;
+}
+const KillProcessVerification: React.FC<KillProcessVerificationProps> = ({
+  setSelectedProcess,
+  selectedProcess,
+  setRecords,
+}) => {
+  const [kill] = useKillProcess({
+    onKill() {
+      setRecords((records) =>
+        records.filter((r) => r.pid !== selectedProcess?.pid)
+      );
+    },
+  });
+
+  const onCancel = () => {
+    setSelectedProcess(null);
+  };
+  const onKill = () => {
+    kill(selectedProcess as Process);
+    setSelectedProcess(null);
+  };
+
+  return (
+    <Modal
+      title="Are you sure?"
+      onClose={onCancel}
+      opened={!!selectedProcess}
+      centered
+    >
+      <Space h="md" />
+      <Text> Are you sure you want to kill {selectedProcess?.name}? </Text>
+      <Space h="xl" />
+      <Group position="right">
+        <Button onClick={onCancel}>Cancel</Button>
+        <Button color={"red"} onClick={onKill}>
+          Kill
+        </Button>
+      </Group>
+    </Modal>
+  );
+};
 
 interface ProcessesTableProps {
   processes: Process[];
@@ -18,6 +65,8 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 1000);
   const [records, setRecords] = useState(sortBy(processes, "name"));
+  const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);
+
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
     columnAccessor: "name",
     direction: "asc",
@@ -106,7 +155,7 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
             render: (record, index) => (
               <Button
                 variant="outline"
-                onClick={() => killProcess(record)}
+                onClick={() => setSelectedProcess(record)}
                 color="red"
               >
                 Kill
@@ -114,6 +163,11 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
             ),
           },
         ]}
+      />
+      <KillProcessVerification
+        selectedProcess={selectedProcess}
+        setSelectedProcess={setSelectedProcess}
+        setRecords={setRecords}
       />
     </>
   );
