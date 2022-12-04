@@ -2,7 +2,7 @@ use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Process, Swap, SysInf
 use std::str;
 use std::sync::{Arc, Mutex};
 use std::time::{SystemTime, UNIX_EPOCH};
-use sysinfo::{CpuExt, DiskExt, NetworkExt, ProcessExt, System, SystemExt};
+use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
 
 use tauri::State;
 
@@ -127,6 +127,7 @@ impl Metrics {
 
         disks
     }
+
     fn memory(&mut self) -> Memory {
         self.sys.refresh_memory();
 
@@ -226,6 +227,20 @@ impl Metrics {
 
         networks
     }
+
+    fn kill_process(&mut self, pid: usize) -> bool {
+        let process = match self.sys.process(Pid::from(pid)) {
+            Some(process) => process,
+            None => return false,
+        };
+
+        let result = match process.kill_with(Signal::Kill) {
+            Some(result) => result,
+            None => return false,
+        };
+
+        result
+    }
 }
 
 fn current_time() -> Timestamp {
@@ -279,4 +294,9 @@ pub fn get_disks(state: State<'_, MetricsState>) -> Vec<Disk> {
 #[tauri::command]
 pub fn get_processes(state: State<'_, MetricsState>) -> Vec<Process> {
     state.0.lock().unwrap().processes()
+}
+
+#[tauri::command]
+pub fn kill_process(state: State<'_, MetricsState>, pid: usize) -> bool {
+    state.0.lock().unwrap().kill_process(pid)
 }

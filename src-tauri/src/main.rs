@@ -5,7 +5,6 @@
 
 mod metrics;
 mod models;
-mod actions;
 
 use metrics::MetricsState;
 use sysinfo::{System, SystemExt};
@@ -67,7 +66,8 @@ fn main() {
             metrics::get_networks,
             metrics::get_cpus,
             metrics::get_disks,
-            metrics::get_processes
+            metrics::get_processes,
+            metrics::kill_process
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
