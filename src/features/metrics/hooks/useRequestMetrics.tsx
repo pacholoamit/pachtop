@@ -20,8 +20,9 @@ const useRequestMetrics = <T extends {}>(
 
       if (latestOnly) {
         setState([data]);
+        return;
       }
-      
+
       if (state.length >= maxLength) {
         setState((prev) => [...prev.slice(1), data]);
       } else {
