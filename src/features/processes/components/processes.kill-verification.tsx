@@ -1,6 +1,6 @@
 import { Process } from "@/lib/types";
 import { Button, Modal, Text, Group, Space } from "@mantine/core";
-import useKillProcess from "@/features/metrics/hooks/useKillProcess";
+import useKillProcess from "@/features/processes/hooks/useKillProcess";
 
 interface KillProcessVerificationProps {
   selectedProcess: Process | null;
