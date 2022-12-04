@@ -3,7 +3,6 @@ import { Process } from "@/lib/types";
 import { useState, useEffect, memo } from "react";
 import { Button, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
-import { useDebouncedValue } from "@mantine/hooks";
 
 import sortBy from "lodash.sortby";
 import formatBytes from "@/features/metrics/utils/format-bytes";
@@ -15,7 +14,6 @@ interface ProcessesTableProps {
 
 const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
   const [query, setQuery] = useState("");
-  const [debouncedQuery] = useDebouncedValue(query, 1000);
   const [records, setRecords] = useState(sortBy(processes, "name"));
   const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);
 
@@ -28,16 +26,16 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
     const filteredRecords = processes.filter((process) => {
       const filteredName = process.name
         .toLowerCase()
-        .includes(debouncedQuery.toLowerCase());
+        .includes(query.toLowerCase());
       const filteredPid = process.pid
         .toString()
         .toLowerCase()
-        .includes(debouncedQuery.toLowerCase());
+        .includes(query.toLowerCase());
 
       return filteredName || filteredPid;
     });
     setRecords(sortBy(filteredRecords, sortStatus.columnAccessor));
-  }, [debouncedQuery]);
+  }, [query]);
 
   useEffect(() => {
     const data = sortBy(processes, sortStatus.columnAccessor);
