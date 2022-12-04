@@ -9,7 +9,7 @@ import {
   Process,
   Swap,
   SysInfo,
-  TauriCommand,
+  Command,
 } from "@/lib/types";
 import {
   UniqueCpu,
@@ -43,16 +43,16 @@ export const MetricsContext = createContext<MetricsContext>({
 });
 
 const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
-  const [globalCpu] = useRequestMetrics<GlobalCpu>(TauriCommand.GlobalCpu);
-  const [memory] = useRequestMetrics<Memory>(TauriCommand.Memory);
-  const [swap] = useRequestMetrics<Swap>(TauriCommand.Swap);
+  const [globalCpu] = useRequestMetrics<GlobalCpu>(Command.GlobalCpu);
+  const [memory] = useRequestMetrics<Memory>(Command.Memory);
+  const [swap] = useRequestMetrics<Swap>(Command.Swap);
   const [networks] = useRequestNetworks();
   const [cpus] = useRequestCpus();
   const [disks] = useRequestDisks();
-  const [sysInfo] = useRequestMetrics<SysInfo>(TauriCommand.SysInfo, {
+  const [sysInfo] = useRequestMetrics<SysInfo>(Command.SysInfo, {
     latestOnly: true,
   });
-  const [processes] = useRequestMetrics<Process[]>(TauriCommand.Processes, {
+  const [processes] = useRequestMetrics<Process[]>(Command.Processes, {
     latestOnly: true,
   });
 

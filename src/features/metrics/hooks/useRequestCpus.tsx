@@ -1,11 +1,11 @@
 import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
 import { UniqueCpu } from "@/features/metrics/utils/types";
-import { TauriCommand } from "@/lib";
+import { Command } from "@/lib";
 import { Cpu } from "@/lib/types";
 import { useEffect, useState } from "react";
 
 const useRequestCpus = () => {
-  const [cpus] = useRequestMetrics<Cpu[]>(TauriCommand.Cpus);
+  const [cpus] = useRequestMetrics<Cpu[]>(Command.Cpus);
   const [uniqueCpus, setUniqueCpus] = useState<UniqueCpu[]>([]);
 
   useEffect(() => {

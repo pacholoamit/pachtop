@@ -1,5 +1,5 @@
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { KillProcessOptions, Process, TauriCommand } from "@/lib/types";
+import { KillProcessOpts, Process, Command } from "@/lib/types";
 import { useState, useEffect, memo } from "react";
 import { Button, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
@@ -8,7 +8,6 @@ import { invoke } from "@/lib";
 
 import sortBy from "lodash.sortby";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import logger from "@/lib/logger";
 
 interface ProcessesTableProps {
   processes: Process[];
@@ -43,6 +42,13 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
     setRecords(sortStatus.direction === "desc" ? data.reverse() : data);
   }, [sortStatus]);
 
+  const killProcess = async (process: Process) => {
+    const cmd = Command.KillProcess;
+    const isKilled = await invoke<KillProcessOpts, boolean>(cmd, {
+      pid: process.pid,
+    });
+    
+  };
   return (
     <>
       <TextInput
@@ -85,12 +91,7 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
             render: (record, index) => (
               <Button
                 variant="outline"
-                onClick={() => {
-                  logger.info("Killing process");
-                  invoke<KillProcessOptions>(TauriCommand.Kill_process, {
-                    pid: record.pid.toString(),
-                  });
-                }}
+                onClick={() => killProcess(record)}
                 color="red"
               >
                 Kill

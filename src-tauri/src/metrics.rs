@@ -232,7 +232,6 @@ impl Metrics {
 
     fn kill_process(&mut self, pid: String) -> bool {
         let pid = pid.parse::<usize>().unwrap_or(0);
-        println!("Killing process with pid: {}", pid);
 
         let process = match self.sys.process(Pid::from(pid)) {
             Some(process) => process,
