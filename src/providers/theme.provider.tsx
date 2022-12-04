@@ -1,10 +1,10 @@
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 
-interface IThemeProvider {
+interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const theme: MantineThemeOverride = {
     fontFamily: "Roboto, Arial, sans-serif",
     colorScheme: "dark",

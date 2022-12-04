@@ -5,9 +5,56 @@ import { Button, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { useDebouncedValue } from "@mantine/hooks";
 import { invoke } from "@/lib";
+import { showNotification } from "@mantine/notifications";
 
 import sortBy from "lodash.sortby";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+
+interface NotificationOpts {
+  title: string;
+  message: string;
+}
+const successNotification = (opts: NotificationOpts) => {
+  showNotification({
+    title: opts.title,
+    message: opts.message,
+    styles: (theme) => ({
+      root: {
+        backgroundColor: theme.colors.green[6],
+        borderColor: theme.colors.green[6],
+        "&::before": { backgroundColor: theme.white },
+      },
+
+      title: { color: theme.white },
+      description: { color: theme.white },
+      closeButton: {
+        color: theme.white,
+        "&:hover": { backgroundColor: theme.colors.green[7] },
+      },
+    }),
+  });
+};
+
+const errorNotification = (opts: NotificationOpts) => {
+  showNotification({
+    title: opts.title,
+    message: opts.message,
+    styles: (theme) => ({
+      root: {
+        backgroundColor: theme.colors.red[6],
+        borderColor: theme.colors.red[6],
+        "&::before": { backgroundColor: theme.white },
+      },
+
+      title: { color: theme.white },
+      description: { color: theme.white },
+      closeButton: {
+        color: theme.white,
+        "&:hover": { backgroundColor: theme.colors.red[7] },
+      },
+    }),
+  });
+};
 
 interface ProcessesTableProps {
   processes: Process[];
@@ -44,10 +91,23 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo(({ processes }) => {
 
   const killProcess = async (process: Process) => {
     const cmd = Command.KillProcess;
+
     const isKilled = await invoke<KillProcessOpts, boolean>(cmd, {
       pid: process.pid,
     });
-    
+
+    if (!isKilled) {
+      return errorNotification({
+        title: "Error",
+        message: `Failed to kill process ${process.pid}`,
+      });
+    }
+
+    setRecords(records.filter((record) => record.pid !== process.pid));
+    successNotification({
+      title: "Process Killed",
+      message: `Process ${process.name} with pid ${process.pid} was killed`,
+    });
   };
   return (
     <>
