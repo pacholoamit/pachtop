@@ -1,11 +1,11 @@
 import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
 import { UniqueNetwork } from "@/features/metrics/utils/types";
-import { TauriCommand } from "@/lib";
+import { Command } from "@/lib";
 import { Network } from "@/lib/types";
 import { useEffect, useState } from "react";
 
 const useRequestNetworks = () => {
-  const [networks] = useRequestMetrics<Network[]>(TauriCommand.Networks);
+  const [networks] = useRequestMetrics<Network[]>(Command.Networks);
   const [uniqueNetworks, setUniqueNetworks] = useState<UniqueNetwork[]>([]);
 
   useEffect(() => {

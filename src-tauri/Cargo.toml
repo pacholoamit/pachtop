@@ -1,6 +1,6 @@
 [package]
 name = "app"
-version = "0.3.1"
+version = "0.3.2"
 description = "Cross-platform (Linux, WIndows, MacOS) Desktop GUI system monitor"
 authors = ["Pacholo Amit"]
 license = "MIT"
@@ -12,7 +12,7 @@ rust-version = "1.65"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.0.4", features = [] }
+tauri-build = { version = "1.1.1", features = [] }
 
 [dependencies]
 serde_json = "1.0"

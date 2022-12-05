@@ -1,7 +1,7 @@
 {
   "name": "pachtop",
   "private": true,
-  "version": "0.3.1",
+  "version": "0.3.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,6 +13,7 @@
     "@emotion/react": "^11.10.0",
     "@mantine/core": "^5.2.0",
     "@mantine/hooks": "^5.2.0",
+    "@mantine/notifications": "^5.9.0",
     "@tabler/icons": "^1.96.0",
     "@tauri-apps/api": "^1.0.2",
     "apexcharts": "^3.35.5",

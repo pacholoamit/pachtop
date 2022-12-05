@@ -1,10 +1,10 @@
 import useRequestMetrics from "@/features/metrics/hooks/useRequestMetrics";
-import { Disk, TauriCommand } from "@/lib/types";
+import { Disk, Command } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { UniqueDisk } from "@/features/metrics/utils/types";
 
 const useRequestDisks = () => {
-  const [disks] = useRequestMetrics<Disk[]>(TauriCommand.Disks);
+  const [disks] = useRequestMetrics<Disk[]>(Command.Disks);
   const [uniqueDisks, setUniqueDisks] = useState<UniqueDisk[]>([]);
 
   useEffect(() => {

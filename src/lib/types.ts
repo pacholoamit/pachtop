@@ -1,4 +1,6 @@
-export enum TauriCommand {
+import { InvokeArgs } from "@tauri-apps/api/tauri";
+
+export enum Command {
   Memory = "get_memory",
   Swap = "get_swap",
   SysInfo = "get_sysinfo",
@@ -7,7 +9,15 @@ export enum TauriCommand {
   Cpus = "get_cpus",
   Disks = "get_disks",
   Processes = "get_processes",
+  KillProcess = "kill_process",
 }
+
+export interface KillProcessOpts extends InvokeArgs {
+  pid: string
+}
+
+export type KillProcessResult = boolean
+
 
 // typescript interfaces/types from models.rs
 

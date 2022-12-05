@@ -1,6 +1,5 @@
 import useMediaQuery from "@/hooks/useMediaQuery";
 import {
-  IconAlertCircle,
   IconLayoutDashboard,
   IconServer,
   IconArticle,
@@ -66,7 +65,9 @@ const NavbarOptions = () => {
     {
       icon: <IconCpu size={16} />,
       label: "Processes",
-      onClick: () => {navigate("/processes")},
+      onClick: () => {
+        navigate("/processes");
+      },
     },
     {
       icon: <IconArticle size={16} />,

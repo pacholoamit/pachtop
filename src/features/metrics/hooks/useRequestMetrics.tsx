@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { invoke, TauriCommand } from "@/lib";
+import { invoke, Command } from "@/lib";
 
 interface UseRequestMetricsOptions {
   interval?: number;
@@ -8,7 +8,7 @@ interface UseRequestMetricsOptions {
 }
 
 const useRequestMetrics = <T extends {}>(
-  command: TauriCommand,
+  command: Command,
   opts?: UseRequestMetricsOptions
 ): [T[], React.Dispatch<React.SetStateAction<T[]>>] => {
   const { interval = 1000, maxLength = 86400, latestOnly = false } = opts || {};
@@ -20,8 +20,9 @@ const useRequestMetrics = <T extends {}>(
 
       if (latestOnly) {
         setState([data]);
+        return;
       }
-      
+
       if (state.length >= maxLength) {
         setState((prev) => [...prev.slice(1), data]);
       } else {
