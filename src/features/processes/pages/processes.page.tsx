@@ -3,23 +3,17 @@ import { TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { Process } from "@/lib/types";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 import sortBy from "lodash.sortby";
 import KillProcessVerification from "@/features/processes/components/processes.kill-verification";
 import ProcessesTable from "@/features/processes/components/processes.table";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import PageWrapper from "@/components/page-wrapper";
-import { RootState, useAppDispatch } from "../../../providers/redux.provider";
 
 let renders = 0;
 
 const ProcessesPage = () => {
-  // const { processes } = useMetricsContext();
-
-  const processes = useSelector<RootState>(
-    (state) => state.processes.value
-  ) as Process[];
+  const { processes } = useMetricsContext();
 
   const [query, setQuery] = useState("");
   const [records, setRecords] = useState(sortBy(processes, "name"));
