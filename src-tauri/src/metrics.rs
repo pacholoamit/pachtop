@@ -1,5 +1,5 @@
 use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Process, Swap, SysInfo, Timestamp};
-use std::str;
+use std::str::{self, FromStr};
 use std::sync::{Arc, Mutex};
 use std::time::{SystemTime, UNIX_EPOCH};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
@@ -231,7 +231,10 @@ impl Metrics {
     }
 
     fn kill_process(&mut self, pid: String) -> bool {
-        let pid = pid.parse::<usize>().unwrap_or(0);
+        let pid = match Pid::from_str(&pid) {
+            Ok(pid) => pid,
+            Err(_) => return false,
+        };
 
         let process = match self.sys.process(Pid::from(pid)) {
             Some(process) => process,
