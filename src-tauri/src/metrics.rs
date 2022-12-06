@@ -236,7 +236,7 @@ impl Metrics {
             Err(_) => return false,
         };
 
-        let process = match self.sys.process(Pid::from(pid)) {
+        let process = match self.sys.process(pid) {
             Some(process) => process,
             None => return false,
         };
