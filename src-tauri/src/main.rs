@@ -3,17 +3,16 @@
     windows_subsystem = "windows"
 )]
 
+mod app;
 mod metrics;
 mod models;
 
+use app::AppState;
 use metrics::MetricsState;
 use sysinfo::{System, SystemExt};
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
 fn main() {
-    let mut sys = System::new_all();
-    sys.refresh_all();
-
     tauri::Builder::default()
         .system_tray(SystemTray::new().with_menu(
             SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
@@ -41,9 +40,10 @@ fn main() {
             }
             _ => {}
         })
-        .manage(MetricsState::new(sys))
+        .manage(AppState::new())
+        .manage(MetricsState::new())
         .invoke_handler(tauri::generate_handler![
-            metrics::get_sysinfo,
+            app::get_sysinfo,
             metrics::get_global_cpu,
             metrics::get_memory,
             metrics::get_swap,

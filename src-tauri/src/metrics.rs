@@ -9,17 +9,18 @@ use tauri::State;
 pub struct MetricsState(Arc<Mutex<Metrics>>);
 
 impl MetricsState {
-    pub fn new(sys: System) -> Self {
+    pub fn new() -> Self {
+        let sys = System::new_all();
         MetricsState(Arc::new(Mutex::new(Metrics { sys })))
     }
 }
 
-struct Metrics {
-    sys: System,
+pub struct Metrics {
+    pub sys: System,
 }
 
 impl Metrics {
-    fn sysinfo(&mut self) -> SysInfo {
+    pub fn sysinfo(&mut self) -> SysInfo {
         self.sys.refresh_all();
 
         let kernel_version = self.sys.kernel_version().unwrap_or("Unknown".to_string());
@@ -264,10 +265,10 @@ fn round(x: f32) -> f32 {
     (x * 100.0).round() / 100.0
 }
 
-#[tauri::command]
-pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
-    state.0.lock().unwrap().sysinfo()
-}
+// #[tauri::command]
+// pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
+//     state.0.lock().unwrap().sysinfo()
+// }
 
 #[tauri::command]
 pub fn get_global_cpu(state: State<'_, MetricsState>) -> GlobalCpu {
