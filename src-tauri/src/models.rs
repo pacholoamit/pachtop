@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Timestamp(pub i64);
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -12,6 +12,10 @@ pub struct Memory {
     pub used: u64,
     pub used_percentage: f64,
     pub timestamp: Timestamp,
+}
+
+pub trait MemoryTrait {
+    fn get_memory(&mut self) -> Memory;
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -25,12 +29,20 @@ pub struct GlobalCpu {
     pub timestamp: Timestamp,
 }
 
+pub trait GlobalCpuTrait {
+    fn get_global_cpu(&mut self) -> GlobalCpu;
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Cpu {
     pub name: String,
     pub usage: f64,
     pub timestamp: Timestamp,
+}
+
+pub trait CpuTrait {
+    fn get_cpus(&mut self) -> Vec<Cpu>;
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -43,7 +55,11 @@ pub struct Swap {
     pub timestamp: Timestamp,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+pub trait SwapTrait {
+    fn get_swap(&mut self) -> Swap;
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SysInfo {
     pub kernel_version: String,
@@ -52,6 +68,11 @@ pub struct SysInfo {
     pub core_count: String,
     pub timestamp: Timestamp,
 }
+
+pub trait SystemInformationTrait {
+    fn get_system_information(&mut self) -> SysInfo;
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Network {
@@ -59,6 +80,10 @@ pub struct Network {
     pub received: u64,
     pub transmitted: u64,
     pub timestamp: Timestamp,
+}
+
+pub trait NetworkTrait {
+    fn get_networks(&mut self) -> Vec<Network>;
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -75,6 +100,10 @@ pub struct Disk {
     pub timestamp: Timestamp,
 }
 
+pub trait DisksTrait {
+    fn get_disks(&mut self) -> Vec<Disk>;
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Process {
@@ -85,4 +114,7 @@ pub struct Process {
     pub status: String,
 }
 
-
+pub trait ProcessesTrait {
+    fn get_processes(&mut self) -> Vec<Process>;
+    fn kill_process(&mut self, pid: String) -> bool;
+}

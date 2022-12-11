@@ -6,16 +6,14 @@
 mod app;
 mod metrics;
 mod models;
+mod sqlite;
+mod utils;
 
-use std::sync::{Arc, Mutex};
+use app::AppState;
 
-use app::App;
-
-use metrics::{Metrics, MetricsState};
-use sysinfo::{System, SystemExt};
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
-fn build_and_run_app(app: App) {
+fn build_and_run_app(app: AppState) {
     tauri::Builder::default()
         .system_tray(SystemTray::new().with_menu(
             SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
@@ -43,27 +41,24 @@ fn build_and_run_app(app: App) {
             }
             _ => {}
         })
-        .manage(app)
-        .manage(MetricsState::new()) // ! delete later
+        .manage(AppState::new())
+        // .manage(app) // ! delete later
         .invoke_handler(tauri::generate_handler![
             app::get_sysinfo,
-            metrics::get_global_cpu,
-            metrics::get_memory,
-            metrics::get_swap,
-            metrics::get_networks,
-            metrics::get_cpus,
-            metrics::get_disks,
-            metrics::get_processes,
-            metrics::kill_process
+            app::get_global_cpu,
+            app::get_memory,
+            app::get_swap,
+            app::get_networks,
+            app::get_cpus,
+            app::get_disks,
+            app::get_processes,
+            app::kill_process
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
 fn main() {
-    let metrics_state = Arc::new(Mutex::new(Metrics {
-        sys: System::new_all(),
-    }));
-    let config = App::new(metrics_state);
-    build_and_run_app(config);
+    let app = AppState::new();
+    build_and_run_app(app);
 }
