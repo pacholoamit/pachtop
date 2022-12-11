@@ -7,12 +7,15 @@ mod app;
 mod metrics;
 mod models;
 
-use app::AppState;
-use metrics::MetricsState;
+use std::sync::{Arc, Mutex};
+
+use app::AppConfig;
+
+use metrics::{Metrics, MetricsState};
 use sysinfo::{System, SystemExt};
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
-fn main() {
+fn build_and_run_app(config: AppConfig) {
     tauri::Builder::default()
         .system_tray(SystemTray::new().with_menu(
             SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
@@ -40,8 +43,8 @@ fn main() {
             }
             _ => {}
         })
-        .manage(AppState::new())
-        .manage(MetricsState::new())
+        .manage(config)
+        .manage(MetricsState::new()) // ! delete later
         .invoke_handler(tauri::generate_handler![
             app::get_sysinfo,
             metrics::get_global_cpu,
@@ -55,4 +58,12 @@ fn main() {
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+fn main() {
+    let metrics_state = Arc::new(Mutex::new(Metrics {
+        sys: System::new_all(),
+    }));
+    let config = AppConfig::new(metrics_state);
+    build_and_run_app(config);
 }

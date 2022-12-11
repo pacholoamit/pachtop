@@ -6,8 +6,9 @@ use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, Syst
 
 use tauri::State;
 
-pub struct MetricsState(Arc<Mutex<Metrics>>);
+pub struct MetricsState(Arc<Mutex<Metrics>>); // !TO DELETE
 
+// ! TO DELETE
 impl MetricsState {
     pub fn new() -> Self {
         let sys = System::new_all();

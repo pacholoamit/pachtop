@@ -1,28 +1,24 @@
 use std::sync::{Arc, Mutex};
 
-use sysinfo::{System, SystemExt};
 use tauri::State;
 
 use crate::{metrics::Metrics, models::SysInfo};
 
-pub struct AppState {
+pub struct AppConfig {
     pub metrics: Arc<Mutex<Metrics>>,
     // pub sqlite:
 }
 
-impl AppState {
-    pub fn new() -> Self {
-        let mut sys = System::new_all();
-        sys.refresh_all();
-
-        AppState {
-            metrics: Arc::new(Mutex::new(Metrics { sys })),
+impl AppConfig {
+    pub fn new(metrics_state: Arc<Mutex<Metrics>>) -> Self {
+        AppConfig {
+            metrics: metrics_state,
             // sqlite:
         }
     }
 }
 
 #[tauri::command]
-pub fn get_sysinfo(state: State<'_, AppState>) -> SysInfo {
+pub fn get_sysinfo(state: State<'_, AppConfig>) -> SysInfo {
     state.metrics.lock().unwrap().sysinfo()
 }
