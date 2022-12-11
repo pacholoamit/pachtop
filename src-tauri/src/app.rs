@@ -4,14 +4,14 @@ use tauri::State;
 
 use crate::{metrics::Metrics, models::SysInfo};
 
-pub struct AppConfig {
+pub struct App {
     pub metrics: Arc<Mutex<Metrics>>,
     // pub sqlite:
 }
 
-impl AppConfig {
+impl App {
     pub fn new(metrics_state: Arc<Mutex<Metrics>>) -> Self {
-        AppConfig {
+        App {
             metrics: metrics_state,
             // sqlite:
         }
@@ -19,6 +19,6 @@ impl AppConfig {
 }
 
 #[tauri::command]
-pub fn get_sysinfo(state: State<'_, AppConfig>) -> SysInfo {
+pub fn get_sysinfo(state: State<'_, App>) -> SysInfo {
     state.metrics.lock().unwrap().sysinfo()
 }
