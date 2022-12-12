@@ -48,16 +48,6 @@ const RightMetricsStack = () => (
 );
 
 const DashboardPage = () => {
-  // useEffect(() => {
-  //   const unlisten = listen("get_sysinfo", (event) => {
-  //     console.log(event.payload);
-  //   });
-
-  //   return () => {
-  //     // cleanup
-  //     unlisten.then((unlisten) => unlisten());
-  //   };
-  // }, []);
   listen("get_sysinfo", (event) => {
     console.log(event.payload);
   });

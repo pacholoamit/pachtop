@@ -41,7 +41,7 @@ impl Default for App {
 // }
 
 #[tauri::command]
-pub fn get_sysinfo(state: State<'_, AppState>) -> String {
+pub fn get_sysinfo(state: State<'_, AppState>) -> SysInfo {
     let mut state = state.0.lock().unwrap();
     let data = state.metrics.get_system_information();
 
@@ -68,7 +68,7 @@ pub fn get_sysinfo(state: State<'_, AppState>) -> String {
     params![data.kernel_version, data.os_version, data.hostname, data.core_count, time.0])
     .expect("Failed to insert data");
 
-    "Hello_world".into()
+    data
 }
 
 #[tauri::command]
