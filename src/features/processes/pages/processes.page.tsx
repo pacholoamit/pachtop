@@ -10,10 +10,6 @@ import ProcessesTable from "@/features/processes/components/processes.table";
 import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import PageWrapper from "@/components/page-wrapper";
 import useProcesses from "@/features/processes/hooks/useProcesses";
-import useRequestMetrics from "../../metrics/hooks/useRequestMetrics";
-
-// Rerenders happen 6 times w/o strict mode
-let renders = 0;
 
 const ProcessesPage = () => {
   const { processes } = useProcesses();
@@ -24,7 +20,6 @@ const ProcessesPage = () => {
     columnAccessor: "name",
     direction: "asc",
   });
-  console.log(++renders);
 
   useEffect(() => {
     setRecords(processes);

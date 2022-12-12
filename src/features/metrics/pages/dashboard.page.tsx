@@ -8,6 +8,8 @@ import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-char
 import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
 
 import { Grid, Stack } from "@mantine/core";
+import { listen } from "@tauri-apps/api/event";
+import { useEffect } from "react";
 
 const xAxisMin = Date.now() - 86400;
 
@@ -46,6 +48,20 @@ const RightMetricsStack = () => (
 );
 
 const DashboardPage = () => {
+  // useEffect(() => {
+  //   const unlisten = listen("get_sysinfo", (event) => {
+  //     console.log(event.payload);
+  //   });
+
+  //   return () => {
+  //     // cleanup
+  //     unlisten.then((unlisten) => unlisten());
+  //   };
+  // }, []);
+  listen("get_sysinfo", (event) => {
+    console.log(event.payload);
+  });
+
   return (
     <Grid gutter="xl">
       <Grid.Col span={12}>

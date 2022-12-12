@@ -1,25 +1,29 @@
-use crate::models::{Cpu, Disk, GlobalCpu, Memory, Network, Process, Swap, SysInfo, Timestamp};
+use crate::models::*;
+use crate::utils::{current_time, get_percentage, round};
 use std::str::{self, FromStr};
 use std::sync::{Arc, Mutex};
-use std::time::{SystemTime, UNIX_EPOCH};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
 
-use tauri::State;
+// pub struct MetricsState(pub Arc<Mutex<Metrics>>);
 
-pub struct MetricsState(Arc<Mutex<Metrics>>);
+// impl MetricsState {
+//     pub fn new(sys: System) -> Self {
+//         MetricsState(Arc::new(Mutex::new(Metrics { sys })))
+//     }
+// }
 
-impl MetricsState {
-    pub fn new(sys: System) -> Self {
-        MetricsState(Arc::new(Mutex::new(Metrics { sys })))
-    }
-}
-
-struct Metrics {
+pub struct Metrics {
     sys: System,
 }
 
-impl Metrics {
-    fn sysinfo(&mut self) -> SysInfo {
+impl Default for Metrics {
+    fn default() -> Self {
+        Metrics { sys: System::new() }
+    }
+}
+
+impl SystemInformationTrait for Metrics {
+    fn get_system_information(&mut self) -> SysInfo {
         self.sys.refresh_all();
 
         let kernel_version = self.sys.kernel_version().unwrap_or("Unknown".to_string());
@@ -35,8 +39,10 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+}
 
-    fn global_cpu(&mut self) -> GlobalCpu {
+impl GlobalCpuTrait for Metrics {
+    fn get_global_cpu(&mut self) -> GlobalCpu {
         self.sys.refresh_cpu();
 
         let cpu = self.sys.global_cpu_info();
@@ -55,8 +61,10 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+}
 
-    fn cpus(&mut self) -> Vec<Cpu> {
+impl CpuTrait for Metrics {
+    fn get_cpus(&mut self) -> Vec<Cpu> {
         let cpus: Vec<Cpu> = self
             .sys
             .cpus()
@@ -76,8 +84,10 @@ impl Metrics {
 
         cpus
     }
+}
 
-    fn disks(&mut self) -> Vec<Disk> {
+impl DisksTrait for Metrics {
+    fn get_disks(&mut self) -> Vec<Disk> {
         self.sys.refresh_disks_list();
         self.sys.refresh_disks();
 
@@ -127,8 +137,10 @@ impl Metrics {
 
         disks
     }
+}
 
-    fn memory(&mut self) -> Memory {
+impl MemoryTrait for Metrics {
+    fn get_memory(&mut self) -> Memory {
         self.sys.refresh_memory();
 
         Memory {
@@ -139,8 +151,10 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+}
 
-    fn swap(&mut self) -> Swap {
+impl SwapTrait for Metrics {
+    fn get_swap(&mut self) -> Swap {
         self.sys.refresh_memory();
 
         Swap {
@@ -151,8 +165,10 @@ impl Metrics {
             timestamp: current_time(),
         }
     }
+}
 
-    fn processes(&mut self) -> Vec<Process> {
+impl ProcessesTrait for Metrics {
+    fn get_processes(&mut self) -> Vec<Process> {
         self.sys.refresh_processes();
         let cpu_count = self.sys.physical_core_count().unwrap_or(1);
 
@@ -208,28 +224,6 @@ impl Metrics {
         processes
     }
 
-    fn networks(&mut self) -> Vec<Network> {
-        self.sys.refresh_networks();
-
-        let networks: Vec<Network> = self
-            .sys
-            .networks()
-            .into_iter()
-            .map(|(name, network)| {
-                let name = name.to_owned();
-
-                Network {
-                    name,
-                    received: network.received(),
-                    transmitted: network.transmitted(),
-                    timestamp: current_time(),
-                }
-            })
-            .collect();
-
-        networks
-    }
-
     fn kill_process(&mut self, pid: String) -> bool {
         let pid = match Pid::from_str(&pid) {
             Ok(pid) => pid,
@@ -250,60 +244,26 @@ impl Metrics {
     }
 }
 
-fn current_time() -> Timestamp {
-    let start = SystemTime::now();
-    let since_the_epoch = start.duration_since(UNIX_EPOCH);
-    Timestamp(since_the_epoch.unwrap().as_millis() as i64)
-}
+impl NetworkTrait for Metrics {
+    fn get_networks(&mut self) -> Vec<Network> {
+        self.sys.refresh_networks();
 
-fn get_percentage(value: &u64, total: &u64) -> f64 {
-    let percentage = (*value as f64 / *total as f64) * 100.0;
-    (percentage * 100.0).round() / 100.0
-}
-fn round(x: f32) -> f32 {
-    (x * 100.0).round() / 100.0
-}
+        let networks: Vec<Network> = self
+            .sys
+            .networks()
+            .into_iter()
+            .map(|(name, network)| {
+                let name = name.to_owned();
 
-#[tauri::command]
-pub fn get_sysinfo(state: State<'_, MetricsState>) -> SysInfo {
-    state.0.lock().unwrap().sysinfo()
-}
+                Network {
+                    name,
+                    received: network.received(),
+                    transmitted: network.transmitted(),
+                    timestamp: current_time(),
+                }
+            })
+            .collect();
 
-#[tauri::command]
-pub fn get_global_cpu(state: State<'_, MetricsState>) -> GlobalCpu {
-    state.0.lock().unwrap().global_cpu()
-}
-
-#[tauri::command]
-pub fn get_cpus(state: State<'_, MetricsState>) -> Vec<Cpu> {
-    state.0.lock().unwrap().cpus()
-}
-
-#[tauri::command]
-pub fn get_memory(state: State<'_, MetricsState>) -> Memory {
-    state.0.lock().unwrap().memory()
-}
-
-#[tauri::command]
-pub fn get_swap(state: State<'_, MetricsState>) -> Swap {
-    state.0.lock().unwrap().swap()
-}
-
-#[tauri::command]
-pub fn get_networks(state: State<'_, MetricsState>) -> Vec<Network> {
-    state.0.lock().unwrap().networks()
-}
-#[tauri::command]
-pub fn get_disks(state: State<'_, MetricsState>) -> Vec<Disk> {
-    state.0.lock().unwrap().disks()
-}
-
-#[tauri::command]
-pub fn get_processes(state: State<'_, MetricsState>) -> Vec<Process> {
-    state.0.lock().unwrap().processes()
-}
-
-#[tauri::command]
-pub fn kill_process(state: State<'_, MetricsState>, pid: String) -> bool {
-    state.0.lock().unwrap().kill_process(pid)
+        networks
+    }
 }
