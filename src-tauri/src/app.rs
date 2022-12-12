@@ -2,11 +2,13 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
+use rusqlite::params;
 use sysinfo::{System, SystemExt};
 use tauri::{Manager, State, Window};
 
 use crate::metrics::Metrics;
 use crate::models::*;
+use crate::sqlite::Sqlite;
 
 pub struct AppState(Arc<Mutex<App>>);
 
@@ -18,14 +20,14 @@ impl AppState {
 
 pub struct App {
     pub metrics: Metrics,
-    // pub sqlite:
+    pub sqlite: Sqlite,
 }
 
 impl Default for App {
     fn default() -> Self {
         App {
             metrics: Metrics::default(),
-            // sqlite: Sqlite::default(),
+            sqlite: Sqlite::new().expect("Failed to create sqlite connection"),
         }
     }
 }
@@ -41,8 +43,50 @@ impl Default for App {
 // }
 
 #[tauri::command]
-pub fn get_sysinfo(state: State<'_, AppState>) -> SysInfo {
-    state.0.lock().unwrap().metrics.get_system_information()
+pub fn get_sysinfo(state: State<'_, AppState>) -> String {
+    let mut state = state.0.lock().unwrap();
+    let data = state.metrics.get_system_information();
+    let table = "system_information";
+
+    let create_table_sql = "
+    CREATE TABLE IF NOT EXISTS system_information (
+        id INTEGER PRIMARY KEY,
+        kernel_version TEXT NOT NULL,
+        os_version TEXT NOT NULL,
+        hostname TEXT NOT NULL,
+        core_count INTEGER NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )";
+
+    state
+        .sqlite
+        .conn
+        .execute(create_table_sql, params![])
+        .expect("Failed to create table");
+
+    state.sqlite.conn.execute("
+    INSERT INTO system_information (kernel_version, os_version, hostname, core_count) VALUES (?1,?2,?3,?4)",
+    params![data.kernel_version, data.os_version, data.hostname, data.core_count])
+    .expect("Failed to insert data");
+
+    // loop {
+    //     let data = state.metrics.get_system_information();
+    //     state
+    //         .sqlite
+    //         .create_table_from_struct::<SysInfo>(&table.to_owned(), &data);
+    //     state.sqlite.insert(table, &data);
+    //     thread::sleep(Duration::from_secs(1));
+    // }
+
+    // state
+    //     .0
+    //     .lock()
+    //     .unwrap()
+    //     .sqlite
+    //     .create_table_from_struct::<SysInfo>(table, &data)
+    //     .insert(table, &data);
+
+    "Hello_world".into()
 }
 
 #[tauri::command]
