@@ -30,45 +30,9 @@ impl Default for App {
     }
 }
 
-// #[tauri::command]
-// pub fn get_sysinfo(state: State<'_, App>, window: Window) {
-//     let mut metrics = state.metrics.lock().unwrap();
-//     let info = metrics.sysinfo();
-//     thread::spawn(move || loop {
-//         window.emit("get_sysinfo", &info).unwrap();
-//         thread::sleep(Duration::from_secs(1));
-//     });
-// }
-
 #[tauri::command]
 pub fn get_sysinfo(state: State<'_, AppState>) -> SysInfo {
-    let mut state = state.0.lock().unwrap();
-    let data = state.metrics.get_system_information();
-
-    let create_table_sql = "
-    CREATE TABLE IF NOT EXISTS system_information (
-        id INTEGER PRIMARY KEY,
-        kernel_version TEXT NOT NULL,
-        os_version TEXT NOT NULL,
-        hostname TEXT NOT NULL,
-        core_count INTEGER NOT NULL,
-        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-    )";
-
-    state
-        .sqlite
-        .conn
-        .execute(create_table_sql, params![])
-        .expect("Failed to create table");
-
-    let time = current_time(); // !FIX TIME ZONE
-
-    state.sqlite.conn.execute("
-    INSERT INTO system_information (kernel_version, os_version, hostname, core_count, created_at) VALUES (?1,?2,?3,?4,?5)",
-    params![data.kernel_version, data.os_version, data.hostname, data.core_count, time.0])
-    .expect("Failed to insert data");
-
-    data
+    state.0.lock().unwrap().metrics.get_system_information()
 }
 
 #[tauri::command]
