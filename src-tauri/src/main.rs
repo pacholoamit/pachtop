@@ -11,6 +11,7 @@ mod utils;
 
 use app::AppState;
 
+use tauri::api::path::cache_dir;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
 fn build_and_run_app(app: AppState) {
@@ -58,7 +59,10 @@ fn build_and_run_app(app: AppState) {
 }
 
 fn main() {
-    logger::init();
+    let binding = cache_dir().expect("Could not get cache dir");
+    let cache_dir = binding.to_str().unwrap();
+    logger::init(cache_dir);
+
     let app = AppState::new();
     build_and_run_app(app);
 }
