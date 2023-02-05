@@ -4,7 +4,6 @@
 )]
 
 mod app;
-mod logger;
 mod metrics;
 mod models;
 mod utils;
@@ -59,10 +58,6 @@ fn build_and_run_app(app: AppState) {
 }
 
 fn main() {
-    let binding = cache_dir().expect("Could not get cache dir");
-    let cache_dir = binding.to_str().unwrap();
-    logger::init(cache_dir);
-
     let app = AppState::new();
     build_and_run_app(app);
 }
