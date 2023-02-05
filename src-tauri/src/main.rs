@@ -6,11 +6,11 @@
 mod app;
 mod metrics;
 mod models;
-mod sqlite;
 mod utils;
 
 use app::AppState;
 
+use tauri::api::path::cache_dir;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
 fn build_and_run_app(app: AppState) {
@@ -41,8 +41,7 @@ fn build_and_run_app(app: AppState) {
             }
             _ => {}
         })
-        .manage(AppState::new())
-        // .manage(app) // ! delete later
+        .manage(app)
         .invoke_handler(tauri::generate_handler![
             app::get_sysinfo,
             app::get_global_cpu,

@@ -17,6 +17,7 @@ import {
 } from "chart.js";
 
 import "chartjs-adapter-luxon";
+import { DateTime } from "luxon";
 
 export interface AreaChartProps {
   title: string;
@@ -56,7 +57,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
   labels,
   datasets,
   title,
-  xAxisMin = undefined,
+  xAxisMin = DateTime.now().toMillis(),
   stacked = false,
   callbacks,
   yAxisTicksCallback,

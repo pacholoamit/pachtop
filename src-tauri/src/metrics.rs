@@ -1,16 +1,7 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
 use std::str::{self, FromStr};
-use std::sync::{Arc, Mutex};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
-
-// pub struct MetricsState(pub Arc<Mutex<Metrics>>);
-
-// impl MetricsState {
-//     pub fn new(sys: System) -> Self {
-//         MetricsState(Arc::new(Mutex::new(Metrics { sys })))
-//     }
-// }
 
 pub struct Metrics {
     sys: System,
@@ -255,6 +246,7 @@ impl NetworkTrait for Metrics {
             .map(|(name, network)| {
                 let name = name.to_owned();
 
+                println!("{:?}", network);
                 Network {
                     name,
                     received: network.received(),
