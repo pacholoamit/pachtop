@@ -42,6 +42,8 @@ export const MetricsContext = createContext<MetricsContext>({
   processes: [],
 });
 
+
+
 const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
   const [globalCpu] = useRequestMetrics<GlobalCpu>(Command.GlobalCpu);
   const [memory] = useRequestMetrics<Memory>(Command.Memory);

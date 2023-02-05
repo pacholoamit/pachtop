@@ -3,35 +3,21 @@
     windows_subsystem = "windows"
 )]
 
+mod app;
 mod metrics;
 mod models;
+mod utils;
 
-use metrics::MetricsState;
-use sysinfo::{System, SystemExt};
-use tauri::{
-    CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem,
-};
-use tauri_plugin_log::{LogTarget, LoggerBuilder};
+use app::AppState;
 
-fn main() {
-    let mut sys = System::new_all();
+use tauri::api::path::cache_dir;
+use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
-    let quit = CustomMenuItem::new("quit".to_string(), "Quit");
-    let hide = CustomMenuItem::new("hide".to_string(), "Hide");
-    let tray_menu = SystemTrayMenu::new()
-        .add_item(quit)
-        .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(hide);
-    let tray = SystemTray::new().with_menu(tray_menu);
-    let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
-    let logger_plugin = LoggerBuilder::default()
-        .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
-        .build();
-
-    sys.refresh_all();
-
+fn build_and_run_app(app: AppState) {
     tauri::Builder::default()
-        .system_tray(tray)
+        .system_tray(SystemTray::new().with_menu(
+            SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
+        ))
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => {
                 let window = app.get_window("main").unwrap();
@@ -55,20 +41,23 @@ fn main() {
             }
             _ => {}
         })
-        .manage(MetricsState::new(sys))
-        .plugin(window_state_plugin)
-        .plugin(logger_plugin)
+        .manage(app)
         .invoke_handler(tauri::generate_handler![
-            metrics::get_sysinfo,
-            metrics::get_global_cpu,
-            metrics::get_memory,
-            metrics::get_swap,
-            metrics::get_networks,
-            metrics::get_cpus,
-            metrics::get_disks,
-            metrics::get_processes,
-            metrics::kill_process
+            app::get_sysinfo,
+            app::get_global_cpu,
+            app::get_memory,
+            app::get_swap,
+            app::get_networks,
+            app::get_cpus,
+            app::get_disks,
+            app::get_processes,
+            app::kill_process
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+fn main() {
+    let app = AppState::new();
+    build_and_run_app(app);
 }
