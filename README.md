@@ -73,3 +73,6 @@ Pachtop is built with what I'd like to call the **"VRRTT"** stack (Vite, Rust, R
 - [x] Persistent metrics over time
 - [ ] Battery Usage?
 - [ ] GPU Usage?
+
+# License
+Pachtop is currently licensed as `MIT`.
