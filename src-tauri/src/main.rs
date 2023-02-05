@@ -6,7 +6,6 @@
 mod app;
 mod metrics;
 mod models;
-mod sqlite;
 mod utils;
 
 use app::AppState;

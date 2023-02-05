@@ -4,7 +4,6 @@ use tauri::State;
 
 use crate::metrics::Metrics;
 use crate::models::*;
-use crate::sqlite::Sqlite;
 
 pub struct AppState(Arc<Mutex<App>>);
 
@@ -16,14 +15,12 @@ impl AppState {
 
 pub struct App {
     pub metrics: Metrics,
-    pub sqlite: Sqlite,
 }
 
 impl Default for App {
     fn default() -> Self {
         App {
             metrics: Metrics::default(),
-            sqlite: Sqlite::new().expect("Failed to create sqlite connection"),
         }
     }
 }
