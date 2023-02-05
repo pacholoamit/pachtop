@@ -1,12 +1,10 @@
 use std::sync::{Arc, Mutex};
 
-use rusqlite::params;
 use tauri::State;
 
 use crate::metrics::Metrics;
 use crate::models::*;
 use crate::sqlite::Sqlite;
-use crate::utils::current_time;
 
 pub struct AppState(Arc<Mutex<App>>);
 

@@ -1,7 +1,5 @@
 use crate::models::*;
-use crate::sqlite::TimeSeriesExt;
 use crate::utils::{current_time, get_percentage, round};
-use rusqlite::params;
 use std::str::{self, FromStr};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
 
@@ -248,6 +246,7 @@ impl NetworkTrait for Metrics {
             .map(|(name, network)| {
                 let name = name.to_owned();
 
+                println!("{:?}", network);
                 Network {
                     name,
                     received: network.received(),

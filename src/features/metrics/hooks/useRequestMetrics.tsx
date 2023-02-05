@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { invoke, Command } from "@/lib";
+import { DateTime } from "luxon";
 
 interface UseRequestMetricsOptions {
   interval?: number;
@@ -7,11 +8,14 @@ interface UseRequestMetricsOptions {
   latestOnly?: boolean;
 }
 
+
+const ONE_HOUR = DateTime.now().minus({ hours: 1 }).toMillis();
+
 const useRequestMetrics = <T extends {}>(
   command: Command,
   opts?: UseRequestMetricsOptions
 ): [T[], React.Dispatch<React.SetStateAction<T[]>>] => {
-  const { interval = 1000, maxLength = 86400, latestOnly = false } = opts || {};
+  const { interval = 1000, maxLength = ONE_HOUR, latestOnly = false } = opts || {};
   const [state, setState] = useState<T[]>([]);
 
   useEffect(() => {

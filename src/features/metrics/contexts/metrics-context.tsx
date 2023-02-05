@@ -42,14 +42,11 @@ export const MetricsContext = createContext<MetricsContext>({
   processes: [],
 });
 
-const DEFAULT_METRICS = {
-  interval: 1000,
-  maxLength: 10,
-}
+
 
 const MetricsProvider: React.FC<MetricsProviderProps> = ({ children }) => {
-  const [globalCpu] = useRequestMetrics<GlobalCpu>(Command.GlobalCpu,DEFAULT_METRICS);
-  const [memory] = useRequestMetrics<Memory>(Command.Memory, DEFAULT_METRICS);
+  const [globalCpu] = useRequestMetrics<GlobalCpu>(Command.GlobalCpu);
+  const [memory] = useRequestMetrics<Memory>(Command.Memory);
   const [swap] = useRequestMetrics<Swap>(Command.Swap);
   const [networks] = useRequestNetworks();
   const [cpus] = useRequestCpus();

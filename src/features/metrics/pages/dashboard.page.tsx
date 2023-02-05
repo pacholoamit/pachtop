@@ -9,9 +9,10 @@ import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
 
 import { Grid, Stack } from "@mantine/core";
 import { listen } from "@tauri-apps/api/event";
-import { useEffect } from "react";
+import { DateTime } from "luxon";
 
-const xAxisMin = Date.now() - 86400;
+
+const xAxisMin = DateTime.now().minus({ minutes: 1 }).toMillis();
 
 const TopMetricsSection = () => {
   return (
@@ -48,9 +49,7 @@ const RightMetricsStack = () => (
 );
 
 const DashboardPage = () => {
-  listen("get_sysinfo", (event) => {
-    console.log(event.payload);
-  });
+
 
   return (
     <Grid gutter="xl">
