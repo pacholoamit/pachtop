@@ -4,6 +4,7 @@
 )]
 
 mod app;
+mod logger;
 mod metrics;
 mod models;
 mod utils;
@@ -57,6 +58,7 @@ fn build_and_run_app(app: AppState) {
 }
 
 fn main() {
+    logger::init();
     let app = AppState::new();
     build_and_run_app(app);
 }

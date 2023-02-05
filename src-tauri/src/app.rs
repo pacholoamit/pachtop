@@ -27,44 +27,62 @@ impl Default for App {
 
 #[tauri::command]
 pub fn get_sysinfo(state: State<'_, AppState>) -> SysInfo {
-    state.0.lock().unwrap().metrics.get_system_information()
+    let sys_info = state.0.lock().unwrap().metrics.get_system_information();
+    log::info!("System Information: {:?}", sys_info);
+    sys_info
 }
 
 #[tauri::command]
 pub fn get_global_cpu(state: State<'_, AppState>) -> GlobalCpu {
-    state.0.lock().unwrap().metrics.get_global_cpu()
+    let global_cpu = state.0.lock().unwrap().metrics.get_global_cpu();
+    log::info!("Global CPU: {:?}", global_cpu);
+    global_cpu
 }
 
 #[tauri::command]
 pub fn get_cpus(state: State<'_, AppState>) -> Vec<Cpu> {
-    state.0.lock().unwrap().metrics.get_cpus()
+    let cpus = state.0.lock().unwrap().metrics.get_cpus();
+    log::info!("CPUs: {:?}", cpus);
+    cpus
 }
 
 #[tauri::command]
 pub fn get_memory(state: State<'_, AppState>) -> Memory {
-    state.0.lock().unwrap().metrics.get_memory()
+    let memory = state.0.lock().unwrap().metrics.get_memory();
+    log::info!("Memory: {:?}", memory);
+    memory
 }
 
 #[tauri::command]
 pub fn get_swap(state: State<'_, AppState>) -> Swap {
-    state.0.lock().unwrap().metrics.get_swap()
+    let swap = state.0.lock().unwrap().metrics.get_swap();
+    log::info!("Swap: {:?}", swap);
+    swap
 }
 
 #[tauri::command]
 pub fn get_networks(state: State<'_, AppState>) -> Vec<Network> {
-    state.0.lock().unwrap().metrics.get_networks()
+    let networks = state.0.lock().unwrap().metrics.get_networks();
+    log::info!("Networks: {:?}", networks);
+    networks
 }
 #[tauri::command]
 pub fn get_disks(state: State<'_, AppState>) -> Vec<Disk> {
-    state.0.lock().unwrap().metrics.get_disks()
+    let disks = state.0.lock().unwrap().metrics.get_disks();
+    log::info!("Disks: {:?}", disks);
+    disks
 }
 
 #[tauri::command]
 pub fn get_processes(state: State<'_, AppState>) -> Vec<Process> {
-    state.0.lock().unwrap().metrics.get_processes()
+    let processes = state.0.lock().unwrap().metrics.get_processes();
+    log::info!("Processes: {:?}", processes);
+    processes
 }
 
 #[tauri::command]
 pub fn kill_process(state: State<'_, AppState>, pid: String) -> bool {
-    state.0.lock().unwrap().metrics.kill_process(pid)
+    let killed = state.0.lock().unwrap().metrics.kill_process(pid);
+    log::info!("Killed Process: {:?}", killed);
+    killed
 }
