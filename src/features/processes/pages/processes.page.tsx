@@ -2,7 +2,7 @@ import { DataTableSortStatus } from "mantine-datatable";
 import { TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { Command, Process } from "@/lib/types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import sortBy from "lodash.sortby";
 import KillProcessVerification from "@/features/processes/components/processes.kill-verification";
@@ -21,18 +21,10 @@ const ProcessesPage = () => {
     direction: "asc",
   });
 
-  useEffect(() => {
-    setRecords(processes);
-    if (!query) {
-      setRecords((prev) => {
-        const data = sortBy(prev, sortStatus.columnAccessor);
-        return sortStatus.direction === "desc" ? data.reverse() : data;
-      });
-      return;
-    }
-
-    setRecords((prev) => {
-      const filteredRecords = prev.filter((process) => {
+  const filteredAndSortedRecords = useMemo(() => {
+    let filteredRecords = processes;
+    if (query) {
+      filteredRecords = filteredRecords.filter((process) => {
         const filteredName = process.name
           .toLowerCase()
           .includes(query.toLowerCase());
@@ -43,10 +35,15 @@ const ProcessesPage = () => {
 
         return filteredName || filteredPid;
       });
-      const sorted = sortBy(filteredRecords, sortStatus.columnAccessor);
-      return sortStatus.direction === "desc" ? sorted.reverse() : sorted;
-    });
-  }, [query, processes, sortStatus]);
+    }
+
+    const sortedRecords = sortBy(filteredRecords, sortStatus.columnAccessor);
+    return sortStatus.direction === "desc" ? sortedRecords.reverse() : sortedRecords;
+  }, [processes, query, sortStatus]);
+
+  useEffect(() => {
+    setRecords(filteredAndSortedRecords);
+  }, [filteredAndSortedRecords]);
 
   return (
     <PageWrapper name="Processes">
