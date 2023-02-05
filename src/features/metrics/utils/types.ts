@@ -1,7 +1,7 @@
 import { Cpu, Disk, Network } from "@/lib/types";
 
 export interface ChartProps {
-  xAxisMin: number;
+  xAxisMin?: number;
 }
 
 export interface UniqueNetwork {
