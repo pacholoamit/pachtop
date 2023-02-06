@@ -21,7 +21,7 @@
     "chartjs-adapter-luxon": "^1.2.0",
     "lodash.sortby": "^4.7.0",
     "luxon": "^3.0.3",
-    "mantine-datatable": "^1.7.18",
+    "mantine-datatable": "^1.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-chartjs-2": "^4.3.1",
