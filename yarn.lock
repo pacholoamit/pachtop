@@ -552,7 +552,7 @@
   resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.119.0.tgz#8c590bc5a563c8673a78ccd451bedabd584b376e"
   integrity sha512-Fk3Qq4w2SXcTjc/n1cuL5bccPkylrOMo7cYpQIf/yw6zP76LQV9dtLcHQUjFiUnaYuswR645CnURIhlafyAh9g==
 
-"@tauri-apps/api@^1.0.2", "@tauri-apps/api@^1.2.0":
+"@tauri-apps/api@^1.0.2":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.2.0.tgz#1f196b3e012971227f41b98214c846430a4eb477"
   integrity sha512-lsI54KI6HGf7VImuf/T9pnoejfgkNoXveP14pVV7XarrQ46rOejIVJLFqHI9sRReJMGdh2YuCoI3cc/yCWCsrw==
@@ -1090,10 +1090,10 @@ magic-string@^0.26.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
-mantine-datatable@^1.7.18:
-  version "1.7.39"
-  resolved "https://registry.yarnpkg.com/mantine-datatable/-/mantine-datatable-1.7.39.tgz#eccfd727f91205bc0c3884b18c8a62ac8ca2fddd"
-  integrity sha512-MO7ka3bmvbAY69HZOw0E94tg4tJDSIH2hmKxKnByxvw62Y27yzc6aaX9IyvjSBquYdQnxKwTNAfgFq2674M11g==
+mantine-datatable@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/mantine-datatable/-/mantine-datatable-1.8.3.tgz#0f08f8a3b72770b20f75582443df8c5df1734164"
+  integrity sha512-9iy4/zR/ccJ7TzPCLeblZDa0iu2uy08NC344hHa2todMCW2QPaEZ6msNL6plY99JSRIRL5LuIG4gYrzbQWvVSA==
 
 ms@2.1.2:
   version "2.1.2"
@@ -1365,12 +1365,6 @@ tabbable@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.0.1.tgz#427a09b13c83ae41eed3e88abb76a4af28bde1a6"
   integrity sha512-SYJSIgeyXW7EuX1ytdneO5e8jip42oHWg9xl/o3oTYhmXusZVgiA+VlPvjIN+kHii9v90AmzTZEBcsEvuAY+TA==
-
-"tauri-plugin-websocket-api@https://github.com/tauri-apps/tauri-plugin-websocket":
-  version "0.0.0"
-  resolved "https://github.com/tauri-apps/tauri-plugin-websocket#71ac8ad8848c3a76d362cd8be5bcd8a45643e96b"
-  dependencies:
-    "@tauri-apps/api" "^1.2.0"
 
 to-fast-properties@^2.0.0:
   version "2.0.0"
