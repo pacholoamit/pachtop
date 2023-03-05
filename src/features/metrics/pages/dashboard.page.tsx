@@ -49,8 +49,6 @@ const RightMetricsStack = () => (
 );
 
 const DashboardPage = () => {
-
-
   return (
     <Grid gutter="xl">
       <Grid.Col span={12}>

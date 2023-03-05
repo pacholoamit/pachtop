@@ -7,7 +7,7 @@ const useLimitedArray = <T,>(maxSize: number) => {
     if (array.length >= maxSize) {
       array.pop();
     }
-    setArray([...array, item]);
+    setArray((prev) => [...prev, item]);
   }
 
   return [array, pushLimited] as const;

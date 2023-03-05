@@ -30,25 +30,23 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
 });
 
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
-  const [sysInfo, pushSysinfo] = useLimitedArray<SysInfo>(10);
-  const [globalCpu, pushGlobalCpu] = useLimitedArray<GlobalCpu>(10);
-  const [memory, pushMemory] = useLimitedArray<Memory>(10);
-  const [swap, pushSwap] = useLimitedArray<Swap>(10);
-  const [processes, pushProcesses] = useLimitedArray<Process>(10);
+  const [sysInfo, pushSysinfo] = useLimitedArray<SysInfo>(100);
+  const [globalCpu, pushGlobalCpu] = useLimitedArray<GlobalCpu>(100);
+  const [memory, pushMemory] = useLimitedArray<Memory>(100);
+  const [swap, pushSwap] = useLimitedArray<Swap>(100);
+  const [processes, pushProcesses] = useLimitedArray<Process>(100);
   // const [networks] = useState<UniqueNetwork[]>([]);
   // const [cpus] = useState<UniqueCpu[]>([]);
   // const [disks] = useState<UniqueDisk[]>([]);
 
-  useEffect(() => {
-    listen<SysInfo>(ServerEvent.SysInfo, (data) => pushSysinfo(data.payload));
-    listen<GlobalCpu>(ServerEvent.GlobalCpu, (data) => pushGlobalCpu(data.payload));
-    listen<Memory>(ServerEvent.Memory, (data) => pushMemory(data.payload));
-    listen<Swap>(ServerEvent.Swap, (data) => pushSwap(data.payload));
-    listen<Process>(ServerEvent.Processes, (data) => pushProcesses(data.payload));
-    // listen<Cpu[]>(ServerEvent.Cpus, (data) => console.log(data));
-    // listen<Network>(ServerEvent.Networks, (data) => console.log(data));
-    // listen<Disk>(ServerEvent.Disks, (data) => console.log(data));
-  }, []);
+  listen<SysInfo>(ServerEvent.SysInfo, ({ payload }) => pushSysinfo(payload));
+  listen<GlobalCpu>(ServerEvent.GlobalCpu, ({ payload }) => pushGlobalCpu(payload));
+  listen<Memory>(ServerEvent.Memory, ({ payload }) => pushMemory(payload));
+  listen<Swap>(ServerEvent.Swap, ({ payload }) => pushSwap(payload));
+  listen<Process>(ServerEvent.Processes, ({ payload }) => pushProcesses(payload));
+  // listen<Cpu[]>(ServerEvent.Cpus, (data) => console.log(data));
+  // listen<Network>(ServerEvent.Networks, (data) => console.log(data));
+  // listen<Disk>(ServerEvent.Disks, (data) => console.log(data));
 
   return (
     <ServerEventsContext.Provider
