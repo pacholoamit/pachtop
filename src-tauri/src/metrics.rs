@@ -56,6 +56,7 @@ impl GlobalCpuTrait for Metrics {
 
 impl CpuTrait for Metrics {
     fn get_cpus(&mut self) -> Vec<Cpu> {
+        self.sys.refresh_cpu();
         let cpus: Vec<Cpu> = self
             .sys
             .cpus()
@@ -246,7 +247,6 @@ impl NetworkTrait for Metrics {
             .map(|(name, network)| {
                 let name = name.to_owned();
 
-                println!("{:?}", network);
                 Network {
                     name,
                     received: network.received(),

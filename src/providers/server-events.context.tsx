@@ -15,7 +15,7 @@ export const ServerEventsContext = createContext<ServerEventsContext>({ data: nu
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
 
     useEffect(() => {
-        listen("server-event", (data) => {
+        listen("emit_cpus", (data) => {
             console.log("server-event", data);
         });
     }, [])
