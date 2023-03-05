@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use tauri::State;
+use tauri::{State, Window};
 
 use crate::metrics::Metrics;
 use crate::models::*;
@@ -82,4 +82,8 @@ pub fn kill_process(state: State<'_, AppState>, pid: String) -> bool {
     let killed = state.0.lock().unwrap().metrics.kill_process(pid);
 
     killed
+}
+
+pub fn emit_server_event(window: &Window) {
+    window.emit("server-event", "Hello from Rust").unwrap();
 }

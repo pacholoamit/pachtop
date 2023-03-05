@@ -10,11 +10,23 @@ mod utils;
 
 use app::AppState;
 
-use tauri::api::path::cache_dir;
+use std::time::Duration;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
 fn build_and_run_app(app: AppState) {
     tauri::Builder::default()
+        .setup(|app| {
+            let window = app.get_window("main").unwrap();
+
+            tauri::async_runtime::spawn(async move {
+                loop {
+                    app::emit_server_event(&window);
+                    std::thread::sleep(Duration::from_secs(2));
+                }
+            });
+
+            Ok(())
+        })
         .system_tray(SystemTray::new().with_menu(
             SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
         ))
