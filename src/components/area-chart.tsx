@@ -58,21 +58,12 @@ const AreaChart: React.FC<AreaChartProps> = ({
   labels,
   datasets,
   title,
-  // xAxisMin = DateTime.now().minus({ seconds: 60 }).toMillis(),
   stacked = false,
+  xAxisMin = undefined,
   callbacks,
   yAxisTicksCallback,
 }) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
-  const [xAxisMin, setXAxisMin] = React.useState(DateTime.now().minus({ seconds: VIEWABLE_ELEMENT_COUNT }).toMillis());
-
-  useEffect(() => {
-    console.log("labels.length", labels.length);
-    //Run XAxis add after number of elements exceeds VIEWEBALE_ELEMENT_COUNT
-    if (labels.length > VIEWABLE_ELEMENT_COUNT) {
-      setXAxisMin((min) => min + SERVER_EVENT_INTERVAL);
-    }
-  }, [datasets]);
 
   const maxTicksLimit = isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
 
