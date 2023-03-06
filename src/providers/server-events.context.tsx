@@ -1,7 +1,7 @@
-import { listen } from "@tauri-apps/api/event";
 import { useEffect, createContext, useState } from "react";
 import { Cpu, Disk, GlobalCpu, Memory, Network, Process, ServerEvent, Swap, SysInfo } from "@/lib/types";
-import useLimitedArray from "@/hooks/useLimitedArray";
+import { VIEWABLE_ELEMENT_COUNT } from "@/contants";
+import useServerEventsStore from "@/hooks/useServerEventsStore";
 
 interface ServerEventsProviderProps {
   children: React.ReactNode;
@@ -29,21 +29,18 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
   // disks: [],
 });
 
+const maxSize = VIEWABLE_ELEMENT_COUNT;
+
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
-  const [sysInfo, pushSysinfo] = useLimitedArray<SysInfo>(100);
-  const [globalCpu, pushGlobalCpu] = useLimitedArray<GlobalCpu>(100);
-  const [memory, pushMemory] = useLimitedArray<Memory>(100);
-  const [swap, pushSwap] = useLimitedArray<Swap>(100);
-  const [processes, pushProcesses] = useLimitedArray<Process>(100);
+  const [sysInfo] = useServerEventsStore<SysInfo>(ServerEvent.SysInfo, { maxSize });
+  const [globalCpu] = useServerEventsStore<GlobalCpu>(ServerEvent.GlobalCpu, { maxSize });
+  const [memory] = useServerEventsStore<Memory>(ServerEvent.Memory, { maxSize });
+  const [swap] = useServerEventsStore<Swap>(ServerEvent.Swap, { maxSize });
+  const [processes] = useServerEventsStore<Process>(ServerEvent.Processes, { maxSize });
   // const [networks] = useState<UniqueNetwork[]>([]);
   // const [cpus] = useState<UniqueCpu[]>([]);
   // const [disks] = useState<UniqueDisk[]>([]);
 
-  listen<SysInfo>(ServerEvent.SysInfo, ({ payload }) => pushSysinfo(payload));
-  listen<GlobalCpu>(ServerEvent.GlobalCpu, ({ payload }) => pushGlobalCpu(payload));
-  listen<Memory>(ServerEvent.Memory, ({ payload }) => pushMemory(payload));
-  listen<Swap>(ServerEvent.Swap, ({ payload }) => pushSwap(payload));
-  listen<Process>(ServerEvent.Processes, ({ payload }) => pushProcesses(payload));
   // listen<Cpu[]>(ServerEvent.Cpus, (data) => console.log(data));
   // listen<Network>(ServerEvent.Networks, (data) => console.log(data));
   // listen<Disk>(ServerEvent.Disks, (data) => console.log(data));

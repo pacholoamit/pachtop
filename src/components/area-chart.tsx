@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@/components/card";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { Line } from "react-chartjs-2";
+import { SERVER_EVENT_INTERVAL, VIEWABLE_ELEMENT_COUNT } from "@/contants";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -57,15 +58,23 @@ const AreaChart: React.FC<AreaChartProps> = ({
   labels,
   datasets,
   title,
-  xAxisMin = DateTime.now().toMillis(),
+  // xAxisMin = DateTime.now().minus({ seconds: 60 }).toMillis(),
   stacked = false,
   callbacks,
   yAxisTicksCallback,
 }) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
+  const [xAxisMin, setXAxisMin] = React.useState(DateTime.now().minus({ seconds: VIEWABLE_ELEMENT_COUNT }).toMillis());
 
-  const maxTicksLimit =
-    isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
+  useEffect(() => {
+    console.log("labels.length", labels.length);
+    //Run XAxis add after number of elements exceeds VIEWEBALE_ELEMENT_COUNT
+    if (labels.length > VIEWABLE_ELEMENT_COUNT) {
+      setXAxisMin((min) => min + SERVER_EVENT_INTERVAL);
+    }
+  }, [datasets]);
+
+  const maxTicksLimit = isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
 
   const chartData = {
     labels,
