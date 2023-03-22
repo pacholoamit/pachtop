@@ -10,7 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.0",
+    "@emotion/react": "^11.10.6",
     "@mantine/core": "^5.2.0",
     "@mantine/hooks": "^5.2.0",
     "@mantine/notifications": "^5.9.0",
