@@ -16,7 +16,7 @@
     "@mantine/notifications": "^5.9.0",
     "@tabler/icons": "^2.11.0",
     "@tauri-apps/api": "^1.0.2",
-    "apexcharts": "^3.35.5",
+    "apexcharts": "^3.37.3",
     "chart.js": "^3.9.1",
     "chartjs-adapter-luxon": "^1.2.0",
     "lodash.sortby": "^4.7.0",
