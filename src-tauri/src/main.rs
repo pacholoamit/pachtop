@@ -9,27 +9,13 @@ mod models;
 mod utils;
 
 use app::AppState;
-use log::info;
-use notify::{RecommendedWatcher, RecursiveMode, Result, Watcher};
 use std::time::Duration;
 use tauri::api::path::cache_dir;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use tauri_plugin_log::LogTarget;
 
-fn build_and_run_app(app: AppState) -> Result<()> {
+fn build_and_run_app(app: AppState) {
     println!("Cache Directory: {:?}", cache_dir().unwrap());
-
-    tauri::async_runtime::spawn(async move {
-        let mut watcher = notify::recommended_watcher(|res| match res {
-            Ok(event) => print!("{:?}", event),
-            Err(e) => print!("watch error: {:?}", e),
-        })
-        .unwrap();
-
-        watcher
-            .watch(cache_dir().unwrap().as_path(), RecursiveMode::NonRecursive)
-            .unwrap();
-    });
 
     tauri::Builder::default()
         .plugin(
@@ -83,13 +69,9 @@ fn build_and_run_app(app: AppState) -> Result<()> {
         .invoke_handler(tauri::generate_handler![app::kill_process])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
-
-    Ok(())
 }
 
-fn main() -> Result<()> {
+fn main() {
     let app = AppState::new();
-    build_and_run_app(app)?;
-
-    Ok(())
+    build_and_run_app(app);
 }
