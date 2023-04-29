@@ -1,14 +1,6 @@
 import { InvokeArgs } from "@tauri-apps/api/tauri";
 
 export enum Command {
-  Memory = "get_memory",
-  Swap = "get_swap",
-  SysInfo = "get_sysinfo",
-  GlobalCpu = "get_global_cpu",
-  Networks = "get_networks",
-  Cpus = "get_cpus",
-  Disks = "get_disks",
-  Processes = "get_processes",
   KillProcess = "kill_process",
 }
 
@@ -24,11 +16,10 @@ export enum ServerEvent {
 }
 
 export interface KillProcessOpts extends InvokeArgs {
-  pid: string
+  pid: string;
 }
 
-export type KillProcessResult = boolean
-
+export type KillProcessResult = boolean;
 
 // typescript interfaces/types from models.rs
 
@@ -94,8 +85,8 @@ export interface Disk {
 
 export interface Process {
   name: string;
-  pid: string
-  cpuUsage: number
-  memoryUsage: number
+  pid: string;
+  cpuUsage: number;
+  memoryUsage: number;
   status: string;
 }

@@ -8,10 +8,10 @@ import sortBy from "lodash.sortby";
 import KillProcessVerification from "@/features/processes/components/processes.kill-verification";
 import ProcessesTable from "@/features/processes/components/processes.table";
 import PageWrapper from "@/components/page-wrapper";
-import useProcesses from "@/features/processes/hooks/useProcesses";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 const ProcessesPage = () => {
-  const { processes } = useProcesses();
+  const { processes } = useServerEventsContext();
   const [query, setQuery] = useState("");
   const [records, setRecords] = useState<Process[]>([]);
   const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);
