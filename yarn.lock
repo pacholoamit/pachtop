@@ -770,10 +770,10 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-apexcharts@^3.35.5:
-  version "3.37.0"
-  resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.37.0.tgz#856ef7ee5549bc9debed1f1052c5ce5394ab9ca5"
-  integrity sha512-0mg1gDKUo3JG00Q//LK0jEXBS6OLjpuglqZ8ec9cqfA5oP8owopD9n5EhfARbWROb5o8GSPzFuohTJiCm2ecWw==
+apexcharts@^3.39.0:
+  version "3.39.0"
+  resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.39.0.tgz#b552d5a7c9eac6fb29584fb4fd0800d5fd90c808"
+  integrity sha512-GRvdTg+ZaD55P7/jxqEXpbdCMZQOaej9qE9f7zKkN/oWAbBuuE3mnSCi44UkGMS2X249uEOEXWx0A96jjP3lcA==
   dependencies:
     svg.draggable.js "^2.2.2"
     svg.easing.js "^2.0.0"
