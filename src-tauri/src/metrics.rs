@@ -241,7 +241,6 @@ impl NetworkTrait for Metrics {
             .map(|(name, network)| {
                 let name = name.to_owned();
 
-                println!("{:?}", network);
                 Network {
                     name,
                     received: network.received(),
