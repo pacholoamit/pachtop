@@ -1,8 +1,8 @@
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import GradientRadialChart from "@/components/gradient-radial-chart";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 const SwapRadialChart = () => {
-  const { swap } = useMetricsContext();
+  const { swap } = useServerEventsContext();
 
   const series = [swap?.at(-1)?.usedPercentage || 0];
   return <GradientRadialChart labels={["Swap Usage"]} series={series} />;

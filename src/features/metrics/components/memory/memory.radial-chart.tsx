@@ -1,6 +1,5 @@
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import GradientRadialChart from "@/components/gradient-radial-chart";
-import useServerEventsContext from "../../../../hooks/useServerEventsContext";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 const MemoryRadialChart = () => {
   const { memory } = useServerEventsContext();
