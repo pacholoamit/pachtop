@@ -10,7 +10,6 @@ mod utils;
 
 use app::AppState;
 
-use tauri::api::path::cache_dir;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 
 fn build_and_run_app(app: AppState) {
@@ -21,11 +20,8 @@ fn build_and_run_app(app: AppState) {
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => {
                 let window = app.get_window("main").unwrap();
-                match id.as_str() {
-                    "quit" => {
-                        window.close().unwrap();
-                    }
-                    _ => {}
+                if id.as_str() == "quit" {
+                    window.close().unwrap();
                 }
             }
             SystemTrayEvent::LeftClick { .. } => {
@@ -34,12 +30,11 @@ fn build_and_run_app(app: AppState) {
             }
             _ => {}
         })
-        .on_window_event(|event| match event.event() {
-            tauri::WindowEvent::CloseRequested { api, .. } => {
+        .on_window_event(|event| {
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
                 event.window().hide().unwrap();
                 api.prevent_close();
             }
-            _ => {}
         })
         .manage(app)
         .invoke_handler(tauri::generate_handler![

@@ -13,16 +13,9 @@ impl AppState {
     }
 }
 
+#[derive(Default)]
 pub struct App {
     pub metrics: Metrics,
-}
-
-impl Default for App {
-    fn default() -> Self {
-        App {
-            metrics: Metrics::default(),
-        }
-    }
 }
 
 #[tauri::command]
