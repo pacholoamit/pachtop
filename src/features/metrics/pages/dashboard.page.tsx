@@ -9,8 +9,6 @@ import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
 
 import { Grid, Stack } from "@mantine/core";
 
-// const xAxisMin = DateTime.local().minus({ minutes: 10 }).toMillis();
-
 const TopMetricsSection = () => {
   return (
     <Grid gutter={"xl"}>

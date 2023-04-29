@@ -1,5 +1,5 @@
+use log::info;
 use std::sync::{Arc, Mutex};
-
 use tauri::{State, Window};
 
 use crate::metrics::Metrics;
@@ -21,11 +21,15 @@ pub struct App {
 impl AppState {
     pub fn emit_sysinfo(&self, window: &Window) {
         let sys_info = self.0.lock().unwrap().metrics.get_system_information();
+        let sys_info_log = serde_json::to_string(&sys_info).unwrap();
+
+        info!("sys_info: {}", sys_info_log);
         window.emit("emit_sysinfo", &sys_info).unwrap();
     }
 
     pub fn emit_global_cpu(&self, window: &Window) {
         let global_cpu = self.0.lock().unwrap().metrics.get_global_cpu();
+
         window.emit("emit_global_cpu", &global_cpu).unwrap();
     }
 

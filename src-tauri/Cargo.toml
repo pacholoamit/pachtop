@@ -23,6 +23,7 @@ tauri = { version = "1.2.3", features = ["api-all", "system-tray"] }
 sysinfo = "0.28.4"
 tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "dev" }
 log = "^0.4"
+notify = "5.1.0"
 # log4rs = "1.2.0"
 
 

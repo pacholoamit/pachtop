@@ -42,15 +42,14 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
   const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus, { maxSize: 1 });
   const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks, { maxSize });
 
-  console.log(processes);
   return (
     <ServerEventsContext.Provider
       value={{
-        sysInfo: sysInfo[sysInfo.length - 1] ?? null,
+        sysInfo: sysInfo[sysInfo.length - 1] ?? null, // Get latest sysInfo
         globalCpu,
         memory,
         swap,
-        processes: processes[processes.length - 1] ?? [],
+        processes: processes[processes.length - 1] ?? [], // Get latest processes
         networks,
         cpus,
         disks,
