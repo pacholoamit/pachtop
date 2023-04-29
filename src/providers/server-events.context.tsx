@@ -1,8 +1,7 @@
+import useServerEventsStore from "@/hooks/useServerEventsStore";
 import { createContext } from "react";
 import { Cpu, Disk, GlobalCpu, Memory, Network, Process, ServerEvent, Swap, SysInfo } from "@/lib/types";
 import { VIEWABLE_ELEMENT_COUNT } from "@/contants";
-import useServerEventsStore from "@/hooks/useServerEventsStore";
-import { UniqueNetwork } from "@/features/metrics/utils/types";
 import useServerEventsEnumerableStore, { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 
 interface ServerEventsProviderProps {
