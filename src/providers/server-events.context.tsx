@@ -38,9 +38,9 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
   const [memory] = useServerEventsStore<Memory>(ServerEvent.Memory, { maxSize });
   const [swap] = useServerEventsStore<Swap>(ServerEvent.Swap, { maxSize });
   const [processes] = useServerEventsStore<Process[]>(ServerEvent.Processes, { maxSize });
-  const [networks] = useServerEventsEnumerableStore<Network>(ServerEvent.Networks);
-  const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus);
-  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks);
+  const [networks] = useServerEventsEnumerableStore<Network>(ServerEvent.Networks, { maxSize });
+  const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus, { maxSize });
+  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks, { maxSize });
 
   console.log(processes);
   return (

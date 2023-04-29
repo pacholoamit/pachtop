@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import Card from "@/components/card";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { Line } from "react-chartjs-2";
-import { SERVER_EVENT_INTERVAL, VIEWABLE_ELEMENT_COUNT } from "@/contants";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,7 +16,6 @@ import {
 } from "chart.js";
 
 import "chartjs-adapter-luxon";
-import { DateTime } from "luxon";
 
 export interface AreaChartProps {
   title: string;

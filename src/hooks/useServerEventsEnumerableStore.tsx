@@ -7,10 +7,15 @@ export interface Enumerable<T> {
   data: T[];
 }
 
+interface useServerEventsEnumerableStoreInput {
+  maxSize: number;
+}
+
 const useServerEventsEnumerableStore = <T extends { name: string }>(
-  serverEvent: ServerEvent
+  serverEvent: ServerEvent,
+  input: useServerEventsEnumerableStoreInput
 ): readonly [Enumerable<T>[]] => {
-  const [items] = useServerEventsStore<T[]>(serverEvent, { maxSize: 100 });
+  const [items] = useServerEventsStore<T[]>(serverEvent, { ...input });
   const [uniqueItems, setUniqueItems] = useState<Enumerable<T>[]>([]);
 
   useEffect(() => {
