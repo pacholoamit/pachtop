@@ -44,10 +44,6 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
   // const [cpus] = useState<UniqueCpu[]>([]);
   // const [disks] = useState<UniqueDisk[]>([]);
 
-  // listen<Cpu[]>(ServerEvent.Cpus, (data) => console.log(data));
-  // listen<Network>(ServerEvent.Networks, (data) => console.log(data));
-  // listen<Disk>(ServerEvent.Disks, (data) => console.log(data));
-
   return (
     <ServerEventsContext.Provider
       value={{

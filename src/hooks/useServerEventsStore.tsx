@@ -6,7 +6,7 @@ interface useServerEventsStoreInput {
   maxSize: number;
 }
 
-const useServerEventsStore = <T,>(event: ServerEvent, input: useServerEventsStoreInput) => {
+const useServerEventsStore = <T,>(event: ServerEvent, input: useServerEventsStoreInput): readonly [T[]] => {
   const [array, setArray] = useState<T[]>([]);
 
   const push = (payload: T) => {
