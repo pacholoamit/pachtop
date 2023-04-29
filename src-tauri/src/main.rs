@@ -9,18 +9,19 @@ mod models;
 mod utils;
 
 use app::AppState;
+use log::info;
 use std::time::Duration;
 use tauri::api::path::cache_dir;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use tauri_plugin_log::LogTarget;
 
 fn build_and_run_app(app: AppState) {
-    println!("Cache Directory: {:?}", cache_dir().unwrap());
+    info!("Cache Directory: {:?}", cache_dir().unwrap());
 
     tauri::Builder::default()
         .plugin(
             tauri_plugin_log::Builder::default()
-                .targets([LogTarget::Folder(cache_dir().unwrap())])
+                .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
                 .build(),
         )
         .setup(|app| {
