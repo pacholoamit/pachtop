@@ -16,8 +16,8 @@ interface ServerEventsContext {
   sysInfo: SysInfo | null;
   processes: Process[];
   networks: Enumerable<Network>[];
-  // cpus: UniqueCpu[];
-  // disks: UniqueDisk[];
+  cpus: Enumerable<Cpu>[];
+  disks: Enumerable<Disk>[];
 }
 
 export const ServerEventsContext = createContext<ServerEventsContext>({
@@ -27,8 +27,8 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
   sysInfo: null,
   processes: [],
   networks: [],
-  // cpus: [],
-  // disks: [],
+  cpus: [],
+  disks: [],
 });
 
 const maxSize = VIEWABLE_ELEMENT_COUNT;
@@ -40,9 +40,8 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
   const [swap] = useServerEventsStore<Swap>(ServerEvent.Swap, { maxSize });
   const [processes] = useServerEventsStore<Process>(ServerEvent.Processes, { maxSize });
   const [networks] = useServerEventsEnumerableStore<Network>(ServerEvent.Networks);
-
-  // const [cpus] = useState<UniqueCpu[]>([]);
-  // const [disks] = useState<UniqueDisk[]>([]);
+  const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus);
+  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks);
 
   return (
     <ServerEventsContext.Provider
@@ -53,8 +52,8 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
         swap,
         processes,
         networks,
-        // cpus,
-        // disks,
+        cpus,
+        disks,
       }}
     >
       {children}

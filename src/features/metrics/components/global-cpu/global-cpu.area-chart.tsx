@@ -1,5 +1,4 @@
 import Card from "@/components/card";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
 import useServerEventsContext from "@/hooks/useServerEventsContext";

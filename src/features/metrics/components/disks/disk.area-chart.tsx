@@ -4,9 +4,10 @@ import AreaChart, { DatasetOptions } from "@/components/area-chart";
 
 interface DiskAreaChartProps extends ChartProps {
   disk: UniqueDisk;
+  xAxisMin: number;
 }
 
-const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ xAxisMin, disk }) => {
+const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk, xAxisMin }) => {
   const labels = disk.data.map((data) => data.timestamp);
   const datasets: DatasetOptions[] = [
     {

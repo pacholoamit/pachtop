@@ -1,11 +1,11 @@
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 import DiskInfo from "@/features/metrics/components/disks/disk.info";
 import PageWrapper from "@/components/page-wrapper";
 
 const xAxisMin = Date.now() - 86400;
 
 const DisksPage = () => {
-  const { disks } = useMetricsContext();
+  const { disks } = useServerEventsContext();
   return (
     <PageWrapper name="Disks">
       {disks?.map((disk) => (
