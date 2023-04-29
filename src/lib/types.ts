@@ -12,6 +12,17 @@ export enum Command {
   KillProcess = "kill_process",
 }
 
+export enum ServerEvent {
+  SysInfo = "emit_sysinfo",
+  GlobalCpu = "emit_global_cpu",
+  Cpus = "emit_cpus",
+  Memory = "emit_memory",
+  Swap = "emit_swap",
+  Networks = "emit_networks",
+  Disks = "emit_disks",
+  Processes = "emit_processes",
+}
+
 export interface KillProcessOpts extends InvokeArgs {
   pid: string
 }

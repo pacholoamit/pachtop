@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@/components/card";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { Line } from "react-chartjs-2";
+import { SERVER_EVENT_INTERVAL, VIEWABLE_ELEMENT_COUNT } from "@/contants";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -57,15 +58,14 @@ const AreaChart: React.FC<AreaChartProps> = ({
   labels,
   datasets,
   title,
-  xAxisMin = DateTime.now().toMillis(),
   stacked = false,
+  xAxisMin = undefined,
   callbacks,
   yAxisTicksCallback,
 }) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
 
-  const maxTicksLimit =
-    isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
+  const maxTicksLimit = isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
 
   const chartData = {
     labels,

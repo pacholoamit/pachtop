@@ -56,6 +56,7 @@ impl GlobalCpuTrait for Metrics {
 
 impl CpuTrait for Metrics {
     fn get_cpus(&mut self) -> Vec<Cpu> {
+        self.sys.refresh_cpu();
         let cpus: Vec<Cpu> = self
             .sys
             .cpus()
