@@ -1,12 +1,12 @@
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 import SingleBarChart from "@/components/single-bar-chart";
 import Card from "@/components/card";
 
 const CpusBarChart = () => {
-  const { cpus } = useMetricsContext();
+  const { cpus } = useServerEventsContext();
 
   const series = cpus.map((cpu) => ({
-    name: cpu.name,
+    name: cpu.id,
     data: [cpu.data.at(-1)?.usage || 0],
   }));
 

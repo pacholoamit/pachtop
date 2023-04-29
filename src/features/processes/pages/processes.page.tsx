@@ -1,13 +1,12 @@
 import { DataTableSortStatus } from "mantine-datatable";
 import { TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { Command, Process } from "@/lib/types";
+import { Process } from "@/lib/types";
 import { useState, useEffect, useMemo } from "react";
 
 import sortBy from "lodash.sortby";
 import KillProcessVerification from "@/features/processes/components/processes.kill-verification";
 import ProcessesTable from "@/features/processes/components/processes.table";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import PageWrapper from "@/components/page-wrapper";
 import useProcesses from "@/features/processes/hooks/useProcesses";
 
