@@ -4,7 +4,7 @@ import {
   IconServer,
   IconArticle,
   IconCpu,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import {
   UnstyledButton,
   Group,

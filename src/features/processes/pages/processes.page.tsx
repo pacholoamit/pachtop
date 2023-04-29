@@ -1,6 +1,6 @@
 import { DataTableSortStatus } from "mantine-datatable";
 import { TextInput } from "@mantine/core";
-import { IconSearch } from "@tabler/icons";
+import { IconSearch } from "@tabler/icons-react";
 import { Command, Process } from "@/lib/types";
 import { useState, useEffect, useMemo } from "react";
 
@@ -25,13 +25,8 @@ const ProcessesPage = () => {
     let filteredRecords = processes;
     if (query) {
       filteredRecords = filteredRecords.filter((process) => {
-        const filteredName = process.name
-          .toLowerCase()
-          .includes(query.toLowerCase());
-        const filteredPid = process.pid
-          .toString()
-          .toLowerCase()
-          .includes(query.toLowerCase());
+        const filteredName = process.name.toLowerCase().includes(query.toLowerCase());
+        const filteredPid = process.pid.toString().toLowerCase().includes(query.toLowerCase());
 
         return filteredName || filteredPid;
       });
