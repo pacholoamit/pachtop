@@ -1,6 +1,6 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
-use log::info;
+//use log::info;
 use std::str::{self, FromStr};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
 
