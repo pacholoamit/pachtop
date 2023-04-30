@@ -25,3 +25,5 @@ dist-ssr
 
 # etc.
 .tauri
+.conda
+__pycache__

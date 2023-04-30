@@ -8,3 +8,7 @@ All notable changes to this project will be documented in this file. This projec
 - Spawne separate thread for metrics capture.
 - Removed `tauri` command implementation for metrics capture.
 - Modify `release` workflow to include `release_notes`
+
+### TODO:
+
+- Add updater support

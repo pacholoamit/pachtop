@@ -1,0 +1,37 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: osx-64
+brotlipy=0.7.0=py310hca72f7f_1002
+bzip2=1.0.8=h1de35cc_0
+ca-certificates=2023.01.10=hecd8cb5_0
+certifi=2022.12.7=py310hecd8cb5_0
+cffi=1.15.1=py310h6c40b1e_3
+charset-normalizer=2.0.4=pyhd3eb1b0_0
+click=8.0.4=py310hecd8cb5_0
+cryptography=39.0.1=py310hf6deb26_0
+dataclasses=0.8=pyh6d0b6a4_7
+flask=2.0.3=pyhd3eb1b0_0
+idna=3.4=py310hecd8cb5_0
+itsdangerous=2.0.1=pyhd3eb1b0_0
+jinja2=3.0.3=pyhd3eb1b0_0
+libffi=3.4.2=hecd8cb5_6
+markupsafe=2.1.1=py310hca72f7f_0
+ncurses=6.4=hcec6c5f_0
+openssl=1.1.1t=hca72f7f_0
+pip=23.0.1=py310hecd8cb5_0
+pycparser=2.21=pyhd3eb1b0_0
+pyopenssl=23.0.0=py310hecd8cb5_0
+pysocks=1.7.1=py310hecd8cb5_0
+python=3.10.11=h218abb5_2
+python-dotenv=0.21.0=py310hecd8cb5_0
+readline=8.2=hca72f7f_0
+requests=2.29.0=py310hecd8cb5_0
+setuptools=66.0.0=py310hecd8cb5_0
+sqlite=3.41.2=h6c40b1e_0
+tk=8.6.12=h5d9f67b_0
+tzdata=2023c=h04d1e81_0
+urllib3=1.26.15=py310hecd8cb5_0
+werkzeug=2.0.3=pyhd3eb1b0_0
+wheel=0.38.4=py310hecd8cb5_0
+xz=5.2.10=h6c40b1e_1
+zlib=1.2.13=h4dc903c_0
