@@ -1,13 +1,13 @@
 [package]
 name = "app"
-version = "0.3.3"
+version = "0.3.4"
 description = "Cross-platform (Linux, WIndows, MacOS) Desktop GUI system monitor"
 authors = ["Pacholo Amit"]
 license = "MIT"
 repository = ""
 default-run = "app"
 edition = "2021"
-rust-version = "1.65"
+rust-version = "1.69"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
