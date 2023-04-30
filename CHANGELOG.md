@@ -7,3 +7,4 @@ All notable changes to this project will be documented in this file. This projec
 - Modified metrics capture to `listen` for events instead of `tauri` command.
 - Spawne separate thread for metrics capture.
 - Removed `tauri` command implementation for metrics capture.
+- Modify `release` workflow to include `release_notes`

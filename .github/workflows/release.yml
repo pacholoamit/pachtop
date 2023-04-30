@@ -58,7 +58,8 @@ jobs:
               name: `Pachtop v${process.env.PACKAGE_VERSION}`,
               body: 'Take a look at the assets to download and install this app.',
               draft: true,
-              prerelease: false
+              prerelease: true,
+              generate_release_notes: true
             })
 
             return data.id
