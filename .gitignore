@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# etc.
+.tauri
+.conda
+__pycache__
