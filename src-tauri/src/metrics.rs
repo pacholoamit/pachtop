@@ -1,6 +1,5 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
-//use log::info;
 use std::str::{self, FromStr};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
 
@@ -217,8 +216,8 @@ impl ProcessesTrait for Metrics {
         processes
     }
 
-    fn kill_process(&mut self, pid: String) -> bool {
-        let pid = match Pid::from_str(&pid) {
+    fn kill_process(&mut self, pid: &str) -> bool {
+        let pid = match Pid::from_str(pid) {
             Ok(pid) => pid,
             Err(_) => return false,
         };

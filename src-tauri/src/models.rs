@@ -116,5 +116,5 @@ pub struct Process {
 
 pub trait ProcessesTrait {
     fn get_processes(&mut self) -> Vec<Process>;
-    fn kill_process(&mut self, pid: String) -> bool;
+    fn kill_process(&mut self, pid: &str) -> bool;
 }
