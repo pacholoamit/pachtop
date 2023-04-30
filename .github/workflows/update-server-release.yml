@@ -1,0 +1,62 @@
+name: update-server-release
+
+on:
+  workflow_dispatch:
+  push: { branches: ["release-update-server"] }
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: pachtop-update-server
+
+jobs:
+  push_to_registries:
+    name: Push Docker image to multiple registries
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - dockerfile: ./update-server/Dockerfile
+            image: ghcr.io/pacholoamit/go-task-mgr
+            context: .
+
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          labels: |
+            org.opencontainers.image.title=pachtop-update-server
+            org.opencontainers.image.description=Tauri update server for Pachtop
+            org.opencontainers.image.vendor=Pacholo Amit
+            org.opencontainers.image.licenses=MIT
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern=v{{version}}
+            type=semver,pattern=v{{major}}.{{minor}}
+          flavor: |
+            latest=true
+          images: ${{ matrix.image }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
