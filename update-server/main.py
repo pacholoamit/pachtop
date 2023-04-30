@@ -14,7 +14,7 @@ PLATFORMS = [ # platform, extension
 ]
 
 @time_cache(60 * 5)  # every 5 minutes
-def get_latest_gh_release(repo) -> dict:
+def get_latest_gh_release(repo):
     github_latest_release_url = f'https://api.github.com/repos/{repo}/releases/latest'
     try:
         release = requests.get(github_latest_release_url).json()
