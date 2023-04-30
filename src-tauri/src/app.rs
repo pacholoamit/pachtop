@@ -1,6 +1,6 @@
+use log::info;
 use std::sync::{Arc, Mutex};
-
-use tauri::State;
+use tauri::{State, Window};
 
 use crate::metrics::Metrics;
 use crate::models::*;
@@ -13,68 +13,55 @@ impl AppState {
     }
 }
 
+#[derive(Default)]
 pub struct App {
     pub metrics: Metrics,
 }
 
-impl Default for App {
-    fn default() -> Self {
-        App {
-            metrics: Metrics::default(),
-        }
+impl AppState {
+    pub fn emit_sysinfo(&self, window: &Window) {
+        let sys_info = self.0.lock().unwrap().metrics.get_system_information();
+        let sys_info_log = serde_json::to_string(&sys_info).unwrap();
+
+        info!("sys_info: {}", sys_info_log);
+        window.emit("emit_sysinfo", &sys_info).unwrap();
     }
-}
 
-#[tauri::command]
-pub fn get_sysinfo(state: State<'_, AppState>) -> SysInfo {
-    let sys_info = state.0.lock().unwrap().metrics.get_system_information();
-    sys_info
-}
+    pub fn emit_global_cpu(&self, window: &Window) {
+        let global_cpu = self.0.lock().unwrap().metrics.get_global_cpu();
 
-#[tauri::command]
-pub fn get_global_cpu(state: State<'_, AppState>) -> GlobalCpu {
-    let global_cpu = state.0.lock().unwrap().metrics.get_global_cpu();
-    global_cpu
-}
+        window.emit("emit_global_cpu", &global_cpu).unwrap();
+    }
 
-#[tauri::command]
-pub fn get_cpus(state: State<'_, AppState>) -> Vec<Cpu> {
-    let cpus = state.0.lock().unwrap().metrics.get_cpus();
-    cpus
-}
+    pub fn emit_cpus(&self, window: &Window) {
+        let cpus = self.0.lock().unwrap().metrics.get_cpus();
+        window.emit("emit_cpus", &cpus).unwrap();
+    }
 
-#[tauri::command]
-pub fn get_memory(state: State<'_, AppState>) -> Memory {
-    let memory = state.0.lock().unwrap().metrics.get_memory();
+    pub fn emit_memory(&self, window: &Window) {
+        let memory = self.0.lock().unwrap().metrics.get_memory();
+        window.emit("emit_memory", &memory).unwrap();
+    }
 
-    memory
-}
+    pub fn emit_swap(&self, window: &Window) {
+        let swap = self.0.lock().unwrap().metrics.get_swap();
+        window.emit("emit_swap", &swap).unwrap();
+    }
 
-#[tauri::command]
-pub fn get_swap(state: State<'_, AppState>) -> Swap {
-    let swap = state.0.lock().unwrap().metrics.get_swap();
+    pub fn emit_networks(&self, window: &Window) {
+        let networks = self.0.lock().unwrap().metrics.get_networks();
+        window.emit("emit_networks", &networks).unwrap();
+    }
 
-    swap
-}
+    pub fn emit_disks(&self, window: &Window) {
+        let disks = self.0.lock().unwrap().metrics.get_disks();
+        window.emit("emit_disks", &disks).unwrap();
+    }
 
-#[tauri::command]
-pub fn get_networks(state: State<'_, AppState>) -> Vec<Network> {
-    let networks = state.0.lock().unwrap().metrics.get_networks();
-
-    networks
-}
-#[tauri::command]
-pub fn get_disks(state: State<'_, AppState>) -> Vec<Disk> {
-    let disks = state.0.lock().unwrap().metrics.get_disks();
-
-    disks
-}
-
-#[tauri::command]
-pub fn get_processes(state: State<'_, AppState>) -> Vec<Process> {
-    let processes = state.0.lock().unwrap().metrics.get_processes();
-
-    processes
+    pub fn emit_processes(&self, window: &Window) {
+        let processes = self.0.lock().unwrap().metrics.get_processes();
+        window.emit("emit_processes", &processes).unwrap();
+    }
 }
 
 #[tauri::command]

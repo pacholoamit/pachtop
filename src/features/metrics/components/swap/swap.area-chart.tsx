@@ -1,13 +1,13 @@
 import Card from "@/components/card";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 interface SwapAreaChartProps extends ChartProps {}
 
 const SwapAreaChart: React.FC<SwapAreaChartProps> = ({ xAxisMin }) => {
-  const { swap } = useMetricsContext();
+  const { swap } = useServerEventsContext();
   const title = "Swap Memory";
   const labels = swap.map((swap) => swap.timestamp);
   const datasets: DatasetOptions[] = [

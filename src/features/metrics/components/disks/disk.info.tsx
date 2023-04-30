@@ -1,9 +1,10 @@
 import DiskAreaChart from "@/features/metrics/components/disks/disk.area-chart";
 import { Box, Card, Center, Space, Stack, Text } from "@mantine/core";
-import { UniqueDisk } from "@/features/metrics/utils/types";
+import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
+import { Disk } from "@/lib/types";
 
 interface DiskInfoProps {
-  disk: UniqueDisk;
+  disk: Enumerable<Disk>;
   xAxisMin: number;
 }
 const DiskInfo: React.FC<DiskInfoProps> = ({ disk, xAxisMin }) => {

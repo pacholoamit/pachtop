@@ -1,5 +1,6 @@
 import Card from "@/components/card";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
+
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
@@ -7,11 +8,11 @@ import { ChartProps } from "@/features/metrics/utils/types";
 interface NetworksAreaChartProps extends ChartProps {}
 
 const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
-  const { networks } = useMetricsContext();
+  const { networks } = useServerEventsContext();
   const title = "Network Received";
   const labels = networks?.map((network) => network.data[0].timestamp);
   const datasets: DatasetOptions[] = networks?.map((network) => ({
-    label: network.name,
+    label: network.id,
     data: network.data.map((data) => ({
       x: data.timestamp,
       y: data.received,
@@ -28,9 +29,6 @@ const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
       return `${label}: ${value}`;
     },
   };
-
-
-
 
   const yAxisTicksCallback = (value: number) => formatBytes(value);
 

@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "pachtop",
-    "version": "0.3.3"
+    "version": "0.3.4"
   },
   "tauri": {
     "systemTray": {
@@ -26,13 +26,7 @@
         "depends": []
       },
       "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
+      "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
       "identifier": "com.pachtop.dev",
       "longDescription": "",
       "macOS": {
@@ -43,7 +37,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "Cross-platform (Linux, WIndows, MacOS) Desktop GUI system monitor, built with Rust & Tauri",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -55,8 +49,9 @@
       "csp": null
     },
     "updater": {
-      "active": false
-
+      "active": true,
+      "endpoints": ["https://pachtop.pacholoamit.com/releases/pachtop/{{target}}/{{current_version}}"],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM0NkIyODA1NThCM0I0MUEKUldRYXRMTllCU2hyeE9mSUx0MElJN2N5VFo5TytFV1RwaUtoaytDNVdmajNQMmlseVlYMGYzeUkK"
     },
     "windows": [
       {
@@ -64,7 +59,7 @@
         "height": 600,
         "resizable": true,
         "title": "pachtop",
-        "alwaysOnTop": true,
+        "alwaysOnTop": false,
         "width": 800,
         "minWidth": 450,
         "decorations": true

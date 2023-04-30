@@ -1,5 +1,6 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
+use log::info;
 use std::str::{self, FromStr};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
 
@@ -56,10 +57,11 @@ impl GlobalCpuTrait for Metrics {
 
 impl CpuTrait for Metrics {
     fn get_cpus(&mut self) -> Vec<Cpu> {
+        self.sys.refresh_cpu();
         let cpus: Vec<Cpu> = self
             .sys
             .cpus()
-            .into_iter()
+            .iter()
             .map(|cpu| {
                 let name = cpu.name().to_owned();
                 let usage = cpu.cpu_usage().to_owned() as u64;
@@ -85,7 +87,7 @@ impl DisksTrait for Metrics {
         let disks: Vec<Disk> = self
             .sys
             .disks()
-            .into_iter()
+            .iter()
             .map(|disk| {
                 let name = match disk.name().to_str() {
                     Some("") => disk.mount_point().to_str().unwrap_or("Unknown").to_owned(),
@@ -166,7 +168,7 @@ impl ProcessesTrait for Metrics {
         let processes: Vec<Process> = self
             .sys
             .processes()
-            .into_iter()
+            .iter()
             .map(|(pid, process)| {
                 let name = process.name().to_owned();
                 let cpu_usage = round(process.cpu_usage() / cpu_count as f32);
@@ -226,12 +228,7 @@ impl ProcessesTrait for Metrics {
             None => return false,
         };
 
-        let result = match process.kill_with(Signal::Kill) {
-            Some(result) => result,
-            None => return false,
-        };
-
-        result
+        process.kill_with(Signal::Kill).unwrap_or(false)
     }
 }
 
@@ -246,7 +243,6 @@ impl NetworkTrait for Metrics {
             .map(|(name, network)| {
                 let name = name.to_owned();
 
-                println!("{:?}", network);
                 Network {
                     name,
                     received: network.received(),

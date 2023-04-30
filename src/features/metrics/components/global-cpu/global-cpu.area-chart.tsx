@@ -1,14 +1,12 @@
 import Card from "@/components/card";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 interface GlobalCpuAreaChartProps extends ChartProps {}
 
-const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({
-  xAxisMin,
-}) => {
-  const { globalCpu } = useMetricsContext();
+const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({ xAxisMin }) => {
+  const { globalCpu } = useServerEventsContext();
 
   const title = "CPU Usage";
   const labels = globalCpu.map((cpu) => cpu.timestamp);

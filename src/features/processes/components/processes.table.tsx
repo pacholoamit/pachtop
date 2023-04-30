@@ -51,11 +51,7 @@ const ProcessesTable: React.FC<ProcessesTableProps> = memo((props) => {
           {
             accessor: "actions",
             render: (record, index) => (
-              <Button
-                variant="outline"
-                onClick={() => setSelectedProcess(record)}
-                color="red"
-              >
+              <Button variant="outline" onClick={() => setSelectedProcess(record)} color="red">
                 Kill
               </Button>
             ),

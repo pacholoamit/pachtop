@@ -8,11 +8,6 @@ import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-char
 import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
 
 import { Grid, Stack } from "@mantine/core";
-import { listen } from "@tauri-apps/api/event";
-import { DateTime } from "luxon";
-
-
-const xAxisMin = DateTime.now().minus({ minutes: 1 }).toMillis();
 
 const TopMetricsSection = () => {
   return (
@@ -36,21 +31,19 @@ const TopMetricsSection = () => {
 
 const LeftMetricsStack = () => (
   <Stack spacing={"xl"}>
-    <MemoryAreaChart xAxisMin={xAxisMin} />
-    <SwapAreaChart xAxisMin={xAxisMin} />
+    <MemoryAreaChart />
+    <SwapAreaChart />
   </Stack>
 );
 
 const RightMetricsStack = () => (
   <Stack spacing={"xl"}>
-    <GlobalCpuAreaChart xAxisMin={xAxisMin} />
-    <NetworksAreaChart xAxisMin={xAxisMin} />
+    <GlobalCpuAreaChart />
+    <NetworksAreaChart />
   </Stack>
 );
 
 const DashboardPage = () => {
-
-
   return (
     <Grid gutter="xl">
       <Grid.Col span={12}>

@@ -1,5 +1,4 @@
-import React from "react";
-import Card from "@/components/card";
+import React, { useEffect } from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { Line } from "react-chartjs-2";
 import {
@@ -17,7 +16,6 @@ import {
 } from "chart.js";
 
 import "chartjs-adapter-luxon";
-import { DateTime } from "luxon";
 
 export interface AreaChartProps {
   title: string;
@@ -57,15 +55,14 @@ const AreaChart: React.FC<AreaChartProps> = ({
   labels,
   datasets,
   title,
-  xAxisMin = DateTime.now().toMillis(),
   stacked = false,
+  xAxisMin = undefined,
   callbacks,
   yAxisTicksCallback,
 }) => {
   const { isSmallerThanMd, isLargerThanXl, isSmallerThanXs } = useMediaQuery();
 
-  const maxTicksLimit =
-    isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
+  const maxTicksLimit = isLargerThanXl || (isSmallerThanMd && !isSmallerThanXs) ? 8 : 4;
 
   const chartData = {
     labels,

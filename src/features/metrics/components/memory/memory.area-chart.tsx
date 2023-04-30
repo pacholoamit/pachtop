@@ -1,13 +1,13 @@
 import Card from "@/components/card";
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 interface MemoryAreaChartProps extends ChartProps {}
 
 const MemoryAreaChart: React.FC<MemoryAreaChartProps> = ({ xAxisMin }) => {
-  const { memory } = useMetricsContext();
+  const { memory } = useServerEventsContext();
 
   const title = "Random Access Memory (RAM)";
   const labels = memory.map((mem) => mem.timestamp);

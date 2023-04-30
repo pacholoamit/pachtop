@@ -2,6 +2,7 @@ import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
+  
 }
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {

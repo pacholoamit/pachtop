@@ -1,9 +1,9 @@
-import useMetricsContext from "@/features/metrics/hooks/useMetricsContext";
 import Card from "@/components/card";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { ScrollArea, Space, Text } from "@mantine/core";
 
 const SystemInfo = () => {
-  const { globalCpu, sysInfo } = useMetricsContext();
+  const { globalCpu, sysInfo } = useServerEventsContext();
 
   return (
     <Card style={{ height: "300px" }}>
