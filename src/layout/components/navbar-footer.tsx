@@ -12,10 +12,10 @@ const NavbarFooter = () => {
     <>
       <Divider />
       <Space h="xs" />
-      <Text size="xs" color="dimmed" align="center" mt="xs">
+      <Text size="xs" color="dimmed" align="center" mt="xs" mb="xs">
         Made with ❤️ by Pacholo Amit
       </Text>
-      <Text size="xs" color="dimmed" align="center" mt="xs">
+      <Text size="xs" color="dimmed" align="center" mt="xs" mb="xs">
         Version: {APP_VERSION}
       </Text>
       <Space h="xs" />
