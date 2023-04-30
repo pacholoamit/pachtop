@@ -69,5 +69,5 @@ def pachtop_desktop_page():
 
 if __name__ == '__main__':
     app.register_blueprint(tauri_releases_bp)
-    app.run()
+    app.run(debug=False)
     
