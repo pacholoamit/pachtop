@@ -18,7 +18,7 @@ jobs:
         include:
           - dockerfile: ./update-server/Dockerfile
             image: ghcr.io/pacholoamit/go-task-mgr
-            context: .
+            context: ./update-server
 
     permissions:
       packages: write
