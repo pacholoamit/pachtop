@@ -58,7 +58,7 @@ jobs:
               repo: context.repo.repo,
               tag_name: `v${process.env.PACKAGE_VERSION}`,
               name: `Pachtop v${process.env.PACKAGE_VERSION}`,
-              body: 'Take a look at the assets to download and install this app.',
+              body: '## Release Notes 🎉',
               draft: true,
               prerelease: true,
               generate_release_notes: true
