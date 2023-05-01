@@ -1,5 +1,6 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
+use log::debug;
 use std::str::{self, FromStr};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
 
@@ -37,11 +38,17 @@ impl GlobalCpuTrait for Metrics {
         self.sys.refresh_cpu();
 
         let cpu = self.sys.global_cpu_info();
-        let usage = cpu.cpu_usage();
+        let usage = if cpu.cpu_usage().is_nan() {
+            0.0
+        } else {
+            cpu.cpu_usage()
+        };
         let brand = cpu.brand().to_owned();
         let frequency = cpu.frequency().to_owned();
         let name = cpu.name().to_owned();
         let vendor = cpu.vendor_id().to_owned();
+
+        debug!("Global CPU usage: {}%", usage);
 
         GlobalCpu {
             usage,
