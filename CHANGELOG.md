@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 - Add `version` in UI
 - Reduce text size for system information
+- Fix global cpu usage if global cpu usage is `undefined`
 
 ## 0.3.4
 

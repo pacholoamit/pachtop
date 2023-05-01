@@ -37,7 +37,11 @@ impl GlobalCpuTrait for Metrics {
         self.sys.refresh_cpu();
 
         let cpu = self.sys.global_cpu_info();
-        let usage = cpu.cpu_usage();
+        let usage = if cpu.cpu_usage().is_nan() {
+            0.0
+        } else {
+            cpu.cpu_usage()
+        };
         let brand = cpu.brand().to_owned();
         let frequency = cpu.frequency().to_owned();
         let name = cpu.name().to_owned();
