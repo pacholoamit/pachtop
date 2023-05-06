@@ -118,7 +118,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
       },
     },
     scales: {
-      yAxis: {
+      y: {
         min: 0,
         stacked,
         ticks: {
@@ -129,7 +129,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
           color: "#263858",
         },
       },
-      xAxis: {
+      x: {
         min: undefined,
         type: "time",
         time: {
