@@ -2097,14 +2097,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mantine-datatable@npm:^1.8.8":
-  version: 1.8.8
-  resolution: "mantine-datatable@npm:1.8.8"
+"mantine-datatable@npm:^2.4.15":
+  version: 2.4.15
+  resolution: "mantine-datatable@npm:2.4.15"
   peerDependencies:
-    "@mantine/core": ^5.10.4
-    "@mantine/hooks": ^5.10.4
+    "@mantine/core": ^6.0.10
+    "@mantine/hooks": ^6.0.10
     react: ^18.2.0
-  checksum: 8554043cbcf13e58567ea1bc9aa491303bb30540b8ea686b112a54c07730bb2cd55a0659a9682ccfd6c49fc5bc362a73bcdd89a47ae172afa6ac77c3d4f16a1b
+  checksum: d0b36f9e23175aa4178d7063f866bc5a0922686b6818f9ac295ce9b296930690ca66e6deeeba17cf4db96838c4de7de46f346c82b414bbde5969371b8bbc9a00
   languageName: node
   linkType: hard
 
@@ -2339,7 +2339,7 @@ __metadata:
     chartjs-adapter-luxon: ^1.3.1
     lodash.sortby: ^4.7.0
     luxon: ^3.3.0
-    mantine-datatable: ^1.8.8
+    mantine-datatable: ^2.4.15
     react: ^18.2.0
     react-apexcharts: ^1.4.0
     react-chartjs-2: ^5.2.0
