@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This projec
 ## 0.3.6-rc
 
 - Updated `tauri` to `1.3`
+- Update `yarn` v1 to `yarn berry`
 
 ## 0.3.5
 
