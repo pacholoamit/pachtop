@@ -9,8 +9,8 @@ const DisksPage = () => {
   return (
     <PageWrapper name="Disks">
       <Grid>
-        {disks?.map((disk) => (
-          <React.Fragment key={disk.id}>
+        {disks?.map((disk, i) => (
+          <React.Fragment key={disk.id + i}>
             <Grid.Col md={6} sm={12}></Grid.Col>
             <Grid.Col md={6} sm={12} key={disk.id}>
               <DiskInfo key={disk.id} disk={disk} />
