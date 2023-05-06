@@ -3,11 +3,8 @@ import Card from "@/components/card";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
-import { ChartProps } from "@/features/metrics/utils/types";
 
-interface NetworksAreaChartProps extends ChartProps {}
-
-const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
+const NetworksAreaChart: React.FC = ({}) => {
   const { networks } = useServerEventsContext();
   const title = "Network Received";
   const labels = networks?.map((network) => network.data[0].timestamp);
@@ -37,7 +34,6 @@ const NetworksAreaChart: React.FC<NetworksAreaChartProps> = ({ xAxisMin }) => {
       <AreaChart
         title={title}
         labels={labels}
-        xAxisMin={xAxisMin}
         datasets={datasets}
         callbacks={callbacks}
         yAxisTicksCallback={yAxisTicksCallback}
