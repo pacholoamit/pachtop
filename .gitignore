@@ -27,3 +27,12 @@ dist-ssr
 .tauri
 .conda
 __pycache__
+
+
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
