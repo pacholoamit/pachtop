@@ -1,15 +1,13 @@
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { ChartProps } from "@/features/metrics/utils/types";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk } from "@/lib/types";
 import AreaChart, { DatasetOptions } from "@/components/area-chart";
 
-interface DiskAreaChartProps extends ChartProps {
+interface DiskAreaChartProps {
   disk: Enumerable<Disk>;
-  xAxisMin: number;
 }
 
-const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk, xAxisMin }) => {
+const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk }) => {
   const labels = disk.data.map((data) => data.timestamp);
   const datasets: DatasetOptions[] = [
     {
@@ -51,7 +49,6 @@ const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk, xAxisMin }) => {
       callbacks={callbacks}
       yAxisTicksCallback={yAxisTicksCallback}
       stacked={true}
-      xAxisMin={xAxisMin}
     />
   );
 };

@@ -3,9 +3,7 @@ import AreaChart, { DatasetOptions } from "@/components/area-chart";
 import { ChartProps } from "@/features/metrics/utils/types";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 
-interface GlobalCpuAreaChartProps extends ChartProps {}
-
-const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({ xAxisMin }) => {
+const GlobalCpuAreaChart: React.FC = ({}) => {
   const { globalCpu } = useServerEventsContext();
 
   const title = "CPU Usage";
@@ -37,7 +35,6 @@ const GlobalCpuAreaChart: React.FC<GlobalCpuAreaChartProps> = ({ xAxisMin }) => 
       <AreaChart
         title={title}
         labels={labels}
-        xAxisMin={xAxisMin}
         datasets={datasets}
         callbacks={callbacks}
         yAxisTicksCallback={yAxisTicksCallback}

@@ -20,7 +20,6 @@ import "chartjs-adapter-luxon";
 export interface AreaChartProps {
   title: string;
   labels: string[] | string[][] | number[];
-  xAxisMin?: any;
   datasets: DatasetOptions[];
   callbacks?: {
     label?: (context: any) => string;
@@ -56,7 +55,6 @@ const AreaChart: React.FC<AreaChartProps> = ({
   datasets,
   title,
   stacked = false,
-  xAxisMin = undefined,
   callbacks,
   yAxisTicksCallback,
 }) => {
@@ -132,7 +130,7 @@ const AreaChart: React.FC<AreaChartProps> = ({
         },
       },
       xAxis: {
-        min: xAxisMin,
+        min: undefined,
         type: "time",
         time: {
           round: "seconds",
