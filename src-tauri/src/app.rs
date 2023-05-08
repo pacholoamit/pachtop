@@ -87,6 +87,8 @@ pub fn read_config(_state: State<'_, AppState>) -> Config {
         }
     };
 
+    println!("config_string: {}", config_string);
+
     match serde_json::from_str(&config_string) {
         Ok(data) => data,
         Err(e) => {
