@@ -1,5 +1,6 @@
+import UserProvider from "@/providers/user.provider";
 import ThemeProvider from "@/providers/theme.provider";
-import ServerEventsProvider from "@/providers/server-events.context";
+import ServerEventsProvider from "@/providers/server-events.provider";
 import { Notifications } from "@mantine/notifications";
 
 interface AppProvider {
@@ -8,12 +9,14 @@ interface AppProvider {
 
 const AppProvider: React.FC<AppProvider> = ({ children }) => {
   return (
-    <ServerEventsProvider>
-      <ThemeProvider>
-        <Notifications />
-        {children}
-      </ThemeProvider>
-    </ServerEventsProvider>
+    <ThemeProvider>
+      <UserProvider>
+        <ServerEventsProvider>
+          <Notifications />
+          {children}
+        </ServerEventsProvider>
+      </UserProvider>
+    </ThemeProvider>
   );
 };
 

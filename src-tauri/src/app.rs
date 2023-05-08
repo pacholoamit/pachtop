@@ -1,6 +1,6 @@
 use log::info;
 use std::sync::{Arc, Mutex};
-use tauri::{State, Window};
+use tauri::{api, State, Window};
 
 use crate::metrics::Metrics;
 use crate::models::*;
@@ -69,4 +69,29 @@ pub fn kill_process(state: State<'_, AppState>, pid: String) -> bool {
         &pid, killed
     );
     killed
+}
+
+#[tauri::command]
+pub fn read_config(_state: State<'_, AppState>) -> Config {
+    // TODO: deduplicate this , this is also on main.rs
+    let config_path = match api::path::config_dir().unwrap().to_str() {
+        Some(path) => format!("{}/{}", path, "config.json"),
+        None => String::from(""),
+    };
+
+    let config_string = match api::file::read_string(config_path) {
+        Ok(data) => data,
+        Err(e) => {
+            info!("Error reading config file: {}", e);
+            String::from("")
+        }
+    };
+
+    match serde_json::from_str(&config_string) {
+        Ok(data) => data,
+        Err(e) => {
+            info!("Error parsing config file: {}", e);
+            Config::default()
+        }
+    }
 }
