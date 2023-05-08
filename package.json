@@ -22,6 +22,7 @@
     "lodash.sortby": "^4.7.0",
     "luxon": "^3.3.0",
     "mantine-datatable": "^2.4.15",
+    "pocketbase": "^0.14.4",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-chartjs-2": "^5.2.0",
