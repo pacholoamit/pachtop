@@ -40,7 +40,6 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     store.userId.get().then((id) => {
       if (!id) return open();
-      console.log("Current user");
       setUserId(id);
     });
   }, []);
