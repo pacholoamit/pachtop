@@ -1,7 +1,7 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
 use std::str::{self, FromStr};
-use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, Signal, System, SystemExt};
+use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, System, SystemExt};
 
 pub struct Metrics {
     sys: System,
@@ -98,9 +98,9 @@ impl DisksTrait for Metrics {
                     None => "Unknown".to_owned(),
                 };
 
-                let disk_type = match disk.type_() {
-                    sysinfo::DiskType::HDD => "HDD".to_owned(),
-                    sysinfo::DiskType::SSD => "SSD".to_owned(),
+                let disk_type = match disk.kind() {
+                    sysinfo::DiskKind::HDD => "HDD".to_owned(),
+                    sysinfo::DiskKind::SSD => "SSD".to_owned(),
                     _ => "Unknown".to_owned(),
                 };
                 let file_system = match str::from_utf8(disk.file_system()) {
@@ -231,7 +231,7 @@ impl ProcessesTrait for Metrics {
             None => return false,
         };
 
-        process.kill_with(Signal::Kill).unwrap_or(false)
+        process.kill()
     }
 }
 

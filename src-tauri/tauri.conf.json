@@ -16,7 +16,49 @@
       "iconAsTemplate": true
     },
     "allowlist": {
-      "all": true
+      "all": true,
+      "path": {
+        "all": true
+      },
+      "fs": {
+        "all": true,
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "copyFile": true,
+        "createDir": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true,
+        "exists": true,
+        "scope": [
+          "$APPCONFIG",
+          "$APPDATA",
+          "$APPLOCALDATA",
+          "$APPCACHE",
+          "$APPLOG",
+          "$AUDIO",
+          "$CACHE",
+          "$CONFIG",
+          "$DATA",
+          "$LOCALDATA",
+          "$DESKTOP",
+          "$DOCUMENT",
+          "$DOWNLOAD",
+          "$EXE",
+          "$FONT",
+          "$HOME",
+          "$PICTURE",
+          "$PUBLIC",
+          "$RUNTIME",
+          "$TEMPLATE",
+          "$VIDEO",
+          "$RESOURCE",
+          "$APP",
+          "$LOG",
+          "$TEMP"
+        ]
+      }
     },
     "bundle": {
       "active": true,
@@ -50,7 +92,7 @@
     },
     "updater": {
       "active": true,
-      "endpoints": ["https://pachtop.pacholoamit.com/releases/pachtop/{{target}}/{{current_version}}"],
+      "endpoints": ["https://update.pachtop.com/releases/pachtop/{{target}}/{{current_version}}"],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM0NkIyODA1NThCM0I0MUEKUldRYXRMTllCU2hyeE9mSUx0MElJN2N5VFo5TytFV1RwaUtoaytDNVdmajNQMmlseVlYMGYzeUkK"
     },
     "windows": [

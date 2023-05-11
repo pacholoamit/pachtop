@@ -118,3 +118,17 @@ pub trait ProcessesTrait {
     fn get_processes(&mut self) -> Vec<Process>;
     fn kill_process(&mut self, pid: &str) -> bool;
 }
+
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct Config {
+    pub user: User,
+}
+
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct User {
+    pub email: String,
+    pub first_name: String,
+    pub last_name: String,
+    pub skipped_setup: bool,
+    pub user_hash: String,
+}

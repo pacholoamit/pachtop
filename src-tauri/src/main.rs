@@ -9,21 +9,49 @@ mod models;
 mod utils;
 
 use app::AppState;
-use log::info;
+use log::{error, info};
 use std::time::Duration;
 use tauri::api::path::cache_dir;
-use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
+use tauri::{api, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use tauri_plugin_log::LogTarget;
+
+use crate::models::Config;
+
+fn setup_app() -> std::io::Result<()> {
+    let config_path = match api::path::config_dir().unwrap().to_str() {
+        Some(path) => format!("{}/{}", path, "config.json"),
+        None => String::from(""),
+    };
+
+    match std::fs::metadata(&config_path) {
+        Ok(_) => info!("Config file exists at: {}", &config_path),
+        Err(e) => {
+            error!("Error checking config file: {}", e);
+            info!("Attempting to create config file at: {}", &config_path);
+
+            let default = Config::default();
+            let default_config = serde_json::to_string_pretty(&default).unwrap();
+
+            std::fs::write(&config_path, default_config)?;
+            info!("Created config file at: {}", &config_path);
+        }
+    }
+
+    Ok(())
+}
 
 fn build_and_run_app(app: AppState) {
     info!("Cache Directory: {:?}", cache_dir().unwrap());
 
+    let log_plugin = tauri_plugin_log::Builder::default()
+        .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
+        .build();
+
+    let store_plugin = tauri_plugin_store::Builder::default().build();
+
     tauri::Builder::default()
-        .plugin(
-            tauri_plugin_log::Builder::default()
-                .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
-                .build(),
-        )
+        .plugin(log_plugin)
+        .plugin(store_plugin)
         .setup(|app| {
             let window = app.get_window("main").unwrap();
             let state = AppState::new();
@@ -67,12 +95,15 @@ fn build_and_run_app(app: AppState) {
             }
         })
         .manage(app)
-        .invoke_handler(tauri::generate_handler![app::kill_process])
+        .invoke_handler(tauri::generate_handler![app::kill_process,])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
-fn main() {
+fn main() -> std::io::Result<()> {
     let app = AppState::new();
+    setup_app()?;
     build_and_run_app(app);
+
+    Ok(())
 }

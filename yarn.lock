@@ -740,6 +740,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/form@npm:^6.0.10":
+  version: 6.0.10
+  resolution: "@mantine/form@npm:6.0.10"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    klona: ^2.0.5
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 2d792413d047a510790093e66478e4bceaaa258a4b88775c79a79a7800cb3ad0de7ab726e5a9e5c93b9cf66175c255f14077f4ff5961e4dcfd633f58420a64dc
+  languageName: node
+  linkType: hard
+
 "@mantine/hooks@npm:^6.0.10":
   version: 6.0.10
   resolution: "@mantine/hooks@npm:6.0.10"
@@ -1685,6 +1697,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-deep-equal@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "fast-deep-equal@npm:3.1.3"
+  checksum: e21a9d8d84f53493b6aa15efc9cfd53dd5b714a1f23f67fb5dc8f574af80df889b3bce25dc081887c6d25457cce704e636395333abad896ccdec03abaf1f3f9d
+  languageName: node
+  linkType: hard
+
 "find-root@npm:^1.1.0":
   version: 1.1.0
   resolution: "find-root@npm:1.1.0"
@@ -2016,6 +2035,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"klona@npm:^2.0.5":
+  version: 2.0.6
+  resolution: "klona@npm:2.0.6"
+  checksum: ac9ee3732e42b96feb67faae4d27cf49494e8a3bf3fa7115ce242fe04786788e0aff4741a07a45a2462e2079aa983d73d38519c85d65b70ef11447bbc3c58ce7
+  languageName: node
+  linkType: hard
+
 "lines-and-columns@npm:^1.1.6":
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
@@ -2323,6 +2349,7 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.10.8
     "@mantine/core": ^6.0.10
+    "@mantine/form": ^6.0.10
     "@mantine/hooks": ^6.0.10
     "@mantine/notifications": ^6.0.10
     "@tabler/icons-react": ^2.17.0
@@ -2340,12 +2367,14 @@ __metadata:
     lodash.sortby: ^4.7.0
     luxon: ^3.3.0
     mantine-datatable: ^2.4.15
+    pocketbase: ^0.14.4
     react: ^18.2.0
     react-apexcharts: ^1.4.0
     react-chartjs-2: ^5.2.0
     react-dom: ^18.2.0
     react-router-dom: ^6.11.1
     tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log"
+    tauri-plugin-store: "https://github.com/tauri-apps/tauri-plugin-store"
     typescript: ^5.0.4
     vite: ^4.3.5
   languageName: unknown
@@ -2397,6 +2426,13 @@ __metadata:
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
   checksum: a2e8092dd86c8396bdba9f2b5481032848525b3dc295ce9b57896f931e63fc16f79805144321f72976383fc249584672a75cc18d6777c6b757603f372f745981
+  languageName: node
+  linkType: hard
+
+"pocketbase@npm:^0.14.4":
+  version: 0.14.4
+  resolution: "pocketbase@npm:0.14.4"
+  checksum: e7bd257fcf143f44e7cec44e5bbd58dea6441ee37a66f5c38bec8aa5c5738d57603e2c7a46e1a9a36b61d278ed474ed809512104c2f1f5d4c3d7d59481b50bbd
   languageName: node
   linkType: hard
 
@@ -2941,6 +2977,15 @@ __metadata:
   dependencies:
     "@tauri-apps/api": ^1.2.0
   checksum: d08f1ba16acb989bd079309472dea5c8f8bf6d83d99315b2d6e141f1c8be9b7ab107b5b3ab8a68fdc8a18f0e549df442d9ec783731eef026839f8b21a95993e1
+  languageName: node
+  linkType: hard
+
+"tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store":
+  version: 0.0.0
+  resolution: "tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store.git#commit=0558a1f6c869ae0afdb0181dfa1ea31be8cf4893"
+  dependencies:
+    "@tauri-apps/api": ^1.2.0
+  checksum: b60a9f2564c007cc30d041d62307771e42378a386a340bdb8d2bbb4d05e5d94742ceeb46ae5379a0533d8614864e9f2c7ebb9e306aafdd7734bf538a8dfc11a7
   languageName: node
   linkType: hard
 
