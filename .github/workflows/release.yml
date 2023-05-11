@@ -3,9 +3,12 @@ name: "release"
 on:
   workflow_dispatch:
   push: { branches: ["release"] }
+env:
+  VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
 jobs:
   test-tauri:
+    environment: production
     strategy:
       fail-fast: false
       matrix:
@@ -47,6 +50,7 @@ jobs:
   create-release:
     needs: test-tauri
     runs-on: ubuntu-20.04
+    environment: production
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
 
@@ -77,6 +81,7 @@ jobs:
 
   build-tauri:
     needs: create-release
+    environment: production
     strategy:
       fail-fast: false
       matrix:
