@@ -1,6 +1,4 @@
-import { createContext, useEffect, useState } from "react";
-import { User } from "@/api";
-
+import { createContext, useCallback, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Title, Text, Center, Stack, TextInput, Button, Space } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -20,7 +18,7 @@ const UserContext = createContext<UserProviderContext>({
 });
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [opened, { open, close }] = useDisclosure(true);
+  const [opened, { open, close }] = useDisclosure(false);
   const [userId, setUserId] = useState<string | null>(null);
 
   const form = useForm<CreateAppUserInput>({
@@ -37,24 +35,34 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     },
   });
 
-  useEffect(() => {
-    store.userId.get().then((id) => {
-      console.log(id);
-      if (!id) return open();
-      setUserId(id);
-    });
+  const checkifExistingUser = useCallback(async () => {
+    const userId = await store.userId.get();
+
+    if (!userId) {
+      open();
+      return;
+    }
+    setUserId(userId);
   }, []);
+
+  useEffect(() => {
+    checkifExistingUser();
+  }, [checkifExistingUser]);
+
+  const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
+    const result = await createAppUser({ ...values, opt_in });
+    await store.userId.set(result.id);
+    setUserId(result.id);
+  };
 
   const handleSubmitForm = async (values: CreateAppUserInput) => {
     close();
-    const result = await createAppUser(values);
-    setUserId(result.id);
+    await createAndSetUserId(values);
   };
 
   const handleSkipForm = async (values: CreateAppUserInput) => {
     close();
-    const result = await createAppUser({ ...values, opt_in: false });
-    setUserId(result.id);
+    await createAndSetUserId(values, false);
   };
 
   return (
