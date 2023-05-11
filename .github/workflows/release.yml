@@ -8,7 +8,7 @@ env:
 
 jobs:
   test-tauri:
-    environment: production
+    environment: release
     strategy:
       fail-fast: false
       matrix:
@@ -50,7 +50,7 @@ jobs:
   create-release:
     needs: test-tauri
     runs-on: ubuntu-20.04
-    environment: production
+    environment: release
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
 
@@ -81,7 +81,7 @@ jobs:
 
   build-tauri:
     needs: create-release
-    environment: production
+    environment: release
     strategy:
       fail-fast: false
       matrix:
