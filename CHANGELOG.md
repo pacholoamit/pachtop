@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.3.7
+
+- Fix user prompt keep showing up after the user has been prompted once
+
 ## 0.3.6
 
 - Updated Rust dependencies
