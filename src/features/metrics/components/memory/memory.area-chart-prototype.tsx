@@ -11,6 +11,28 @@ const MemoryAreaChart: React.FC = ({}) => {
     title: {
       text: "Random Access Memory (RAM)",
     },
+    credits: {
+      enabled: false,
+    },
+    rangeSelector: {
+      buttons: [
+        {
+          count: 1,
+          type: "minute",
+          text: "1M",
+        },
+        {
+          count: 5,
+          type: "minute",
+          text: "5M",
+        },
+        {
+          type: "all",
+          text: "All",
+        },
+      ],
+      selected: 1,
+    },
   });
 
   useEffect(() => {
@@ -29,7 +51,7 @@ const MemoryAreaChart: React.FC = ({}) => {
   }, [memory]);
 
   return (
-    <Card style={{ height: "300px" }}>
+    <Card style={{ height: "500px" }}>
       <AreaChart options={chartOptions} />
     </Card>
   );
