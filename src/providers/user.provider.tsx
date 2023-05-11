@@ -46,14 +46,14 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, []);
 
   const handleSubmitForm = async (values: CreateAppUserInput) => {
-    const result = await createAppUser(values);
     close();
+    const result = await createAppUser(values);
     setUserId(result.id);
   };
 
   const handleSkipForm = async (values: CreateAppUserInput) => {
-    const result = await createAppUser({ ...values, opt_in: false });
     close();
+    const result = await createAppUser({ ...values, opt_in: false });
     setUserId(result.id);
   };
 
