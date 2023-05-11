@@ -6,6 +6,7 @@ import useServerEventsContext from "@/hooks/useServerEventsContext";
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
 
+  console.log("Rerendering");
   const title = "Random Access Memory (RAM)";
   const labels = memory.map((mem) => mem.timestamp);
   const datasets: DatasetOptions[] = [
