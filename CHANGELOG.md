@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 0.3.6
 
-- Updated dependencies
+- Updated Rust dependencies
+- Updated Typescript dependencies
 
 ## 0.3.5
 
