@@ -10,12 +10,12 @@ interface AppProvider {
 const AppProvider: React.FC<AppProvider> = ({ children }) => {
   return (
     <ThemeProvider>
-      <UserProvider>
-        <ServerEventsProvider>
+      <ServerEventsProvider>
+        <UserProvider>
           <Notifications />
           {children}
-        </ServerEventsProvider>
-      </UserProvider>
+        </UserProvider>
+      </ServerEventsProvider>
     </ThemeProvider>
   );
 };

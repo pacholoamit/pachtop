@@ -4,6 +4,7 @@ import { Modal, Title, Text, Center, Stack, TextInput, Button, Space } from "@ma
 import { useForm } from "@mantine/form";
 import { CreateAppUserInput, createAppUser } from "@/api";
 import store from "@/lib/store";
+import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ const UserContext = createContext<UserProviderContext>({
 });
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const { sysInfo } = useServerEventsContext();
   const [opened, { open, close }] = useDisclosure(false);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -27,7 +29,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       first_name: "",
       last_name: "",
       last_active: new Date(),
-      operating_system: "Example OS",
+      operating_system: sysInfo?.osVersion || "Not Available",
       opt_in: true,
     },
     validate: {
