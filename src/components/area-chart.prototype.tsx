@@ -9,7 +9,14 @@ const AreaChart: React.FC<HighchartsReact.Props> = (props) => {
     ...props.options,
   };
 
-  return <HighchartsReact highcharts={Highcharts} options={options} ref={chartComponentRef} {...props} />;
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={options}
+      ref={chartComponentRef}
+      containerProps={{ style: { height: "100%" } }}
+    />
+  );
 };
 
 export default AreaChart;

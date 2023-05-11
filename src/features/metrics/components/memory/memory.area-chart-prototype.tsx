@@ -1,37 +1,69 @@
 import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import AreaChart from "@/components/are-chart.prototype";
+import AreaChart from "@/components/area-chart.prototype";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import * as Highcharts from "highcharts";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import * as luxon from "luxon";
 
+const time = new Highcharts.Time();
+
+// TODO: Remove Luxon and ChartJS
+// TODO: Make timestamp work automatically
+// TODO: fix time
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     title: {
       text: "Random Access Memory (RAM)",
+      style: {
+        fontFamily: "Roboto, Arial, sans-serif",
+        fontWeight: "bold",
+        fontSize: "18px",
+        color: "#dce1e8",
+      },
+    },
+    colors: [
+      {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+          [0, "rgba(10, 167, 147, 1)"],
+          [1, "rgba(10, 167, 147, 0.45)"],
+        ],
+      },
+    ],
+
+    xAxis: {
+      type: "datetime",
+      gridLineColor: "#263858",
+      labels: {
+        format: "{value:%I:%M %p}",
+        style: {
+          color: "#8192ac",
+        },
+      },
+    },
+    legend: {
+      enabled: false,
+    },
+
+    yAxis: {
+      gridLineColor: "#263858",
+      labels: {
+        formatter: (x) => formatBytes(x.value as number),
+        style: {
+          color: "#8192ac",
+        },
+      },
     },
     credits: {
       enabled: false,
     },
-    rangeSelector: {
-      buttons: [
-        {
-          count: 1,
-          type: "minute",
-          text: "1M",
-        },
-        {
-          count: 5,
-          type: "minute",
-          text: "5M",
-        },
-        {
-          type: "all",
-          text: "All",
-        },
-      ],
-      selected: 1,
+    chart: {
+      backgroundColor: "transparent",
+      style: {
+        color: "#dce1e8",
+      },
     },
   });
 
@@ -51,7 +83,7 @@ const MemoryAreaChart: React.FC = ({}) => {
   }, [memory]);
 
   return (
-    <Card style={{ height: "500px" }}>
+    <Card style={{ height: "300px" }}>
       <AreaChart options={chartOptions} />
     </Card>
   );
