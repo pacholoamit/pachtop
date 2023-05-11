@@ -1,6 +1,6 @@
 [package]
 name = "app"
-version = "0.3.5"
+version = "0.3.7"
 description = "Cross-platform (Linux, WIndows, MacOS) Desktop GUI system monitor"
 authors = ["Pacholo Amit"]
 license = "MIT"

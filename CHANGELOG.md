@@ -2,14 +2,18 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
-## 0.3.6-rc
+## 0.3.8
 
-- Updated dependencies
-- Improve Chart performance by using High Charts as charting library
+- Improve UI performance by utilizing High Charts library
 
-### Todo:
+## 0.3.7
 
-- Improve UI performance by reducing number of renders
+- Fix user prompt keep showing up after the user has been prompted once
+
+## 0.3.6
+
+- Updated Rust dependencies
+- Updated Typescript dependencies
 
 ## 0.3.5
 
