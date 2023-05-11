@@ -39,6 +39,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     store.userId.get().then((id) => {
+      console.log(id);
       if (!id) return open();
       setUserId(id);
     });
