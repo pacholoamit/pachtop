@@ -2374,6 +2374,7 @@ __metadata:
     react-dom: ^18.2.0
     react-router-dom: ^6.11.1
     tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log"
+    tauri-plugin-store: "https://github.com/tauri-apps/tauri-plugin-store"
     typescript: ^5.0.4
     vite: ^4.3.5
   languageName: unknown
@@ -2976,6 +2977,15 @@ __metadata:
   dependencies:
     "@tauri-apps/api": ^1.2.0
   checksum: d08f1ba16acb989bd079309472dea5c8f8bf6d83d99315b2d6e141f1c8be9b7ab107b5b3ab8a68fdc8a18f0e549df442d9ec783731eef026839f8b21a95993e1
+  languageName: node
+  linkType: hard
+
+"tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store":
+  version: 0.0.0
+  resolution: "tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store.git#commit=0558a1f6c869ae0afdb0181dfa1ea31be8cf4893"
+  dependencies:
+    "@tauri-apps/api": ^1.2.0
+  checksum: b60a9f2564c007cc30d041d62307771e42378a386a340bdb8d2bbb4d05e5d94742ceeb46ae5379a0533d8614864e9f2c7ebb9e306aafdd7734bf538a8dfc11a7
   languageName: node
   linkType: hard
 

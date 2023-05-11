@@ -1,68 +1,64 @@
 import { createContext, useEffect, useState } from "react";
-import { Config, User } from "@/lib/types";
+import { User } from "@/api";
+
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Title, Text, Center, Stack, TextInput, Button, Space } from "@mantine/core";
-import { Command, invoke } from "@/lib";
 import { useForm } from "@mantine/form";
 import { CreateAppUserInput, createAppUser } from "@/api";
-import notification from "@/utils/notification";
+import store from "@/lib/store";
 
 interface UserProviderProps {
   children: React.ReactNode;
 }
 
 interface UserProviderContext {
-  user: User | null;
+  userId: string | null;
 }
 
 const UserContext = createContext<UserProviderContext>({
-  user: null,
+  userId: null,
 });
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [opened, { open, close }] = useDisclosure(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [opened, { open, close }] = useDisclosure(true);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const form = useForm<CreateAppUserInput>({
     initialValues: {
       email: "",
       first_name: "",
       last_name: "",
-      skipped_setup: false,
+      last_active: new Date(),
+      operating_system: "Example OS",
+      opt_in: true,
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
 
-  const handleSubmitForm = async (values: CreateAppUserInput) => {
-    const result = await createAppUser(values).catch((e) => {
-      console.log(e);
-    });
-    close();
-    console.log(result);
-  };
-
-  const handleSkipForm = async (values: CreateAppUserInput) => {
-    const result = await createAppUser({ ...values, skipped_setup: true }).catch((e) => {
-      console.log(e);
-    });
-    close();
-    console.log(result);
-  };
-
   useEffect(() => {
-    invoke<{}, Config>(Command.ReadConfig).then((c) => {
-      if (!c?.user?.user_hash) {
-        open();
-        return;
-      }
-      setUser(c.user);
+    store.userId.get().then((id) => {
+      if (!id) return open();
+      console.log("Current user");
+      setUserId(id);
     });
   }, []);
 
+  const handleSubmitForm = async (values: CreateAppUserInput) => {
+    const result = await createAppUser(values);
+    close();
+    setUserId(result.id);
+  };
+
+  const handleSkipForm = async (values: CreateAppUserInput) => {
+    const result = await createAppUser({ ...values, opt_in: false });
+    close();
+    setUserId(result.id);
+  };
+
   return (
-    <UserContext.Provider value={{ user }}>
+    <UserContext.Provider value={{ userId }}>
       <Modal opened={opened} onClose={() => {}} size="lg" withCloseButton={false}>
         <Center>
           <form onSubmit={form.onSubmit(handleSubmitForm)}>

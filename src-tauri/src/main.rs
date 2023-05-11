@@ -43,12 +43,15 @@ fn setup_app() -> std::io::Result<()> {
 fn build_and_run_app(app: AppState) {
     info!("Cache Directory: {:?}", cache_dir().unwrap());
 
+    let log_plugin = tauri_plugin_log::Builder::default()
+        .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
+        .build();
+
+    let store_plugin = tauri_plugin_store::Builder::default().build();
+
     tauri::Builder::default()
-        .plugin(
-            tauri_plugin_log::Builder::default()
-                .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
-                .build(),
-        )
+        .plugin(log_plugin)
+        .plugin(store_plugin)
         .setup(|app| {
             let window = app.get_window("main").unwrap();
             let state = AppState::new();
@@ -92,10 +95,7 @@ fn build_and_run_app(app: AppState) {
             }
         })
         .manage(app)
-        .invoke_handler(tauri::generate_handler![
-            app::kill_process,
-            app::read_config
-        ])
+        .invoke_handler(tauri::generate_handler![app::kill_process,])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

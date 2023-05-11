@@ -2,7 +2,6 @@ import { InvokeArgs } from "@tauri-apps/api/tauri";
 
 export enum Command {
   KillProcess = "kill_process",
-  ReadConfig = "read_config",
 }
 
 export enum ServerEvent {
@@ -90,16 +89,4 @@ export interface Process {
   cpuUsage: number;
   memoryUsage: number;
   status: string;
-}
-
-export interface Config {
-  user: User;
-}
-
-export interface User {
-  email: string;
-  first_name: string;
-  last_name: string;
-  skipped_setup: boolean;
-  user_hash: string;
 }

@@ -1,6 +1,9 @@
-export interface CreateAppUserInput {
+export interface User {
   email: string;
   first_name: string;
   last_name: string;
-  skipped_setup: boolean;
+  last_active: Date;
+  opt_in: boolean;
+  operating_system: string;
 }
+export type CreateAppUserInput = Omit<User, "id">;
