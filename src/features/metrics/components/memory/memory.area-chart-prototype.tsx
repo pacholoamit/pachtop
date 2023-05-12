@@ -13,16 +13,18 @@ const time = new Highcharts.Time();
 // TODO: fix time
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
+
+  console.log("render");
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
-    title: {
-      text: "Random Access Memory (RAM)",
-      style: {
-        fontFamily: "Roboto, Arial, sans-serif",
-        fontWeight: "bold",
-        fontSize: "18px",
-        color: "#dce1e8",
-      },
-    },
+    // title: {
+    //   text: "Random Access Memory (RAM)",
+    //   style: {
+    //     fontFamily: "Roboto, Arial, sans-serif",
+    //     fontWeight: "bold",
+    //     fontSize: "18px",
+    //     color: "#dce1e8",
+    //   },
+    // },
     plotOptions: {
       series: {
         marker: {
