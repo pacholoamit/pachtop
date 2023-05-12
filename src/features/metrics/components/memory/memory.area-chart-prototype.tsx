@@ -36,6 +36,8 @@ const MemoryAreaChart: React.FC = ({}) => {
     xAxis: {
       type: "datetime",
       gridLineColor: "#263858",
+      lineColor: "#263858",
+
       labels: {
         format: "{value:%I:%M %p}",
         style: {
@@ -48,7 +50,11 @@ const MemoryAreaChart: React.FC = ({}) => {
     },
 
     yAxis: {
+      title: {
+        text: null,
+      },
       gridLineColor: "#263858",
+      lineColor: "#263858",
       labels: {
         formatter: (x) => formatBytes(x.value as number),
         style: {
