@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Title, Text, Center, Stack, TextInput, Button, Space } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { CreateAppUserInput, createAppUser, updateUserLastActive } from "@/api";
+import { CreateAppUserInput, createAppUser, updateAppUser } from "@/api";
 import store from "@/lib/store";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 
@@ -41,7 +41,10 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       return;
     }
 
-    await updateUserLastActive(id);
+    await updateAppUser(id, {
+      last_active: new Date(),
+      operating_system: sysInfo.osVersion,
+    });
   }, []);
 
   useEffect(() => {
@@ -51,7 +54,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
     const result = await createAppUser({
       ...values,
-      operating_system: sysInfo?.osVersion ?? "Not Available",
+      operating_system: sysInfo.osVersion,
       last_active: new Date(),
       opt_in,
     });
