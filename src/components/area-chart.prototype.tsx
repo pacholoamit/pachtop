@@ -1,18 +1,14 @@
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const AreaChart: React.FC<HighchartsReact.Props> = (props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
-  const options: Highcharts.Options = {
-    ...props.options,
-  };
-
   return (
     <HighchartsReact
       highcharts={Highcharts}
-      options={options}
+      options={props.options}
       ref={chartComponentRef}
       containerProps={{ style: { height: "100%" } }}
     />

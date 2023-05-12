@@ -23,6 +23,13 @@ const MemoryAreaChart: React.FC = ({}) => {
         color: "#dce1e8",
       },
     },
+    plotOptions: {
+      series: {
+        marker: {
+          enabled: false,
+        },
+      },
+    },
     colors: [
       {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -64,6 +71,14 @@ const MemoryAreaChart: React.FC = ({}) => {
     },
     credits: {
       enabled: false,
+    },
+    tooltip: {
+      xDateFormat: "%I:%M %p",
+      pointFormatter: function () {
+        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
+          this.y as number
+        )}</b><br/>`;
+      },
     },
     chart: {
       backgroundColor: "transparent",
