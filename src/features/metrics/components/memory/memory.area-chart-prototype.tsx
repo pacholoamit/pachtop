@@ -73,7 +73,7 @@ const MemoryAreaChart: React.FC = ({}) => {
       enabled: false,
     },
     tooltip: {
-      xDateFormat: "%I:%M %p",
+      xDateFormat: "%I:%M:%S %p",
       pointFormatter: function () {
         return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
           this.y as number
