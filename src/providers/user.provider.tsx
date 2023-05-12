@@ -29,7 +29,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       first_name: "",
       last_name: "",
       last_active: new Date(),
-      operating_system: sysInfo?.osVersion || "Not Available",
+      operating_system: "",
       opt_in: true,
     },
     validate: {
@@ -39,7 +39,6 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const checkifExistingUser = useCallback(async () => {
     const userId = await store.userId.get();
-
     if (!userId) {
       open();
       return;
@@ -52,7 +51,12 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [checkifExistingUser]);
 
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
-    const result = await createAppUser({ ...values, opt_in });
+    const result = await createAppUser({
+      ...values,
+      operating_system: sysInfo?.osVersion ?? "Not Available",
+      last_active: new Date(),
+      opt_in,
+    });
     await store.userId.set(result.id);
     setUserId(result.id);
   };
