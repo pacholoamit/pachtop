@@ -16,19 +16,21 @@ const UserContext = createContext<UserProviderContext>({});
 
 //TODO: Move this somewhere else?
 
+const initialValues: CreateAppUserInput = {
+  email: "",
+  first_name: "",
+  last_name: "",
+  last_active: new Date(),
+  operating_system: "",
+  opt_in: true,
+};
+
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { sysInfo } = useServerEventsContext();
   const [opened, { open, close }] = useDisclosure(false);
 
   const form = useForm<CreateAppUserInput>({
-    initialValues: {
-      email: "",
-      first_name: "",
-      last_name: "",
-      last_active: new Date(),
-      operating_system: "",
-      opt_in: true,
-    },
+    initialValues,
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
@@ -52,13 +54,13 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [checkifExistingUser]);
 
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
-    const result = await createAppUser({
+    const user = await createAppUser({
       ...values,
       operating_system: sysInfo.osVersion,
       last_active: new Date(),
       opt_in,
     });
-    await store.userId.set(result.id);
+    await store.userId.set(user.id);
   };
 
   const handleSubmitForm = async (values: CreateAppUserInput) => {
