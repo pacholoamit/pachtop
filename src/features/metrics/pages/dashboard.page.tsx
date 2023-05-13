@@ -1,5 +1,5 @@
 import SystemInfo from "@/features/metrics/components/system-info";
-import MemoryAreaChart from "@/features/metrics/components/memory/memory.area-chart-prototype";
+import MemoryAreaChart from "@/features/metrics/components/memory/memory.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu.area-chart";
 import NetworksAreaChart from "@/features/metrics/components/networks/networks.area-chart";
