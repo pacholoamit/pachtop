@@ -1,11 +1,10 @@
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 
-const defaultOptions: Highcharts.Options = {
+export const areaChatOptions: Highcharts.Options = {
   title: {
-    text: "Random Access Memory (RAM)",
     style: {
       fontFamily: "Roboto, Arial, sans-serif",
       fontWeight: "bold",
@@ -20,16 +19,6 @@ const defaultOptions: Highcharts.Options = {
       },
     },
   },
-  colors: [
-    {
-      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-      stops: [
-        [0, "rgba(10, 167, 147, 1)"],
-        [1, "rgba(10, 167, 147, 0.45)"],
-      ],
-    },
-  ],
-
   xAxis: {
     type: "datetime",
     gridLineColor: "#263858",
@@ -79,19 +68,12 @@ const defaultOptions: Highcharts.Options = {
 };
 
 const AreaChart: React.FC<HighchartsReact.Props> = (props) => {
-  const [options, setOptions] = useState<Highcharts.Options>(defaultOptions);
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
-
-  useEffect(() => {
-    if (props.options) {
-      setOptions({ ...props.options, ...defaultOptions });
-    }
-  }, [props.options]);
 
   return (
     <HighchartsReact
       highcharts={Highcharts}
-      options={options}
+      options={props.options}
       ref={chartComponentRef}
       containerProps={{ style: { height: "100%" } }}
     />

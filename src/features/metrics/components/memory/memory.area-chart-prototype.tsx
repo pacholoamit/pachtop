@@ -1,6 +1,6 @@
 import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import AreaChart from "@/components/area-chart.prototype";
+import AreaChart, { areaChatOptions } from "@/components/area-chart.prototype";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import * as Highcharts from "highcharts";
 import { useEffect, useState } from "react";
@@ -16,21 +16,10 @@ const MemoryAreaChart: React.FC = ({}) => {
 
   console.log("render");
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
-    // title: {
-    //   text: "Random Access Memory (RAM)",
-    //   style: {
-    //     fontFamily: "Roboto, Arial, sans-serif",
-    //     fontWeight: "bold",
-    //     fontSize: "18px",
-    //     color: "#dce1e8",
-    //   },
-    // },
-    plotOptions: {
-      series: {
-        marker: {
-          enabled: false,
-        },
-      },
+    ...areaChatOptions,
+    title: {
+      text: "Random Access Memory (RAM)",
+      ...areaChatOptions.title,
     },
     colors: [
       {
@@ -41,67 +30,17 @@ const MemoryAreaChart: React.FC = ({}) => {
         ],
       },
     ],
-
-    xAxis: {
-      type: "datetime",
-      gridLineColor: "#263858",
-      lineColor: "#263858",
-
-      labels: {
-        format: "{value:%I:%M %p}",
-        style: {
-          color: "#8192ac",
-        },
-      },
-    },
-    legend: {
-      enabled: false,
-    },
-
-    yAxis: {
-      title: {
-        text: null,
-      },
-      gridLineColor: "#263858",
-      lineColor: "#263858",
-      labels: {
-        formatter: (x) => formatBytes(x.value as number),
-        style: {
-          color: "#8192ac",
-        },
-      },
-    },
-    credits: {
-      enabled: false,
-    },
-    tooltip: {
-      xDateFormat: "%I:%M:%S %p",
-      pointFormatter: function () {
-        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
-          this.y as number
-        )}</b><br/>`;
-      },
-    },
-    chart: {
-      backgroundColor: "transparent",
-      style: {
-        color: "#dce1e8",
-      },
-    },
   });
 
   useEffect(() => {
-    setChartOptions((prevOptions) => {
-      return {
-        ...prevOptions,
-        series: [
-          {
-            name: "RAM Usage",
-            type: "area",
-            data: memory.map((mem) => [mem.timestamp, mem.used]),
-          },
-        ],
-      };
+    setChartOptions({
+      series: [
+        {
+          name: "RAM Usage",
+          type: "area",
+          data: memory.map((mem) => [mem.timestamp, mem.used]),
+        },
+      ],
     });
   }, [memory]);
 
