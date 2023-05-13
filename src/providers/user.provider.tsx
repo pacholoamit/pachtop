@@ -5,6 +5,7 @@ import { useForm } from "@mantine/form";
 import { CreateAppUserInput, createAppUser, updateAppUser } from "@/api";
 import store from "@/lib/store";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
+import { getVersion } from "@tauri-apps/api/app";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -23,6 +24,7 @@ const initialValues: CreateAppUserInput = {
   last_active: new Date(),
   operating_system: "",
   opt_in: true,
+  version: "",
 };
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
@@ -37,6 +39,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   });
 
   const checkifExistingUser = useCallback(async () => {
+    const version = await getVersion();
     const id = await store.userId.get();
     if (!id) {
       open();
@@ -46,6 +49,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     await updateAppUser(id, {
       last_active: new Date(),
       operating_system: sysInfo.osVersion,
+      version,
     });
   }, []);
 
@@ -54,11 +58,13 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [checkifExistingUser]);
 
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
+    const version = await getVersion();
     const user = await createAppUser({
       ...values,
       operating_system: sysInfo.osVersion,
       last_active: new Date(),
       opt_in,
+      version,
     });
     await store.userId.set(user.id);
   };
