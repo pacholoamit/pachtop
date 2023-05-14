@@ -64,7 +64,7 @@ const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk }) => {
         },
       ],
     });
-  }, [disk]);
+  }, [JSON.stringify(disk)]);
 
   return (
     // <Card style={{ height: "450px" }}>

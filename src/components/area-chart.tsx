@@ -8,6 +8,7 @@ export interface InitialAreaChatStateInput {
   title: {
     text: string;
   };
+  series?: Highcharts.SeriesOptionsType[];
   yAxis: {
     labels: {
       formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
