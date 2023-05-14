@@ -715,13 +715,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kurkle/color@npm:^0.3.0":
-  version: 0.3.2
-  resolution: "@kurkle/color@npm:0.3.2"
-  checksum: 79e97b31f8f6efb28c69d373f94b0c7480226fe8ec95221f518ac998e156444a496727ce47de6d728eb5c3369288e794cba82cae34253deb0d472d3bfe080e49
-  languageName: node
-  linkType: hard
-
 "@mantine/core@npm:^6.0.10":
   version: 6.0.10
   resolution: "@mantine/core@npm:6.0.10"
@@ -1394,15 +1387,6 @@ __metadata:
     escape-string-regexp: ^1.0.5
     supports-color: ^5.3.0
   checksum: ec3661d38fe77f681200f878edbd9448821924e0f93a9cefc0e26a33b145f1027a2084bf19967160d11e1f03bfe4eaffcabf5493b89098b2782c3fe0b03d80c2
-  languageName: node
-  linkType: hard
-
-"chart.js@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "chart.js@npm:4.3.0"
-  dependencies:
-    "@kurkle/color": ^0.3.0
-  checksum: 157ceaa3815665163cb30ccc221a5af40834dca940faa6ec02cb95406bf3e83c15c5f36ad950a1716c9d199e87f7b9be953227c4d9d445d593536175b47bbab8
   languageName: node
   linkType: hard
 
@@ -2109,13 +2093,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "luxon@npm:3.3.0"
-  checksum: 50cf17a0dc155c3dcacbeae8c0b7e80db425e0ba97b9cbdf12a7fc142d841ff1ab1560919f033af46240ed44e2f70c49f76e3422524c7fc8bb8d81ca47c66187
-  languageName: node
-  linkType: hard
-
 "make-fetch-happen@npm:^10.0.3":
   version: 10.2.1
   resolution: "make-fetch-happen@npm:10.2.1"
@@ -2379,17 +2356,14 @@ __metadata:
     "@types/react-dom": ^18.2.4
     "@vitejs/plugin-react": ^4.0.0
     apexcharts: ^3.40.0
-    chart.js: ^4.3.0
     chartjs-adapter-luxon: ^1.3.1
     highcharts: ^11.0.1
     highcharts-react-official: ^3.2.0
     lodash.sortby: ^4.7.0
-    luxon: ^3.3.0
     mantine-datatable: ^2.4.15
     pocketbase: ^0.14.4
     react: ^18.2.0
     react-apexcharts: ^1.4.0
-    react-chartjs-2: ^5.2.0
     react-dom: ^18.2.0
     react-router-dom: ^6.11.1
     tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log"
@@ -2503,16 +2477,6 @@ __metadata:
     apexcharts: ^3.18.0
     react: ">=0.13"
   checksum: eb6c1fcfe7c8c9cb565edd807095633f80e8c7da115cc9aaa490b6651f771bd6bf9a48df6def4b77c6865e9170b906fa1fb8fe2b5f76b8c14ef69bca592e0f37
-  languageName: node
-  linkType: hard
-
-"react-chartjs-2@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "react-chartjs-2@npm:5.2.0"
-  peerDependencies:
-    chart.js: ^4.1.1
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: ace702185be1450e5888a8bcd8b5fc1995067e3b11d236764a67f5567a3d7c32ff16923b8d48d3d39bda6e45135da6c044c9b43fbe8e1978f95aca9d2c0ce348
   languageName: node
   linkType: hard
 
