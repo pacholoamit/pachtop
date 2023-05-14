@@ -2,7 +2,7 @@ import * as Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { Dispatch, SetStateAction, useRef } from "react";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export interface InitialAreaChatStateInput {
   title: {

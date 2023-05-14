@@ -2,8 +2,7 @@ import Card from "@/components/card";
 
 import AreaChart, { useAreaChartState } from "@/components/area-chart.prototype";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
-import * as Highcharts from "highcharts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // TODO: Remove Luxon and ChartJS
 // TODO: Make timestamp work automatically
