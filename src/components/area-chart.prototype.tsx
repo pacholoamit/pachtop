@@ -3,8 +3,21 @@ import HighchartsReact from "highcharts-react-official";
 import { useRef } from "react";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 
-export const areaChatOptions: Highcharts.Options = {
+export interface InitialAreaChatStateInput {
   title: {
+    text: string;
+  };
+  yAxis: {
+    labels: {
+      formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
+    };
+  };
+  colors: (string | Highcharts.GradientColorObject | Highcharts.PatternObject)[] | undefined;
+}
+
+export const createAreaChartInitialState = (opts: InitialAreaChatStateInput): Highcharts.Options => ({
+  title: {
+    text: opts.title.text,
     style: {
       fontFamily: "Roboto, Arial, sans-serif",
       fontWeight: "bold",
@@ -42,7 +55,7 @@ export const areaChatOptions: Highcharts.Options = {
     gridLineColor: "#263858",
     lineColor: "#263858",
     labels: {
-      formatter: (x) => formatBytes(x.value as number),
+      formatter: opts.yAxis.labels.formatter,
       style: {
         color: "#8192ac",
       },
@@ -65,7 +78,7 @@ export const areaChatOptions: Highcharts.Options = {
       color: "#dce1e8",
     },
   },
-};
+});
 
 const AreaChart: React.FC<HighchartsReact.Props> = (props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
