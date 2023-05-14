@@ -1,4 +1,4 @@
-import * as Highcharts from "highcharts";
+import * as Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { useRef } from "react";
 import formatBytes from "@/features/metrics/utils/format-bytes";
@@ -47,11 +47,15 @@ export const createAreaChartInitialState = (opts: InitialAreaChatStateInput): Hi
   legend: {
     enabled: false,
   },
+  time: {
+    useUTC: false,
+  },
 
   yAxis: {
     title: {
       text: null,
     },
+
     gridLineColor: "#263858",
     lineColor: "#263858",
     labels: {
@@ -72,6 +76,48 @@ export const createAreaChartInitialState = (opts: InitialAreaChatStateInput): Hi
       )}</b><br/>`;
     },
   },
+
+  rangeSelector: {
+    labelStyle: {
+      color: "#8192ac",
+      backgroundColor: "#263858",
+    },
+
+    buttonTheme: {
+      fill: "none",
+      stroke: "none",
+      display: "none",
+      r: 8,
+      state: {
+        hover: {
+          fill: "#263858",
+          style: {
+            color: "#dce1e8",
+          },
+        },
+      },
+      style: {
+        color: "#8192ac",
+        fontWeight: "bold",
+      },
+    },
+    buttons: [
+      {
+        count: 1,
+        type: "minute",
+        text: "1M",
+      },
+      {
+        count: 5,
+        type: "minute",
+        text: "5M",
+      },
+      {
+        type: "all",
+        text: "All",
+      },
+    ],
+  },
   chart: {
     backgroundColor: "transparent",
     style: {
@@ -88,6 +134,7 @@ const AreaChart: React.FC<HighchartsReact.Props> = (props) => {
       highcharts={Highcharts}
       options={props.options}
       ref={chartComponentRef}
+      constructorType={"stockChart"}
       containerProps={{ style: { height: "100%" } }}
     />
   );
