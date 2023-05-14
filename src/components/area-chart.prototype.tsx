@@ -76,8 +76,12 @@ export const useAreaChartState = (
       enabled: false,
     },
     tooltip: {
-      xDateFormat: "%I:%M:%S %p",
+      xDateFormat: "%Y-%m-%d %I:%M:%S %p",
       pointFormatter: opts.tooltip.pointFormatter,
+      style: {
+        color: "#dce1e8",
+      },
+      backgroundColor: "#263858",
     },
 
     rangeSelector: {
@@ -90,25 +94,12 @@ export const useAreaChartState = (
       },
       buttonTheme: {
         fill: "none",
-        stroke: "none",
         display: "none",
         r: 8,
-        // state: {
-        //   disabled: {
-        //     fill: "red",
-        //     style: {
-        //       color: "red",
-        //     },
-        //   },
-        //   hover: {
-        //     fill: "#263858",
-        //     style: {
-        //       color: "#dce1e8",
-        //     },
-        //   },
-        // },
         style: {
+          background: "none",
           color: "#8192ac",
+          backgroundColor: "#263858",
           fontWeight: "bold",
         },
       },
