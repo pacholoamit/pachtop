@@ -1,6 +1,6 @@
 import Card from "@/components/card";
 
-import AreaChart, { createAreaChartInitialState } from "@/components/area-chart.prototype";
+import AreaChart, { useAreaChartState } from "@/components/area-chart.prototype";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import * as Highcharts from "highcharts";
 import { useEffect, useState } from "react";
@@ -9,28 +9,18 @@ import { useEffect, useState } from "react";
 // TODO: Make timestamp work automatically
 // TODO: fix time
 
-const initialState = createAreaChartInitialState({
-  title: {
-    text: "CPU Usage",
-  },
-  yAxis: {
-    labels: {
-      formatter: (x) => `${x.value}%`,
-    },
-  },
-  colors: [
-    {
-      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-      stops: [
-        [0, "rgba(255, 99, 132, 1)"],
-        [1, "rgba(255, 99, 132, 0.45)"],
-      ],
-    },
-  ],
-});
 const GlobalCpuAreaChart: React.FC = ({}) => {
   const { globalCpu } = useServerEventsContext();
-  const [chartOptions, setChartOptions] = useState<Highcharts.Options>(initialState);
+  const [chartOptions, setChartOptions] = useAreaChartState({
+    title: {
+      text: "CPU Usage",
+    },
+    yAxis: {
+      labels: {
+        formatter: (x) => `${x.value}%`,
+      },
+    },
+  });
 
   useEffect(() => {
     setChartOptions({
@@ -39,6 +29,13 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
           name: "CPU Usage",
           type: "area",
           data: globalCpu.map((cpu) => [cpu.timestamp, cpu.usage]),
+          color: {
+            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+            stops: [
+              [0, "rgba(255, 99, 132, 1)"],
+              [1, "rgba(255, 99, 132, 0.45)"],
+            ],
+          },
         },
       ],
     });
