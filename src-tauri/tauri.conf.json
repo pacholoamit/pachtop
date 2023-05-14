@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "pachtop",
-    "version": "0.3.7"
+    "version": "0.3.8"
   },
   "tauri": {
     "systemTray": {
@@ -98,11 +98,11 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 1080,
         "resizable": true,
         "title": "pachtop",
         "alwaysOnTop": false,
-        "width": 800,
+        "width": 1920,
         "minWidth": 450,
         "decorations": true
       }
