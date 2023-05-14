@@ -18,6 +18,12 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
       labels: {
         formatter: (x) => `${x.value}%`,
       },
+      max: 100,
+    },
+    tooltip: {
+      pointFormatter: function () {
+        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${this.y}%</b><br/>`;
+      },
     },
   });
 

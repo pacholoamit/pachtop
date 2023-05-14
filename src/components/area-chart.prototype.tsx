@@ -12,6 +12,10 @@ export interface InitialAreaChatStateInput {
     labels: {
       formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
     };
+    max?: number;
+  };
+  tooltip: {
+    pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
   };
 }
 
@@ -39,7 +43,6 @@ export const useAreaChartState = (
       type: "datetime",
       gridLineColor: "#263858",
       lineColor: "#263858",
-
       labels: {
         format: "{value:%I:%M %p}",
         style: {
@@ -55,6 +58,7 @@ export const useAreaChartState = (
     },
 
     yAxis: {
+      max: opts.yAxis.max,
       title: {
         text: null,
       },
@@ -73,11 +77,7 @@ export const useAreaChartState = (
     },
     tooltip: {
       xDateFormat: "%I:%M:%S %p",
-      pointFormatter: function () {
-        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
-          this.y as number
-        )}</b><br/>`;
-      },
+      pointFormatter: opts.tooltip.pointFormatter,
     },
 
     rangeSelector: {
@@ -85,20 +85,28 @@ export const useAreaChartState = (
         color: "#8192ac",
         backgroundColor: "#263858",
       },
-
+      inputStyle: {
+        color: "#8192ac",
+      },
       buttonTheme: {
         fill: "none",
         stroke: "none",
         display: "none",
         r: 8,
-        state: {
-          hover: {
-            fill: "#263858",
-            style: {
-              color: "#dce1e8",
-            },
-          },
-        },
+        // state: {
+        //   disabled: {
+        //     fill: "red",
+        //     style: {
+        //       color: "red",
+        //     },
+        //   },
+        //   hover: {
+        //     fill: "#263858",
+        //     style: {
+        //       color: "#dce1e8",
+        //     },
+        //   },
+        // },
         style: {
           color: "#8192ac",
           fontWeight: "bold",
@@ -115,6 +123,12 @@ export const useAreaChartState = (
           type: "minute",
           text: "5M",
         },
+        {
+          count: 30,
+          type: "minute",
+          text: "30M",
+        },
+
         {
           type: "all",
           text: "All",
@@ -142,7 +156,7 @@ const AreaChart: React.FC<HighchartsReact.Props> = (props) => {
       options={props.options}
       ref={chartComponentRef}
       constructorType={"stockChart"}
-      containerProps={{ style: { height: "100%" } }}
+      containerProps={{ style: { height: "100%", width: "100%" } }}
     />
   );
 };

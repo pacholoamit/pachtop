@@ -20,6 +20,13 @@ const MemoryAreaChart: React.FC = ({}) => {
         formatter: (x) => formatBytes(x.value as number),
       },
     },
+    tooltip: {
+      pointFormatter: function () {
+        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
+          this.y as number
+        )}</b><br/>`;
+      },
+    },
   });
 
   useEffect(() => {
