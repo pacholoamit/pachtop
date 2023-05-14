@@ -2,8 +2,7 @@ import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { useAreaChartState } from "@/components/area-chart.prototype";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
-import * as Highcharts from "highcharts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // TODO: Remove Luxon and ChartJS
 // TODO: Make timestamp work automatically
@@ -13,7 +12,7 @@ const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
-      text: "Random Access Memory (RAM)",
+      text: "Ram Usage",
     },
     yAxis: {
       labels: {

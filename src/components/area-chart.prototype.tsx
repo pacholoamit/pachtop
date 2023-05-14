@@ -1,8 +1,9 @@
 import * as Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { useState } from "react";
+import { useViewportSize } from "@mantine/hooks";
 
 export interface InitialAreaChatStateInput {
   title: {
@@ -44,6 +45,7 @@ export const useAreaChartState = (
       gridLineColor: "#263858",
       lineColor: "#263858",
       labels: {
+        step: 2,
         format: "{value:%I:%M %p}",
         style: {
           color: "#8192ac",
@@ -83,12 +85,18 @@ export const useAreaChartState = (
       },
       backgroundColor: "#263858",
     },
-
+    scrollbar: {
+      rifleColor: "#324363",
+      barBackgroundColor: "#324363",
+      buttonBackgroundColor: "#324363",
+      trackBorderColor: "#324363",
+    },
     rangeSelector: {
       labelStyle: {
         color: "#8192ac",
         backgroundColor: "#263858",
       },
+
       inputStyle: {
         color: "#8192ac",
       },
@@ -119,12 +127,13 @@ export const useAreaChartState = (
           type: "minute",
           text: "30M",
         },
-
         {
           type: "all",
           text: "All",
         },
       ],
+      // inputEnabled: false,
+      selected: 0,
     },
 
     chart: {
@@ -140,6 +149,12 @@ export const useAreaChartState = (
 
 const AreaChart: React.FC<HighchartsReact.Props> = (props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+  const { width } = useViewportSize();
+
+  // Reflow chart on window resize
+  useEffect(() => {
+    chartComponentRef.current?.chart?.reflow();
+  }, [width]);
 
   return (
     <HighchartsReact
