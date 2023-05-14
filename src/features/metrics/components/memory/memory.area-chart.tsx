@@ -11,7 +11,6 @@ import { useEffect } from "react";
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
   const [chartOptions, setChartOptions] = useAreaChartState({
-    stacking: true,
     title: {
       text: "Ram Usage",
     },

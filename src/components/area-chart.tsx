@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useViewportSize } from "@mantine/hooks";
 
 export interface InitialAreaChatStateInput {
-  stacking?: boolean; // Custom option
   title: {
     text: string;
   };
@@ -41,11 +40,10 @@ export const useAreaChartState = (
       },
       area: {
         stacking: "normal",
-        // lineColor: "#666666",
+
         lineWidth: 1,
         marker: {
           lineWidth: 1,
-          // lineColor: "#666666",
         },
       },
     },

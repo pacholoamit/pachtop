@@ -2,7 +2,7 @@ import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SeriesOptionsType } from "highcharts";
 
 // TODO: Remove Luxon and ChartJS
@@ -28,22 +28,18 @@ const NetworksAreaChart: React.FC = ({}) => {
       },
     },
   });
-  console.log("rendering");
+
+  console.log("render");
 
   useEffect(() => {
     setChartOptions({
-      series: networks.reduce<SeriesOptionsType[]>((acc, network) => {
-        return [
-          ...acc,
-          {
-            name: `${network.id}`,
-            type: "area",
-            data: network.data.map((net) => [net.timestamp, net.received]),
-          },
-        ];
-      }, []),
+      series: networks.map((network) => ({
+        name: `${network.id}`,
+        type: "area",
+        data: network.data.map((net) => [net.timestamp, net.received]),
+      })),
     });
-  }, [networks.map((network) => network.data)]);
+  }, [networks]);
 
   return (
     <Card style={{ height: "450px" }}>
