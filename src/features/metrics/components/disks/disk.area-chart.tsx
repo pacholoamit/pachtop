@@ -1,4 +1,3 @@
-import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk } from "@/lib/types";
@@ -66,11 +65,7 @@ const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk }) => {
     });
   }, [JSON.stringify(disk)]);
 
-  return (
-    // <Card style={{ height: "450px" }}>
-    <AreaChart options={chartOptions} />
-    // </Card>
-  );
+  return <AreaChart options={chartOptions} />;
 };
 
 export default DiskAreaChart;

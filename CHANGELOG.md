@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This projec
 ## 0.3.8
 
 - Improve UI performance by utilizing High Charts library
+- Add viewable range feature for all area charts
 
 ## 0.3.7
 
