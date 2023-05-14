@@ -3,12 +3,17 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { useAreaChartState } from "@/components/area-chart.prototype";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useEffect } from "react";
+import { Options, SeriesOptionsType } from "highcharts";
 
-const SwapAreaChart: React.FC = ({}) => {
-  const { swap } = useServerEventsContext();
+// TODO: Remove Luxon and ChartJS
+// TODO: Make timestamp work automatically
+// TODO: fix time
+
+const NetworksAreaChart: React.FC = ({}) => {
+  const { networks } = useServerEventsContext();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
-      text: "Swap Memory Usage",
+      text: "Network Received",
     },
     yAxis: {
       labels: {
@@ -26,22 +31,18 @@ const SwapAreaChart: React.FC = ({}) => {
 
   useEffect(() => {
     setChartOptions({
-      series: [
-        {
-          name: "Swap Usage",
-          type: "area",
-          data: swap.map((mem) => [mem.timestamp, mem.used]),
-          color: {
-            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-            stops: [
-              [0, "rgba(53, 162, 235, 0.45)"],
-              [1, "rgba(53, 162, 235)"],
-            ],
+      series: networks.reduce<SeriesOptionsType[]>((acc, network) => {
+        return [
+          ...acc,
+          {
+            name: `${network.id}`,
+            type: "area",
+            data: network.data.map((net) => [net.timestamp, net.received]),
           },
-        },
-      ],
+        ];
+      }, []),
     });
-  }, [swap]);
+  }, [networks]);
 
   return (
     <Card style={{ height: "450px" }}>
@@ -50,4 +51,4 @@ const SwapAreaChart: React.FC = ({}) => {
   );
 };
 
-export default SwapAreaChart;
+export default NetworksAreaChart;
