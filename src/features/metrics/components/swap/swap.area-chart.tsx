@@ -30,7 +30,7 @@ const SwapAreaChart: React.FC = ({}) => {
         {
           name: "Swap Usage",
           type: "area",
-          data: swap.map((mem) => [mem.timestamp, mem.used]),
+          data: swap.map((swap) => [swap.timestamp, swap.used]),
           color: {
             linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
             stops: [
