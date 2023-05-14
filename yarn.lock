@@ -2117,14 +2117,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mantine-datatable@npm:^2.4.15":
-  version: 2.4.15
-  resolution: "mantine-datatable@npm:2.4.15"
+"mantine-datatable@npm:^2.4.17":
+  version: 2.4.17
+  resolution: "mantine-datatable@npm:2.4.17"
   peerDependencies:
     "@mantine/core": ^6.0.10
     "@mantine/hooks": ^6.0.10
     react: ^18.2.0
-  checksum: d0b36f9e23175aa4178d7063f866bc5a0922686b6818f9ac295ce9b296930690ca66e6deeeba17cf4db96838c4de7de46f346c82b414bbde5969371b8bbc9a00
+  checksum: 2daf754dfa0e4fa09b5b1f69c23eaf397341e64cc1c430984ba35c0720fbedf84d629ee8b45a07d811be23968ee2644514ffcbaa2c587e6357a6802807203429
   languageName: node
   linkType: hard
 
@@ -2360,7 +2360,7 @@ __metadata:
     highcharts: ^11.0.1
     highcharts-react-official: ^3.2.0
     lodash.sortby: ^4.7.0
-    mantine-datatable: ^2.4.15
+    mantine-datatable: ^2.4.17
     pocketbase: ^0.14.4
     react: ^18.2.0
     react-apexcharts: ^1.4.0

@@ -22,7 +22,7 @@
     "highcharts": "^11.0.1",
     "highcharts-react-official": "^3.2.0",
     "lodash.sortby": "^4.7.0",
-    "mantine-datatable": "^2.4.15",
+    "mantine-datatable": "^2.4.17",
     "pocketbase": "^0.14.4",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
