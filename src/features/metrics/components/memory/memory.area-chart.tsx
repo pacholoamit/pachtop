@@ -1,6 +1,6 @@
 import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import AreaChart, { useAreaChartState } from "@/components/area-chart.prototype";
+import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useEffect } from "react";
 
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
   const [chartOptions, setChartOptions] = useAreaChartState({
+    stacking: true,
     title: {
       text: "Ram Usage",
     },

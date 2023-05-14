@@ -1,6 +1,6 @@
 import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import AreaChart, { useAreaChartState } from "@/components/area-chart.prototype";
+import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useEffect } from "react";
 import { SeriesOptionsType } from "highcharts";
@@ -28,6 +28,7 @@ const NetworksAreaChart: React.FC = ({}) => {
       },
     },
   });
+  console.log("rendering");
 
   useEffect(() => {
     setChartOptions({
@@ -42,7 +43,7 @@ const NetworksAreaChart: React.FC = ({}) => {
         ];
       }, []),
     });
-  }, [networks]);
+  }, [networks.map((network) => network.data)]);
 
   return (
     <Card style={{ height: "450px" }}>
