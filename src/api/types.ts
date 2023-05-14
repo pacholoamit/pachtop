@@ -6,5 +6,6 @@ export interface User {
   last_active: Date;
   opt_in: boolean;
   operating_system: string;
+  version: string;
 }
 export type CreateAppUserInput = Omit<User, "id">;

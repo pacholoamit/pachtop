@@ -2,49 +2,55 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Title, Text, Center, Stack, TextInput, Button, Space } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { CreateAppUserInput, createAppUser } from "@/api";
+import { CreateAppUserInput, createAppUser, updateAppUser } from "@/api";
 import store from "@/lib/store";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
+import { getVersion } from "@tauri-apps/api/app";
 
 interface UserProviderProps {
   children: React.ReactNode;
 }
 
-interface UserProviderContext {
-  userId: string | null;
-}
+interface UserProviderContext {}
 
-const UserContext = createContext<UserProviderContext>({
-  userId: null,
-});
+const UserContext = createContext<UserProviderContext>({});
+
+//TODO: Move this somewhere else?
+
+const initialValues: CreateAppUserInput = {
+  email: "",
+  first_name: "",
+  last_name: "",
+  last_active: new Date(),
+  operating_system: "",
+  opt_in: true,
+  version: "",
+};
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { sysInfo } = useServerEventsContext();
   const [opened, { open, close }] = useDisclosure(false);
-  const [userId, setUserId] = useState<string | null>(null);
 
   const form = useForm<CreateAppUserInput>({
-    initialValues: {
-      email: "",
-      first_name: "",
-      last_name: "",
-      last_active: new Date(),
-      operating_system: sysInfo?.osVersion || "Not Available",
-      opt_in: true,
-    },
+    initialValues,
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
 
   const checkifExistingUser = useCallback(async () => {
-    const userId = await store.userId.get();
-
-    if (!userId) {
+    const version = await getVersion();
+    const id = await store.userId.get();
+    if (!id) {
       open();
       return;
     }
-    setUserId(userId);
+
+    await updateAppUser(id, {
+      last_active: new Date(),
+      operating_system: sysInfo.osVersion,
+      version,
+    });
   }, []);
 
   useEffect(() => {
@@ -52,9 +58,15 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [checkifExistingUser]);
 
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
-    const result = await createAppUser({ ...values, opt_in });
-    await store.userId.set(result.id);
-    setUserId(result.id);
+    const version = await getVersion();
+    const user = await createAppUser({
+      ...values,
+      operating_system: sysInfo.osVersion,
+      last_active: new Date(),
+      opt_in,
+      version,
+    });
+    await store.userId.set(user.id);
   };
 
   const handleSubmitForm = async (values: CreateAppUserInput) => {
@@ -68,7 +80,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ userId }}>
+    <UserContext.Provider value={{}}>
       <Modal opened={opened} onClose={() => {}} size="lg" withCloseButton={false}>
         <Center>
           <form onSubmit={form.onSubmit(handleSubmitForm)}>

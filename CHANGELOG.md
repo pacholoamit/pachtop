@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.3.8
+
+- Improve UI performance by utilizing High Charts library
+- Add viewable range feature for all area charts
+
 ## 0.3.7
 
 - Fix user prompt keep showing up after the user has been prompted once

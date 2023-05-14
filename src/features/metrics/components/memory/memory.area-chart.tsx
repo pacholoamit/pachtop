@@ -1,41 +1,55 @@
 import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import AreaChart, { DatasetOptions } from "@/components/area-chart";
+import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
+import { useEffect } from "react";
+
+// TODO: Remove Luxon and ChartJS
+// TODO: Make timestamp work automatically
+// TODO: fix time
 
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
+  const [chartOptions, setChartOptions] = useAreaChartState({
+    title: {
+      text: "Ram Usage",
+    },
+    yAxis: {
+      labels: {
+        formatter: (x) => formatBytes(x.value as number),
+      },
+    },
+    tooltip: {
+      pointFormatter: function () {
+        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
+          this.y as number
+        )}</b><br/>`;
+      },
+    },
+  });
 
-  const title = "Random Access Memory (RAM)";
-  const labels = memory.map((mem) => mem.timestamp);
-  const datasets: DatasetOptions[] = [
-    {
-      label: `RAM Usage`,
-      data: memory.map((mem) => ({ x: mem.timestamp, y: mem.used })),
-      backgroundColor: "rgba(10, 167, 147, 0.45)",
-      borderColor: "rgba(10, 167, 147, 1)",
-      fill: true,
-      yAxisId: "ram-usage",
-    },
-  ];
-  const callbacks = {
-    label: (context: any) => {
-      const label = context.dataset.label || "";
-      const value = formatBytes(context.parsed.y);
-      return `${label}: ${value}`;
-    },
-  };
-  const yAxisTicksCallback = (value: number) => formatBytes(value);
+  useEffect(() => {
+    setChartOptions({
+      series: [
+        {
+          name: "RAM Usage",
+          type: "area",
+          data: memory.map((mem) => [mem.timestamp, mem.used]),
+          color: {
+            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+            stops: [
+              [0, "rgba(10, 167, 147, 1)"],
+              [1, "rgba(10, 167, 147, 0.45)"],
+            ],
+          },
+        },
+      ],
+    });
+  }, [memory]);
 
   return (
-    <Card style={{ height: "300px" }}>
-      <AreaChart
-        title={title}
-        labels={labels}
-        datasets={datasets}
-        callbacks={callbacks}
-        yAxisTicksCallback={yAxisTicksCallback}
-      />
+    <Card style={{ height: "450px" }}>
+      <AreaChart options={chartOptions} />
     </Card>
   );
 };

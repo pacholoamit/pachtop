@@ -1847,6 +1847,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highcharts-react-official@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "highcharts-react-official@npm:3.2.0"
+  peerDependencies:
+    highcharts: ">=6.0.0"
+    react: ">=16.8.0"
+  checksum: c6716f7d5c501a5240b1be1b16a1fe5605e8c7fc565215905dcbdd25d12bf7a760cc4202852254224f76533b5b62be3caafa201eb9b50f6e104d0d57600a2e94
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:^11.0.1":
+  version: 11.0.1
+  resolution: "highcharts@npm:11.0.1"
+  checksum: 773a7b876502d616b7c5f522610b061cc714233a6ecdd7f7d073151fdf53bc597c01a758fbda5bba9069a0ee487e7defddfbdb1de73a78db6267a9257250137c
+  languageName: node
+  linkType: hard
+
 "hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
@@ -2364,6 +2381,8 @@ __metadata:
     apexcharts: ^3.40.0
     chart.js: ^4.3.0
     chartjs-adapter-luxon: ^1.3.1
+    highcharts: ^11.0.1
+    highcharts-react-official: ^3.2.0
     lodash.sortby: ^4.7.0
     luxon: ^3.3.0
     mantine-datatable: ^2.4.15

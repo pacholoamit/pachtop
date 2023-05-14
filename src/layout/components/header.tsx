@@ -1,4 +1,4 @@
-import { Grid, Group, Title } from "@mantine/core";
+import { Grid,  Title } from "@mantine/core";
 
 const Header = () => {
   return (

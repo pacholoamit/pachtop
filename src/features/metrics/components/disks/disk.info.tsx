@@ -6,11 +6,11 @@ import { Disk } from "@/lib/types";
 interface DiskInfoProps {
   disk: Enumerable<Disk>;
 }
-const DiskInfo: React.FC<DiskInfoProps> = ({ disk}) => {
+const DiskInfo: React.FC<DiskInfoProps> = ({ disk }) => {
   return (
     <Card shadow="xl" p="sm" radius={"md"} withBorder>
       <Stack spacing="xl">
-        <Box style={{ height: "300px" }}>
+        <Box style={{ height: "450px" }}>
           <DiskAreaChart key={disk.id} disk={disk} />
         </Box>
         <Center>
