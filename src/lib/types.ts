@@ -2,6 +2,7 @@ import { InvokeArgs } from "@tauri-apps/api/tauri";
 
 export enum Command {
   KillProcess = "kill_process",
+  ShowInFolder = "show_folder",
 }
 
 export enum ServerEvent {
@@ -13,6 +14,10 @@ export enum ServerEvent {
   Networks = "emit_networks",
   Disks = "emit_disks",
   Processes = "emit_processes",
+}
+
+export interface ShowInFolderOpts extends InvokeArgs {
+  path: string;
 }
 
 export interface KillProcessOpts extends InvokeArgs {

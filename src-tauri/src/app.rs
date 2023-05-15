@@ -70,3 +70,29 @@ pub fn kill_process(state: State<'_, AppState>, pid: String) -> bool {
     );
     killed
 }
+
+#[tauri::command]
+pub fn show_folder(path: String) {
+    #[cfg(target_os = "macos")]
+    {
+        std::process::Command::new("open")
+            .arg(path)
+            .arg("-R")
+            .spawn()
+            .unwrap();
+    }
+    #[cfg(target_os = "linux")]
+    {
+        std::process::Command::new("xdg-open")
+            .arg(path)
+            .spawn()
+            .unwrap();
+    }
+    #[cfg(target_os = "windows")]
+    {
+        std::process::Command::new("explorer")
+            .arg(path)
+            .spawn()
+            .unwrap();
+    }
+}

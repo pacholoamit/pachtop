@@ -1,8 +1,8 @@
 import DiskAreaChart from "@/features/metrics/components/disks/disk.area-chart";
-import { ActionIcon, Badge, Box, Card, Center, Group, Space, Stack, Text } from "@mantine/core";
+import { ActionIcon, Badge, Box, Card, Center, Group, HoverCard, Space, Stack, Text } from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
-import { Disk } from "@/lib/types";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { Disk, commands } from "@/lib";
+import { IconCheck, IconFolder, IconX } from "@tabler/icons-react";
 
 interface RemovableIconProps {
   isRemovable?: boolean;
@@ -23,6 +23,13 @@ interface DiskInfoProps {
   disk: Enumerable<Disk>;
 }
 const DiskInfo: React.FC<DiskInfoProps> = ({ disk }) => {
+  const last = disk.data.at(-1);
+
+  const showDirectory = async () => {
+    if (!last?.mountPoint) return;
+    await commands.showInFolder(last.mountPoint);
+  };
+
   return (
     <Card shadow="xl" p="sm" radius={"md"} withBorder>
       <Stack spacing="xl">
@@ -33,22 +40,31 @@ const DiskInfo: React.FC<DiskInfoProps> = ({ disk }) => {
           <Stack spacing={"xs"}>
             <Group spacing="xs">
               <Text size={"sm"}>Name</Text>
-              <Badge color="red">{disk.data.at(-1)?.name}</Badge>
+              <Badge color="red">{last?.name}</Badge>
             </Group>
             <Group spacing={"xs"}>
-              <Text size={"sm"}>Mount Point </Text>
-              <Badge color="yellow">{disk.data.at(-1)?.mountPoint}</Badge>
+              <Text size={"sm"}>Location</Text>
+              <HoverCard>
+                <HoverCard.Target>
+                  <Badge color="yellow" style={{ cursor: "pointer" }} onClick={showDirectory}>
+                    {last?.mountPoint}
+                  </Badge>
+                </HoverCard.Target>
+                <HoverCard.Dropdown>
+                  <Text size="sm"> Open Folder</Text>
+                </HoverCard.Dropdown>
+              </HoverCard>
             </Group>
           </Stack>
           <Space style={{ width: "120px" }} />
           <Stack spacing={"xs"}>
             <Group spacing={"xs"}>
               <Text size={"sm"}>File System</Text>
-              <Badge>{disk.data.at(-1)?.fileSystem}</Badge>
+              <Badge>{last?.fileSystem}</Badge>
             </Group>
             <Group spacing={"xs"}>
               <Text size={"sm"}>Removable </Text>
-              <RemovableIcon isRemovable={disk.data.at(-1)?.isRemovable} />
+              <RemovableIcon isRemovable={last?.isRemovable} />
             </Group>
           </Stack>
         </Center>
