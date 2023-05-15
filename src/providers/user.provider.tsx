@@ -6,6 +6,8 @@ import { CreateAppUserInput, createAppUser, updateAppUser } from "@/api";
 import store from "@/lib/store";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { getVersion } from "@tauri-apps/api/app";
+import useEffectAsync from "../hooks/useEffectAsync";
+import { s } from "@tauri-apps/api/event-30ea0228";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -38,9 +40,10 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     },
   });
 
-  const checkifExistingUser = useCallback(async () => {
-    const version = await getVersion();
+  useEffectAsync(async () => {}, [sysInfo?.osVersion]);
 
+  useEffectAsync(async () => {
+    const version = await getVersion();
     const id = await store.userId.get();
 
     if (!id) {
@@ -48,16 +51,16 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       return;
     }
 
-    await updateAppUser(id, {
+    if (!sysInfo?.osVersion) return;
+
+    const response = await updateAppUser(id, {
       last_active: new Date(),
-      operating_system: sysInfo.osVersion,
+      operating_system: sysInfo?.osVersion,
       version,
     });
-  }, []);
 
-  useEffect(() => {
-    checkifExistingUser();
-  }, [checkifExistingUser]);
+    console.log(response);
+  }, [sysInfo?.osVersion]);
 
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
     const version = await getVersion();
