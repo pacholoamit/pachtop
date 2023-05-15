@@ -28,6 +28,7 @@
     "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
+    "tauri-plugin-autostart-api": "https://github.com/tauri-apps/tauri-plugin-autostart",
     "tauri-plugin-log-api": "https://github.com/tauri-apps/tauri-plugin-log",
     "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store"
   },

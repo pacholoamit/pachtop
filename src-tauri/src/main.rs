@@ -12,6 +12,7 @@ use app::AppState;
 use std::time::Duration;
 use tauri::api::path::cache_dir;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
+use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::LogTarget;
 
 fn build_and_run_app(app: AppState) {
@@ -21,9 +22,12 @@ fn build_and_run_app(app: AppState) {
 
     let store_plugin = tauri_plugin_store::Builder::default().build();
 
+    let auto_start_plugin = tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec![]));
+
     tauri::Builder::default()
         .plugin(log_plugin)
         .plugin(store_plugin)
+        .plugin(auto_start_plugin)
         .setup(|app| {
             let window = app.get_window("main").unwrap();
             let state = AppState::new();

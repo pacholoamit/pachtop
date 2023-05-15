@@ -2366,6 +2366,7 @@ __metadata:
     react-apexcharts: ^1.4.0
     react-dom: ^18.2.0
     react-router-dom: ^6.11.1
+    tauri-plugin-autostart-api: "https://github.com/tauri-apps/tauri-plugin-autostart"
     tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log"
     tauri-plugin-store: "https://github.com/tauri-apps/tauri-plugin-store"
     typescript: ^5.0.4
@@ -2951,6 +2952,15 @@ __metadata:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: a1be0815a9bdc97dfca7c6c2d71d1b836f8ba9314684e2c412832f0f59cc226d4c13da303d6bc30925e82f634cc793f40da79ae72f3e96fb87c23d0f4efd5207
+  languageName: node
+  linkType: hard
+
+"tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart":
+  version: 0.0.0
+  resolution: "tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart.git#commit=8d2706d05568f71eb81a05c3c891db1291c3ca82"
+  dependencies:
+    "@tauri-apps/api": ^1.2.0
+  checksum: a37ed161ef97a019c312e4ad7476bfe324812314b349218d7be1172441aca414cc2b06b6e2e61333d74981fa3430d3b6da9dad5d26789cd8f91054882d7ac809
   languageName: node
   linkType: hard
 
