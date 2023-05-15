@@ -24,6 +24,9 @@ fn build_and_run_app(app: AppState) {
 
     let auto_start_plugin = tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec![]));
 
+    let system_tray = SystemTray::new()
+        .with_menu(SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")));
+
     tauri::Builder::default()
         .plugin(log_plugin)
         .plugin(store_plugin)
@@ -48,9 +51,7 @@ fn build_and_run_app(app: AppState) {
 
             Ok(())
         })
-        .system_tray(SystemTray::new().with_menu(
-            SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")),
-        ))
+        .system_tray(system_tray)
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => {
                 let window = app.get_window("main").unwrap();
