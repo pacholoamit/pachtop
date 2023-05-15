@@ -53,13 +53,11 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
     if (!sysInfo?.osVersion) return;
 
-    const response = await updateAppUser(id, {
+    await updateAppUser(id, {
       last_active: new Date(),
       operating_system: sysInfo?.osVersion,
       version,
     });
-
-    console.log(response);
   }, [sysInfo?.osVersion]);
 
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
