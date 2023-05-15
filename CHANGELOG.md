@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 - Add `Settings` page
 - Make Pachtop start on system startup
 - Improvements to Disks UI
+- Add functionality to open folder directory if "Location" is clicked in Disks UI
 
 ## 0.3.8
 
