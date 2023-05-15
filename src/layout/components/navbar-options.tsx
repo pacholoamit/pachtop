@@ -1,18 +1,6 @@
 import useMediaQuery from "@/hooks/useMediaQuery";
-import {
-  IconLayoutDashboard,
-  IconServer,
-  IconArticle,
-  IconCpu,
-} from "@tabler/icons-react";
-import {
-  UnstyledButton,
-  Group,
-  ThemeIcon,
-  Text,
-  MediaQuery,
-  MantineTheme,
-} from "@mantine/core";
+import { IconLayoutDashboard, IconServer, IconArticle, IconCpu, IconSettings } from "@tabler/icons-react";
+import { UnstyledButton, Group, ThemeIcon, Text, MediaQuery, MantineTheme } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
 interface NavbarOptionProps {
@@ -42,7 +30,7 @@ const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
       <Group position={position}>
         <ThemeIcon variant="gradient">{icon}</ThemeIcon>
         <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
-          <Text>{label}</Text>
+          <Text size={"sm"}>{label}</Text>
         </MediaQuery>
       </Group>
     </UnstyledButton>
@@ -70,15 +58,15 @@ const NavbarOptions = () => {
       },
     },
     {
-      icon: <IconArticle size={16} />,
-      label: "Logs",
-      onClick: () => {},
+      icon: <IconSettings size={16} />,
+      label: "Settings",
+      onClick: () => {
+        navigate("/settings");
+      },
     },
   ];
 
-  const navbarOptions = options.map((option) => (
-    <NavbarOption {...option} key={option.label} />
-  ));
+  const navbarOptions = options.map((option) => <NavbarOption {...option} key={option.label} />);
   return <>{navbarOptions}</>;
 };
 

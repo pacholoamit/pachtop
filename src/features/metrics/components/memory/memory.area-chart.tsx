@@ -4,10 +4,6 @@ import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useEffect } from "react";
 
-// TODO: Remove Luxon and ChartJS
-// TODO: Make timestamp work automatically
-// TODO: fix time
-
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
   const [chartOptions, setChartOptions] = useAreaChartState({
