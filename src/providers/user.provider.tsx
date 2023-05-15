@@ -66,7 +66,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const version = await getVersion();
     const user = await createAppUser({
       ...values,
-      operating_system: sysInfo.osVersion,
+      operating_system: sysInfo?.osVersion ?? "Not Available",
       last_active: new Date(),
       opt_in,
       version,
