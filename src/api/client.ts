@@ -15,7 +15,3 @@ export const updateAppUser = async (id: string, input: Partial<User>) => {
   const appUser = await api.collection("app_users").update<User>(id, { id, ...input });
   return appUser;
 };
-
-export const updateUserLastActive = async (id: string) => {
-  await updateAppUser(id, { last_active: new Date() });
-};

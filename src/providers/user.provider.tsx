@@ -40,7 +40,9 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const checkifExistingUser = useCallback(async () => {
     const version = await getVersion();
+
     const id = await store.userId.get();
+
     if (!id) {
       open();
       return;

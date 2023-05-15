@@ -2,7 +2,7 @@ import DiskAreaChart from "@/features/metrics/components/disks/disk.area-chart";
 import { ActionIcon, Badge, Box, Card, Center, Group, HoverCard, Space, Stack, Text } from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
-import { IconCheck, IconFolder, IconX } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 interface RemovableIconProps {
   isRemovable?: boolean;
@@ -22,6 +22,7 @@ const RemovableIcon: React.FC<RemovableIconProps> = (props) => {
 interface DiskInfoProps {
   disk: Enumerable<Disk>;
 }
+// TODO: Refactor this
 const DiskInfo: React.FC<DiskInfoProps> = ({ disk }) => {
   const last = disk.data.at(-1);
 
