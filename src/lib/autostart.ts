@@ -15,3 +15,9 @@ export const disableAutostart = async () => {
 
   await disable();
 };
+
+export const autostart = {
+  enable: enableAutostart,
+  disable: disableAutostart,
+  isEnabled,
+};
