@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.4.0
+
+- Add `Settings` page
+- Make Pachtop start on system startup
+- Improvements to Disks UI
+- Add functionality to open folder directory if "Location" is clicked in Disks UI
+
 ## 0.3.8
 
 - Improve UI performance by utilizing High Charts library

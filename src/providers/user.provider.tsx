@@ -6,6 +6,8 @@ import { CreateAppUserInput, createAppUser, updateAppUser } from "@/api";
 import store from "@/lib/store";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { getVersion } from "@tauri-apps/api/app";
+import useEffectAsync from "../hooks/useEffectAsync";
+import { s } from "@tauri-apps/api/event-30ea0228";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -38,30 +40,31 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     },
   });
 
-  const checkifExistingUser = useCallback(async () => {
+  useEffectAsync(async () => {}, [sysInfo?.osVersion]);
+
+  useEffectAsync(async () => {
     const version = await getVersion();
     const id = await store.userId.get();
+
     if (!id) {
       open();
       return;
     }
 
+    if (!sysInfo?.osVersion) return;
+
     await updateAppUser(id, {
       last_active: new Date(),
-      operating_system: sysInfo.osVersion,
+      operating_system: sysInfo?.osVersion,
       version,
     });
-  }, []);
-
-  useEffect(() => {
-    checkifExistingUser();
-  }, [checkifExistingUser]);
+  }, [sysInfo?.osVersion]);
 
   const createAndSetUserId = async (values: CreateAppUserInput, opt_in = true) => {
     const version = await getVersion();
     const user = await createAppUser({
       ...values,
-      operating_system: sysInfo.osVersion,
+      operating_system: sysInfo?.osVersion ?? "Not Available",
       last_active: new Date(),
       opt_in,
       version,

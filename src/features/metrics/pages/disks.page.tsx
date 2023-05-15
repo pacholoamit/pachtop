@@ -11,7 +11,6 @@ const DisksPage = () => {
       <Grid>
         {disks?.map((disk, i) => (
           <React.Fragment key={disk.id + i}>
-            {/* <Grid.Col md={6} sm={12}></Grid.Col> */}
             <Grid.Col span={12}>
               <DiskInfo key={disk.id} disk={disk} />
             </Grid.Col>

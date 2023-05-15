@@ -12,7 +12,7 @@ interface ServerEventsContext {
   globalCpu: GlobalCpu[];
   memory: Memory[];
   swap: Swap[];
-  sysInfo: SysInfo;
+  sysInfo: SysInfo | null;
   processes: Process[];
   networks: Enumerable<Network>[];
   cpus: Enumerable<Cpu>[];
@@ -23,13 +23,7 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
   globalCpu: [],
   memory: [],
   swap: [],
-  sysInfo: {
-    osVersion: "Unknown",
-    coreCount: "0",
-    hostname: "Unknown",
-    kernelVersion: "Unknown",
-    timestamp: 0,
-  },
+  sysInfo: null,
   processes: [],
   networks: [],
   cpus: [],
