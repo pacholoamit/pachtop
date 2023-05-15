@@ -72,7 +72,10 @@ fn build_and_run_app(app: AppState) {
             }
         })
         .manage(app)
-        .invoke_handler(tauri::generate_handler![app::kill_process,])
+        .invoke_handler(tauri::generate_handler![
+            app::kill_process,
+            app::show_folder
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
