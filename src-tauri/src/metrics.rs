@@ -104,7 +104,7 @@ impl DisksTrait for Metrics {
                     _ => "Unknown".to_owned(),
                 };
                 let file_system = match str::from_utf8(disk.file_system()) {
-                    Ok(v) => v.to_owned(),
+                    Ok(v) => v.to_owned().to_ascii_uppercase(),
                     Err(e) => {
                         println!("Invalid UTF-8 sequence: {}", e);
                         "Unknown".to_owned()
