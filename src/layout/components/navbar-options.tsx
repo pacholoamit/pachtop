@@ -30,7 +30,7 @@ const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
       <Group position={position}>
         <ThemeIcon variant="gradient">{icon}</ThemeIcon>
         <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
-          <Text size={"sm"} >{label}</Text>
+          <Text size={"sm"}>{label}</Text>
         </MediaQuery>
       </Group>
     </UnstyledButton>
@@ -60,7 +60,9 @@ const NavbarOptions = () => {
     {
       icon: <IconSettings size={16} />,
       label: "Settings",
-      onClick: () => {},
+      onClick: () => {
+        navigate("/settings");
+      },
     },
   ];
 
