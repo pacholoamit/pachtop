@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "pachtop",
-    "version": "0.4.0"
+    "version": "0.5.0"
   },
   "tauri": {
     "systemTray": {
@@ -68,7 +68,13 @@
         "depends": []
       },
       "externalBin": [],
-      "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
       "identifier": "com.pachtop.dev",
       "longDescription": "",
       "macOS": {
@@ -92,7 +98,9 @@
     },
     "updater": {
       "active": true,
-      "endpoints": ["https://update.pachtop.com/releases/pachtop/{{target}}/{{current_version}}"],
+      "endpoints": [
+        "https://update.pachtop.com/releases/pachtop/{{target}}/{{current_version}}"
+      ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM0NkIyODA1NThCM0I0MUEKUldRYXRMTllCU2hyeE9mSUx0MElJN2N5VFo5TytFV1RwaUtoaytDNVdmajNQMmlseVlYMGYzeUkK"
     },
     "windows": [
