@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+
+## 0.5.2
+- Fixed Network interfaces not being reported
+
 ## 0.5.1
 - Updated Rust and Typescript dependencies
 
