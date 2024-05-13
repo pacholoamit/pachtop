@@ -7,7 +7,6 @@ import store from "@/lib/store";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { getVersion } from "@tauri-apps/api/app";
 import useEffectAsync from "../hooks/useEffectAsync";
-import { s } from "@tauri-apps/api/event-30ea0228";
 
 interface UserProviderProps {
   children: React.ReactNode;
