@@ -1211,22 +1211,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons-react@npm:^2.47.0":
-  version: 2.47.0
-  resolution: "@tabler/icons-react@npm:2.47.0"
+"@tabler/icons-react@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@tabler/icons-react@npm:3.3.0"
   dependencies:
-    "@tabler/icons": 2.47.0
-    prop-types: ^15.7.2
+    "@tabler/icons": 3.3.0
   peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: f896a1fc146272d289a2a101e36027c08a6618cf930647e1b7b7dafd684aed6a4e63cc90b54b5b6742570125556c51162be4f1119d2881291c3e3a0f9427bc25
+    react: ">= 16"
+  checksum: 000b223c32811f69aab0d2839356a0b71bb4e44cbc92c078e9a715e6630a7cfad9729c8f158bc20caa9fe6d2595946ac52f556fe817dea63673dd3c98cc63704
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:2.47.0":
-  version: 2.47.0
-  resolution: "@tabler/icons@npm:2.47.0"
-  checksum: 610582883f22510a3528fd7b5d0613faf815d6b0f48d42514ed080ac083bdbcbc3a7e49c62819c5c479d2d9d30dbb3e1cfc9978c0160f3900724890ec57caaab
+"@tabler/icons@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@tabler/icons@npm:3.3.0"
+  checksum: 10ce1ebc6dda98925acff238c0a02797146ec0252bd6cc63ca23f0adf7dbc52b122137c3229b87d83178c11b19ba4ecef960293533d537e69328b01763644831
   languageName: node
   linkType: hard
 
@@ -3563,7 +3562,7 @@ __metadata:
     "@mdx-js/mdx": next
     "@mdx-js/react": ^2.3.0
     "@mdx-js/rollup": ^2.3.0
-    "@tabler/icons-react": ^2.47.0
+    "@tabler/icons-react": ^3.3.0
     "@tauri-apps/api": ^1.5.5
     "@tauri-apps/cli": ^1.5.13
     "@types/lodash.sortby": ^4.7.9
@@ -3708,7 +3707,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
