@@ -1,7 +1,7 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
 use std::str::{self, FromStr};
-use sysinfo::{CpuExt, DiskExt, NetworkExt, Pid, ProcessExt, System, SystemExt};
+use sysinfo::{CpuExt, DiskExt, NetworkExt, NetworksExt, Pid, ProcessExt, System, SystemExt};
 
 pub struct Metrics {
     sys: System,
@@ -9,14 +9,16 @@ pub struct Metrics {
 
 impl Default for Metrics {
     fn default() -> Self {
-        Metrics { sys: System::new() }
+        let mut sys = System::new_all();
+        sys.refresh_all();
+        Metrics {
+            sys: System::new_all(),
+        }
     }
 }
 
 impl SystemInformationTrait for Metrics {
     fn get_system_information(&mut self) -> SysInfo {
-        self.sys.refresh_all();
-
         let kernel_version = self.sys.kernel_version().unwrap_or("Unknown".to_string());
         let os_version = self.sys.long_os_version().unwrap_or("Unknown".to_string());
         let hostname = self.sys.host_name().unwrap_or("Unknown".to_string());
@@ -242,7 +244,7 @@ impl NetworkTrait for Metrics {
         let networks: Vec<Network> = self
             .sys
             .networks()
-            .into_iter()
+            .iter()
             .map(|(name, network)| {
                 let name = name.to_owned();
 
