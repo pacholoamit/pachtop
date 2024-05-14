@@ -3581,6 +3581,7 @@ __metadata:
     react: ^18.3.1
     react-apexcharts: ^1.4.1
     react-dom: ^18.3.1
+    react-geiger: ^1.2.0
     react-router-dom: ^6.23.1
     tauri-plugin-autostart-api: "https://github.com/tauri-apps/tauri-plugin-autostart"
     tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log"
@@ -3747,6 +3748,15 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 298954ecd8f78288dcaece05e88b570014d8f6dce5db6f66e6ee91448debeb59dcd31561dddb354eee47e6c1bb234669459060deb238ed0213497146e555a0b9
+  languageName: node
+  linkType: hard
+
+"react-geiger@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "react-geiger@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 97728dd70623660d549a6205c0d59e3227c324de5feb7756f1c10b5182725d8c2dd23fee4192970ddbde09dee2b65e9dbc53952b874a051736845d01f067f85a
   languageName: node
   linkType: hard
 

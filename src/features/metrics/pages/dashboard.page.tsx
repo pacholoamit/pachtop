@@ -6,23 +6,33 @@ import NetworksAreaChart from "@/features/metrics/components/networks/networks.a
 import MemoryRadialChart from "@/features/metrics/components/memory/memory.radial-chart";
 import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-chart";
 import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
+import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
+import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-ring";
+import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
+import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 
 import { Grid, Stack } from "@mantine/core";
 
+// TODO: Make room for system info
 const TopMetricsSection = () => {
   return (
     <Grid gutter={"xl"}>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <SystemInfo />
+        {/* <SystemInfo /> */}
+        <GlobalCpuStatsRing />
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <MemoryRadialChart />
+        <MemoryStatsRing />
+        {/* <GlobalCpuStatsRing /> */}
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <SwapRadialChart />
+        <SwapStatsRing />
+
+        {/* <SwapRadialChart /> */}
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={12} xl={3}>
-        <CpusBarChart />
+      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+        <DiskStatsRing />
+        {/* <CpusBarChart /> */}
       </Grid.Col>
     </Grid>
   );
