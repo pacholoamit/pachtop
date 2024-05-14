@@ -6,8 +6,10 @@ import NetworksAreaChart from "@/features/metrics/components/networks/networks.a
 import MemoryRadialChart from "@/features/metrics/components/memory/memory.radial-chart";
 import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-chart";
 import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
+import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
 
 import { Grid, Stack } from "@mantine/core";
+import MemoryStatsRing from "../components/memory/memory.stats-ring";
 
 const TopMetricsSection = () => {
   return (
@@ -16,7 +18,9 @@ const TopMetricsSection = () => {
         <SystemInfo />
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <MemoryRadialChart />
+        <MemoryStatsRing />
+        {/* <GlobalCpuStatsRing /> */}
+        {/* <MemoryRadialChart /> */}
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <SwapRadialChart />

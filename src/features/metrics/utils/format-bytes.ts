@@ -1,3 +1,5 @@
+import React from "react";
+
 const formatBytes = (bytes: number): string => {
   if (bytes >= 1000000000) {
     return (bytes / 1000000000).toFixed(2) + " GB";
