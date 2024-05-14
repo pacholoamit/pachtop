@@ -4,13 +4,14 @@ interface AnalyticsProviderProps {
   children: React.ReactNode;
 }
 
+// TODO: Make these env vars
 const options = {
-  api_host: process.env.VITE_PUBLIC_POSTHOG_HOST,
+  api_host: "https://us.i.posthog.com",
 };
 
 const AnalyticsProvider: React.FC<AnalyticsProviderProps> = ({ children }) => {
   return (
-    <PostHogProvider apiKey={process.env.VITE_PUBLIC_POSTHOG_KEY} options={options}>
+    <PostHogProvider apiKey={"phc_vSut74z2u93fsNspbRNT0XoKaAlVDs54RV8bPlxdo96"} options={options}>
       {children}
     </PostHogProvider>
   );
