@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.6.0
+- Modify UI to use stats-rings
+- Add Analytics provider
 
 ## 0.5.2
 - Fixed Network interfaces not being reported
