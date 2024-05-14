@@ -1211,21 +1211,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons-react@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "@tabler/icons-react@npm:3.3.0"
+"@tabler/icons-react@npm:^2.47.0":
+  version: 2.47.0
+  resolution: "@tabler/icons-react@npm:2.47.0"
   dependencies:
-    "@tabler/icons": 3.3.0
+    "@tabler/icons": 2.47.0
+    prop-types: ^15.7.2
   peerDependencies:
-    react: ">= 16"
-  checksum: 000b223c32811f69aab0d2839356a0b71bb4e44cbc92c078e9a715e6630a7cfad9729c8f158bc20caa9fe6d2595946ac52f556fe817dea63673dd3c98cc63704
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+  checksum: f896a1fc146272d289a2a101e36027c08a6618cf930647e1b7b7dafd684aed6a4e63cc90b54b5b6742570125556c51162be4f1119d2881291c3e3a0f9427bc25
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:3.3.0":
-  version: 3.3.0
-  resolution: "@tabler/icons@npm:3.3.0"
-  checksum: 10ce1ebc6dda98925acff238c0a02797146ec0252bd6cc63ca23f0adf7dbc52b122137c3229b87d83178c11b19ba4ecef960293533d537e69328b01763644831
+"@tabler/icons@npm:2.47.0":
+  version: 2.47.0
+  resolution: "@tabler/icons@npm:2.47.0"
+  checksum: 610582883f22510a3528fd7b5d0613faf815d6b0f48d42514ed080ac083bdbcbc3a7e49c62819c5c479d2d9d30dbb3e1cfc9978c0160f3900724890ec57caaab
   languageName: node
   linkType: hard
 
@@ -2277,6 +2278,13 @@ __metadata:
   version: 3.1.3
   resolution: "fast-deep-equal@npm:3.1.3"
   checksum: e21a9d8d84f53493b6aa15efc9cfd53dd5b714a1f23f67fb5dc8f574af80df889b3bce25dc081887c6d25457cce704e636395333abad896ccdec03abaf1f3f9d
+  languageName: node
+  linkType: hard
+
+"fflate@npm:^0.4.8":
+  version: 0.4.8
+  resolution: "fflate@npm:0.4.8"
+  checksum: 29d8cbe44d5e7f53e7f5a160ac7f9cc025480c7b3bfd85c5f898cbe20dfa2dad4732daa534982664bf30b35896a90af44ea33ede5d94c5ffd1b8b0c0a0a56ca2
   languageName: node
   linkType: hard
 
@@ -3562,7 +3570,7 @@ __metadata:
     "@mdx-js/mdx": next
     "@mdx-js/react": ^2.3.0
     "@mdx-js/rollup": ^2.3.0
-    "@tabler/icons-react": ^3.3.0
+    "@tabler/icons-react": ^2.47.0
     "@tauri-apps/api": ^1.5.5
     "@tauri-apps/cli": ^1.5.13
     "@types/lodash.sortby": ^4.7.9
@@ -3577,6 +3585,7 @@ __metadata:
     lodash.sortby: ^4.7.0
     mantine-datatable: ^2.9.14
     pocketbase: ^0.21.2
+    posthog-js: ^1.131.4
     react: ^18.3.1
     react-apexcharts: ^1.4.1
     react-dom: ^18.3.1
@@ -3691,6 +3700,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"posthog-js@npm:^1.131.4":
+  version: 1.131.4
+  resolution: "posthog-js@npm:1.131.4"
+  dependencies:
+    fflate: ^0.4.8
+    preact: ^10.19.3
+  checksum: 558e377eff5c0c3fef1708af1f53b113ded9fd85d2827fb8884867276ad05e4693d3256e19f5f3c8017aae0cf2c553ae490054a1e9726d4381e91de3cee7cc7a
+  languageName: node
+  linkType: hard
+
+"preact@npm:^10.19.3":
+  version: 10.21.0
+  resolution: "preact@npm:10.21.0"
+  checksum: 04acdd300e779eec230256d043120e564ac76bb535b05a9b23949f8641bf8e135098d0bd12c008cc4316174469356d09a2326dde6acbd8f539d1b4bf2231cbaa
+  languageName: node
+  linkType: hard
+
 "promise-inflight@npm:^1.0.1":
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
@@ -3708,7 +3734,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
