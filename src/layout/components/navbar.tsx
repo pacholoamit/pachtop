@@ -1,12 +1,7 @@
 import NavbarOptions from "@/layout/components/navbar-options";
 import NavbarFooter from "@/layout/components/navbar-footer";
 import NavbarLogo from "@/layout/components/navbar-logo";
-import {
-  Navbar as MantineNavbar,
-  Navbar,
-  ScrollArea,
-  Space,
-} from "@mantine/core";
+import { Navbar as MantineNavbar, Navbar, ScrollArea, Space } from "@mantine/core";
 
 const AppNavbar = () => {
   return (
