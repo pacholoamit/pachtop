@@ -19,7 +19,7 @@ const MemoryStatsRing: React.FC = ({}) => {
   const used = memory?.at(-1)?.used || 0;
   const progress = memory?.at(-1)?.usedPercentage || 0;
 
-  const stats = formatMemoryMetrics(used, available);
+  const stats = React.useMemo(() => formatMemoryMetrics(used, available), [used, available]);
 
   return <StatsRing color="cyan" Icon={IconCpu2} stats={stats} label="Memory" progress={progress} />;
 };

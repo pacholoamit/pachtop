@@ -10,20 +10,24 @@ import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-
 
 import { Grid, Stack } from "@mantine/core";
 import MemoryStatsRing from "../components/memory/memory.stats-ring";
+import SwapStatsRing from "../components/swap/swap.stats-ring";
 
+// TODO: Make room for system info
 const TopMetricsSection = () => {
   return (
     <Grid gutter={"xl"}>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <SystemInfo />
+        {/* <SystemInfo /> */}
+        <GlobalCpuStatsRing />
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <MemoryStatsRing />
         {/* <GlobalCpuStatsRing /> */}
-        {/* <MemoryRadialChart /> */}
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        <SwapRadialChart />
+        <SwapStatsRing />
+
+        {/* <SwapRadialChart /> */}
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={12} xl={3}>
         <CpusBarChart />
