@@ -1,4 +1,4 @@
-<p align="center">
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/e06da2e0-e131-4af6-a510-c2fbd94998d1)<p align="center">
   <a href="#">
     
   </a>
@@ -26,7 +26,7 @@ Pachtop is a cross-platform desktop application built with Rust that allows you 
 > NOTE: Pachtop is under active development, most of the features are still experimental and subject to change.
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/69985528/193450195-80d84184-d2d0-4c1d-85fc-1ffa8784e26c.png"/>
+    <img src="https://github.com/pacholoamit/pachtop/assets/69985528/3972a5af-44f7-4880-89c1-37ab66a1b7a3"/>
     <br/>
     <br/>
     <img src="https://rust-reportcard.xuri.me/badge/github.com/pacholoamit/pachtop" />
@@ -44,12 +44,28 @@ Please see the <a href="https://github.com/pacholoamit/pachtop/releases">release
 
 The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan.github.io/Stacer-Web/) which is a comprehensive System optimizer and monitoring solution. Although, Pachtop does not implement any system optimizer functionality (yet!), It provides more in-depth metrics and information about your system. I wanted to create a similar application to Stacer but with a more modern UI and a more robust codebase. I also wanted to learn Rust and this seemed like a good opportunity to do so. If you hadn't guessed, Pachtop is named after the legendary [top](<https://en.wikipedia.org/wiki/Top_(software)>) linux program that displays information about CPU and memory utilization. Pachtop will always remain open-source and free to use.
 
+
 # 🚀 Showcase
-![Dashboard](https://user-images.githubusercontent.com/69985528/204079643-a9eb76d2-01be-4d1b-8a87-98e9d8917b09.png)
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/ff1cc06a-f451-439f-ace9-6e28cf0a4c64)
 
-![Disks](https://user-images.githubusercontent.com/69985528/204079679-d490e154-9448-42c5-8caa-f317c731c52a.png)
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/64e89f89-7e15-4dd0-a5f8-69b5e719b2ed)
 
-![Processes](https://user-images.githubusercontent.com/69985528/204079695-50259a36-87c4-403e-9819-5d16ab71d163.png)
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/529daa85-f0e6-4b2f-a358-09d36398fcef)
+
+# 📚 Themes
+
+## Slate
+
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/15518077-abf4-4e4b-9dbb-589ed8ae1b25)
+
+## Midnight
+
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/304f9acc-91b3-42a7-8003-3882d0548e22)
+
+## Bumblebee
+
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/ce06a95d-942f-4f5a-95cd-dbc27f8f702b)
+
 
 # 🏗️ Architecture
 
