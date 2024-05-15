@@ -1,5 +1,6 @@
 import { DefaultMantineColor, MantineProvider, MantineThemeOverride } from "@mantine/core";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import store from "../lib/store";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -232,9 +233,19 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<MantineThemeOverride>(themes[THEME_OPTION.SLATE]);
   const [currentTheme, setCurrentTheme] = useState<THEME_OPTION>(THEME_OPTION.SLATE);
 
+  useEffect(() => {
+    store.theme.get().then((theme) => {
+      if (theme) {
+        setTheme(themes[theme as THEME_OPTION]);
+        setCurrentTheme(theme as THEME_OPTION);
+      }
+    });
+  }, []);
+
   const handleSetTheme = (theme: THEME_OPTION) => {
     setTheme(themes[theme]);
     setCurrentTheme(theme);
+    store.theme.set(theme);
   };
 
   return (

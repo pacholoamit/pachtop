@@ -10,11 +10,22 @@ const userId = (store: Store) => {
   };
 };
 
+const theme = (store: Store) => {
+  return {
+    get: async () => await store.get<string>("theme"),
+    set: async (value: string) => {
+      await store.set("theme", value);
+      await store.save();
+    },
+  };
+};
+
 const createStore = (path: string) => {
   const store = new Store(path);
 
   return {
     userId: userId(store),
+    theme: theme(store),
   };
 };
 
