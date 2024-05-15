@@ -48,7 +48,7 @@ const NetworksAreaChart: React.FC = ({}) => {
   }, [JSON.stringify(networks)]);
 
   return (
-    <Card style={{ height: "450px" }}>
+    <Card style={{ height: "420px" }}>
       <AreaChart options={chartOptions} />
     </Card>
   );
