@@ -1,4 +1,4 @@
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/e06da2e0-e131-4af6-a510-c2fbd94998d1)<p align="center">
+<p align="center">
   <a href="#">
     
   </a>
