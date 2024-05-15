@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.7.0-rc
+- Improve Settings page UI
+- Add Theme support
+- Add Slate theme
+- Add Midnight theme
+- Add Bumblebee theme
+- Remove User email prompt
+
 ## 0.6.0
 - Modify UI to use stats-rings
 - Add Analytics provider

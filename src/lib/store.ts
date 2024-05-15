@@ -1,5 +1,6 @@
 import { Store } from "tauri-plugin-store";
 
+// Currently not being used, implement on PostHog maybe?
 const userId = (store: Store) => {
   return {
     get: async () => await store.get<string>("userId"),
