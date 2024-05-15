@@ -1,4 +1,3 @@
-import UserProvider from "@/providers/user.provider";
 import ThemeProvider from "@/providers/theme.provider";
 import ServerEventsProvider from "@/providers/server-events.provider";
 import AnalyticsProvider from "@/providers/analytics.provider";
@@ -15,10 +14,8 @@ const AppProvider: React.FC<AppProvider> = ({ children }) => {
       <AnalyticsProvider>
         <ThemeProvider>
           <ServerEventsProvider>
-            <UserProvider>
-              <Notifications />
-              {children}
-            </UserProvider>
+            <Notifications />
+            {children}
           </ServerEventsProvider>
         </ThemeProvider>
       </AnalyticsProvider>
