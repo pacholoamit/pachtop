@@ -1,27 +1,30 @@
 import React from "react";
-import AutoStartSettingsView from "@/features/settings/views/autostart.view";
+import GeneralSettingsView from "@/features/settings/views/general.view";
 import AboutView from "@/features/settings/views/about.view";
 import PageWrapper from "@/components/page-wrapper";
 import Card from "@/components/card";
 
-import { Icon24Hours, IconGitBranch } from "@tabler/icons-react";
+import { IconGitBranch, IconSettings2 } from "@tabler/icons-react";
 import { Center, Grid, NavLink } from "@mantine/core";
 import { useState } from "react";
 
 const settings = [
-  { icon: Icon24Hours, label: "Auto Start", view: <AutoStartSettingsView /> },
-  {
-    icon: IconGitBranch,
-    label: "About",
-    view: <AboutView />,
-  },
+  { icon: IconSettings2, label: "General", view: <GeneralSettingsView /> },
+
+  // TODO: FIX responsiveness
+  // {
+  //   icon: IconGitBranch,
+  //   label: "About",
+  //   view: <AboutView />,
+  // },
 ];
 
 const SettingsPage = () => {
   const [active, setActive] = useState(0);
+
   const items = settings.map((item, index) => (
     <React.Fragment key={item.label}>
-      <Grid.Col span={4}>
+      <Grid.Col span={3}>
         <NavLink
           key={item.label}
           active={index === active}
@@ -37,10 +40,10 @@ const SettingsPage = () => {
   ));
 
   return (
-    <PageWrapper name="Settings">
+    <PageWrapper name="Settings" height={"94vh"}>
       <Center>
-        <Card>
-          <Grid style={{ width: "45rem" }}>{items}</Grid>
+        <Card style={{ height: "85vh" }}>
+          <Grid style={{ width: "50rem" }}>{items}</Grid>
         </Card>
       </Center>
     </PageWrapper>

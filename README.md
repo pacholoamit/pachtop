@@ -63,14 +63,14 @@ Pachtop is built with what I'd like to call the **"VRRTT"** stack (Vite, Rust, R
 - **SysInfo** is a Rust crate that provides system information. This crate is used to get information about the system's CPU, memory, disks, network, and processes. This is what Pachtop uses to get the system metrics on different operating systems.
 
 # Features & Roadmap
-
+- [x] Themes & Color Schemes
 - [x] Aggregate CPU usage & per-core CPU usage metrics
 - [x] Memory Usage
 - [x] Network Usage
 - [x] System Information
 - [x] Processes
 - [x] Disk Usage
-- [x] Persistent metrics over time
+- [ ] Persistent metrics over time
 - [ ] Battery Usage?
 - [ ] GPU Usage?
 

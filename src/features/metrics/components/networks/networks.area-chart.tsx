@@ -4,6 +4,7 @@ import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useEffect, useState } from "react";
 import { SeriesOptionsType } from "highcharts";
+import { useMantineTheme } from "@mantine/core";
 
 // TODO: Remove Luxon and ChartJS
 // TODO: Make timestamp work automatically
@@ -11,6 +12,7 @@ import { SeriesOptionsType } from "highcharts";
 
 const NetworksAreaChart: React.FC = ({}) => {
   const { networks } = useServerEventsContext();
+  const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
       text: "Network Received",
@@ -40,11 +42,10 @@ const NetworksAreaChart: React.FC = ({}) => {
         name: `${network.id}`,
         type: "area",
         data: network.data.map((net) => [net.timestamp, net.received]),
+        color: other.charts.area.networkReceived.color,
       })),
     });
   }, [JSON.stringify(networks)]);
-
-  
 
   return (
     <Card style={{ height: "450px" }}>

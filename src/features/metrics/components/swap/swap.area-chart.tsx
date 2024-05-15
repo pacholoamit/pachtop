@@ -3,9 +3,11 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useEffect } from "react";
+import { useMantineTheme } from "@mantine/core";
 
 const SwapAreaChart: React.FC = ({}) => {
   const { swap } = useServerEventsContext();
+  const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
       text: "Swap Memory Usage",
@@ -31,13 +33,7 @@ const SwapAreaChart: React.FC = ({}) => {
           name: "Swap Usage",
           type: "area",
           data: swap.map((swap) => [swap.timestamp, swap.used]),
-          color: {
-            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-            stops: [
-              [0, "rgba(53, 162, 235, 0.45)"],
-              [1, "rgba(53, 162, 235)"],
-            ],
-          },
+          color: other.charts.area.swap.color,
         },
       ],
     });
