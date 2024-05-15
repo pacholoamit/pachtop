@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
-## 0.7.0-rc
+## 0.7.0
 - Improve Settings page UI
 - Add Theme support
 - Add Slate theme
