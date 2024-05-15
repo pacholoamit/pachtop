@@ -25,7 +25,7 @@ interface ThemeProviderProps {
 //   other: {
 //     charts: {
 //       // Use DefaultMantineColor for the color
-//       statsArea: {
+//       statsRing: {
 //         cpu: "blue",
 //         memory: "cyan",
 //         swap: "red",
@@ -55,7 +55,7 @@ interface ThemeProviderProps {
 //   other: {
 //     charts: {
 //       // Use DefaultMantineColor for the color
-//       statsArea: {
+//       statsRing: {
 //         cpu: "white",
 //         memory: "white",
 //         swap: "white",
@@ -67,7 +67,8 @@ interface ThemeProviderProps {
 
 export enum THEME_OPTION {
   SLATE = "slate",
-  SHADCN = "shadcn",
+  MIDNIGHT = "midnight",
+  BUMBLEBEE = "bumblebee",
 }
 
 const themes: Record<THEME_OPTION, MantineThemeOverride> = {
@@ -91,18 +92,51 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
     other: {
       charts: {
         // Use DefaultMantineColor for the color
-        statsArea: {
+        statsRing: {
           cpu: "blue",
           memory: "cyan",
           swap: "red",
           disk: "grape",
         },
+        area: {
+          swap: {
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgba(53, 162, 235, 0.45)"],
+                [1, "rgba(53, 162, 235)"],
+              ],
+            },
+          },
+          networkReceived: {
+            color: undefined, // Make it random
+          },
+          memory: {
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgba(10, 167, 147, 1)"],
+                [1, "rgba(10, 167, 147, 0.45)"],
+              ],
+            },
+          },
+          globalCpu: {
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgba(255, 99, 132, 1)"],
+                [1, "rgba(255, 99, 132, 0.45)"],
+              ],
+            },
+          },
+        },
       },
     },
   },
-  [THEME_OPTION.SHADCN]: {
+  [THEME_OPTION.MIDNIGHT]: {
     fontFamily: "Roboto, Arial, sans-serif",
     colorScheme: "dark",
+    primaryColor: "gray",
     colors: {
       dark: [
         "#C1C2C5",
@@ -120,11 +154,69 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
     other: {
       charts: {
         // Use DefaultMantineColor for the color
-        statsArea: {
+        statsRing: {
           cpu: "white",
           memory: "white",
           swap: "white",
           disk: "white",
+        },
+        area: {
+          swap: {
+            color: "white",
+          },
+          networkReceived: {
+            color: "white", // Make it random
+          },
+          memory: {
+            color: "white",
+          },
+          globalCpu: {
+            color: "white",
+          },
+        },
+      },
+    },
+  },
+  [THEME_OPTION.BUMBLEBEE]: {
+    fontFamily: "Roboto, Arial, sans-serif",
+    colorScheme: "dark",
+    primaryColor: "yellow",
+    colors: {
+      dark: [
+        "#C1C2C5",
+        "#A6A7AB",
+        "#909296",
+        "#27272a",
+        "#27272a", // Card Borders
+        "#27272a", // Layout edges
+        "#09090b", // Card colors
+        "#09090b", // Background of layout
+        "#09090b", // Background
+        "#09090b",
+      ],
+    },
+    other: {
+      charts: {
+        // Use DefaultMantineColor for the color
+        statsRing: {
+          cpu: "yellow",
+          memory: "yellow",
+          swap: "yellow",
+          disk: "yellow",
+        },
+        area: {
+          swap: {
+            color: "#fdd450",
+          },
+          networkReceived: {
+            color: "#fdd450", // Make it random
+          },
+          memory: {
+            color: "#fdd450",
+          },
+          globalCpu: {
+            color: "#fdd450",
+          },
         },
       },
     },

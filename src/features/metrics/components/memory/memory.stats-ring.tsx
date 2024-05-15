@@ -17,7 +17,7 @@ const MemoryStatsRing: React.FC = ({}) => {
   const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
 
   return (
-    <StatsRing color={other.charts.statsArea.memory} Icon={IconCpu2} stats={stats} label="Memory" progress={progress} />
+    <StatsRing color={other.charts.statsRing.memory} Icon={IconCpu2} stats={stats} label="Memory" progress={progress} />
   );
 };
 

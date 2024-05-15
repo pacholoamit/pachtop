@@ -1,20 +1,22 @@
 import React from "react";
-import AutoStartSettingsView from "@/features/settings/views/autostart.view";
+import GeneralSettingsView from "@/features/settings/views/general.view";
 import AboutView from "@/features/settings/views/about.view";
 import PageWrapper from "@/components/page-wrapper";
 import Card from "@/components/card";
 
-import { Icon24Hours, IconGitBranch } from "@tabler/icons-react";
-import { Center, Container, Grid, NavLink } from "@mantine/core";
+import { IconGitBranch, IconSettings2 } from "@tabler/icons-react";
+import { Center, Grid, NavLink } from "@mantine/core";
 import { useState } from "react";
 
 const settings = [
-  { icon: Icon24Hours, label: "General", view: <AutoStartSettingsView /> },
-  {
-    icon: IconGitBranch,
-    label: "About",
-    view: <AboutView />,
-  },
+  { icon: IconSettings2, label: "General", view: <GeneralSettingsView /> },
+
+  // TODO: FIX responsiveness
+  // {
+  //   icon: IconGitBranch,
+  //   label: "About",
+  //   view: <AboutView />,
+  // },
 ];
 
 const SettingsPage = () => {

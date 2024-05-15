@@ -3,9 +3,11 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useEffect } from "react";
+import { useMantineTheme } from "@mantine/core";
 
 const MemoryAreaChart: React.FC = ({}) => {
   const { memory } = useServerEventsContext();
+  const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
       text: "Ram Usage",
@@ -31,13 +33,7 @@ const MemoryAreaChart: React.FC = ({}) => {
           name: "RAM Usage",
           type: "area",
           data: memory.map((mem) => [mem.timestamp, mem.used]),
-          color: {
-            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-            stops: [
-              [0, "rgba(10, 167, 147, 1)"],
-              [1, "rgba(10, 167, 147, 0.45)"],
-            ],
-          },
+          color: other.charts.area.memory.color,
         },
       ],
     });

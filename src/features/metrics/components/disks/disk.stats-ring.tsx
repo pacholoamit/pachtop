@@ -21,7 +21,7 @@ const DiskStatsRing: React.FC = ({}) => {
   const label = `Disk ${disk?.data?.at(-1)?.name}`;
 
   return (
-    <StatsRing color={other.charts.statsArea.disk} Icon={IconCpu2} stats={stats} label={label} progress={progress} />
+    <StatsRing color={other.charts.statsRing.disk} Icon={IconCpu2} stats={stats} label={label} progress={progress} />
   );
 };
 

@@ -13,7 +13,7 @@ const GlobalCpuStatsRing: React.FC = ({}) => {
   const progress = globalCpu.at(-1)?.usage || 0;
   const stats = React.useMemo(() => fromNumberToPercentageString(progress), [progress]);
 
-  return <StatsRing color={other.charts.statsArea.cpu} Icon={IconCpu} stats={stats} label="CPU" progress={progress} />;
+  return <StatsRing color={other.charts.statsRing.cpu} Icon={IconCpu} stats={stats} label="CPU" progress={progress} />;
 };
 
 export default GlobalCpuStatsRing;

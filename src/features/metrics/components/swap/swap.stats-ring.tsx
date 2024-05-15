@@ -17,7 +17,7 @@ const SwapStatsRing: React.FC = ({}) => {
   const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
 
   return (
-    <StatsRing color={other.charts.statsArea.swap} Icon={IconCpu2} stats={stats} label="Swap" progress={progress} />
+    <StatsRing color={other.charts.statsRing.swap} Icon={IconCpu2} stats={stats} label="Swap" progress={progress} />
   );
 };
 

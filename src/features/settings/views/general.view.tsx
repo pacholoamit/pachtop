@@ -4,7 +4,7 @@ import { autostart } from "@/lib";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_OPTION } from "../../../providers/theme.provider";
 
-const AutoStartSettingsView = () => {
+const GeneralSettingsView = () => {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(true);
   const checkAutoStart = async () => setChecked(await autostart.isEnabled());
@@ -38,21 +38,23 @@ const AutoStartSettingsView = () => {
       <Space h={"md"} />
       <Grid gutter={"xl"}>
         <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
-          <Switch checked={checked} onChange={onChange} label="Start on system startup" />
-        </Grid.Col>
-        <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
           <Select
             defaultValue={currentTheme}
+            label="Theme"
             data={[
               { value: THEME_OPTION.SLATE, label: "Slate" },
-              { value: THEME_OPTION.SHADCN, label: "Shadcn" },
+              { value: THEME_OPTION.MIDNIGHT, label: "Midnight" },
+              { value: THEME_OPTION.BUMBLEBEE, label: "Bumblebee" },
             ]}
             onChange={(value) => setTheme(value as THEME_OPTION)}
           />
+        </Grid.Col>
+        <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+          <Switch checked={checked} onChange={onChange} label="Start on system startup" />
         </Grid.Col>
       </Grid>
     </>
   );
 };
 
-export default AutoStartSettingsView;
+export default GeneralSettingsView;

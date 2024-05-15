@@ -28,7 +28,7 @@ const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   return (
     <UnstyledButton sx={sx} onClick={onClick}>
       <Group position={position}>
-        <ThemeIcon variant="gradient">{icon}</ThemeIcon>
+        <ThemeIcon variant="outline">{icon}</ThemeIcon>
         <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
           <Text size={"sm"}>{label}</Text>
         </MediaQuery>
