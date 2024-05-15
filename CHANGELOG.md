@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. This projec
 - Add Slate theme
 - Add Midnight theme
 - Add Bumblebee theme
+- Remove User email prompt
 
 ## 0.6.0
 - Modify UI to use stats-rings
