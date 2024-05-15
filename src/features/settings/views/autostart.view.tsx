@@ -1,11 +1,14 @@
-import { Skeleton, Switch } from "@mantine/core";
+import { Grid, Select, Skeleton, Space, Switch } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { autostart } from "@/lib";
+import { useTheme } from "@/hooks/useTheme";
+import { THEME_OPTION } from "../../../providers/theme.provider";
 
 const AutoStartSettingsView = () => {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(true);
   const checkAutoStart = async () => setChecked(await autostart.isEnabled());
+  const { setTheme, currentTheme } = useTheme();
 
   useEffect(() => {
     checkAutoStart();
@@ -30,7 +33,26 @@ const AutoStartSettingsView = () => {
       </>
     );
   }
-  return <Switch checked={checked} onChange={onChange} label="Start on system startup" />;
+  return (
+    <>
+      <Space h={"md"} />
+      <Grid gutter={"xl"}>
+        <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+          <Switch checked={checked} onChange={onChange} label="Start on system startup" />
+        </Grid.Col>
+        <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+          <Select
+            defaultValue={currentTheme}
+            data={[
+              { value: THEME_OPTION.SLATE, label: "Slate" },
+              { value: THEME_OPTION.SHADCN, label: "Shadcn" },
+            ]}
+            onChange={(value) => setTheme(value as THEME_OPTION)}
+          />
+        </Grid.Col>
+      </Grid>
+    </>
+  );
 };
 
 export default AutoStartSettingsView;

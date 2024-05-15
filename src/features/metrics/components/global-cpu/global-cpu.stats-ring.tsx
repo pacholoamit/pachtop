@@ -4,14 +4,16 @@ import fromNumberToPercentageString from "@/features/metrics/utils/from-number-t
 import React from "react";
 
 import { IconCpu } from "@tabler/icons-react";
+import { useMantineTheme } from "@mantine/core";
 
 const GlobalCpuStatsRing: React.FC = ({}) => {
   const { globalCpu } = useServerEventsContext();
+  const { other } = useMantineTheme();
 
   const progress = globalCpu.at(-1)?.usage || 0;
   const stats = React.useMemo(() => fromNumberToPercentageString(progress), [progress]);
 
-  return <StatsRing color="blue" Icon={IconCpu} stats={stats} label="CPU" progress={progress} />;
+  return <StatsRing color={other.charts.statsArea.cpu} Icon={IconCpu} stats={stats} label="CPU" progress={progress} />;
 };
 
 export default GlobalCpuStatsRing;
