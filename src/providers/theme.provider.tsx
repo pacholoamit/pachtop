@@ -137,27 +137,27 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         },
         area: {
           default: {
-            gridLineColor: "#263858",
-            lineColor: "#263858",
-            labelColor: "#8192ac",
+            gridLineColor: "#27272a",
+            lineColor: "#27272a",
+            labelColor: "white",
             tooltip: {
               color: "#dce1e8",
-              backgroundColor: "#263858",
+              backgroundColor: "#09090b",
             },
             scrollbar: {
-              rifleColor: "#324363",
-              barBackgroundColor: "#324363",
-              buttonBackgroundColor: "#324363",
-              trackBorderColor: "#324363",
+              rifleColor: "#27272a",
+              barBackgroundColor: "#27272a",
+              buttonBackgroundColor: "#27272a",
+              trackBorderColor: "#27272a",
             },
             rangeSelector: {
               labelStyle: {
-                color: "#8192ac",
-                backgroundColor: "#263858",
+                color: "#27272a",
+                backgroundColor: "#27272a",
               },
 
               inputStyle: {
-                color: "#8192ac",
+                color: "#27272a",
               },
             },
             buttonTheme: {
