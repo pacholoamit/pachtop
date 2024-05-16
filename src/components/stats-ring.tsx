@@ -1,5 +1,6 @@
 import { DefaultMantineColor, Paper, Group, RingProgress, Center, rem, Text } from "@mantine/core";
 import { IconArrowUpRight, IconArrowDownRight, TablerIconsProps } from "@tabler/icons-react";
+import Card from "./card";
 
 interface StatsRingProps {
   label: string;
@@ -11,7 +12,7 @@ interface StatsRingProps {
 
 const StatsRing: React.FC<StatsRingProps> = (props) => {
   return (
-    <Paper withBorder radius={"md"} p={"xs"}>
+    <Card height="100%">
       <Group>
         <RingProgress
           size={80}
@@ -33,7 +34,7 @@ const StatsRing: React.FC<StatsRingProps> = (props) => {
           </Text>
         </div>
       </Group>
-    </Paper>
+    </Card>
   );
 };
 

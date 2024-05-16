@@ -1,5 +1,5 @@
 import Navbar from "@/layout/components/navbar";
-import { AppShell, Card, useMantineTheme, Styles } from "@mantine/core";
+import { AppShell, Card, useMantineTheme, Styles, Space } from "@mantine/core";
 import { Outlet } from "react-router-dom";
 
 const Layout: React.FC = () => {
@@ -12,6 +12,7 @@ const Layout: React.FC = () => {
 
   return (
     <AppShell styles={styles} navbar={<Navbar />} padding={"xl"}>
+      <Space h={"sm"} />
       <Card style={{ backgroundColor: theme.colors.dark[7] }} radius={"md"}>
         <Outlet />
       </Card>

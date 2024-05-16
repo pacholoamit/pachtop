@@ -1,6 +1,8 @@
-import { DefaultMantineColor, MantineProvider, MantineThemeOverride } from "@mantine/core";
+import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { createContext, useEffect, useState } from "react";
 import store from "../lib/store";
+import "non.geist";
+import "non.geist/mono";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -14,7 +16,7 @@ export enum THEME_OPTION {
 
 const themes: Record<THEME_OPTION, MantineThemeOverride> = {
   [THEME_OPTION.SLATE]: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
     colorScheme: "dark",
     colors: {
       dark: [
@@ -23,10 +25,10 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#909296",
         "#5C5F66",
         "#324363", // Card Borders
-        "#0d1830", // Layout edges
+        "#324363", // Layout edges
         "#152847", // Card colors
         "#0d1830", // Background of layout
-        "#070f2c", // Background
+        "#0d1830", // Background
         "#101113",
       ],
     },
@@ -40,6 +42,49 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           disk: "grape",
         },
         area: {
+          default: {
+            // This is the rectangle box that u can use to navigate
+            navigator: {
+              handles: {
+                backgroundColor: "white",
+              },
+              // This is the mask that covers the area
+              maskFill: "rgba(255, 255, 255, 0.2)",
+            },
+
+            gridLineColor: "#263858",
+            lineColor: "#263858",
+            labelColor: "#8192ac",
+            tooltip: {
+              color: "#dce1e8",
+              backgroundColor: "#263858",
+            },
+            scrollbar: {
+              rifleColor: "#324363",
+              barBackgroundColor: "#324363",
+              buttonBackgroundColor: "#324363",
+              trackBorderColor: "#324363",
+            },
+            rangeSelector: {
+              labelStyle: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+
+              inputStyle: {
+                color: "#8192ac",
+              },
+            },
+            buttonTheme: {
+              style: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+            },
+            legend: {
+              color: "#dce1e8",
+            },
+          },
           swap: {
             color: {
               linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -75,7 +120,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
     },
   },
   [THEME_OPTION.MIDNIGHT]: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
     colorScheme: "dark",
     primaryColor: "gray",
     colors: {
@@ -86,7 +131,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#27272a",
         "#27272a", // Card Borders
         "#27272a", // Layout edges
-        "#09090b", // Card colors
+        "#0a0a0a", // Card colors
         "#09090b", // Background of layout
         "#09090b", // Background
         "#09090b",
@@ -102,6 +147,48 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           disk: "white",
         },
         area: {
+          default: {
+            // This is the rectangle box that u can use to navigate
+            navigator: {
+              handles: {
+                backgroundColor: "white",
+              },
+              // This is the mask that covers the area
+              maskFill: "rgba(255, 255, 255, 0.2)",
+            },
+            gridLineColor: "#27272a",
+            lineColor: "#27272a",
+            labelColor: "white",
+            tooltip: {
+              color: "#dce1e8",
+              backgroundColor: "#09090b",
+            },
+            scrollbar: {
+              rifleColor: "#27272a",
+              barBackgroundColor: "#27272a",
+              buttonBackgroundColor: "#27272a",
+              trackBorderColor: "#27272a",
+            },
+            rangeSelector: {
+              labelStyle: {
+                color: "white",
+                backgroundColor: "#27272a",
+              },
+
+              inputStyle: {
+                color: "white",
+              },
+            },
+            buttonTheme: {
+              style: {
+                color: "white",
+                backgroundColor: "#27272a",
+              },
+            },
+            legend: {
+              color: "#dce1e8",
+            },
+          },
           swap: {
             color: "white",
           },
@@ -119,7 +206,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
     },
   },
   [THEME_OPTION.BUMBLEBEE]: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
     colorScheme: "dark",
     primaryColor: "yellow",
     colors: {
@@ -130,7 +217,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#27272a",
         "#27272a", // Card Borders
         "#27272a", // Layout edges
-        "#09090b", // Card colors
+        "#0a0a0a", // Card colors
         "#09090b", // Background of layout
         "#09090b", // Background
         "#09090b",
@@ -146,6 +233,49 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           disk: "yellow",
         },
         area: {
+          default: {
+            // This is the rectangle box that u can use to navigate
+            navigator: {
+              handles: {
+                backgroundColor: "white",
+              },
+              // This is the mask that covers the area
+              maskFill: "rgba(255, 255, 255, 0.1)",
+            },
+
+            gridLineColor: "#27272a",
+            lineColor: "#27272a",
+            labelColor: "white",
+            tooltip: {
+              color: "#dce1e8",
+              backgroundColor: "#09090b",
+            },
+            scrollbar: {
+              rifleColor: "#27272a",
+              barBackgroundColor: "#27272a",
+              buttonBackgroundColor: "#27272a",
+              trackBorderColor: "#27272a",
+            },
+            rangeSelector: {
+              labelStyle: {
+                color: "white",
+                backgroundColor: "#27272a",
+              },
+
+              inputStyle: {
+                color: "white",
+              },
+            },
+            buttonTheme: {
+              style: {
+                color: "white",
+                backgroundColor: "#27272a",
+              },
+            },
+            legend: {
+              color: "#dce1e8",
+            },
+          },
           swap: {
             color: "#fdd450",
           },

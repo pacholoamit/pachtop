@@ -3,7 +3,7 @@ import StatsRing from "@/components/stats-ring";
 import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
 import React from "react";
 
-import { IconCpu2 } from "@tabler/icons-react";
+import { IconCpu2, IconFile } from "@tabler/icons-react";
 import { useMantineTheme } from "@mantine/core";
 
 const SwapStatsRing: React.FC = ({}) => {
@@ -17,7 +17,7 @@ const SwapStatsRing: React.FC = ({}) => {
   const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
 
   return (
-    <StatsRing color={other.charts.statsRing.swap} Icon={IconCpu2} stats={stats} label="Swap" progress={progress} />
+    <StatsRing color={other.charts.statsRing.swap} Icon={IconFile} stats={stats} label="Swap" progress={progress} />
   );
 };
 
