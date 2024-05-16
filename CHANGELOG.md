@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+
+## 0.7.4
+- Modify chart label button text
+
 ## 0.7.3
 - Add persistent title bars so it matches with the theme
 
