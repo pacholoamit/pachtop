@@ -1,7 +1,7 @@
 import { DataTableSortStatus } from "mantine-datatable";
 import { TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { Process } from "@/lib/types";
+import { Process } from "@/lib";
 import { useState, useEffect, useMemo } from "react";
 
 import sortBy from "lodash.sortby";

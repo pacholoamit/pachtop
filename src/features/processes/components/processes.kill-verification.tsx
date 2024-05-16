@@ -1,4 +1,4 @@
-import { Process } from "@/lib/types";
+import { Process } from "@/lib";
 import { Button, Modal, Text, Group, Space } from "@mantine/core";
 import useKillProcess from "@/features/processes/hooks/useKillProcess";
 
@@ -14,9 +14,7 @@ const KillProcessVerification: React.FC<KillProcessVerificationProps> = ({
 }) => {
   const [kill] = useKillProcess({
     onKill() {
-      setRecords((records) =>
-        records.filter((r) => r.pid !== selectedProcess?.pid)
-      );
+      setRecords((records) => records.filter((r) => r.pid !== selectedProcess?.pid));
     },
   });
 
@@ -29,12 +27,7 @@ const KillProcessVerification: React.FC<KillProcessVerificationProps> = ({
   };
 
   return (
-    <Modal
-      title="Are you sure?"
-      onClose={onCancel}
-      opened={!!selectedProcess}
-      centered
-    >
+    <Modal title="Are you sure?" onClose={onCancel} opened={!!selectedProcess} centered>
       <Space h="md" />
       <Text> Are you sure you want to kill {selectedProcess?.name}? </Text>
       <Space h="xl" />
