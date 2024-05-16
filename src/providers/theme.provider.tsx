@@ -1,6 +1,8 @@
-import { DefaultMantineColor, MantineProvider, MantineThemeOverride } from "@mantine/core";
+import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { createContext, useEffect, useState } from "react";
 import store from "../lib/store";
+import "non.geist";
+import "non.geist/mono";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -14,7 +16,7 @@ export enum THEME_OPTION {
 
 const themes: Record<THEME_OPTION, MantineThemeOverride> = {
   [THEME_OPTION.SLATE]: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
     colorScheme: "dark",
     colors: {
       dark: [
@@ -23,10 +25,10 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#909296",
         "#5C5F66",
         "#324363", // Card Borders
-        "#0d1830", // Layout edges
+        "#324363", // Layout edges
         "#152847", // Card colors
         "#0d1830", // Background of layout
-        "#070f2c", // Background
+        "#0d1830", // Background
         "#101113",
       ],
     },
@@ -109,7 +111,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
     },
   },
   [THEME_OPTION.MIDNIGHT]: {
-    fontFamily: "Inter, Roboto, Arial, sans-serif",
+    fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
     colorScheme: "dark",
     primaryColor: "gray",
     colors: {
@@ -152,18 +154,18 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
             },
             rangeSelector: {
               labelStyle: {
-                color: "#27272a",
+                color: "white",
                 backgroundColor: "#27272a",
               },
 
               inputStyle: {
-                color: "#27272a",
+                color: "white",
               },
             },
             buttonTheme: {
               style: {
-                color: "#8192ac",
-                backgroundColor: "#263858",
+                color: "white",
+                backgroundColor: "#27272a",
               },
             },
             legend: {
@@ -187,7 +189,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
     },
   },
   [THEME_OPTION.BUMBLEBEE]: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
     colorScheme: "dark",
     primaryColor: "yellow",
     colors: {
@@ -230,18 +232,18 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
             },
             rangeSelector: {
               labelStyle: {
-                color: "#27272a",
+                color: "white",
                 backgroundColor: "#27272a",
               },
 
               inputStyle: {
-                color: "#27272a",
+                color: "white",
               },
             },
             buttonTheme: {
               style: {
-                color: "#8192ac",
-                backgroundColor: "#263858",
+                color: "white",
+                backgroundColor: "#27272a",
               },
             },
             legend: {

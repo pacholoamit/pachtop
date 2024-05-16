@@ -29,7 +29,7 @@ export const useAreaChartState = (
     title: {
       text: opts.title.text,
       style: {
-        fontFamily: "Roboto, Arial, sans-serif",
+        fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
         fontWeight: "bold",
         fontSize: "18px",
         color: "#dce1e8",
@@ -42,7 +42,7 @@ export const useAreaChartState = (
         },
       },
       area: {
-        stacking: "normal",
+        stacking: "stream",
 
         lineWidth: 1,
         marker: {
@@ -98,12 +98,14 @@ export const useAreaChartState = (
       },
       backgroundColor: other.charts.area.default.tooltip.backgroundColor,
     },
+    // Scrollbar at the bottom of the chart
     scrollbar: {
       rifleColor: other.charts.area.default.scrollbar.rifleColor,
       barBackgroundColor: other.charts.area.default.scrollbar.barBackgroundColor,
       buttonBackgroundColor: other.charts.area.default.scrollbar.buttonBackgroundColor,
       trackBorderColor: other.charts.area.default.scrollbar.trackBorderColor,
     },
+    // This is the calendar thing on the top right
     rangeSelector: {
       labelStyle: {
         color: other.charts.area.default.rangeSelector.labelStyle.color,

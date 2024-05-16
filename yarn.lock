@@ -3510,6 +3510,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"non.geist@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "non.geist@npm:1.0.3"
+  checksum: 26ff0410728a29ca583d41b9b009caf8efcfc3e6b43666740f09b65549f05f9ca2ec179e089c0985a4ae70c567ec5361d542b5f57f823103a9478e3875513e6f
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^6.0.0":
   version: 6.0.0
   resolution: "nopt@npm:6.0.0"
@@ -3584,6 +3591,7 @@ __metadata:
     highcharts-react-official: ^3.2.1
     lodash.sortby: ^4.7.0
     mantine-datatable: ^2.9.14
+    non.geist: ^1.0.3
     pocketbase: ^0.21.2
     posthog-js: ^1.131.4
     react: ^18.3.1

@@ -26,6 +26,7 @@
     "highcharts-react-official": "^3.2.1",
     "lodash.sortby": "^4.7.0",
     "mantine-datatable": "^2.9.14",
+    "non.geist": "^1.0.3",
     "pocketbase": "^0.21.2",
     "posthog-js": "^1.131.4",
     "react": "^18.3.1",

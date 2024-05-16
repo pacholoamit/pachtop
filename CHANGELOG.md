@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 0.8.0-rc
 - Change Chart height
+- Improve font style
+- Improve reference colors for charts
+
 
 ## 0.7.0
 - Improve Settings page UI
