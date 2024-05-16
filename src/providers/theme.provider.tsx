@@ -1,6 +1,7 @@
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { createContext, useEffect, useState } from "react";
-import store from "../lib/store";
+import { setWindowColor } from "@/lib";
+import store from "@/lib/store";
 import "non.geist";
 import "non.geist/mono";
 
@@ -33,6 +34,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       ],
     },
     other: {
+      titlebar: "#0d1830",
       charts: {
         // Use DefaultMantineColor for the color
         statsRing: {
@@ -138,6 +140,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       ],
     },
     other: {
+      titlebar: "#09090b",
       charts: {
         // Use DefaultMantineColor for the color
         statsRing: {
@@ -224,6 +227,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       ],
     },
     other: {
+      titlebar: "#09090b",
       charts: {
         // Use DefaultMantineColor for the color
         statsRing: {
@@ -299,6 +303,9 @@ export const ThemeContext = createContext({
   setTheme: (theme: THEME_OPTION) => {},
 });
 
+// TODO: Add this to constants?
+const DEFAULT_TITLEBAR_COLOR = "#0d1830";
+
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<MantineThemeOverride>(themes[THEME_OPTION.SLATE]);
   const [currentTheme, setCurrentTheme] = useState<THEME_OPTION>(THEME_OPTION.SLATE);
@@ -308,6 +315,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       if (theme) {
         setTheme(themes[theme as THEME_OPTION]);
         setCurrentTheme(theme as THEME_OPTION);
+        setWindowColor(themes[theme as THEME_OPTION]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
       }
     });
   }, []);
@@ -315,7 +323,9 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const handleSetTheme = (theme: THEME_OPTION) => {
     setTheme(themes[theme]);
     setCurrentTheme(theme);
+    setWindowColor(themes[theme]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
     store.theme.set(theme);
+    store.windowColor.set(themes[theme]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
   };
 
   return (

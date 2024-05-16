@@ -18,11 +18,19 @@ use windows::Win32::Graphics::Dwm::DWMWA_USE_IMMERSIVE_DARK_MODE;
 use windows::Win32::UI::Controls::SetWindowThemeAttribute;
 use windows::Win32::UI::Controls::WTNCA_NODRAWCAPTION;
 
+use std::path::PathBuf;
+use tauri::Wry;
+use tauri_plugin_store::with_store;
+use tauri_plugin_store::StoreCollection;
 use winver::WindowsVersion;
 
 fn hex_color_to_colorref(color: HexColor) -> COLORREF {
     // TODO: Remove this unsafe, This operation doesn't need to be unsafe!
     unsafe { COLORREF(transmute::<[u8; 4], u32>([color.r, color.g, color.b, 0])) }
+}
+
+fn hex_color_to_string(color: HexColor) -> String {
+    format!("#{:02X}{:02X}{:02X}", color.r, color.g, color.b)
 }
 
 struct WinThemeAttribute {
@@ -79,17 +87,15 @@ pub fn setup_win_window(app: &mut App) {
     let window = app.get_window("main").unwrap();
     let win_handle = window.hwnd().unwrap();
 
-    let win_clone = win_handle.clone();
-
     //TODO: Update this to update based on theme
-    app.listen_global("hopp-bg-changed", move |ev| {
+    app.listen_global("bg-changed", move |ev| {
         let payload = serde_json::from_str::<&str>(ev.payload().unwrap())
             .unwrap()
             .trim();
 
         let color = HexColor::parse_rgb(payload).unwrap();
 
-        update_bg_color(&HWND(win_clone.0), color);
+        update_bg_color(&HWND(win_handle.0), color);
     });
 
     update_bg_color(&HWND(win_handle.0), HexColor::rgb(9, 9, 11));
