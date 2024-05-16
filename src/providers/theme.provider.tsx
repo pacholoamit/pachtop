@@ -131,7 +131,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#27272a",
         "#27272a", // Card Borders
         "#27272a", // Layout edges
-        "#09090b", // Card colors
+        "#0a0a0a", // Card colors
         "#09090b", // Background of layout
         "#09090b", // Background
         "#09090b",
@@ -217,7 +217,7 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#27272a",
         "#27272a", // Card Borders
         "#27272a", // Layout edges
-        "#09090b", // Card colors
+        "#0a0a0a", // Card colors
         "#09090b", // Background of layout
         "#09090b", // Background
         "#09090b",
