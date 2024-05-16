@@ -43,7 +43,7 @@ const SettingsPage = () => {
     <PageWrapper name="Settings" height={"94vh"}>
       <Center>
         <Card style={{ height: "85vh" }}>
-          <Grid style={{ width: "50rem" }}>{items}</Grid>
+          <Grid style={{ width: "80rem" }}>{items}</Grid>
         </Card>
       </Center>
     </PageWrapper>
