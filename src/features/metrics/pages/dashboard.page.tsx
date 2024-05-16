@@ -17,7 +17,7 @@ import PageWrapper from "@/components/page-wrapper";
 // TODO: Make room for system info
 const TopMetricsSection = () => {
   return (
-    <Grid gutter={"xl"}>
+    <Grid gutter={"md"}>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         {/* <SystemInfo /> */}
         <GlobalCpuStatsRing />
@@ -40,14 +40,14 @@ const TopMetricsSection = () => {
 };
 
 const LeftMetricsStack = () => (
-  <Stack spacing={"xl"}>
+  <Stack spacing={"md"}>
     <MemoryAreaChart />
     <SwapAreaChart />
   </Stack>
 );
 
 const RightMetricsStack = () => (
-  <Stack spacing={"xl"}>
+  <Stack spacing={"md"}>
     <GlobalCpuAreaChart />
     <NetworksAreaChart />
   </Stack>
@@ -56,7 +56,7 @@ const RightMetricsStack = () => (
 const DashboardPage = () => {
   return (
     <PageWrapper name="Dashboard">
-      <Grid gutter="xl">
+      <Grid gutter="md">
         <Grid.Col span={12}>
           <TopMetricsSection />
         </Grid.Col>
