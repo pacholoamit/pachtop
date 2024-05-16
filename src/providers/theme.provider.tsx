@@ -1,9 +1,9 @@
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { createContext, useEffect, useState } from "react";
+import { setWindowColor } from "@/lib";
 import store from "@/lib/store";
 import "non.geist";
 import "non.geist/mono";
-import { setWindowColor } from "@/lib";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
