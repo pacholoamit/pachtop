@@ -4,7 +4,38 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style type="text/css">
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        overflow: overlay;
+      }
+
+      .div1 {
+        background: grey;
+        margin-top: 200px;
+        margin-bottom: 20px;
+        height: 20px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(90, 90, 90);
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    </style>
+    <!-- <style type="text/css">
       ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
@@ -14,32 +45,38 @@
         height: 0px;
       }
       ::-webkit-scrollbar-thumb {
-        background: #27272a;
+        background: #152847;
         border: 0px none #ffffff;
         border-radius: 50px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #27272a;
+        background: #152847;
       }
       ::-webkit-scrollbar-thumb:active {
-        background: #27272a;
+        background: #152847;
       }
       ::-webkit-scrollbar-track {
-        background: #0a0a0a;
+        background: #070f2c;
         border: 0px none #ffffff;
         border-radius: 50px;
       }
       ::-webkit-scrollbar-track:hover {
-        background: #0a0a0a;
+        background: #070f2c;
       }
       ::-webkit-scrollbar-track:active {
-        background: #0a0a0a;
+        background: #070f2c;
       }
       ::-webkit-scrollbar-corner {
         background: transparent;
       }
-    </style>
-
+    </style> -->
+    <!-- Hide scrollbars -->
+    <!-- <style>
+      body {
+        overflow-y: hidden; /* Hide vertical scrollbar */
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+      }
+    </style> -->
     <!-- LOAD GOOGLE FONTS START -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
