@@ -24,7 +24,7 @@ export interface InitialAreaChatStateInput {
 export const useAreaChartState = (
   opts: InitialAreaChatStateInput
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
-  const theme = useMantineTheme();
+  const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     title: {
       text: opts.title.text,
@@ -52,18 +52,21 @@ export const useAreaChartState = (
     },
     xAxis: {
       type: "datetime",
-      gridLineColor: "#263858",
-      lineColor: "#263858",
+      gridLineColor: other.charts.area.default.gridLineColor,
+      lineColor: other.charts.area.default.lineColor,
       labels: {
         step: 2,
         format: "{value:%I:%M %p}",
         style: {
-          color: "#8192ac",
+          color: other.charts.area.default.labelColor,
         },
       },
     },
     legend: {
-      enabled: false,
+      itemStyle: {
+        color: other.charts.area.default.legend.color,
+      },
+      enabled: true,
     },
     time: {
       useUTC: false,
@@ -75,8 +78,8 @@ export const useAreaChartState = (
         text: null,
       },
       startOnTick: true,
-      gridLineColor: "#263858",
-      lineColor: "#263858",
+      gridLineColor: other.charts.area.default.gridLineColor,
+      lineColor: other.charts.area.default.lineColor,
       labels: {
         formatter: opts.yAxis.labels.formatter,
         style: {
@@ -91,24 +94,24 @@ export const useAreaChartState = (
       xDateFormat: "%Y-%m-%d %I:%M:%S %p",
       pointFormatter: opts.tooltip.pointFormatter,
       style: {
-        color: "#dce1e8",
+        color: other.charts.area.default.tooltip.color,
       },
-      backgroundColor: "#263858",
+      backgroundColor: other.charts.area.default.tooltip.backgroundColor,
     },
     scrollbar: {
-      rifleColor: "#324363",
-      barBackgroundColor: "#324363",
-      buttonBackgroundColor: "#324363",
-      trackBorderColor: "#324363",
+      rifleColor: other.charts.area.default.scrollbar.rifleColor,
+      barBackgroundColor: other.charts.area.default.scrollbar.barBackgroundColor,
+      buttonBackgroundColor: other.charts.area.default.scrollbar.buttonBackgroundColor,
+      trackBorderColor: other.charts.area.default.scrollbar.trackBorderColor,
     },
     rangeSelector: {
       labelStyle: {
-        color: "#8192ac",
-        backgroundColor: "#263858",
+        color: other.charts.area.default.rangeSelector.labelStyle.color,
+        backgroundColor: other.charts.area.default.rangeSelector.labelStyle.backgroundColor,
       },
 
       inputStyle: {
-        color: "#8192ac",
+        color: other.charts.area.default.rangeSelector.inputStyle.color,
       },
       buttonTheme: {
         fill: "none",
@@ -116,8 +119,8 @@ export const useAreaChartState = (
         r: 8,
         style: {
           background: "none",
-          color: "#8192ac",
-          backgroundColor: "#263858",
+          color: other.charts.area.default.buttonTheme.style.color,
+          backgroundColor: other.charts.area.default.buttonTheme.style.backgroundColor,
           fontWeight: "bold",
         },
       },
@@ -148,9 +151,6 @@ export const useAreaChartState = (
 
     chart: {
       backgroundColor: "transparent",
-      style: {
-        color: "#dce1e8",
-      },
     },
   });
 

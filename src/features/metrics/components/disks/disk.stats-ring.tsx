@@ -3,7 +3,7 @@ import StatsRing from "@/components/stats-ring";
 import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
 import React from "react";
 
-import { IconCpu2 } from "@tabler/icons-react";
+import { IconCpu2, IconFileAnalytics, IconFolders } from "@tabler/icons-react";
 import { useMantineTheme } from "@mantine/core";
 
 const DiskStatsRing: React.FC = ({}) => {
@@ -21,7 +21,7 @@ const DiskStatsRing: React.FC = ({}) => {
   const label = `Disk ${disk?.data?.at(-1)?.name}`;
 
   return (
-    <StatsRing color={other.charts.statsRing.disk} Icon={IconCpu2} stats={stats} label={label} progress={progress} />
+    <StatsRing color={other.charts.statsRing.disk} Icon={IconFolders} stats={stats} label={label} progress={progress} />
   );
 };
 

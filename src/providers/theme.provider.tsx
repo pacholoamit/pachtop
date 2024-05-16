@@ -40,6 +40,40 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           disk: "grape",
         },
         area: {
+          default: {
+            gridLineColor: "#263858",
+            lineColor: "#263858",
+            labelColor: "#8192ac",
+            tooltip: {
+              color: "#dce1e8",
+              backgroundColor: "#263858",
+            },
+            scrollbar: {
+              rifleColor: "#324363",
+              barBackgroundColor: "#324363",
+              buttonBackgroundColor: "#324363",
+              trackBorderColor: "#324363",
+            },
+            rangeSelector: {
+              labelStyle: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+
+              inputStyle: {
+                color: "#8192ac",
+              },
+            },
+            buttonTheme: {
+              style: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+            },
+            legend: {
+              color: "#dce1e8",
+            },
+          },
           swap: {
             color: {
               linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -102,6 +136,40 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           disk: "white",
         },
         area: {
+          default: {
+            gridLineColor: "#263858",
+            lineColor: "#263858",
+            labelColor: "#8192ac",
+            tooltip: {
+              color: "#dce1e8",
+              backgroundColor: "#263858",
+            },
+            scrollbar: {
+              rifleColor: "#324363",
+              barBackgroundColor: "#324363",
+              buttonBackgroundColor: "#324363",
+              trackBorderColor: "#324363",
+            },
+            rangeSelector: {
+              labelStyle: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+
+              inputStyle: {
+                color: "#8192ac",
+              },
+            },
+            buttonTheme: {
+              style: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+            },
+            legend: {
+              color: "#dce1e8",
+            },
+          },
           swap: {
             color: "white",
           },
@@ -146,6 +214,40 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           disk: "yellow",
         },
         area: {
+          default: {
+            gridLineColor: "#263858",
+            lineColor: "#263858",
+            labelColor: "#8192ac",
+            tooltip: {
+              color: "#dce1e8",
+              backgroundColor: "#263858",
+            },
+            scrollbar: {
+              rifleColor: "#324363",
+              barBackgroundColor: "#324363",
+              buttonBackgroundColor: "#324363",
+              trackBorderColor: "#324363",
+            },
+            rangeSelector: {
+              labelStyle: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+
+              inputStyle: {
+                color: "#8192ac",
+              },
+            },
+            buttonTheme: {
+              style: {
+                color: "#8192ac",
+                backgroundColor: "#263858",
+              },
+            },
+            legend: {
+              color: "#dce1e8",
+            },
+          },
           swap: {
             color: "#fdd450",
           },
