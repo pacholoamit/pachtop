@@ -1,5 +1,5 @@
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { Process } from "@/lib/types";
+import { Process } from "@/lib";
 import { memo } from "react";
 import { Button } from "@mantine/core";
 

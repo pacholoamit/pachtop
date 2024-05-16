@@ -1,5 +1,5 @@
 import { Command, invoke } from "@/lib";
-import { KillProcessOpts, Process } from "@/lib/types";
+import { KillProcessOpts, Process } from "@/lib";
 import notification from "@/utils/notification";
 import { useCallback } from "react";
 
@@ -8,11 +8,7 @@ interface UseKillProcessOpts {
   onFailure?: () => void;
 }
 
-const killProcess = async (
-  process: Process,
-  onKill?: () => void,
-  onFailure?: () => void
-) => {
+const killProcess = async (process: Process, onKill?: () => void, onFailure?: () => void) => {
   const cmd = Command.KillProcess;
   const isKilled = await invoke<KillProcessOpts, boolean>(cmd, {
     pid: process.pid,
@@ -36,10 +32,7 @@ const killProcess = async (
 const useKillProcess = (opts: UseKillProcessOpts) => {
   const { onKill, onFailure } = opts;
 
-  const kill = useCallback(
-    (process: Process) => killProcess(process, onKill, onFailure),
-    [onKill, onFailure]
-  );
+  const kill = useCallback((process: Process) => killProcess(process, onKill, onFailure), [onKill, onFailure]);
 
   return [kill] as const;
 };
