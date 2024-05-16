@@ -43,6 +43,15 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         },
         area: {
           default: {
+            // This is the rectangle box that u can use to navigate
+            navigator: {
+              handles: {
+                backgroundColor: "white",
+              },
+              // This is the mask that covers the area
+              maskFill: "rgba(255, 255, 255, 0.2)",
+            },
+
             gridLineColor: "#263858",
             lineColor: "#263858",
             labelColor: "#8192ac",
@@ -139,6 +148,14 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         },
         area: {
           default: {
+            // This is the rectangle box that u can use to navigate
+            navigator: {
+              handles: {
+                backgroundColor: "white",
+              },
+              // This is the mask that covers the area
+              maskFill: "rgba(255, 255, 255, 0.2)",
+            },
             gridLineColor: "#27272a",
             lineColor: "#27272a",
             labelColor: "white",
@@ -217,6 +234,15 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         },
         area: {
           default: {
+            // This is the rectangle box that u can use to navigate
+            navigator: {
+              handles: {
+                backgroundColor: "white",
+              },
+              // This is the mask that covers the area
+              maskFill: "rgba(255, 255, 255, 0.1)",
+            },
+
             gridLineColor: "#27272a",
             lineColor: "#27272a",
             labelColor: "white",

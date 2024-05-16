@@ -35,6 +35,15 @@ export const useAreaChartState = (
         color: "#dce1e8",
       },
     },
+    // This is the rectangle box that u can use to navigate
+    navigator: {
+      adaptToUpdatedData: true,
+      maskFill: other.charts.area.default.navigator.maskFill,
+      handles: {
+        backgroundColor: other.charts.area.default.navigator.handles.backgroundColor,
+      },
+    },
+
     plotOptions: {
       series: {
         marker: {
