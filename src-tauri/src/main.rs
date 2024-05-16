@@ -24,6 +24,8 @@ fn build_and_run_app(app: AppState) {
 
     let auto_start_plugin = tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec![]));
 
+    let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
+
     let system_tray = SystemTray::new()
         .with_menu(SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")));
 
@@ -31,6 +33,7 @@ fn build_and_run_app(app: AppState) {
         .plugin(log_plugin)
         .plugin(store_plugin)
         .plugin(auto_start_plugin)
+        .plugin(window_state_plugin)
         .setup(|app| {
             let window = app.get_window("main").unwrap();
             let state = AppState::new();

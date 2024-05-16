@@ -111,7 +111,6 @@
         "title": "pachtop",
         "alwaysOnTop": false,
         "width": 1920,
-        "minWidth": 450,
         "decorations": true
       }
     ]
