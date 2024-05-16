@@ -20,8 +20,11 @@
     <br />
 </p>
 Pachtop is a cross-platform desktop application built with Rust that allows you to monitor your system resources in real time.
+
 <br/>
 <br/>
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/pacholoamit)
 
 > NOTE: Pachtop is under active development, most of the features are still experimental and subject to change.
 
