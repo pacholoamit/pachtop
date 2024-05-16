@@ -12,7 +12,7 @@ import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
 import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 
 import { Grid, Stack } from "@mantine/core";
-import PageWrapper from "../../../components/page-wrapper";
+import PageWrapper from "@/components/page-wrapper";
 
 // TODO: Make room for system info
 const TopMetricsSection = () => {

@@ -29,7 +29,7 @@ const StatsRing: React.FC<StatsRingProps> = (props) => {
           <Text c="dimmed" size="xs" tt="uppercase" fw={700}>
             {props.label}
           </Text>
-          <Text fw={700} size="xl">
+          <Text fw={700} size="xl" truncate="end" lineClamp={1}>
             {props.stats}
           </Text>
         </div>

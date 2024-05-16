@@ -150,7 +150,11 @@ export const useAreaChartState = (
       // inputEnabled: false,
       selected: 0,
     },
-
+    boost: {
+      enabled: true,
+      useGPUTranslations: true,
+      allowForce: true,
+    },
     chart: {
       backgroundColor: "transparent",
     },
