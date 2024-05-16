@@ -12,6 +12,7 @@ import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
 import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 
 import { Grid, Stack } from "@mantine/core";
+import PageWrapper from "../../../components/page-wrapper";
 
 // TODO: Make room for system info
 const TopMetricsSection = () => {
@@ -54,17 +55,19 @@ const RightMetricsStack = () => (
 
 const DashboardPage = () => {
   return (
-    <Grid gutter="xl">
-      <Grid.Col span={12}>
-        <TopMetricsSection />
-      </Grid.Col>
-      <Grid.Col md={6} sm={12}>
-        <LeftMetricsStack />
-      </Grid.Col>
-      <Grid.Col md={6} sm={12}>
-        <RightMetricsStack />
-      </Grid.Col>
-    </Grid>
+    <PageWrapper name="Dashboard">
+      <Grid gutter="xl">
+        <Grid.Col span={12}>
+          <TopMetricsSection />
+        </Grid.Col>
+        <Grid.Col md={6} sm={12}>
+          <LeftMetricsStack />
+        </Grid.Col>
+        <Grid.Col md={6} sm={12}>
+          <RightMetricsStack />
+        </Grid.Col>
+      </Grid>
+    </PageWrapper>
   );
 };
 

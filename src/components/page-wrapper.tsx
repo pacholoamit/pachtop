@@ -9,7 +9,7 @@ interface PageWrapperProps {
 const PageWrapper: React.FC<PageWrapperProps> = ({ children, name, height }) => {
   return (
     <Stack spacing="lg" h={height}>
-      <Title order={2}>{name}</Title>
+      <Title order={1}>{name}</Title>
       {children}
     </Stack>
   );

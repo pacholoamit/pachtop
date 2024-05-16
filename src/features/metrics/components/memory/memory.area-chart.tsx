@@ -10,7 +10,7 @@ const MemoryAreaChart: React.FC = ({}) => {
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
-      text: "Ram Usage",
+      text: "RAM Usage",
     },
     yAxis: {
       labels: {
