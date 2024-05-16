@@ -13,6 +13,8 @@ const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk }) => {
     title: {
       text: `${disk.id} Disk Usage`,
     },
+    
+
     yAxis: {
       labels: {
         formatter: (x) => formatBytes(x.value as number),

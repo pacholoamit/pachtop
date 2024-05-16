@@ -50,9 +50,8 @@ export const useAreaChartState = (
           enabled: false,
         },
       },
-      area: {
-        stacking: "stream",
 
+      area: {
         lineWidth: 1,
         marker: {
           lineWidth: 1,
@@ -156,12 +155,12 @@ export const useAreaChartState = (
           text: "All",
         },
       ],
-      // inputEnabled: false,
+
       selected: 0,
     },
     boost: {
       enabled: true,
-      useGPUTranslations: true,
+      useGPUTranslations: false,
       allowForce: true,
     },
     chart: {
