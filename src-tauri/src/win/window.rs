@@ -14,7 +14,7 @@ use windows::Win32::Foundation::COLORREF;
 use windows::Win32::Foundation::BOOL;
 use windows::Win32::Graphics::Dwm::DwmSetWindowAttribute;
 use windows::Win32::Foundation::HWND;
-use windows::Win32::Graphics::Dwm::{DWMWA_USE_IMMERSIVE_DARK_MODE};
+use windows::Win32::Graphics::Dwm::DWMWA_USE_IMMERSIVE_DARK_MODE;
 
 use winver::WindowsVersion;
 
