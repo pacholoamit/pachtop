@@ -34,7 +34,6 @@
     "react-dom": "^18.3.1",
     "react-geiger": "^1.2.0",
     "react-router-dom": "^6.23.1",
-    "styled-components": "^6.1.11",
     "tauri-plugin-autostart-api": "https://github.com/tauri-apps/tauri-plugin-autostart",
     "tauri-plugin-log-api": "https://github.com/tauri-apps/tauri-plugin-log",
     "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store"
