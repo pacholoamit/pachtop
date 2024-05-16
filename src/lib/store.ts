@@ -11,6 +11,16 @@ const userId = (store: Store) => {
   };
 };
 
+const windowColor = (store: Store) => {
+  return {
+    get: async () => await store.get<string>("windowColor"),
+    set: async (value: string) => {
+      await store.set("windowColor", value);
+      await store.save();
+    },
+  };
+};
+
 const theme = (store: Store) => {
   return {
     get: async () => await store.get<string>("theme"),
@@ -26,6 +36,7 @@ const createStore = (path: string) => {
 
   return {
     userId: userId(store),
+    windowColor: windowColor(store),
     theme: theme(store),
   };
 };
