@@ -1,4 +1,8 @@
 use log::info;
+use std::fs;
+use std::fs::FileType;
+use std::io;
+use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use tauri::{State, Window};
 
@@ -95,4 +99,62 @@ pub fn show_folder(path: String) {
             .spawn()
             .unwrap();
     }
+}
+
+#[tauri::command]
+pub fn delete_folder(path: String) {
+    #[cfg(target_os = "macos")]
+    {
+        std::process::Command::new("rm")
+            .arg("-rf")
+            .arg(path)
+            .spawn()
+            .unwrap();
+    }
+    #[cfg(target_os = "linux")]
+    {
+        std::process::Command::new("rm")
+            .arg("-rf")
+            .arg(path)
+            .spawn()
+            .unwrap();
+    }
+    #[cfg(target_os = "windows")]
+    {
+        std::process::Command::new("del")
+            .arg("/f")
+            .arg("/q")
+            .arg(path)
+            .spawn()
+            .unwrap();
+    }
+}
+
+#[tauri::command]
+pub fn scan_directory(path: PathBuf) -> Result<Vec<FileEntry>, String> {
+    let mut files: Vec<FileEntry> = Vec::new();
+    if path.is_dir() {
+        for entry in fs::read_dir(&path).map_err(|e| e.to_string())? {
+            let entry = entry.map_err(|e| e.to_string())?;
+            let path = entry.path();
+            if path.is_dir() {
+                // Recursively check the subdirectory and merge the result
+                let sub_dir_files = scan_directory(path.clone()).map_err(|e| e.to_string())?;
+                files.extend(sub_dir_files);
+            } else if path.is_file() {
+                let metadata = fs::metadata(&path).map_err(|e| e.to_string())?;
+                let file_size = metadata.len();
+
+                let file_entry = FileEntry {
+                    path: path.to_str().unwrap().to_string(),
+                    file_size,
+                };
+
+                dbg!(&file_entry);
+                files.push(file_entry);
+            }
+        }
+    }
+
+    Ok(files)
 }

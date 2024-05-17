@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::{fs::FileType, path::PathBuf};
 use ts_rs::TS;
 
 #[derive(Clone, Debug, Serialize, Deserialize, TS)]
@@ -142,4 +142,12 @@ pub struct Process {
 pub trait ProcessesTrait {
     fn get_processes(&mut self) -> Vec<Process>;
     fn kill_process(&mut self, pid: &str) -> bool;
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/lib/bindings/")]
+pub struct FileEntry {
+    pub path: String,
+    pub file_size: u64,
 }
