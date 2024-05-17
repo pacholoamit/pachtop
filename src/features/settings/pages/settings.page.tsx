@@ -1,23 +1,8 @@
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
+import GitHubButton from "react-github-btn";
 import PageWrapper from "@/components/page-wrapper";
 import Card from "@/components/card";
-import {
-  Grid,
-  NavLink,
-  Select,
-  Skeleton,
-  Space,
-  Stack,
-  Switch,
-  Title,
-  Text,
-  SegmentedControl,
-  Input,
-  Divider,
-  Group,
-  ThemeIcon,
-} from "@mantine/core";
+import { Grid, Skeleton, Space, Stack, Switch, Title, Text, SegmentedControl, Group, ThemeIcon } from "@mantine/core";
 import { useTheme } from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import { THEME_OPTION } from "@/providers/theme.provider";
@@ -106,10 +91,11 @@ const BuyMeACoffee = () => {
         src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png"
         alt="Buy Me A Coffee"
         style={{
-          height: "41px",
-          width: "174px",
+          height: "26px",
+          width: "96px",
+          marginBottom: "8px",
           boxShadow: "0px 3px 2px 0px rgba(190, 190, 190, 0.5)",
-          WebkitBoxShadow: "0px 3px 2px 0px rgba(190, 190, 190, 0.5)",
+          // WebkitBoxShadow: "0px 3px 2px 0px rgba(190, 190, 190, 0.5)",
         }}
       />
     </a>
@@ -124,11 +110,27 @@ const AboutSection = () => {
       </Text>
       <Group>
         <BuyMeACoffee />
-        <a href="https://github.com/pacholoamit/pachtop" target="_blank" rel="noopener noreferrer">
-          <ThemeIcon variant="outline" size={"xl"} radius={"xl"}>
-            <IconBrandGithub />
-          </ThemeIcon>
-        </a>
+
+        <GitHubButton
+          href="https://github.com/sponsors/pacholoamit"
+          data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+          data-icon="octicon-heart"
+          data-size="large"
+          aria-label="Sponsor @pacholoamit on GitHub"
+        >
+          Sponsor
+        </GitHubButton>
+
+        <GitHubButton
+          href="https://github.com/pacholoamit/pachtop"
+          data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+          data-icon="octicon-star"
+          data-size="large"
+          data-show-count="true"
+          aria-label="Star pacholoamit/pachtop on GitHub"
+        >
+          Star
+        </GitHubButton>
       </Group>
     </Stack>
   );
@@ -137,9 +139,9 @@ const AboutSection = () => {
 const ContributorsSectionInfo = () => {
   return (
     <>
-      <Title order={4}>Contributors</Title>
+      <Title order={4}>Sponsors</Title>
       <Text c="dimmed" size={"sm"}>
-        Amazing people who contributed to the project.
+        Amazing people who sponsored the project.
       </Text>
     </>
   );
