@@ -3607,6 +3607,7 @@ __metadata:
     react-geiger: ^1.2.0
     react-github-btn: ^1.4.0
     react-router-dom: ^6.23.1
+    react-text-gradients: ^1.0.2
     tauri-plugin-autostart-api: "https://github.com/tauri-apps/tauri-plugin-autostart"
     tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log"
     tauri-plugin-store: "https://github.com/tauri-apps/tauri-plugin-store"
@@ -3899,6 +3900,15 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 7ee8ef3aab74c7ae1d70ff34a27643d11ba1a8d62d072c767827d9ff9a520905223e567002e0bf6c772929d8ea1c781a3ba0cc4a563e92b1e3dc2eaa817ecbe8
+  languageName: node
+  linkType: hard
+
+"react-text-gradients@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "react-text-gradients@npm:1.0.2"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 02c209e801a8752b4d73d07a4f6c7b8ab0049bda7fccf422a90e3e550e23d2bd967e32fb9da98298cc2e6440db4f2768d28488846f8402250f2091f1b8129648
   languageName: node
   linkType: hard
 

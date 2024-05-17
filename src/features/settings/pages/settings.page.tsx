@@ -6,7 +6,7 @@ import { Grid, Skeleton, Space, Stack, Switch, Title, Text, SegmentedControl, Gr
 import { useTheme } from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import { THEME_OPTION } from "@/providers/theme.provider";
-import { IconBrandGithub } from "@tabler/icons-react";
+import { LinearGradient } from "react-text-gradients";
 
 const GeneralSectionInfo = () => {
   return (
@@ -94,8 +94,6 @@ const BuyMeACoffee = () => {
           height: "26px",
           width: "96px",
           marginBottom: "8px",
-          boxShadow: "0px 3px 2px 0px rgba(190, 190, 190, 0.5)",
-          // WebkitBoxShadow: "0px 3px 2px 0px rgba(190, 190, 190, 0.5)",
         }}
       />
     </a>
@@ -104,16 +102,12 @@ const BuyMeACoffee = () => {
 const AboutSection = () => {
   return (
     <Stack spacing={"lg"}>
-      <Text>
-        Pachtop will always remain open-source and free to use. If you like the project, please consider giving it a
-        star on Github or buy me a coffee. ❤️
-      </Text>
+      <Text>Pachtop will always remain open-source and free to use. 🤗</Text>
       <Group>
         <BuyMeACoffee />
-
         <GitHubButton
           href="https://github.com/sponsors/pacholoamit"
-          data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+          // data-color-scheme="no-preference: dark; light: dark; dark: dark;"
           data-icon="octicon-heart"
           data-size="large"
           aria-label="Sponsor @pacholoamit on GitHub"
@@ -123,7 +117,7 @@ const AboutSection = () => {
 
         <GitHubButton
           href="https://github.com/pacholoamit/pachtop"
-          data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+          // data-color-scheme="no-preference: dark; light: dark; dark: dark;"
           data-icon="octicon-star"
           data-size="large"
           data-show-count="true"
@@ -136,21 +130,31 @@ const AboutSection = () => {
   );
 };
 
-const ContributorsSectionInfo = () => {
+const SponsorsSectionInfo = () => {
   return (
     <>
       <Title order={4}>Sponsors</Title>
       <Text c="dimmed" size={"sm"}>
-        Amazing people who sponsored the project.
+        A big shoutout to these amazing people who sponsored the project. Your support means a lot to me. ❤️
       </Text>
     </>
+  );
+};
+
+const SponsorsSection = () => {
+  return (
+    <Stack spacing={"lg"}>
+      <Title order={1}>
+        <LinearGradient gradient={["to left", "#17acff ,#ff68f0"]}>Coming soon...</LinearGradient>
+      </Title>
+    </Stack>
   );
 };
 
 const SettingsPage = () => {
   return (
     <PageWrapper name="Settings">
-      <Card style={{ padding: "16px", height: "100%" }}>
+      <Card style={{ padding: "16px", height: "80vh" }}>
         <Stack justify="space-around" spacing={"lg"}>
           <Grid grow>
             <Grid.Col span={4}>
@@ -171,8 +175,14 @@ const SettingsPage = () => {
             <Grid.Col span={4} />
             <Grid.Col span={4}>
               <Space h={"xl"} />
-              <ContributorsSectionInfo />
+              <SponsorsSectionInfo />
             </Grid.Col>
+            <Grid.Col span={4}>
+              <Space h={"xl"} />
+              <Space h={"xl"} />
+              <SponsorsSection />
+            </Grid.Col>
+            <Grid.Col span={4} />
           </Grid>
         </Stack>
       </Card>
