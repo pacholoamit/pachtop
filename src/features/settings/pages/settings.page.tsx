@@ -120,17 +120,28 @@ const AboutSection = () => {
     <Stack spacing={"lg"}>
       <Text>
         Pachtop will always remain open-source and free to use. If you like the project, please consider giving it a
-        star on Github or buy me a coffee.
+        star on Github or buy me a coffee. ❤️
       </Text>
       <Group>
+        <BuyMeACoffee />
         <a href="https://github.com/pacholoamit/pachtop" target="_blank" rel="noopener noreferrer">
-          <ThemeIcon variant="light" size={"xl"} radius={"xl"}>
+          <ThemeIcon variant="outline" size={"xl"} radius={"xl"}>
             <IconBrandGithub />
           </ThemeIcon>
         </a>
-        <BuyMeACoffee />
       </Group>
     </Stack>
+  );
+};
+
+const ContributorsSectionInfo = () => {
+  return (
+    <>
+      <Title order={4}>Contributors</Title>
+      <Text c="dimmed" size={"sm"}>
+        Amazing people who contributed to the project.
+      </Text>
+    </>
   );
 };
 
@@ -146,7 +157,7 @@ const SettingsPage = () => {
             <Grid.Col span={4}>
               <GeneralSection />
             </Grid.Col>
-            <Grid.Col span={4}></Grid.Col>
+            <Grid.Col span={4} />
             <Grid.Col span={4}>
               <Space h={"xl"} />
               <AboutSectionInfo />
@@ -155,7 +166,11 @@ const SettingsPage = () => {
               <Space h={"xl"} />
               <AboutSection />
             </Grid.Col>
-            <Grid.Col span={4}></Grid.Col>
+            <Grid.Col span={4} />
+            <Grid.Col span={4}>
+              <Space h={"xl"} />
+              <ContributorsSectionInfo />
+            </Grid.Col>
           </Grid>
         </Stack>
       </Card>
