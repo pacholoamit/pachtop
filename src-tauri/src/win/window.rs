@@ -18,19 +18,11 @@ use windows::Win32::Graphics::Dwm::DWMWA_USE_IMMERSIVE_DARK_MODE;
 use windows::Win32::UI::Controls::SetWindowThemeAttribute;
 use windows::Win32::UI::Controls::WTNCA_NODRAWCAPTION;
 
-use std::path::PathBuf;
-use tauri::Wry;
-use tauri_plugin_store::with_store;
-use tauri_plugin_store::StoreCollection;
 use winver::WindowsVersion;
 
 fn hex_color_to_colorref(color: HexColor) -> COLORREF {
     // TODO: Remove this unsafe, This operation doesn't need to be unsafe!
     unsafe { COLORREF(transmute::<[u8; 4], u32>([color.r, color.g, color.b, 0])) }
-}
-
-fn hex_color_to_string(color: HexColor) -> String {
-    format!("#{:02X}{:02X}{:02X}", color.r, color.g, color.b)
 }
 
 struct WinThemeAttribute {
