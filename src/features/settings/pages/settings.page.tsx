@@ -154,7 +154,7 @@ const SponsorsSection = () => {
 const SettingsPage = () => {
   return (
     <PageWrapper name="Settings">
-      <Card style={{ padding: "16px", height: "80vh" }}>
+      <Card style={{ padding: "16px", height: "85vh" }}>
         <Stack justify="space-around" spacing={"lg"}>
           <Grid grow>
             <Grid.Col span={4}>
