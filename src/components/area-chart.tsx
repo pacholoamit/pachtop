@@ -138,17 +138,17 @@ export const useAreaChartState = (
         {
           count: 1,
           type: "minute",
-          text: "1M",
+          text: "1m",
         },
         {
           count: 5,
           type: "minute",
-          text: "5M",
+          text: "5m",
         },
         {
           count: 30,
           type: "minute",
-          text: "30M",
+          text: "30m",
         },
         {
           type: "all",
