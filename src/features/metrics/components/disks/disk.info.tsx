@@ -1,10 +1,14 @@
 import { ActionIcon, Badge, Card, Group, Stack, Image, Text, createStyles, Button, Center, Title } from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
-import { IconCheck, IconFolderOpen, IconX } from "@tabler/icons-react";
+import { IconFolderOpen } from "@tabler/icons-react";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
 import drive from "/drive.png";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+
+interface DiskInfoProps {
+  disk: Enumerable<Disk>;
+}
 
 const useStyles = createStyles((theme) => ({
   section: {
@@ -14,12 +18,10 @@ const useStyles = createStyles((theme) => ({
     paddingBottom: theme.spacing.md,
     paddingTop: theme.spacing.md,
   },
-
   folder: {
     width: "20px",
     height: "20px",
   },
-
   label: {
     textTransform: "uppercase",
     fontSize: theme.fontSizes.xs,
@@ -27,74 +29,64 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const onCheckDisk = async (mountPoint: string) => {
-  console.log("Checking disk", mountPoint);
-  await commands.deepScan({ path: mountPoint }).then((res) => {
-    console.log(res);
-  });
-};
-
-interface DiskInfoProps {
-  disk: Enumerable<Disk>;
-}
-
-const DiskTitleImage: React.FC<{ name?: string }> = ({ name }) => {
-  const { classes } = useStyles();
+const DiskDetailsSection: React.FC<{ last: any }> = ({ last }) => {
+  const range: DynamicProgressRangeInput[] = [
+    { from: 0, to: 50, color: "green" },
+    { from: 50, to: 80, color: "yellow" },
+    { from: 80, to: 100, color: "red" },
+  ];
 
   return (
-    <Card.Section className={classes.section}>
+    <>
       <Center>
-        <Title order={6}>{name}</Title>
+        <Title order={6}>{last?.name}</Title>
       </Center>
       <Image src={drive} alt="Drive" withPlaceholder />
-    </Card.Section>
+      <Text size={"sm"}>Free: {formatBytes(last?.free || 0)}</Text>
+      <DynamicProgress value={last?.usedPercentage || 0} range={range} />
+    </>
   );
 };
 
-const DiskDetails: React.FC<{ last: any }> = ({ last }) => {
-  const { classes } = useStyles();
-
+const DiskInfoSection: React.FC<{ last: any }> = ({ last }) => {
   return (
-    <Card.Section className={classes.section}>
-      <Stack spacing={3}>
-        <Group position="apart">
-          <Text c="dimmed" size={"sm"}>
-            Location
-          </Text>
-          <Badge size="sm" variant="light" color="indigo">
-            {last?.mountPoint}
-          </Badge>
-        </Group>
-        <Group position="apart" align="center">
-          <Text c="dimmed" size={"sm"}>
-            Disk Type
-          </Text>
-          <Badge size="sm" variant="light" color="red">
-            {last?.diskType}
-          </Badge>
-        </Group>
-        <Group position="apart">
-          <Text c="dimmed" size={"sm"}>
-            File System
-          </Text>
-          <Badge size="sm" variant="light" color="grape">
-            {last?.fileSystem}
-          </Badge>
-        </Group>
-      </Stack>
-    </Card.Section>
+    <Stack spacing={3}>
+      <Group position="apart">
+        <Text c="dimmed" size={"sm"}>
+          Location
+        </Text>
+        <Badge size="sm" variant="light" color="indigo">
+          {last?.mountPoint}
+        </Badge>
+      </Group>
+      <Group position="apart" align="center">
+        <Text c="dimmed" size={"sm"}>
+          Disk Type
+        </Text>
+        <Badge size="sm" variant="light" color="red">
+          {last?.diskType}
+        </Badge>
+      </Group>
+      <Group position="apart">
+        <Text c="dimmed" size={"sm"}>
+          File System
+        </Text>
+        <Badge size="sm" variant="light" color="grape">
+          {last?.fileSystem}
+        </Badge>
+      </Group>
+    </Stack>
   );
 };
 
-const DiskActions: React.FC<{ showDirectory: () => void }> = ({ showDirectory }) => {
+const DiskActionGroup: React.FC<{ onShowDirectory: () => void }> = ({ onShowDirectory }) => {
   const { classes } = useStyles();
-
   return (
     <Group mt="xs">
       <Button radius="md" style={{ flex: 1 }}>
         Show details
       </Button>
-      <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
+      <ActionIcon variant="default" radius="md" size={36} onClick={onShowDirectory}>
         <IconFolderOpen className={classes.folder} stroke={1.5} />
       </ActionIcon>
     </Group>
@@ -103,37 +95,29 @@ const DiskActions: React.FC<{ showDirectory: () => void }> = ({ showDirectory })
 
 const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
   const last = disk.data.at(-1);
+  const { classes } = useStyles();
 
   const showDirectory = async () => {
     if (!last?.mountPoint) return;
     await commands.showInFolder(last.mountPoint);
   };
 
-  const range: DynamicProgressRangeInput[] = [
-    {
-      from: 0,
-      to: 50,
-      color: "green",
-    },
-    {
-      from: 50,
-      to: 80,
-      color: "yellow",
-    },
-    {
-      from: 80,
-      to: 100,
-      color: "red",
-    },
-  ];
+  const onCheckDisk = async (mountPoint: string) => {
+    console.log("Checking disk", mountPoint);
+    await commands.deepScan({ path: mountPoint }).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
-    <Card shadow="xl" p="sm" radius={"md"} withBorder>
-      <DiskTitleImage name={last?.name} />
-      <Text size={"sm"}>Free: {formatBytes(last?.free || 0)}</Text>
-      <DynamicProgress value={last?.usedPercentage || 0} range={range} />
-      <DiskDetails last={last} />
-      <DiskActions showDirectory={showDirectory} />
+    <Card shadow="xl" p="xs" radius={"md"} withBorder>
+      <Card.Section className={classes.section}>
+        <DiskDetailsSection last={last} />
+      </Card.Section>
+      <Card.Section className={classes.section}>
+        <DiskInfoSection last={last} />
+      </Card.Section>
+      <DiskActionGroup onShowDirectory={showDirectory} />
     </Card>
   );
 };
