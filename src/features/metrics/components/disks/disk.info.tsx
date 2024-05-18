@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const DiskDetailsSection: React.FC<{ last: any }> = ({ last }) => {
+const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   const range: DynamicProgressRangeInput[] = [
     { from: 0, to: 50, color: "green" },
     { from: 50, to: 80, color: "yellow" },
@@ -40,16 +40,16 @@ const DiskDetailsSection: React.FC<{ last: any }> = ({ last }) => {
   return (
     <>
       <Center>
-        <Title order={6}>{last?.name}</Title>
+        <Title order={6}>{disk?.name}</Title>
       </Center>
       <Image src={drive} alt="Drive" withPlaceholder />
-      <Text size={"sm"}>Free: {formatBytes(last?.free || 0)}</Text>
-      <DynamicProgress value={last?.usedPercentage || 0} range={range} />
+      <Text size={"sm"}>Free: {formatBytes(disk?.free || 0)}</Text>
+      <DynamicProgress value={disk?.usedPercentage || 0} range={range} />
     </>
   );
 };
 
-const DiskInfoSection: React.FC<{ last: any }> = ({ last }) => {
+const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   return (
     <Stack spacing={3}>
       <Group position="apart">
@@ -57,7 +57,7 @@ const DiskInfoSection: React.FC<{ last: any }> = ({ last }) => {
           Location
         </Text>
         <Badge size="sm" variant="light" color="indigo">
-          {last?.mountPoint}
+          {disk?.mountPoint}
         </Badge>
       </Group>
       <Group position="apart" align="center">
@@ -65,7 +65,7 @@ const DiskInfoSection: React.FC<{ last: any }> = ({ last }) => {
           Disk Type
         </Text>
         <Badge size="sm" variant="light" color="red">
-          {last?.diskType}
+          {disk?.diskType}
         </Badge>
       </Group>
       <Group position="apart">
@@ -73,7 +73,7 @@ const DiskInfoSection: React.FC<{ last: any }> = ({ last }) => {
           File System
         </Text>
         <Badge size="sm" variant="light" color="grape">
-          {last?.fileSystem}
+          {disk?.fileSystem}
         </Badge>
       </Group>
     </Stack>
@@ -119,10 +119,10 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
   return (
     <Card shadow="xl" p="xs" radius={"md"} withBorder>
       <Card.Section className={classes.section}>
-        <DiskDetailsSection last={last} />
+        <DiskDetailsSection disk={last} />
       </Card.Section>
       <Card.Section className={classes.section}>
-        <DiskInfoSection last={last} />
+        <DiskInfoSection disk={last} />
       </Card.Section>
       <DiskActionGroup onShowDirectory={showDirectory} />
     </Card>
