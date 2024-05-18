@@ -11,10 +11,11 @@ import {
   Center,
   Title,
   Tooltip,
+  Popover,
 } from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
-import { IconFolderOpen } from "@tabler/icons-react";
+import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
 import drive from "/drive.png";
 import formatBytes from "@/features/metrics/utils/format-bytes";
@@ -50,13 +51,34 @@ const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
     { from: 80, to: 100, color: "red" },
   ];
 
+  const free = formatBytes(disk?.free || 0);
+  const used = formatBytes(disk?.used || 0);
+  const total = formatBytes(disk?.total || 0);
+
+  const tooltip = `Total: ${total}\nUsed: ${used}\nFree: ${free}`;
+
   return (
     <>
       <Center>
         <Title order={6}>{disk?.name}</Title>
       </Center>
       <Image src={drive} alt="Drive" withPlaceholder />
-      <Text size={"sm"}>Free: {formatBytes(disk?.free || 0)}</Text>
+      <Group position="apart">
+        <Text size={"sm"}>Free: {free}</Text>
+
+        <Popover position="left-end" withArrow shadow="md">
+          <Popover.Target>
+            <ActionIcon variant="transparent">
+              <IconAlertCircle size="1rem" />
+            </ActionIcon>
+          </Popover.Target>
+          <Popover.Dropdown>
+            <Text size="xs" style={{ whiteSpace: "pre-line" }}>
+              {tooltip}
+            </Text>
+          </Popover.Dropdown>
+        </Popover>
+      </Group>
       <DynamicProgress value={disk?.usedPercentage || 0} range={range} />
     </>
   );
@@ -104,7 +126,7 @@ const DiskActionGroup: React.FC<{ onShowDirectory: () => void }> = ({ onShowDire
   return (
     <Group mt="xs">
       <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick}>
-        Show details
+        Disk Analysis
       </Button>
       <ActionIcon variant="default" radius="md" size={36} onClick={onShowDirectory}>
         <IconFolderOpen className={classes.folder} stroke={1.5} />

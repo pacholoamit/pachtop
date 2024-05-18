@@ -1,8 +1,9 @@
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import DiskInfo from "@/features/metrics/components/disks/disk.info";
 import PageWrapper from "@/components/page-wrapper";
-import { Grid } from "@mantine/core";
+import { Alert, Grid } from "@mantine/core";
 import React from "react";
+import { IconAlertCircle } from "@tabler/icons-react";
 
 const DisksPage = () => {
   const { disks } = useServerEventsContext();
