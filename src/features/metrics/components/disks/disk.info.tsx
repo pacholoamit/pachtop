@@ -1,4 +1,17 @@
-import { ActionIcon, Badge, Card, Group, Stack, Image, Text, createStyles, Button, Center, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Card,
+  Group,
+  Stack,
+  Image,
+  Text,
+  createStyles,
+  Button,
+  Center,
+  Title,
+  Tooltip,
+} from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
 import { IconFolderOpen } from "@tabler/icons-react";
