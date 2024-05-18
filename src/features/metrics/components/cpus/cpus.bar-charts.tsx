@@ -1,8 +1,6 @@
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { Space, useMantineTheme } from "@mantine/core";
-import { useAreaChartState } from "@/components/area-chart";
 
-import { useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import Card from "@/components/card";
 
@@ -12,13 +10,19 @@ const CpusBarChart: React.FC = () => {
 
   const options: ApexCharts.ApexOptions = {
     chart: {
+      fontFamily: "Geist, Roboto, Arial, sans-serif",
       toolbar: {
         show: false,
       },
       height: "100%",
     },
+    tooltip: {
+      custom(options) {
+          
+      },
+    },
 
-    colors: ["#FFFFFF"],
+    colors: other.charts.bar.cpus.colors,
 
     dataLabels: {
       enabled: false,

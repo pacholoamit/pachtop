@@ -119,6 +119,11 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
             },
           },
         },
+        bar: {
+          cpus: {
+            colors: ["#7B2EDA"],
+          },
+        },
       },
     },
   },
@@ -204,6 +209,11 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           },
           globalCpu: {
             color: "white",
+          },
+        },
+        bar: {
+          cpus: {
+            colors: ["#FFFFFF"],
           },
         },
       },
@@ -292,6 +302,11 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           },
           globalCpu: {
             color: "#fdd450",
+          },
+        },
+        bar: {
+          cpus: {
+            colors: ["#fdd450"],
           },
         },
       },
