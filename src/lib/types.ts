@@ -29,6 +29,12 @@ export enum ServerEvent {
   ThemeChanged = "theme_changed",
 }
 
+export enum DiskType {
+  UNKNOWN = "Unknown",
+  HDD = "HDD",
+  SSD = "SSD",
+}
+
 export interface ShowInFolderOpts extends InvokeArgs {
   path: string;
 }
