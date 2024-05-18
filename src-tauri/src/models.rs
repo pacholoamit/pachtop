@@ -143,11 +143,3 @@ pub trait ProcessesTrait {
     fn get_processes(&mut self) -> Vec<Process>;
     fn kill_process(&mut self, pid: &str) -> bool;
 }
-
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/lib/bindings/")]
-pub struct FileEntry {
-    pub path: String,
-    pub file_size: u64,
-}

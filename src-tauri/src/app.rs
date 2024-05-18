@@ -133,9 +133,8 @@ pub fn delete_folder(path: String) {
 
 // Result<Vec<FileEntry>, String>
 #[tauri::command]
-pub async fn deep_scan(path: String) -> Result<String, String> {
+pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
     dbg!("Scanning folder:", &path);
-    let mut files: Vec<FileEntry> = Vec::new();
     let path_buf = PathBuf::from(&path);
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 
@@ -166,12 +165,9 @@ pub async fn deep_scan(path: String) -> Result<String, String> {
         }],
     };
 
-    let serialized = serde_json::to_string(&analysed).unwrap();
-
-    dbg!(&analysed);
     dbg!("Scanning complete");
 
-    Ok(serialized)
+    Ok(analysed)
 }
 
 // #[tauri::command]
