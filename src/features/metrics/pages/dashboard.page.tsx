@@ -2,7 +2,8 @@ import SystemInfo from "@/features/metrics/components/system-info";
 import MemoryAreaChart from "@/features/metrics/components/memory/memory.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu.area-chart";
-import NetworksAreaChart from "@/features/metrics/components/networks/networks.area-chart";
+import NetworksReceivedAreaChart from "@/features/metrics/components/networks/networks-received.area-chart";
+import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
 import MemoryRadialChart from "@/features/metrics/components/memory/memory.radial-chart";
 import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-chart";
 import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
@@ -10,10 +11,10 @@ import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-
 import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-ring";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
 import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
+import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-charts";
 
-import { Grid, Stack, Title } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import PageWrapper from "@/components/page-wrapper";
-import CpusRadialChart from "../components/cpus/cpus.bar-charts";
 
 // TODO: Unused metrics
 
@@ -61,7 +62,20 @@ const CpuSection = () => {
         <GlobalCpuAreaChart />
       </Grid.Col>
       <Grid.Col md={4.5} sm={12}>
-        <CpusRadialChart />
+        <CpusBarChart />
+      </Grid.Col>
+    </>
+  );
+};
+
+const DisksSection = () => {
+  return (
+    <>
+      <Grid.Col md={6} sm={12}>
+        <NetworksReceivedAreaChart />
+      </Grid.Col>
+      <Grid.Col md={6} sm={12}>
+        <NetworksTransmittedAreaChart />
       </Grid.Col>
     </>
   );
@@ -74,7 +88,7 @@ const DashboardPage = () => {
         <StatsRings />
         <CpuSection />
         <MemorySection />
-
+        <DisksSection />
         {/* <Grid.Col md={6} sm={12}>
           <GlobalCpuAreaChart />
         </Grid.Col>

@@ -2,20 +2,16 @@ import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { useEffect, useState } from "react";
-import { SeriesOptionsType } from "highcharts";
+import { useEffect } from "react";
+
 import { useMantineTheme } from "@mantine/core";
 
-// TODO: Remove Luxon and ChartJS
-// TODO: Make timestamp work automatically
-// TODO: fix time
-
-const NetworksAreaChart: React.FC = ({}) => {
+const NetworksReceivedAreaChart: React.FC = ({}) => {
   const { networks } = useServerEventsContext();
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
-      text: "Network Received",
+      text: "Network Activity (Received)",
     },
     yAxis: {
       labels: {
@@ -54,4 +50,4 @@ const NetworksAreaChart: React.FC = ({}) => {
   );
 };
 
-export default NetworksAreaChart;
+export default NetworksReceivedAreaChart;

@@ -10,7 +10,6 @@ import {
   Button,
   Center,
   Title,
-  Tooltip,
   Popover,
 } from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
@@ -19,7 +18,7 @@ import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
 import drive from "/drive.png";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import notification from "../../../../utils/notification";
+import notification from "@/utils/notification";
 
 interface DiskInfoProps {
   disk: Enumerable<Disk>;

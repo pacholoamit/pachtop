@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 0.8.0-rc
 - Add CPU thread usage metrics
+- Major Redesign of Disks page
+- 
 
 ## 0.7.4
 - Modify chart label button text
