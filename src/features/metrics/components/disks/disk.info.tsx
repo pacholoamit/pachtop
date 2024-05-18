@@ -1,9 +1,24 @@
-import { ActionIcon, Badge, Card, Group, Stack, Image, Text, createStyles, Button } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Card,
+  Group,
+  Stack,
+  Image,
+  Text,
+  createStyles,
+  Button,
+  Progress,
+  DefaultMantineColor,
+  Center,
+  Title,
+} from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
 import { IconCheck, IconFolderOpen, IconX } from "@tabler/icons-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import drive from "/drive.png";
+import formatBytes from "@/features/metrics/utils/format-bytes";
 
 interface RemovableIconProps {
   isRemovable?: boolean;
@@ -25,10 +40,6 @@ interface DiskInfoProps {
 }
 
 const useStyles = createStyles((theme) => ({
-  card: {
-    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.white,
-  },
-
   section: {
     borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]}`,
     paddingLeft: theme.spacing.md,
@@ -56,6 +67,29 @@ const onCheckDisk = async (mountPoint: string) => {
   });
 };
 
+interface DynamicProgressRangeInput {
+  from: number;
+  to: number;
+  color: DefaultMantineColor;
+}
+interface DynamicProgressProps {
+  value: number;
+  range?: DynamicProgressRangeInput[];
+}
+
+const DynamicProgress: React.FC<DynamicProgressProps> = (props) => {
+  const { value, range } = props;
+  const [color, setColor] = useState("blue");
+
+  useEffect(() => {
+    if (!range) return;
+    const currentColor = range.find((r) => value >= r.from && value <= r.to)?.color;
+    if (currentColor) setColor(currentColor);
+  }, [value, range]);
+
+  return <Progress value={value} color={color} size={"xs"} />;
+};
+
 const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
   const { classes } = useStyles();
   const last = disk.data.at(-1);
@@ -65,19 +99,52 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
     await commands.showInFolder(last.mountPoint);
   };
 
-  useEffect(() => {}, [disk]);
+  const range: DynamicProgressRangeInput[] = [
+    {
+      from: 0,
+      to: 50,
+      color: "green",
+    },
+    {
+      from: 50,
+      to: 80,
+      color: "yellow",
+    },
+    {
+      from: 80,
+      to: 100,
+      color: "red",
+    },
+  ];
 
   return (
-    <Card withBorder radius="md" p="md" shadow="xl" className={classes.card}>
+    <Card shadow="xl" p="sm" radius={"md"} withBorder>
       <Card.Section className={classes.section}>
+        <Center>
+          <Title order={6}>{last?.name}</Title>
+        </Center>
         <Image src={drive} alt="Drive" withPlaceholder />
+
+        <Text size={"sm"}>Free: {formatBytes(last?.free || 0)}</Text>
+
+        <DynamicProgress value={last?.usedPercentage || 0} range={range} />
       </Card.Section>
 
       <Card.Section className={classes.section}>
         <Stack spacing={3}>
+          <Group position="apart">
+            <Text c="dimmed" size={"sm"}>
+              Location
+            </Text>
+            <Badge size="sm" variant="light" color="indigo">
+              {last?.mountPoint}
+            </Badge>
+          </Group>
           <Group position="apart" align="center">
-            <Text>{last?.name}</Text>
-            <Badge size="sm" variant="light">
+            <Text c="dimmed" size={"sm"}>
+              Disk Type
+            </Text>
+            <Badge size="sm" variant="light" color="red">
               {last?.diskType}
             </Badge>
           </Group>
@@ -85,7 +152,7 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
             <Text c="dimmed" size={"sm"}>
               File System
             </Text>
-            <Badge size="sm" variant="light">
+            <Badge size="sm" variant="light" color="grape">
               {last?.fileSystem}
             </Badge>
           </Group>
