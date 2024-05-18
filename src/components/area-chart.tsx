@@ -19,6 +19,7 @@ export interface InitialAreaChartStateInput {
   tooltip: {
     pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
   };
+  legend?: boolean;
 }
 
 export const useAreaChartState = (
@@ -64,6 +65,7 @@ export const useAreaChartState = (
       gridLineColor: other.charts.area.default.gridLineColor,
       lineColor: other.charts.area.default.lineColor,
       labels: {
+        // enabled: false,
         step: 2,
         format: "{value:%I:%M %p}",
         style: {
@@ -75,7 +77,7 @@ export const useAreaChartState = (
       itemStyle: {
         color: other.charts.area.default.legend.color,
       },
-      enabled: true,
+      enabled: opts?.legend ?? false,
     },
     time: {
       useUTC: false,

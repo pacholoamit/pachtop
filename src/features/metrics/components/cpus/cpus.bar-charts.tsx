@@ -1,5 +1,5 @@
 import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { useMantineTheme } from "@mantine/core";
+import { Space, useMantineTheme } from "@mantine/core";
 import { useAreaChartState } from "@/components/area-chart";
 
 import { useEffect } from "react";
@@ -31,16 +31,19 @@ const CpusBarChart: React.FC = () => {
 
     title: {
       text: "CPU Threads",
-
+      align: "center",
       style: {
-        fontSize: "16px",
-        color: "#f0f0f0",
+        fontSize: "18px",
+        color: "#dce1e8",
         fontWeight: "bold",
         fontFamily: "Geist, Roboto, Arial, sans-serif",
       },
     },
     yaxis: {
       labels: {
+        formatter(val, opts) {
+          return `${val}%`;
+        },
         style: {
           colors: "#f0f0f0",
           fontFamily: "Geist, Roboto, Arial, sans-serif",
@@ -72,6 +75,7 @@ const CpusBarChart: React.FC = () => {
 
   return (
     <Card style={{ height: "410px" }}>
+      <Space h={1} />
       <ReactApexChart options={options} series={series} height={"100%"} type="bar" />
     </Card>
   );

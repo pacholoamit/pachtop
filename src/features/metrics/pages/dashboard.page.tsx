@@ -5,7 +5,6 @@ import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-
 import NetworksAreaChart from "@/features/metrics/components/networks/networks.area-chart";
 import MemoryRadialChart from "@/features/metrics/components/memory/memory.radial-chart";
 import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-chart";
-import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
 import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
 
 import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-ring";
@@ -71,10 +70,11 @@ const CpuSection = () => {
 const DashboardPage = () => {
   return (
     <PageWrapper name="Dashboard">
-      <Grid gutter="md">
+      <Grid gutter="sm">
         <StatsRings />
-        <MemorySection />
         <CpuSection />
+        <MemorySection />
+
         {/* <Grid.Col md={6} sm={12}>
           <GlobalCpuAreaChart />
         </Grid.Col>
