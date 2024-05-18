@@ -108,7 +108,8 @@ fn build_and_run_app(app: AppState) {
         .invoke_handler(tauri::generate_handler![
             app::kill_process,
             app::show_folder,
-            app::deep_scan
+            app::deep_scan,
+            app::delete_folder
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

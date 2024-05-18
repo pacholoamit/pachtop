@@ -1,12 +1,12 @@
 use log::info;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::ffi::OsStr;
+use std::fs;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
-use std::{env, fs, io};
 use tauri::{State, Window};
 
-use crate::dirstat::disk::{DiskItem, FileInfo};
+use crate::dirstat::{DiskItem, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
 
@@ -133,7 +133,7 @@ pub fn delete_folder(path: String) {
 
 // Result<Vec<FileEntry>, String>
 #[tauri::command]
-pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
+pub async fn deep_scan(path: String) -> Result<String, String> {
     dbg!("Scanning folder:", &path);
     let mut files: Vec<FileEntry> = Vec::new();
     let path_buf = PathBuf::from(&path);
@@ -166,10 +166,12 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
         }],
     };
 
+    let serialized = serde_json::to_string(&analysed).unwrap();
+
     dbg!(&analysed);
     dbg!("Scanning complete");
 
-    Ok(analysed)
+    Ok(serialized)
 }
 
 // #[tauri::command]
