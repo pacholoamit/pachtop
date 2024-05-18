@@ -115,6 +115,8 @@ pub struct Disk {
     pub total: u64,
     #[ts(type = "number")]
     pub used: u64,
+    #[ts(type = "number")]
+    pub used_percentage: f64,
     pub mount_point: PathBuf,
     pub file_system: String,
     pub disk_type: String,
