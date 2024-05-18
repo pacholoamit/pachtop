@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.8.0-rc
+- Add CPU thread usage metrics
+
 ## 0.7.4
 - Modify chart label button text
 - Add Project information to settings page

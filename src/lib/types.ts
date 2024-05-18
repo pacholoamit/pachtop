@@ -8,6 +8,8 @@ export * from "@/lib/bindings/Process";
 export * from "@/lib/bindings/Swap";
 export * from "@/lib/bindings/SysInfo";
 export * from "@/lib/bindings/Timestamp";
+export * from "@/lib/bindings/DiskItem";
+export * from "@/lib/bindings/FileEntry";
 
 export enum Command {
   KillProcess = "kill_process",

@@ -140,7 +140,7 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
 
     let analysed = match file_info {
         FileInfo::Directory { volume_id } => {
-            let sub_entries = fs::read_dir(&path_buf)
+            let sub_entries = fs::read_dir(path_buf)
                 .map_err(|e| e.to_string())?
                 .filter_map(Result::ok)
                 .collect::<Vec<_>>();
