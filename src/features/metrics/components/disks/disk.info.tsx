@@ -17,11 +17,14 @@ import {
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
 import {
+  IconAnalyze,
   IconCheck,
   IconDeviceAnalytics,
   IconDeviceFloppy,
   IconFileUnknown,
+  IconFolderOpen,
   IconHeart,
+  IconSettings2,
   IconX,
 } from "@tabler/icons-react";
 import { useEffect } from "react";
@@ -60,7 +63,6 @@ const useStyles = createStyles((theme) => ({
   },
 
   like: {
-    color: theme.colors.red[6],
     width: "20px",
     height: "20px",
   },
@@ -98,24 +100,36 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
 
       <Card.Section className={classes.section}>
         <Group position="apart" align="center">
-          <Text fz="lg" fw={500}>
-            {last?.name}
-          </Text>
+          <Text fw={500}>{last?.name}</Text>
           <Badge size="sm" variant="light">
             {last?.diskType}
           </Badge>
         </Group>
-        <Text mt="md" className={classes.label} c="dimmed">
-          Perfect for you, if you enjoy
-        </Text>
+      </Card.Section>
+
+      <Card.Section className={classes.section}>
+        <Group position="apart">
+          <Text c="dimmed" size={"sm"}>
+            File System
+          </Text>
+          <Badge size="sm" variant="light">
+            {last?.fileSystem}
+          </Badge>
+        </Group>
+        <Group position="apart">
+          <Text c="dimmed" size={"sm"}>
+            Removable
+          </Text>
+          <RemovableIcon isRemovable={last?.isRemovable} />
+        </Group>
       </Card.Section>
 
       <Group mt="xs">
         <Button radius="md" style={{ flex: 1 }}>
           Show details
         </Button>
-        <ActionIcon variant="default" radius="md" size={36}>
-          <IconHeart className={classes.like} stroke={1.5} />
+        <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
+          <IconFolderOpen className={classes.like} stroke={1.5} />
         </ActionIcon>
       </Group>
     </Card>
