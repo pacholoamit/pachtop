@@ -17,9 +17,8 @@ const CpusBarChart: React.FC = () => {
       height: "100%",
     },
     tooltip: {
-      custom(options) {
-          
-      },
+      theme: "dark",
+      enabled: false,
     },
 
     colors: other.charts.bar.cpus.colors,
@@ -29,7 +28,9 @@ const CpusBarChart: React.FC = () => {
     },
     plotOptions: {
       bar: {
-        dataLabels: {},
+        dataLabels: {
+          hideOverflowingLabels: true,
+        },
       },
     },
 
@@ -37,7 +38,7 @@ const CpusBarChart: React.FC = () => {
       text: "CPU Threads",
       align: "center",
       style: {
-        fontSize: "18px",
+        fontSize: "16px",
         color: "#dce1e8",
         fontWeight: "bold",
         fontFamily: "Geist, Roboto, Arial, sans-serif",
@@ -56,7 +57,10 @@ const CpusBarChart: React.FC = () => {
     },
     xaxis: {
       labels: {
-        show: false,
+        style: {
+          colors: "#f0f0f0",
+          fontFamily: "Geist, Roboto, Arial, sans-serif",
+        },
       },
     },
   };

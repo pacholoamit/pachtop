@@ -57,10 +57,10 @@ const MemorySection = () => {
 const CpuSection = () => {
   return (
     <>
-      <Grid.Col md={8} sm={12}>
+      <Grid.Col md={7.5} sm={12}>
         <GlobalCpuAreaChart />
       </Grid.Col>
-      <Grid.Col md={4} sm={12}>
+      <Grid.Col md={4.5} sm={12}>
         <CpusRadialChart />
       </Grid.Col>
     </>

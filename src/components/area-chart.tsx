@@ -32,7 +32,7 @@ export const useAreaChartState = (
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
         fontWeight: "bold",
-        fontSize: "18px",
+        fontSize: "16px",
         color: "#dce1e8",
       },
     },
@@ -118,6 +118,8 @@ export const useAreaChartState = (
     },
     // This is the calendar thing on the top right
     rangeSelector: {
+      floating: true,
+
       labelStyle: {
         color: other.charts.area.default.rangeSelector.labelStyle.color,
         backgroundColor: other.charts.area.default.rangeSelector.labelStyle.backgroundColor,
