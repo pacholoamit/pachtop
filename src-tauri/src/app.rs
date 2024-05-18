@@ -133,7 +133,7 @@ pub fn delete_folder(path: String) {
 
 // Result<Vec<FileEntry>, String>
 #[tauri::command]
-pub fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
+pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
     dbg!("Scanning folder:", &path);
     let mut files: Vec<FileEntry> = Vec::new();
     let path_buf = PathBuf::from(&path);
@@ -158,7 +158,7 @@ pub fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
         FileInfo::File { size, .. } => vec![DiskItem {
             name: path_buf
                 .file_name()
-                .unwrap_or(&OsStr::new("."))
+                .unwrap_or(OsStr::new("."))
                 .to_string_lossy()
                 .to_string(),
             disk_size: size,
