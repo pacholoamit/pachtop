@@ -1,32 +1,7 @@
-import DiskAreaChart from "@/features/metrics/components/disks/disk.area-chart";
-import {
-  ActionIcon,
-  Badge,
-  Box,
-  Card,
-  Center,
-  Group,
-  HoverCard,
-  Space,
-  Stack,
-  Image,
-  Text,
-  createStyles,
-  Button,
-} from "@mantine/core";
+import { ActionIcon, Badge, Card, Group, Stack, Image, Text, createStyles, Button } from "@mantine/core";
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
-import {
-  IconAnalyze,
-  IconCheck,
-  IconDeviceAnalytics,
-  IconDeviceFloppy,
-  IconFileUnknown,
-  IconFolderOpen,
-  IconHeart,
-  IconSettings2,
-  IconX,
-} from "@tabler/icons-react";
+import { IconCheck, IconFolderOpen, IconX } from "@tabler/icons-react";
 import { useEffect } from "react";
 import drive from "/drive.png";
 
@@ -62,7 +37,7 @@ const useStyles = createStyles((theme) => ({
     paddingTop: theme.spacing.md,
   },
 
-  like: {
+  folder: {
     width: "20px",
     height: "20px",
   },
@@ -99,29 +74,22 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
       </Card.Section>
 
       <Card.Section className={classes.section}>
-        <Group position="apart" align="center">
-          <Text fw={500}>{last?.name}</Text>
-          <Badge size="sm" variant="light">
-            {last?.diskType}
-          </Badge>
-        </Group>
-      </Card.Section>
-
-      <Card.Section className={classes.section}>
-        <Group position="apart">
-          <Text c="dimmed" size={"sm"}>
-            File System
-          </Text>
-          <Badge size="sm" variant="light">
-            {last?.fileSystem}
-          </Badge>
-        </Group>
-        <Group position="apart">
-          <Text c="dimmed" size={"sm"}>
-            Removable
-          </Text>
-          <RemovableIcon isRemovable={last?.isRemovable} />
-        </Group>
+        <Stack spacing={3}>
+          <Group position="apart" align="center">
+            <Text>{last?.name}</Text>
+            <Badge size="sm" variant="light">
+              {last?.diskType}
+            </Badge>
+          </Group>
+          <Group position="apart">
+            <Text c="dimmed" size={"sm"}>
+              File System
+            </Text>
+            <Badge size="sm" variant="light">
+              {last?.fileSystem}
+            </Badge>
+          </Group>
+        </Stack>
       </Card.Section>
 
       <Group mt="xs">
@@ -129,7 +97,7 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
           Show details
         </Button>
         <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
-          <IconFolderOpen className={classes.like} stroke={1.5} />
+          <IconFolderOpen className={classes.folder} stroke={1.5} />
         </ActionIcon>
       </Group>
     </Card>
