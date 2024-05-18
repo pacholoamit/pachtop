@@ -166,6 +166,9 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
         }],
     };
 
+    dbg!(&analysed);
+    dbg!("Scanning complete");
+
     Ok(analysed)
 }
 

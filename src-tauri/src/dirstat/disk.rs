@@ -1,13 +1,13 @@
 use crate::dirstat::ffi;
 use rayon::prelude::*;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
 use winapi_util::{file, Handle};
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct DiskItem {
     pub name: String,
     pub disk_size: u64,
