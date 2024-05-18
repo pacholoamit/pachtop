@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::{fs::FileType, path::PathBuf};
+use std::path::PathBuf;
 use ts_rs::TS;
 
 #[derive(Clone, Debug, Serialize, Deserialize, TS)]

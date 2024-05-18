@@ -18,6 +18,7 @@ mod mac;
 mod win;
 
 mod app;
+mod dirstat;
 mod metrics;
 mod models;
 mod utils;
@@ -107,7 +108,7 @@ fn build_and_run_app(app: AppState) {
         .invoke_handler(tauri::generate_handler![
             app::kill_process,
             app::show_folder,
-            app::scan_directory
+            app::deep_scan
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

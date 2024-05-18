@@ -88,6 +88,7 @@ dependencies = [
  "hex_color",
  "log",
  "objc",
+ "rayon",
  "serde",
  "serde_json",
  "sysinfo",
@@ -99,6 +100,8 @@ dependencies = [
  "tauri-plugin-window-state",
  "tokio",
  "ts-rs",
+ "winapi",
+ "winapi-util",
  "windows 0.52.0",
  "winver",
 ]

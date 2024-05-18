@@ -1,9 +1,12 @@
 use log::info;
-use std::fs;
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
+use std::ffi::OsStr;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
+use std::{env, fs, io};
 use tauri::{State, Window};
 
+use crate::dirstat::disk::{DiskItem, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
 
@@ -128,31 +131,94 @@ pub fn delete_folder(path: String) {
     }
 }
 
+// Result<Vec<FileEntry>, String>
 #[tauri::command]
-pub fn scan_directory(path: PathBuf) -> Result<Vec<FileEntry>, String> {
+pub fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
+    dbg!("Scanning folder:", &path);
     let mut files: Vec<FileEntry> = Vec::new();
-    if path.is_dir() {
-        for entry in fs::read_dir(&path).map_err(|e| e.to_string())? {
-            let entry = entry.map_err(|e| e.to_string())?;
-            let path = entry.path();
-            if path.is_dir() {
-                // Recursively check the subdirectory and merge the result
-                let sub_dir_files = scan_directory(path.clone()).map_err(|e| e.to_string())?;
-                files.extend(sub_dir_files);
-            } else if path.is_file() {
-                let metadata = fs::metadata(&path).map_err(|e| e.to_string())?;
-                let file_size = metadata.len();
+    let path_buf = PathBuf::from(&path);
+    let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 
-                let file_entry = FileEntry {
-                    path: path.to_str().unwrap().to_string(),
-                    file_size,
-                };
+    let analysed = match file_info {
+        FileInfo::Directory { volume_id } => {
+            let sub_entries = fs::read_dir(&path_buf)
+                .map_err(|e| e.to_string())?
+                .filter_map(Result::ok)
+                .collect::<Vec<_>>();
 
-                dbg!(&file_entry);
-                files.push(file_entry);
-            }
+            let mut sub_items = sub_entries
+                .par_iter()
+                .filter_map(|entry| DiskItem::from_analyze(&entry.path(), true, volume_id).ok())
+                .collect::<Vec<_>>();
+
+            sub_items.sort_unstable_by(|a, b| a.disk_size.cmp(&b.disk_size).reverse());
+
+            sub_items
         }
-    }
+        FileInfo::File { size, .. } => vec![DiskItem {
+            name: path_buf
+                .file_name()
+                .unwrap_or(&OsStr::new("."))
+                .to_string_lossy()
+                .to_string(),
+            disk_size: size,
+            children: None,
+        }],
+    };
 
-    Ok(files)
+    Ok(analysed)
 }
+
+// #[tauri::command]
+// pub fn deep_scan(path: String) -> String {
+//     dbg!("Scanning folder", &path);
+//     "Hello from Rust!".to_string()
+// }
+// #[tauri::command]
+// pub fn deep_scan(path: String) -> Result<Vec<FileEntry>, String> {
+//     dbg!("Scanning folder:", &path);
+
+//     let mut files: Vec<FileEntry> = Vec::new();
+//     let path = PathBuf::from(&path);
+
+//     if path.exists() {
+//         if path.is_dir() {
+//             dbg!("Path is a directory");
+//             for entry in fs::read_dir(&path).map_err(|e| e.to_string())? {
+//                 let entry = entry.map_err(|e| e.to_string())?;
+//                 let path = entry.path();
+//                 if path.is_dir() {
+//                     // Recursively check the subdirectory and merge the result
+//                     let sub_dir_files = deep_scan(path.display().to_string())?;
+//                     files.extend(sub_dir_files);
+//                 } else if path.is_file() {
+//                     let metadata = fs::metadata(&path).map_err(|e| e.to_string())?;
+//                     let file_size = metadata.len();
+
+//                     let file_entry = FileEntry {
+//                         path: path.to_str().unwrap().to_string(),
+//                         file_size,
+//                     };
+
+//                     dbg!(&file_entry);
+//                     files.push(file_entry);
+//                 }
+//             }
+//         } else if path.is_file() {
+//             let metadata = fs::metadata(&path).map_err(|e| e.to_string())?;
+//             let file_size = metadata.len();
+
+//             let file_entry = FileEntry {
+//                 path: path.to_str().unwrap().to_string(),
+//                 file_size,
+//             };
+
+//             dbg!(&file_entry);
+//             files.push(file_entry);
+//         }
+//     }
+
+//     format!("{:?}", files);
+
+//     Ok(files)
+// }

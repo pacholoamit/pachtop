@@ -12,6 +12,7 @@ export * from "@/lib/bindings/Timestamp";
 export enum Command {
   KillProcess = "kill_process",
   ShowInFolder = "show_folder",
+  DeepScan = "deep_scan",
 }
 
 export enum ServerEvent {
@@ -23,6 +24,7 @@ export enum ServerEvent {
   Networks = "emit_networks",
   Disks = "emit_disks",
   Processes = "emit_processes",
+  ThemeChanged = "theme_changed",
 }
 
 export interface ShowInFolderOpts extends InvokeArgs {
@@ -31,6 +33,10 @@ export interface ShowInFolderOpts extends InvokeArgs {
 
 export interface KillProcessOpts extends InvokeArgs {
   pid: string;
+}
+
+export interface DeepScanOpts extends InvokeArgs {
+  path: string;
 }
 
 export type KillProcessResult = boolean;
