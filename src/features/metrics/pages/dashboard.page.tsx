@@ -14,6 +14,7 @@ import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 
 import { Grid, Stack, Title } from "@mantine/core";
 import PageWrapper from "@/components/page-wrapper";
+import CpusRadialChart from "../components/cpus/cpus.bar-charts";
 
 // TODO: Unused metrics
 
@@ -54,18 +55,32 @@ const MemorySection = () => {
   );
 };
 
+const CpuSection = () => {
+  return (
+    <>
+      <Grid.Col md={8} sm={12}>
+        <GlobalCpuAreaChart />
+      </Grid.Col>
+      <Grid.Col md={4} sm={12}>
+        <CpusRadialChart />
+      </Grid.Col>
+    </>
+  );
+};
+
 const DashboardPage = () => {
   return (
     <PageWrapper name="Dashboard">
       <Grid gutter="md">
         <StatsRings />
         <MemorySection />
-        <Grid.Col md={6} sm={12}>
+        <CpuSection />
+        {/* <Grid.Col md={6} sm={12}>
           <GlobalCpuAreaChart />
         </Grid.Col>
         <Grid.Col md={6} sm={12}>
           <NetworksAreaChart />
-        </Grid.Col>
+        </Grid.Col> */}
       </Grid>
     </PageWrapper>
   );

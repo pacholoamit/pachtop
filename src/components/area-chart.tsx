@@ -2,10 +2,10 @@ import * as Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useState } from "react";
-import { useColorScheme, useViewportSize } from "@mantine/hooks";
+import { useViewportSize } from "@mantine/hooks";
 import { useMantineTheme } from "@mantine/core";
 
-export interface InitialAreaChatStateInput {
+export interface InitialAreaChartStateInput {
   title: {
     text: string;
   };
@@ -22,7 +22,7 @@ export interface InitialAreaChatStateInput {
 }
 
 export const useAreaChartState = (
-  opts: InitialAreaChatStateInput
+  opts: InitialAreaChartStateInput
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
@@ -42,6 +42,7 @@ export const useAreaChartState = (
       handles: {
         backgroundColor: other.charts.area.default.navigator.handles.backgroundColor,
       },
+      height: 30,
     },
 
     plotOptions: {

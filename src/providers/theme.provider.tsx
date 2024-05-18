@@ -2,6 +2,7 @@ import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { createContext, useEffect, useState } from "react";
 import { setWindowColor } from "@/lib";
 import store from "@/lib/store";
+import { DEFAULT_TITLEBAR_COLOR } from "@/contants";
 import "non.geist";
 import "non.geist/mono";
 
@@ -15,7 +16,7 @@ export enum THEME_OPTION {
   BUMBLEBEE = "bumblebee",
 }
 
-const themes: Record<THEME_OPTION, MantineThemeOverride> = {
+export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
   [THEME_OPTION.SLATE]: {
     fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
     colorScheme: "dark",
@@ -298,13 +299,11 @@ const themes: Record<THEME_OPTION, MantineThemeOverride> = {
   },
 };
 export const ThemeContext = createContext({
-  theme: themes[THEME_OPTION.SLATE],
   currentTheme: THEME_OPTION.SLATE,
   setTheme: (theme: THEME_OPTION) => {},
 });
 
 // TODO: Add this to constants?
-const DEFAULT_TITLEBAR_COLOR = "#0d1830";
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<MantineThemeOverride>(themes[THEME_OPTION.SLATE]);
@@ -329,7 +328,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme, currentTheme }}>
+    <ThemeContext.Provider value={{ setTheme: handleSetTheme, currentTheme }}>
       <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
         {children}
       </MantineProvider>
