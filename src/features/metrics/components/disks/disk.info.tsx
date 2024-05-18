@@ -5,6 +5,7 @@ import { IconFolderOpen } from "@tabler/icons-react";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
 import drive from "/drive.png";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import notification from "../../../../utils/notification";
 
 interface DiskInfoProps {
   disk: Enumerable<Disk>;
@@ -81,9 +82,15 @@ const DiskInfoSection: React.FC<{ last: any }> = ({ last }) => {
 
 const DiskActionGroup: React.FC<{ onShowDirectory: () => void }> = ({ onShowDirectory }) => {
   const { classes } = useStyles();
+  const onShowDetailsClick = () => {
+    notification.error({
+      message: "Feature coming soon! 🙏",
+      title: "Thank you for your patience",
+    });
+  };
   return (
     <Group mt="xs">
-      <Button radius="md" style={{ flex: 1 }}>
+      <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick}>
         Show details
       </Button>
       <ActionIcon variant="default" radius="md" size={36} onClick={onShowDirectory}>
