@@ -1,8 +1,6 @@
 use log::info;
 use std::fs;
-use std::fs::FileType;
-use std::io;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use tauri::{State, Window};
 

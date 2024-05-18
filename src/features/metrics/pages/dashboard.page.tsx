@@ -12,60 +12,59 @@ import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-r
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
 import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 
-import { Grid, Stack } from "@mantine/core";
+import { Grid, Stack, Title } from "@mantine/core";
 import PageWrapper from "@/components/page-wrapper";
 
-// TODO: Make room for system info
-const TopMetricsSection = () => {
+// TODO: Unused metrics
+
+/* <CpusBarChart /> */
+// <SwapRadialChart /> */
+/* <GlobalCpuStatsRing /> */
+/* <SystemInfo /> */
+
+const StatsRings = () => {
   return (
-    <Grid gutter={"md"}>
+    <>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        {/* <SystemInfo /> */}
         <GlobalCpuStatsRing />
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <MemoryStatsRing />
-        {/* <GlobalCpuStatsRing /> */}
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <SwapStatsRing />
-
-        {/* <SwapRadialChart /> */}
       </Grid.Col>
       <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <DiskStatsRing />
-        {/* <CpusBarChart /> */}
       </Grid.Col>
-    </Grid>
+    </>
   );
 };
 
-const LeftMetricsStack = () => (
-  <Stack spacing={"md"}>
-    <MemoryAreaChart />
-    <SwapAreaChart />
-  </Stack>
-);
-
-const RightMetricsStack = () => (
-  <Stack spacing={"md"}>
-    <GlobalCpuAreaChart />
-    <NetworksAreaChart />
-  </Stack>
-);
+const MemorySection = () => {
+  return (
+    <>
+      <Grid.Col md={6} sm={12}>
+        <MemoryAreaChart />
+      </Grid.Col>
+      <Grid.Col md={6} sm={12}>
+        <SwapAreaChart />
+      </Grid.Col>
+    </>
+  );
+};
 
 const DashboardPage = () => {
   return (
     <PageWrapper name="Dashboard">
       <Grid gutter="md">
-        <Grid.Col span={12}>
-          <TopMetricsSection />
+        <StatsRings />
+        <MemorySection />
+        <Grid.Col md={6} sm={12}>
+          <GlobalCpuAreaChart />
         </Grid.Col>
         <Grid.Col md={6} sm={12}>
-          <LeftMetricsStack />
-        </Grid.Col>
-        <Grid.Col md={6} sm={12}>
-          <RightMetricsStack />
+          <NetworksAreaChart />
         </Grid.Col>
       </Grid>
     </PageWrapper>
