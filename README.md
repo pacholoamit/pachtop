@@ -47,6 +47,17 @@ Please see the <a href="https://github.com/pacholoamit/pachtop/releases">release
 
 The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan.github.io/Stacer-Web/) which is a comprehensive System optimizer and monitoring solution. Although, Pachtop does not implement any system optimizer functionality (yet!), It provides more in-depth metrics and information about your system. I wanted to create a similar application to Stacer but with a more modern UI and a more robust codebase. I also wanted to learn Rust and this seemed like a good opportunity to do so. If you hadn't guessed, Pachtop is named after the legendary [top](<https://en.wikipedia.org/wiki/Top_(software)>) linux program that displays information about CPU and memory utilization. Pachtop will always remain open-source and free to use.
 
+# 🚀 Showcase
+
+## Dashboard
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/f746921b-efbb-49fc-b65a-2bb375df4924)
+
+## Disks
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/60df5068-dc35-4097-8a0d-515037a2588b)
+
+## Processes
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/f4d1ab2d-773a-4851-818d-d5ad58f10e29)
+
 # 📚 Themes
 
 ## Midnight
@@ -60,17 +71,6 @@ The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan
 ## Slate
 
 ![image](https://github.com/pacholoamit/pachtop/assets/69985528/f746921b-efbb-49fc-b65a-2bb375df4924)
-
-# 🚀 Showcase
-
-## Dashboard
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/f746921b-efbb-49fc-b65a-2bb375df4924)
-
-## Disks
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/60df5068-dc35-4097-8a0d-515037a2588b)
-
-## Processes
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/f4d1ab2d-773a-4851-818d-d5ad58f10e29)
 
 # 🏗️ Architecture
 
