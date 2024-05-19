@@ -15,10 +15,10 @@ import {
 import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { Disk, commands } from "@/lib";
 import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
 import drive from "/drive.png";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import notification from "@/utils/notification";
 
 interface DiskInfoProps {
   disk: Enumerable<Disk>;
@@ -114,20 +114,23 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   );
 };
 
-const DiskActionGroup: React.FC<{ onShowDirectory: () => void }> = ({ onShowDirectory }) => {
+const DiskActionGroup: React.FC<{ disk?: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
-  const onShowDetailsClick = () => {
-    notification.error({
-      message: "Feature coming soon! 🙏",
-      title: "Thank you for your patience",
-    });
+  const navigate = useNavigate();
+
+  const showDirectory = async () => {
+    if (!disk?.mountPoint) return;
+    await commands.showInFolder(disk.mountPoint);
   };
+
+  const onShowDetailsClick = () => navigate(`/disks/${disk?.name}`);
+
   return (
     <Group mt="xs">
       <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick}>
         Disk Analysis
       </Button>
-      <ActionIcon variant="default" radius="md" size={36} onClick={onShowDirectory}>
+      <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
         <IconFolderOpen className={classes.folder} stroke={1.5} />
       </ActionIcon>
     </Group>
@@ -137,11 +140,6 @@ const DiskActionGroup: React.FC<{ onShowDirectory: () => void }> = ({ onShowDire
 const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
   const last = disk.data.at(-1);
   const { classes } = useStyles();
-
-  const showDirectory = async () => {
-    if (!last?.mountPoint) return;
-    await commands.showInFolder(last.mountPoint);
-  };
 
   const onCheckDisk = async (mountPoint: string) => {
     console.log("Checking disk", mountPoint);
@@ -158,7 +156,7 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
       <Card.Section className={classes.section}>
         <DiskInfoSection disk={last} />
       </Card.Section>
-      <DiskActionGroup onShowDirectory={showDirectory} />
+      <DiskActionGroup disk={last} />
     </Card>
   );
 };
