@@ -28,20 +28,16 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { disks } = useServerEventsContext();
   const { id = "" } = useParams();
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
-  const [analysis, setAnalysis] = React.useState<DiskItem[]>([]);
+  const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
   const [loading, setLoading] = React.useState(false);
 
-  const onCheckDisk = async (mountPoint: string) => {
-    console.log("Checking disk", mountPoint);
+  const startDiskAnalysis = async () => {
     setLoading(true);
-    await commands.deepScan({ path: mountPoint }).then((res) => {
-      setAnalysis(res);
+    await commands.deepScan({ path: disk.mountPoint }).then((res) => {
+      setDiskAnalysis(res);
+      setLoading(false);
     });
-    setLoading(false);
   };
-
-  // Stop if no disk id
-  if (!id) return <DiskNotFound />;
 
   useEffect(() => {
     if (!disks) return;
@@ -56,13 +52,12 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     <PageWrapper name={id}>
       <Grid>
         <Grid.Col span={3}>
-          <DiskInformationAnalyticsCard disk={disk} />
+          <DiskInformationAnalyticsCard disk={disk} startDiskAnalysis={startDiskAnalysis} />
         </Grid.Col>
         <Grid.Col span={9}>
           <Card height="350px">
             <Group position="apart">
               <Title order={4}>Disk Analysis</Title>
-              <Button onClick={() => onCheckDisk(disk.mountPoint)}>Start Analysis</Button>
             </Group>
             {loading && (
               <Center>

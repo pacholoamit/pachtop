@@ -2646,7 +2646,6 @@ __metadata:
     react-dom: ^18.3.1
     react-geiger: ^1.2.0
     react-github-btn: ^1.4.0
-    react-icons: ^5.2.1
     react-router-dom: ^6.23.1
     react-text-gradients: ^1.0.2
     tauri-plugin-autostart-api: "https://github.com/tauri-apps/tauri-plugin-autostart"
@@ -2810,15 +2809,6 @@ __metadata:
   peerDependencies:
     react: ">=16.3.0"
   checksum: 33a416ad76ab4cc9238ac5cf5cfcab636bb2127c48fb30805385350fd3a3c2aa0aaeb78f6c726c52a0d3d133ca469be35d4b3d188c8e40c735c7ff458d2c8c3c
-  languageName: node
-  linkType: hard
-
-"react-icons@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "react-icons@npm:5.2.1"
-  peerDependencies:
-    react: "*"
-  checksum: f084ea7409a3986c03b7805d0787d8526e2c988439a39f485cc526ec1b2eb6ec78e7b69345478151ce94bca8522737c6569203c8ab8b8ff08542b496f954bdfb
   languageName: node
   linkType: hard
 
