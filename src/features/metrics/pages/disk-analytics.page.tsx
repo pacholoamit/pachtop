@@ -102,7 +102,11 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
             {isDiskAnalysisEmpty ? <FileExplorerNoData /> : <MemoizedDiskDirectoryTreeView data={diskAnalysis} />}
           </Card>
         </Grid.Col>
-        <Grid.Col span={12}></Grid.Col>
+        <Grid.Col span={12}>
+          <Card height="560px">
+            <Text>Chart goes here</Text>
+          </Card>
+        </Grid.Col>
       </Grid>
     </PageWrapper>
   );
