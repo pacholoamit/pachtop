@@ -24,8 +24,8 @@ pub struct DiskItemMetadata {
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct DiskItem {
     pub name: String,
-    #[ts(type = "number")]
-    pub size: u64,
+    // #[ts(type = "number")]
+    // pub size: u64,
     pub children: Option<Vec<DiskItem>>,
     pub metadata: DiskItemMetadata,
 }
@@ -61,20 +61,18 @@ impl DiskItem {
                     })
                     .collect::<Vec<_>>();
 
-                sub_items.sort_unstable_by(|a, b| a.size.cmp(&b.size).reverse());
+                sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
 
                 Ok(DiskItem {
                     name,
-                    size: sub_items.iter().map(|di| di.size).sum(), // TODO: Duplicate field, remove later
                     metadata: DiskItemMetadata {
-                        size: sub_items.iter().map(|di| di.size).sum(),
+                        size: sub_items.iter().map(|di| di.metadata.size).sum(),
                     },
                     children: Some(sub_items),
                 })
             }
             FileInfo::File { size, .. } => Ok(DiskItem {
                 name,
-                size, // TODO: Duplicate field, remove later
                 metadata: DiskItemMetadata { size },
                 children: None,
             }),
