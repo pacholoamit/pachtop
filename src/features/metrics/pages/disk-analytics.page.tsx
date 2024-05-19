@@ -1,20 +1,14 @@
-import "./styles.css";
-
 import React, { useEffect } from "react";
-import TreeView, { flattenTree, INode } from "react-accessible-treeview";
+import { flattenTree, INode } from "react-accessible-treeview";
 import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
-import { DiCss3, DiJavascript, DiNpm } from "react-icons/di";
-import { FaList, FaRegFolder, FaRegFolderOpen } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import DiskNotFound from "@/features/metrics/components/disks/disk.notfound";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { commands, Disk, DiskItem } from "@/lib";
-import { Button, Center, Grid, Group, Loader, ScrollArea, Stack, Title } from "@mantine/core";
-import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
+import { commands, Disk } from "@/lib";
+import { Button, Center, Grid, Title } from "@mantine/core";
 
 import DiskDirectoryTreeView from "../components/disks/disk.directory-treeview";
 

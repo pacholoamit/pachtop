@@ -1,9 +1,10 @@
+import "@/features/metrics/styles/disk-treeview.css";
+
 import TreeView, { INode } from "react-accessible-treeview";
 import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
 import { DiCss3, DiJavascript, DiNpm } from "react-icons/di";
 import { FaList } from "react-icons/fa";
 
-import { Disk } from "@/lib";
 import { ScrollArea } from "@mantine/core";
 import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
 
@@ -39,7 +40,7 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
   return (
     <ScrollArea h="90%">
       <TreeView
-        aria-label="Directory Tree"
+        aria-label="directory Tree"
         togglableSelect
         clickAction="EXCLUSIVE_SELECT"
         multiSelect

@@ -2,6 +2,7 @@
   list-style: none;
   margin: 0;
   padding: 20px;
+  font-family: 'Geist Mono Variable','Geist Variable';
 }
  .tree-node,
  .tree-node-group {
