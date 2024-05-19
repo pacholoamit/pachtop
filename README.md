@@ -67,7 +67,7 @@ The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan
 ![image](https://github.com/pacholoamit/pachtop/assets/69985528/f746921b-efbb-49fc-b65a-2bb375df4924)
 
 ## Disks
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/50c78111-029c-4517-899c-8b4472cff6fe)
+![image](https://github.com/pacholoamit/pachtop/assets/69985528/60df5068-dc35-4097-8a0d-515037a2588b)
 
 ## Processes
 ![image](https://github.com/pacholoamit/pachtop/assets/69985528/f4d1ab2d-773a-4851-818d-d5ad58f10e29)
