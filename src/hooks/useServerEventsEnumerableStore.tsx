@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import useServerEventsStore from '@/hooks/useServerEventsStore';
-import { ServerEvent } from '@/lib/types';
+import useServerEventsStore from "@/hooks/useServerEventsStore";
+import { ServerEvent } from "@/lib/types";
 
 export interface Enumerable<T> {
   id: string;
@@ -20,22 +20,24 @@ const useServerEventsEnumerableStore = <T extends { name: string }>(
   const [uniqueItems, setUniqueItems] = useState<Enumerable<T>[]>([]);
 
   useEffect(() => {
-    items.at(-1)?.forEach((item) => {
-      setUniqueItems((prev) => {
-        const existingIndex = prev.findIndex((unique) => unique.id === item.name);
+    items.at(-1)?.filter((item) => {
+      // If the item name is not in the uniqueItems array, add it
+      if (!uniqueItems.find((unique) => unique.id === item.name)) {
+        const newUniqueItem: Enumerable<T> = {
+          id: item.name,
+          data: [item],
+        };
 
-        if (existingIndex === -1) {
-          // Item not found, add new entry
-          return [...prev, { id: item.name, data: [item] }];
-        } else {
-          // Item found, update existing entry
-          const updatedItems = [...prev];
-          updatedItems[existingIndex].data = [item, ...updatedItems[existingIndex].data].slice(0, input.maxSize);
-          return updatedItems;
-        }
-      });
+        setUniqueItems((prev) => [...prev, newUniqueItem]);
+      }
+
+      // If the item name is in the uniqueItems array, append the data
+      const index = uniqueItems.findIndex((u) => u.id === item.name);
+      if (index === -1) return;
+
+      uniqueItems[index].data.push(item);
     });
-  }, [items, input.maxSize]);
+  }, [items]);
 
   return [uniqueItems] as const;
 };

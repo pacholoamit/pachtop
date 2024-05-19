@@ -16,6 +16,8 @@ import { commands, Disk, DiskItem } from "@/lib";
 import { Button, Center, Grid, Group, Loader, ScrollArea, Stack, Title } from "@mantine/core";
 import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
 
+import DiskDirectoryTreeView from "../components/disks/disk.directory-treeview";
+
 interface DiskAnalyticsPageProps {}
 
 const defaultDisk: Disk = {
@@ -31,73 +33,21 @@ const defaultDisk: Disk = {
   usedPercentage: 0,
 };
 
-const FolderIcon = ({ isOpen }: { isOpen: boolean }) => {
-  return isOpen ? <IconFolderOpen className="icon" /> : <IconFolderCancel className="icon" />;
-};
-
-const FileIcon = ({ fileName }: { fileName: string }) => {
-  const extension = fileName.split(".").pop();
-
-  switch (extension) {
-    case "js":
-      return <DiJavascript color="yellow" className="icon" />;
-    case "css":
-      return <DiCss3 color="turquoise" className="icon" />;
-    case "json":
-      return <FaList color="yellow" className="icon" />;
-    case "npmignore":
-      return <DiNpm color="red" className="icon" />;
-    default:
-      return <IconFile />;
-  }
-};
-
-const TEST_DATA = {
-  name: "",
-  children: [
-    {
-      name: "src",
-      children: [{ name: "index.js" }, { name: "styles.css" }],
-    },
-    {
-      name: "node_modules",
-      children: [
-        {
-          name: "react-accessible-treeview",
-          children: [{ name: "index.js" }],
-        },
-        { name: "react", children: [{ name: "index.js" }] },
-      ],
-    },
-    {
-      name: ".npmignore",
-    },
-    {
-      name: "package.json",
-    },
-    {
-      name: "webpack.config.js",
-    },
-  ],
-};
-
-const FLATTENED_TEST_DATA = flattenTree(TEST_DATA);
-
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { disks } = useServerEventsContext();
   const { id = "" } = useParams();
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
-  const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>(FLATTENED_TEST_DATA);
+  const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>(flattenTree({ name: "" }));
 
   const startDiskAnalysis = async () => {
     await commands.deepScan({ path: disk.mountPoint }).then((item) => {
-      // setDiskAnalysis(
-      //   flattenTree({
-      //     name: disk.mountPoint,
-      //     children: item as any,
-      //   })
-      // );
-      // console.log(diskAnalysis);
+      setDiskAnalysis(
+        flattenTree({
+          name: disk.mountPoint,
+          children: item as any,
+        })
+      );
+      console.log(diskAnalysis);
     });
   };
 
@@ -118,20 +68,8 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col span={9}>
           <Card height="350px">
-            <Group position="apart">
-              <Title order={4}>Disk Analysis</Title>
-            </Group>
-            <ScrollArea>
-              <TreeView
-                data={diskAnalysis}
-                nodeRenderer={({ element, isBranch, isExpanded, getNodeProps, level }) => (
-                  <div {...getNodeProps()} style={{ paddingLeft: 20 * (level - 1) }}>
-                    {isBranch ? <FolderIcon isOpen={isExpanded} /> : <FileIcon fileName={element.name} />}
-                    {element.name}
-                  </div>
-                )}
-              />
-            </ScrollArea>
+            <Title order={4}>File Explorer</Title>
+            <DiskDirectoryTreeView data={diskAnalysis} />
           </Card>
         </Grid.Col>
       </Grid>
