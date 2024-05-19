@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 - Add CPU thread usage metrics
 - Major Redesign of Disks page
 - Added Network Transmitted Chart
+- Patch bytes calculations
 
 ## 0.7.4
 - Modify chart label button text

@@ -1,13 +1,22 @@
 const formatBytes = (bytes: number): string => {
-  if (bytes >= 1000000000) {
-    return (bytes / 1000000000).toFixed(2) + " GB";
-  } else if (bytes >= 1000000) {
-    return (bytes / 1000000).toFixed(2) + " MB";
-  } else if (bytes >= 1000) {
-    return (bytes / 1000).toFixed(2) + " KB";
-  } else {
-    return bytes.toFixed(2) + " B";
+  if (bytes < 0) return "0 Bytes";
+
+  const units = ["Bytes", "KB", "MB", "GB", "TB"];
+  const factor = 1024;
+
+  if (bytes < factor) {
+    return `${bytes} Bytes`;
   }
+
+  let unitIndex = 0;
+  let value = bytes;
+
+  while (value >= factor && unitIndex < units.length - 1) {
+    value /= factor;
+    unitIndex++;
+  }
+
+  return `${value.toFixed(2)} ${units[unitIndex]}`;
 };
 
 export default formatBytes;
