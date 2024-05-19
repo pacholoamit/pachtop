@@ -92,13 +92,28 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
             color: {
               linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
               stops: [
-                [0, "rgba(53, 162, 235, 0.45)"],
-                [1, "rgba(53, 162, 235)"],
+                [0, "rgba(53, 162, 235, 1)"],
+                [1, "rgba(53, 162, 235, 0.45)"],
               ],
             },
           },
           networkReceived: {
-            color: undefined, // Make it random
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(236, 18, 120,1)"],
+                [1, "rgb(236, 18, 120, 0.45)"],
+              ],
+            },
+          },
+          networksTransmitted: {
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(252, 169, 46,1)"],
+                [1, "rgb(252, 169, 46, 0.45)"],
+              ],
+            },
           },
           memory: {
             color: {
@@ -204,6 +219,9 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           networkReceived: {
             color: "white", // Make it random
           },
+          networksTransmitted: {
+            color: "white",
+          },
           memory: {
             color: "white",
           },
@@ -297,6 +315,9 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
           networkReceived: {
             color: "#fdd450", // Make it random
           },
+          networksTransmitted: {
+            color: "#fdd450",
+          },
           memory: {
             color: "#fdd450",
           },
@@ -318,8 +339,7 @@ export const ThemeContext = createContext({
   setTheme: (theme: THEME_OPTION) => {},
 });
 
-// TODO: Add this to constants?
-
+// Todo implement in settingsprovider?
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<MantineThemeOverride>(themes[THEME_OPTION.SLATE]);
   const [currentTheme, setCurrentTheme] = useState<THEME_OPTION>(THEME_OPTION.SLATE);

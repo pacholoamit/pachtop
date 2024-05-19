@@ -9,6 +9,19 @@ const CpusBarChart: React.FC = () => {
   const { other } = useMantineTheme();
 
   const options: ApexCharts.ApexOptions = {
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "dark",
+        type: "vertical",
+        shadeIntensity: 0.5,
+        gradientToColors: other.charts.bar.cpus.gradientColors,
+        inverseColors: true,
+        opacityFrom: 1,
+        opacityTo: 0.8,
+        stops: [0],
+      },
+    },
     chart: {
       fontFamily: "Geist, Roboto, Arial, sans-serif",
       toolbar: {

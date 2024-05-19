@@ -38,7 +38,7 @@ const NetworksTransmittedAreaChart: React.FC = ({}) => {
         name: `${network.id}`,
         type: "area",
         data: network.data.map((net) => [net.timestamp, net.transmitted]),
-        color: other.charts.area.networkReceived.color,
+        color: other.charts.area.networksTransmitted.color,
       })),
     });
   }, [JSON.stringify(networks)]);
