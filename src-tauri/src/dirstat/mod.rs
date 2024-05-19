@@ -13,6 +13,8 @@ use winapi_util::{file, Handle};
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
+
+// TODO Reduce dup
 pub struct DiskItem {
     pub name: String,
     #[ts(type = "number")]
