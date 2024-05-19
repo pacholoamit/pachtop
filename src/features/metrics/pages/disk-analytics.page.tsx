@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { flattenTree, INode } from "react-accessible-treeview";
 import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
 import { useParams } from "react-router-dom";
@@ -47,13 +47,22 @@ const defaultDisk: Disk = {
   usedPercentage: 0,
 };
 
+const deepCompare = <A, B>(a: A, b: B) => {
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+
+const MemoizedDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView, (prevProps, nextProps) =>
+  deepCompare(prevProps.data, nextProps.data)
+);
+
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
+  // TODO: Use Stores to make this more performant
   const { disks } = useServerEventsContext();
   const { id = "" } = useParams();
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
   const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
 
-  const [isLoading, setIsloading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
 
   useEffect(() => {
@@ -63,21 +72,21 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     if (disk?.data?.length ?? 0 > 0) {
       setDisk(disk?.data?.at(-1) || defaultDisk);
     }
-  }, [disks]);
+  }, []);
 
-  const startDiskAnalysis = async () => {
-    setIsloading(true);
+  const startDiskAnalysis = useCallback(async () => {
+    setIsLoading(true);
 
-    commands.deepScan({ path: disk.mountPoint }).then((item) => {
-      setIsloading(false);
-      setDiskAnalysis(
-        flattenTree({
-          name: disk.mountPoint,
-          children: item as any,
-        })
-      );
-    });
-  };
+    const item = await commands.deepScan({ path: disk.mountPoint });
+    setDiskAnalysis(
+      flattenTree({
+        name: disk.mountPoint,
+        children: item as any,
+      })
+    );
+
+    setIsLoading(false);
+  }, [disk.mountPoint]); // Adding disk.mountPoint as dependency
 
   return (
     <PageWrapper name={id}>
@@ -90,9 +99,10 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
             <LoadingOverlay visible={isLoading} overlayBlur={3} />
             <Title order={4}>File Explorer</Title>
 
-            {isDiskAnalysisEmpty ? <FileExplorerNoData /> : <DiskDirectoryTreeView data={diskAnalysis} />}
+            {isDiskAnalysisEmpty ? <FileExplorerNoData /> : <MemoizedDiskDirectoryTreeView data={diskAnalysis} />}
           </Card>
         </Grid.Col>
+        <Grid.Col span={12}></Grid.Col>
       </Grid>
     </PageWrapper>
   );

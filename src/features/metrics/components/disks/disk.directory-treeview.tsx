@@ -2,10 +2,9 @@ import "@/features/metrics/styles/disk-treeview.css";
 
 import TreeView, { INode } from "react-accessible-treeview";
 import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
-import { DiCss3, DiJavascript, DiNpm } from "react-icons/di";
-import { FaList } from "react-icons/fa";
 
-import { Group, ScrollArea } from "@mantine/core";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import { Group, ScrollArea, Text } from "@mantine/core";
 import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
 
 const iconStyle = { paddingRight: "5px", verticalAlign: "middle" };
@@ -38,16 +37,16 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
         multiSelect
         data={data}
         nodeRenderer={({ element, isBranch, isExpanded, getNodeProps, level, handleExpand }) => {
-          if (element?.metadata) {
-            console.log(element.metadata);
-          }
-
+          console.log("Render");
           return (
             <Group position="apart">
               <div {...getNodeProps({ onClick: handleExpand })} style={{ paddingLeft: 20 * (level - 1) }}>
                 {isBranch ? <FolderIcon isOpen={isExpanded} /> : <FileIcon fileName={element.name} />}
                 {element.name}
               </div>
+              <Text size="xs" color="dimmed">
+                {formatBytes(element.metadata?.size as number)}
+              </Text>
             </Group>
           );
         }}
