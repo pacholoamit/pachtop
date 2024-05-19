@@ -45,7 +45,7 @@ const useStyles = createStyles((theme) => ({
 
 const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   const range: DynamicProgressRangeInput[] = [
-    { from: 0, to: 50, color: "green" },
+    { from: 0, to: 50, color: "#47d6ab" },
     { from: 50, to: 80, color: "yellow" },
     { from: 80, to: 100, color: "red" },
   ];
@@ -78,38 +78,41 @@ const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
           </Popover.Dropdown>
         </Popover>
       </Group>
-      <DynamicProgress value={disk?.usedPercentage || 0} range={range} />
+      <DynamicProgress value={disk?.usedPercentage || 0} range={range} size={"xs"} />
     </>
   );
 };
 
 const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
+  const data: { label: string; value: string; color: string }[] = [
+    {
+      label: "Location",
+      value: disk?.mountPoint || "unknown",
+      color: "blue",
+    },
+    {
+      label: "Disk Type",
+      value: disk?.diskType || "unknown",
+      color: "yellow",
+    },
+    {
+      label: "File System",
+      value: disk?.fileSystem || "unknown",
+      color: "cyan",
+    },
+  ];
   return (
     <Stack spacing={3}>
-      <Group position="apart">
-        <Text c="dimmed" size={"sm"}>
-          Location
-        </Text>
-        <Badge size="sm" variant="light" color="indigo">
-          {disk?.mountPoint}
-        </Badge>
-      </Group>
-      <Group position="apart" align="center">
-        <Text c="dimmed" size={"sm"}>
-          Disk Type
-        </Text>
-        <Badge size="sm" variant="light" color="red">
-          {disk?.diskType}
-        </Badge>
-      </Group>
-      <Group position="apart">
-        <Text c="dimmed" size={"sm"}>
-          File System
-        </Text>
-        <Badge size="sm" variant="light" color="grape">
-          {disk?.fileSystem}
-        </Badge>
-      </Group>
+      {data.map((d, i) => (
+        <Group key={i} position="apart">
+          <Text c="dimmed" size={"sm"}>
+            {d.label}
+          </Text>
+          <Badge size="sm" variant="light" color={d.color}>
+            {d.value}
+          </Badge>
+        </Group>
+      ))}
     </Stack>
   );
 };

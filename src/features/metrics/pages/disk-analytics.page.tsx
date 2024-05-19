@@ -2,12 +2,12 @@ import useServerEventsContext from "@/hooks/useServerEventsContext";
 import PageWrapper from "@/components/page-wrapper";
 import DiskNotFound from "@/features/metrics/components/disks/disk.notfound";
 import Card from "@/components/card";
-import { Title, Grid } from "@mantine/core";
-import { Disk, commands } from "@/lib";
+import { Title, Grid, Group, Button } from "@mantine/core";
+import { Disk, DiskItem, commands } from "@/lib";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytcs";
+import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
 
 interface DiskAnalyticsPageProps {}
 
@@ -28,6 +28,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { disks } = useServerEventsContext();
   const { id = "" } = useParams();
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
+  const [analysis, setAnalysis] = React.useState<DiskItem | null>(null);
 
   // Stop if no disk id
   if (!id) return <DiskNotFound />;
@@ -56,7 +57,10 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col span={9}>
           <Card>
-            <Title order={4}>Disk Analysis</Title>
+            <Group position="apart">
+              <Title order={4}>Disk Analysis</Title>
+              <Button onClick={() => onCheckDisk(disk.mountPoint)}>Start Analysis</Button>
+            </Group>
           </Card>
         </Grid.Col>
       </Grid>
