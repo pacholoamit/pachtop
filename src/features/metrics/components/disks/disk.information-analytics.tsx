@@ -1,10 +1,21 @@
-import { DefaultMantineColor, Title, Space, Stack, Group, Badge, Text, Center, ActionIcon } from "@mantine/core";
+import {
+  DefaultMantineColor,
+  Title,
+  Space,
+  Stack,
+  Group,
+  Badge,
+  Text,
+  Center,
+  ActionIcon,
+  Button,
+} from "@mantine/core";
 import { Disk, DiskItem, commands } from "@/lib";
 
 import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
-import { IconFolderOpen } from "@tabler/icons-react";
+import { IconAnalyze, IconChartArcs, IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInformationAnalyticsCardProps {
   disk: Disk;
@@ -88,13 +99,15 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
             </Group>
           ))}
         </Stack>
+        <DynamicProgress size={34} range={range} sections={sections} />
         <Group>
           <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
             <IconFolderOpen stroke={1.5} />
           </ActionIcon>
-          <ActionIcon variant="default" radius="md" size={36} onClick={startDiskAnalysis}></ActionIcon>
+          <Button radius="md" style={{ flex: 1 }} variant="outline" onClick={startDiskAnalysis}>
+            Start Disk Analysis
+          </Button>
         </Group>
-        <DynamicProgress size={34} range={range} sections={sections} />
       </Stack>
     </Card>
   );
