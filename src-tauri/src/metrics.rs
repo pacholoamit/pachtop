@@ -118,6 +118,7 @@ impl DisksTrait for Metrics {
                 let used = total - free;
                 let is_removable = disk.is_removable();
                 let mount_point = disk.mount_point().to_owned();
+                let used_percentage = get_percentage(&used, &total);
 
                 Disk {
                     name,
@@ -127,6 +128,7 @@ impl DisksTrait for Metrics {
                     mount_point,
                     file_system,
                     is_removable,
+                    used_percentage,
                     disk_type,
                     timestamp: current_time(),
                 }

@@ -2,71 +2,92 @@ import SystemInfo from "@/features/metrics/components/system-info";
 import MemoryAreaChart from "@/features/metrics/components/memory/memory.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu.area-chart";
-import NetworksAreaChart from "@/features/metrics/components/networks/networks.area-chart";
+import NetworksReceivedAreaChart from "@/features/metrics/components/networks/networks-received.area-chart";
+import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
 import MemoryRadialChart from "@/features/metrics/components/memory/memory.radial-chart";
 import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-chart";
-import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-chart";
 import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
 
 import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-ring";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
 import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
+import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-charts";
 
-import { Grid, Stack } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import PageWrapper from "@/components/page-wrapper";
 
-// TODO: Make room for system info
-const TopMetricsSection = () => {
+// TODO: Unused metrics
+
+/* <CpusBarChart /> */
+// <SwapRadialChart /> */
+/* <SystemInfo /> */
+
+const StatsRings = () => {
   return (
-    <Grid gutter={"md"}>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
-        {/* <SystemInfo /> */}
+    <>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <GlobalCpuStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <MemoryStatsRing />
-        {/* <GlobalCpuStatsRing /> */}
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <SwapStatsRing />
-
-        {/* <SwapRadialChart /> */}
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <DiskStatsRing />
-        {/* <CpusBarChart /> */}
       </Grid.Col>
-    </Grid>
+    </>
   );
 };
 
-const LeftMetricsStack = () => (
-  <Stack spacing={"md"}>
-    <MemoryAreaChart />
-    <SwapAreaChart />
-  </Stack>
-);
+const MemorySection = () => {
+  return (
+    <>
+      <Grid.Col md={6} sm={12}>
+        <MemoryAreaChart />
+      </Grid.Col>
+      <Grid.Col md={6} sm={12}>
+        <SwapAreaChart />
+      </Grid.Col>
+    </>
+  );
+};
 
-const RightMetricsStack = () => (
-  <Stack spacing={"md"}>
-    <GlobalCpuAreaChart />
-    <NetworksAreaChart />
-  </Stack>
-);
+const CpuSection = () => {
+  return (
+    <>
+      <Grid.Col lg={7.5} md={12}>
+        <GlobalCpuAreaChart />
+      </Grid.Col>
+      <Grid.Col lg={4.5} md={12}>
+        <CpusBarChart />
+      </Grid.Col>
+    </>
+  );
+};
+
+const DisksSection = () => {
+  return (
+    <>
+      <Grid.Col md={6} sm={12}>
+        <NetworksReceivedAreaChart />
+      </Grid.Col>
+      <Grid.Col md={6} sm={12}>
+        <NetworksTransmittedAreaChart />
+      </Grid.Col>
+    </>
+  );
+};
 
 const DashboardPage = () => {
   return (
     <PageWrapper name="Dashboard">
-      <Grid gutter="md">
-        <Grid.Col span={12}>
-          <TopMetricsSection />
-        </Grid.Col>
-        <Grid.Col md={6} sm={12}>
-          <LeftMetricsStack />
-        </Grid.Col>
-        <Grid.Col md={6} sm={12}>
-          <RightMetricsStack />
-        </Grid.Col>
+      <Grid gutter="sm">
+        <StatsRings />
+        <CpuSection />
+        <MemorySection />
+        <DisksSection />
       </Grid>
     </PageWrapper>
   );

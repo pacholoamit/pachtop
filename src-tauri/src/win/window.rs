@@ -79,8 +79,7 @@ pub fn setup_win_window(app: &mut App) {
     let window = app.get_window("main").unwrap();
     let win_handle = window.hwnd().unwrap();
 
-    //TODO: Update this to update based on theme
-    app.listen_global("bg-changed", move |ev| {
+    app.listen_global("theme_changed", move |ev| {
         let payload = serde_json::from_str::<&str>(ev.payload().unwrap())
             .unwrap()
             .trim();

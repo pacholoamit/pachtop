@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import GitHubButton from "react-github-btn";
 import PageWrapper from "@/components/page-wrapper";
 import Card from "@/components/card";
-import { Grid, Skeleton, Space, Stack, Switch, Title, Text, SegmentedControl, Group, ThemeIcon } from "@mantine/core";
-import { useTheme } from "@/hooks/useTheme";
+import { Grid, Space, Stack, Switch, Title, Text, SegmentedControl, Group } from "@mantine/core";
+import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import { THEME_OPTION } from "@/providers/theme.provider";
 import { LinearGradient } from "react-text-gradients";
@@ -20,13 +20,11 @@ const GeneralSectionInfo = () => {
 };
 const GeneralSection = () => {
   const [checked, setChecked] = useState(false);
-  const [loading, setLoading] = useState(true);
   const checkAutoStart = async () => setChecked(await autostart.isEnabled());
   const { setTheme, currentTheme } = useTheme();
 
   useEffect(() => {
     checkAutoStart();
-    setLoading(false);
   }, [checkAutoStart]);
 
   const onChange = () => {
@@ -38,39 +36,27 @@ const GeneralSection = () => {
     setChecked(!checked);
   };
 
-  if (loading) {
-    return (
-      <>
-        <Skeleton height={8} radius="xl" />
-        <Skeleton height={8} mt={6} radius="xl" />
-        <Skeleton height={8} mt={6} width="70%" radius="xl" />
-      </>
-    );
-  }
-
   return (
-    <>
-      <Grid gutter={"xl"}>
-        <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
-          <Text size={"sm"} color="white">
-            Theme
-          </Text>
-          <SegmentedControl
-            defaultValue={currentTheme}
-            size="xs"
-            onChange={(value) => setTheme(value as THEME_OPTION)}
-            data={[
-              { value: THEME_OPTION.SLATE, label: "Slate" },
-              { value: THEME_OPTION.MIDNIGHT, label: "Midnight" },
-              { value: THEME_OPTION.BUMBLEBEE, label: "Bumblebee" },
-            ]}
-          />
-        </Grid.Col>
-        <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
-          <Switch checked={checked} onChange={onChange} label="Start on system startup" />
-        </Grid.Col>
-      </Grid>
-    </>
+    <Grid gutter={"xl"}>
+      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+        <Text size={"sm"} color="white">
+          Theme
+        </Text>
+        <SegmentedControl
+          defaultValue={currentTheme}
+          size="xs"
+          onChange={(value) => setTheme(value as THEME_OPTION)}
+          data={[
+            { value: THEME_OPTION.SLATE, label: "Slate" },
+            { value: THEME_OPTION.MIDNIGHT, label: "Midnight" },
+            { value: THEME_OPTION.BUMBLEBEE, label: "Bumblebee" },
+          ]}
+        />
+      </Grid.Col>
+      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+        <Switch checked={checked} onChange={onChange} label="Start on system startup" />
+      </Grid.Col>
+    </Grid>
   );
 };
 
