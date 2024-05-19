@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use tauri::{State, Window};
 
-use crate::dirstat::{DiskItem, FileInfo};
+use crate::dirstat::{DiskItem, DiskItemMetadata, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
 
@@ -150,7 +150,7 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
                 .filter_map(|entry| DiskItem::from_analyze(&entry.path(), true, volume_id).ok())
                 .collect::<Vec<_>>();
 
-            sub_items.sort_unstable_by(|a, b| a.disk_size.cmp(&b.disk_size).reverse());
+            sub_items.sort_unstable_by(|a, b| a.size.cmp(&b.size).reverse());
 
             sub_items
         }
@@ -160,7 +160,8 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
                 .unwrap_or(OsStr::new("."))
                 .to_string_lossy()
                 .to_string(),
-            disk_size: size,
+            size,
+            metadata: DiskItemMetadata { size },
             children: None,
         }],
     };
