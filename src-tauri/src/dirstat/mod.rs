@@ -7,6 +7,7 @@ use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
 use ts_rs::TS;
+#[cfg(target_os = "windows")]
 use winapi_util::{file, Handle};
 
 #[derive(Serialize, Deserialize, Debug, TS)]
