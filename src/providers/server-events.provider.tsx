@@ -42,7 +42,6 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
   const [swap] = useServerEventsStore<Swap>(ServerEvent.Swap, { maxSize });
   const [networks] = useServerEventsEnumerableStore<Network>(ServerEvent.Networks, { maxSize });
 
-  console.log(disks);
   return (
     <ServerEventsContext.Provider
       value={{

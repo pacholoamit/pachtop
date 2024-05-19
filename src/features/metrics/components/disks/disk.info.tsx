@@ -114,7 +114,7 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   );
 };
 
-const DiskActionGroup: React.FC<{ disk?: Disk }> = ({ disk }) => {
+const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) => {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
@@ -123,7 +123,8 @@ const DiskActionGroup: React.FC<{ disk?: Disk }> = ({ disk }) => {
     await commands.showInFolder(disk.mountPoint);
   };
 
-  const onShowDetailsClick = () => navigate(`/disks/${disk?.name}`);
+  // Encode this id to avoid any issues with special characters
+  const onShowDetailsClick = () => navigate(`/disks/${encodeURI(id)}`);
 
   return (
     <Group mt="xs">
@@ -138,25 +139,19 @@ const DiskActionGroup: React.FC<{ disk?: Disk }> = ({ disk }) => {
 };
 
 const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
-  const last = disk.data.at(-1);
+  const id = disk?.id;
+  const latest = disk.data.at(-1);
   const { classes } = useStyles();
-
-  const onCheckDisk = async (mountPoint: string) => {
-    console.log("Checking disk", mountPoint);
-    await commands.deepScan({ path: mountPoint }).then((res) => {
-      console.log(res);
-    });
-  };
 
   return (
     <Card shadow="xl" p="xs" radius={"md"} withBorder>
       <Card.Section className={classes.section}>
-        <DiskDetailsSection disk={last} />
+        <DiskDetailsSection disk={latest} />
       </Card.Section>
       <Card.Section className={classes.section}>
-        <DiskInfoSection disk={last} />
+        <DiskInfoSection disk={latest} />
       </Card.Section>
-      <DiskActionGroup disk={last} />
+      <DiskActionGroup disk={latest} id={id} />
     </Card>
   );
 };
