@@ -9,7 +9,8 @@ import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.dire
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { commands, Disk } from "@/lib";
-import { Grid, Stack, Text, Title } from "@mantine/core";
+import { Grid, LoadingOverlay, Stack, Text, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 const FileExplorerNoData = () => {
   return (
@@ -52,20 +53,8 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
   const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
 
+  const [isLoading, setIsloading] = React.useState(false);
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
-
-  // TODO: Do this in rust
-  const startDiskAnalysis = async () => {
-    await commands.deepScan({ path: disk.mountPoint }).then((item) => {
-      setDiskAnalysis(
-        flattenTree({
-          name: disk.mountPoint,
-          children: item as any,
-        })
-      );
-      console.log(diskAnalysis);
-    });
-  };
 
   useEffect(() => {
     if (!disks) return;
@@ -76,6 +65,20 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     }
   }, [disks]);
 
+  const startDiskAnalysis = async () => {
+    setIsloading(true);
+
+    commands.deepScan({ path: disk.mountPoint }).then((item) => {
+      setIsloading(false);
+      setDiskAnalysis(
+        flattenTree({
+          name: disk.mountPoint,
+          children: item as any,
+        })
+      );
+    });
+  };
+
   return (
     <PageWrapper name={id}>
       <Grid>
@@ -84,7 +87,9 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col span={9}>
           <Card height="350px">
+            <LoadingOverlay visible={isLoading} overlayBlur={3} />
             <Title order={4}>File Explorer</Title>
+
             {isDiskAnalysisEmpty ? <FileExplorerNoData /> : <DiskDirectoryTreeView data={diskAnalysis} />}
           </Card>
         </Grid.Col>
