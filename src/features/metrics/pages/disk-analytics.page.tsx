@@ -2,7 +2,7 @@ import useServerEventsContext from "@/hooks/useServerEventsContext";
 import PageWrapper from "@/components/page-wrapper";
 import DiskNotFound from "@/features/metrics/components/disks/disk.notfound";
 import Card from "@/components/card";
-import { Title, Grid, Group, Button } from "@mantine/core";
+import { Title, Grid, Group, Button, Stack, Loader } from "@mantine/core";
 import { Disk, DiskItem, commands } from "@/lib";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -29,6 +29,16 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
   const [analysis, setAnalysis] = React.useState<DiskItem | null>(null);
+  const [loading, setLoading] = React.useState(false);
+
+  const onCheckDisk = async (mountPoint: string) => {
+    console.log("Checking disk", mountPoint);
+    setLoading(true);
+    await commands.deepScan({ path: mountPoint }).then((res) => {
+      console.log(res);
+    });
+    setLoading(false);
+  };
 
   // Stop if no disk id
   if (!id) return <DiskNotFound />;
@@ -42,13 +52,6 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     }
   }, [disks]);
 
-  const onCheckDisk = async (mountPoint: string) => {
-    console.log("Checking disk", mountPoint);
-    await commands.deepScan({ path: mountPoint }).then((res) => {
-      console.log(res);
-    });
-  };
-
   return (
     <PageWrapper name={id}>
       <Grid>
@@ -61,6 +64,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
               <Title order={4}>Disk Analysis</Title>
               <Button onClick={() => onCheckDisk(disk.mountPoint)}>Start Analysis</Button>
             </Group>
+            {loading && <Loader />}
           </Card>
         </Grid.Col>
       </Grid>
