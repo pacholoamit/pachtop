@@ -1,10 +1,11 @@
+import useServerEventsContext from "@/hooks/useServerEventsContext";
+import PageWrapper from "@/components/page-wrapper";
+import DiskNotFound from "@/features/metrics/components/disks/disk.notfound";
+import Card from "@/components/card";
+import { Text, Stack, Title, Center, Container, Button, Grid } from "@mantine/core";
 import { Disk, commands } from "@/lib";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import PageWrapper from "@/components/page-wrapper";
-import DiskNotFound from "@/features/metrics/components/disks/disk.notfound";
-import { Text, Stack, Title, Center, Container } from "@mantine/core";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
 
 interface DiskAnalyticsPageProps {}
 
@@ -46,7 +47,21 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   return (
     <PageWrapper name={id}>
-      <div>TODO: DiskAnalyticsPage {disk.name}</div>
+      <Grid>
+        <Grid.Col span={3}>
+          <Card>
+            <Title order={4}>Disk Information</Title>
+            <Button onClick={() => onCheckDisk(disk.mountPoint)} color="blue">
+              Click
+            </Button>
+          </Card>
+        </Grid.Col>
+        <Grid.Col span={9}>
+          <Card>
+            <Title order={4}>Disk Info</Title>
+          </Card>
+        </Grid.Col>
+      </Grid>
     </PageWrapper>
   );
 };
