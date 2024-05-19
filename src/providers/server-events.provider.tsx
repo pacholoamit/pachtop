@@ -1,8 +1,11 @@
-import useServerEventsStore from "@/hooks/useServerEventsStore";
-import { createContext } from "react";
-import { Cpu, Disk, GlobalCpu, Memory, Network, Process, ServerEvent, Swap, SysInfo } from "@/lib/types";
-import { VIEWABLE_ELEMENT_COUNT } from "@/contants";
-import useServerEventsEnumerableStore, { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
+import { createContext } from 'react';
+
+import { VIEWABLE_ELEMENT_COUNT } from '@/contants';
+import useServerEventsEnumerableStore, { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
+import useServerEventsStore from '@/hooks/useServerEventsStore';
+import {
+    Cpu, Disk, GlobalCpu, Memory, Network, Process, ServerEvent, Swap, SysInfo
+} from '@/lib/types';
 
 interface ServerEventsProviderProps {
   children: React.ReactNode;
@@ -35,7 +38,7 @@ const maxSize = VIEWABLE_ELEMENT_COUNT;
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
   const [sysInfo] = useServerEventsStore<SysInfo>(ServerEvent.SysInfo, { maxSize: 1 });
   const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus, { maxSize: 1 });
-  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks, { maxSize: 10 });
+  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks, { maxSize: 1 });
   const [processes] = useServerEventsStore<Process[]>(ServerEvent.Processes, { maxSize: 1 });
   const [globalCpu] = useServerEventsStore<GlobalCpu>(ServerEvent.GlobalCpu, { maxSize });
   const [memory] = useServerEventsStore<Memory>(ServerEvent.Memory, { maxSize });

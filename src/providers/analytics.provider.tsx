@@ -1,4 +1,4 @@
-import { PostHogProvider } from "posthog-js/react";
+import { PostHogProvider } from 'posthog-js/react';
 
 interface AnalyticsProviderProps {
   children: React.ReactNode;

@@ -1,8 +1,8 @@
-import useMediaQuery from "@/hooks/useMediaQuery";
-import logoWithText from "/logo-white.png";
-import logoOnly from "/logo-only.png";
+import logoOnly from '/logo-only.png';
+import logoWithText from '/logo-white.png';
 
-import { Image, Space } from "@mantine/core";
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { Image, Space } from '@mantine/core';
 
 const NavbarLogo = () => {
   const { isSmallerThanMd } = useMediaQuery();

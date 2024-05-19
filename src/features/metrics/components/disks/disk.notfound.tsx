@@ -1,4 +1,4 @@
-import { Container, Stack, Title, Text } from "@mantine/core";
+import { Container, Stack, Text, Title } from '@mantine/core';
 
 // TODO: maybe make this more generic later to be reused in other places?
 const DiskNotFound = () => {

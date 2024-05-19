@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from "@/layout";
-import DashboardPage from "@/features/metrics/pages/dashboard.page";
-import DisksPage from "@/features/metrics/pages/disks.page";
-import ProcessesPage from "@/features/processes/pages/processes.page";
-import SettingsPage from "@/features/settings/pages/settings.page";
-import DiskAnalyticsPage from "@/features/metrics/pages/disk-analytics.page";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import DashboardPage from '@/features/metrics/pages/dashboard.page';
+import DiskAnalyticsPage from '@/features/metrics/pages/disk-analytics.page';
+import DisksPage from '@/features/metrics/pages/disks.page';
+import ProcessesPage from '@/features/processes/pages/processes.page';
+import SettingsPage from '@/features/settings/pages/settings.page';
+import Layout from '@/layout';
 
 const AppRoutes: React.FC = () => {
   return (

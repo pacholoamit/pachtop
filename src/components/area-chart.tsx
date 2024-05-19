@@ -1,9 +1,9 @@
-import * as Highcharts from "highcharts/highstock";
-import HighchartsReact from "highcharts-react-official";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { useState } from "react";
-import { useViewportSize } from "@mantine/hooks";
-import { useMantineTheme } from "@mantine/core";
+import HighchartsReact from 'highcharts-react-official';
+import * as Highcharts from 'highcharts/highstock';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+
+import { useMantineTheme } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 
 export interface InitialAreaChartStateInput {
   title: {

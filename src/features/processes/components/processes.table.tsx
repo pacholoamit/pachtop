@@ -1,9 +1,9 @@
-import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { Process } from "@/lib";
-import { memo } from "react";
-import { Button } from "@mantine/core";
+import { DataTable, DataTableSortStatus } from 'mantine-datatable';
+import { memo } from 'react';
 
-import formatBytes from "@/features/metrics/utils/format-bytes";
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import { Process } from '@/lib';
+import { Button } from '@mantine/core';
 
 interface ProcessesTableProps {
   records: Process[];

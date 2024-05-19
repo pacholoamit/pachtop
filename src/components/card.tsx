@@ -1,4 +1,4 @@
-import { Card as MantineCard } from "@mantine/core";
+import { Card as MantineCard } from '@mantine/core';
 
 interface CardProps {
   children: React.ReactNode;

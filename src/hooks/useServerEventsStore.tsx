@@ -1,6 +1,7 @@
-import { listen } from "@tauri-apps/api/event";
-import { useEffect, useState } from "react";
-import { ServerEvent } from "@/lib/types";
+import { useEffect, useState } from 'react';
+
+import { ServerEvent } from '@/lib/types';
+import { listen } from '@tauri-apps/api/event';
 
 interface useServerEventsStoreInput {
   maxSize: number;

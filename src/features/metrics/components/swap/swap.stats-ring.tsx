@@ -1,10 +1,10 @@
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import StatsRing from "@/components/stats-ring";
-import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
-import React from "react";
+import React from 'react';
 
-import { IconCpu2, IconFile } from "@tabler/icons-react";
-import { useMantineTheme } from "@mantine/core";
+import StatsRing from '@/components/stats-ring';
+import formatOverallStats from '@/features/metrics/utils/format-overall-stats';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { useMantineTheme } from '@mantine/core';
+import { IconCpu2, IconFile } from '@tabler/icons-react';
 
 const SwapStatsRing: React.FC = ({}) => {
   const { swap } = useServerEventsContext();

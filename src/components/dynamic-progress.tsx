@@ -1,5 +1,6 @@
-import { DefaultMantineColor, MantineNumberSize, Progress, ProgressProps } from "@mantine/core";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from 'react';
+
+import { DefaultMantineColor, MantineNumberSize, Progress, ProgressProps } from '@mantine/core';
 
 export interface DynamicProgressRangeInput {
   from: number;

@@ -1,6 +1,7 @@
-import useServerEventsStore from "@/hooks/useServerEventsStore";
-import { useEffect, useState } from "react";
-import { ServerEvent } from "@/lib/types";
+import { useEffect, useState } from 'react';
+
+import useServerEventsStore from '@/hooks/useServerEventsStore';
+import { ServerEvent } from '@/lib/types';
 
 export interface Enumerable<T> {
   id: string;

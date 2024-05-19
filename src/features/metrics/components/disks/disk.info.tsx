@@ -1,24 +1,14 @@
+import drive from '/drive.png';
+import { useNavigate } from 'react-router-dom';
+
+import DynamicProgress, { DynamicProgressRangeInput } from '@/components/dynamic-progress';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
+import { commands, Disk } from '@/lib';
 import {
-  ActionIcon,
-  Badge,
-  Card,
-  Group,
-  Stack,
-  Image,
-  Text,
-  createStyles,
-  Button,
-  Center,
-  Title,
-  Popover,
-} from "@mantine/core";
-import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
-import { Disk, commands } from "@/lib";
-import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
-import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
-import drive from "/drive.png";
-import formatBytes from "@/features/metrics/utils/format-bytes";
+    ActionIcon, Badge, Button, Card, Center, createStyles, Group, Image, Popover, Stack, Text, Title
+} from '@mantine/core';
+import { IconAlertCircle, IconFolderOpen } from '@tabler/icons-react';
 
 interface DiskInfoProps {
   disk: Enumerable<Disk>;

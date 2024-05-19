@@ -1,9 +1,9 @@
-import Card from "@/components/card";
+import { useEffect } from 'react';
 
-import AreaChart, { useAreaChartState } from "@/components/area-chart";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { useEffect } from "react";
-import { useMantineTheme } from "@mantine/core";
+import AreaChart, { useAreaChartState } from '@/components/area-chart';
+import Card from '@/components/card';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { useMantineTheme } from '@mantine/core';
 
 // TODO: Remove Luxon and ChartJS
 // TODO: Make timestamp work automatically

@@ -1,6 +1,7 @@
-import Navbar from "@/layout/components/navbar";
-import { AppShell, Card, useMantineTheme, Styles, Space } from "@mantine/core";
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
+
+import Navbar from '@/layout/components/navbar';
+import { AppShell, Card, Space, Styles, useMantineTheme } from '@mantine/core';
 
 const Layout: React.FC = () => {
   const theme = useMantineTheme();

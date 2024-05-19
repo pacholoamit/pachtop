@@ -1,5 +1,5 @@
-import GradientRadialChart from "@/components/gradient-radial-chart";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
+import GradientRadialChart from '@/components/gradient-radial-chart';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
 
 const SwapRadialChart = () => {
   const { swap } = useServerEventsContext();

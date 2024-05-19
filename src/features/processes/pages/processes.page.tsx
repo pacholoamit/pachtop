@@ -1,14 +1,14 @@
-import { DataTableSortStatus } from "mantine-datatable";
-import { TextInput } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
-import { Process } from "@/lib";
-import { useState, useEffect, useMemo } from "react";
+import sortBy from 'lodash.sortby';
+import { DataTableSortStatus } from 'mantine-datatable';
+import { useEffect, useMemo, useState } from 'react';
 
-import sortBy from "lodash.sortby";
-import KillProcessVerification from "@/features/processes/components/processes.kill-verification";
-import ProcessesTable from "@/features/processes/components/processes.table";
-import PageWrapper from "@/components/page-wrapper";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
+import PageWrapper from '@/components/page-wrapper';
+import KillProcessVerification from '@/features/processes/components/processes.kill-verification';
+import ProcessesTable from '@/features/processes/components/processes.table';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { Process } from '@/lib';
+import { TextInput } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 
 const ProcessesPage = () => {
   const { processes } = useServerEventsContext();

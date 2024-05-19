@@ -1,10 +1,10 @@
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import StatsRing from "@/components/stats-ring";
-import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
-import React from "react";
+import React from 'react';
 
-import { IconChartArea, IconCpu2 } from "@tabler/icons-react";
-import { useMantineTheme } from "@mantine/core";
+import StatsRing from '@/components/stats-ring';
+import formatOverallStats from '@/features/metrics/utils/format-overall-stats';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { useMantineTheme } from '@mantine/core';
+import { IconChartArea, IconCpu2 } from '@tabler/icons-react';
 
 const MemoryStatsRing: React.FC = ({}) => {
   const { memory } = useServerEventsContext();

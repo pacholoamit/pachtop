@@ -1,21 +1,11 @@
+import Card from '@/components/card';
+import DynamicProgress, { DynamicProgressRangeInput } from '@/components/dynamic-progress';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import { commands, Disk, DiskItem } from '@/lib';
 import {
-  DefaultMantineColor,
-  Title,
-  Space,
-  Stack,
-  Group,
-  Badge,
-  Text,
-  Center,
-  ActionIcon,
-  Button,
-} from "@mantine/core";
-import { Disk, DiskItem, commands } from "@/lib";
-
-import Card from "@/components/card";
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
-import { IconAnalyze, IconChartArcs, IconFolderOpen } from "@tabler/icons-react";
+    ActionIcon, Badge, Button, Center, DefaultMantineColor, Group, Space, Stack, Text, Title
+} from '@mantine/core';
+import { IconAnalyze, IconChartArcs, IconFolderOpen } from '@tabler/icons-react';
 
 interface DiskInformationAnalyticsCardProps {
   disk: Disk;
