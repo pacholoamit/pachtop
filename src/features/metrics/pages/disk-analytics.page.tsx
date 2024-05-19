@@ -61,6 +61,7 @@ const MemoizedTreemapChart = React.memo(TreemapChart, (prevProps, nextProps) =>
   deepCompare(prevProps.options, nextProps.options)
 );
 
+// TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   // TODO: Use Stores to make this more performant
   const { disks } = useServerEventsContext();
@@ -78,13 +79,6 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     yAxis: {
       labels: {
         formatter: (x) => formatBytes(x.value as number),
-      },
-    },
-    tooltip: {
-      pointFormatter: function () {
-        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
-          this.y as number
-        )}</b><br/>`;
       },
     },
   });
@@ -105,24 +99,35 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
     setIsLoading(false);
     // Populate File Explorer
-    setDiskAnalysis(
-      flattenTree({
-        name: disk.mountPoint,
-        children: item as any,
-      })
-    );
+    const flattened = flattenTree({
+      name: disk.mountPoint,
+      children: item as any, //TODO: Crutch fix this later
+    });
+    setDiskAnalysis(flattened);
 
+    console.log(flattened);
+
+    const sample = flattened.slice(-1000);
     // Populate Treemap
     setChartOptions({
       series: [
         {
           type: "treemap",
           layoutAlgorithm: "squarified",
-          data: item.map((i) => {
+          animationLimit: 1000,
+
+          tooltip: {
+            format: "{point.name}: <b>{point.value}</b>",
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          data: sample.map((i) => {
             console.log(i);
             return {
-              name: i?.name,
-              value: i?.metadata?.size ?? 0,
+              name: (i?.name as string) || "unknown",
+              parent: (i?.parent as string) || "unknown",
+              value: (i?.metadata?.size as number) ?? 0,
             };
           }),
         },

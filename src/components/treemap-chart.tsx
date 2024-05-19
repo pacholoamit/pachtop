@@ -13,13 +13,13 @@ export interface InitialTreemapChartStateInput {
     text: string;
   };
   series?: Highcharts.SeriesOptionsType[];
-  yAxis: {
+  yAxis?: {
     labels: {
       formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
     };
     max?: number;
   };
-  tooltip: {
+  tooltip?: {
     pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
   };
   legend?: boolean;
@@ -32,6 +32,14 @@ export const useTreemapChartState = (
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     accessibility: {
       enabled: true,
+    },
+    chart: {
+      backgroundColor: "transparent",
+    },
+    boost: {
+      enabled: true,
+      useGPUTranslations: true,
+      allowForce: true,
     },
     title: {
       text: opts.title.text,
