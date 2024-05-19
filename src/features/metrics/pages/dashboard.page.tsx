@@ -20,22 +20,21 @@ import PageWrapper from "@/components/page-wrapper";
 
 /* <CpusBarChart /> */
 // <SwapRadialChart /> */
-/* <GlobalCpuStatsRing /> */
 /* <SystemInfo /> */
 
 const StatsRings = () => {
   return (
     <>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <GlobalCpuStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <MemoryStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <SwapStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <DiskStatsRing />
       </Grid.Col>
     </>
@@ -58,10 +57,10 @@ const MemorySection = () => {
 const CpuSection = () => {
   return (
     <>
-      <Grid.Col md={7.5} sm={12}>
+      <Grid.Col lg={7.5} md={12}>
         <GlobalCpuAreaChart />
       </Grid.Col>
-      <Grid.Col md={4.5} sm={12}>
+      <Grid.Col lg={4.5} md={12}>
         <CpusBarChart />
       </Grid.Col>
     </>
@@ -89,12 +88,6 @@ const DashboardPage = () => {
         <CpuSection />
         <MemorySection />
         <DisksSection />
-        {/* <Grid.Col md={6} sm={12}>
-          <GlobalCpuAreaChart />
-        </Grid.Col>
-        <Grid.Col md={6} sm={12}>
-          <NetworksAreaChart />
-        </Grid.Col> */}
       </Grid>
     </PageWrapper>
   );
