@@ -35,7 +35,7 @@ const maxSize = VIEWABLE_ELEMENT_COUNT;
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
   const [sysInfo] = useServerEventsStore<SysInfo>(ServerEvent.SysInfo, { maxSize: 1 });
   const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus, { maxSize: 1 });
-  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks, { maxSize: 1 });
+  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks, { maxSize: 10 });
   const [processes] = useServerEventsStore<Process[]>(ServerEvent.Processes, { maxSize: 1 });
   const [globalCpu] = useServerEventsStore<GlobalCpu>(ServerEvent.GlobalCpu, { maxSize });
   const [memory] = useServerEventsStore<Memory>(ServerEvent.Memory, { maxSize });

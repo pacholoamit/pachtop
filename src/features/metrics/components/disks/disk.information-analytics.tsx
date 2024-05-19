@@ -1,9 +1,10 @@
-import { DefaultMantineColor, Title, Space, Stack, Group, Badge, Text, Center } from "@mantine/core";
-import { Disk } from "@/lib";
+import { DefaultMantineColor, Title, Space, Stack, Group, Badge, Text, Center, ActionIcon } from "@mantine/core";
+import { Disk, commands } from "@/lib";
 
 import Card from "@/components/card";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
+import { IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInformationAnalyticsCardProps {
   disk: Disk;
@@ -62,12 +63,18 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
       label: disk.usedPercentage + "%",
     },
   ];
+  const showDirectory = async () => {
+    await commands.showInFolder(disk.mountPoint);
+  };
 
   return (
-    <Card height="100%">
-      <Title order={4}>Disk Information</Title>
+    <Card height="350px">
+      <Group position="apart">
+        <Title order={4}>Disk Information</Title>
+      </Group>
       <Space h={8} />
-      <Stack justify="space-between">
+
+      <Stack spacing={"lg"}>
         <Stack spacing={3}>
           {data.map((d, i) => (
             <Group key={i} position="apart">
@@ -80,6 +87,9 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
             </Group>
           ))}
         </Stack>
+        <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
+          <IconFolderOpen stroke={1.5} />
+        </ActionIcon>
         <DynamicProgress size={34} range={range} sections={sections} />
       </Stack>
     </Card>
