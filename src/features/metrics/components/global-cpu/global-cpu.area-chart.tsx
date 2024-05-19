@@ -43,7 +43,7 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
   }, [globalCpu]);
 
   return (
-    <Card style={{ height: "420px" }}>
+    <Card style={{ height: "410px" }}>
       <AreaChart options={chartOptions} />
     </Card>
   );

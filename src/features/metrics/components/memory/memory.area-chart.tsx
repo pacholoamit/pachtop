@@ -40,7 +40,7 @@ const MemoryAreaChart: React.FC = ({}) => {
   }, [memory]);
 
   return (
-    <Card style={{ height: "420px" }}>
+    <Card style={{ height: "410px" }}>
       <AreaChart options={chartOptions} />
     </Card>
   );

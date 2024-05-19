@@ -2,10 +2,10 @@ import * as Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useState } from "react";
-import { useColorScheme, useViewportSize } from "@mantine/hooks";
+import { useViewportSize } from "@mantine/hooks";
 import { useMantineTheme } from "@mantine/core";
 
-export interface InitialAreaChatStateInput {
+export interface InitialAreaChartStateInput {
   title: {
     text: string;
   };
@@ -19,10 +19,11 @@ export interface InitialAreaChatStateInput {
   tooltip: {
     pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
   };
+  legend?: boolean;
 }
 
 export const useAreaChartState = (
-  opts: InitialAreaChatStateInput
+  opts: InitialAreaChartStateInput
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
@@ -31,7 +32,7 @@ export const useAreaChartState = (
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
         fontWeight: "bold",
-        fontSize: "18px",
+        fontSize: "16px",
         color: "#dce1e8",
       },
     },
@@ -42,6 +43,7 @@ export const useAreaChartState = (
       handles: {
         backgroundColor: other.charts.area.default.navigator.handles.backgroundColor,
       },
+      height: 30,
     },
 
     plotOptions: {
@@ -63,6 +65,7 @@ export const useAreaChartState = (
       gridLineColor: other.charts.area.default.gridLineColor,
       lineColor: other.charts.area.default.lineColor,
       labels: {
+        // enabled: false,
         step: 2,
         format: "{value:%I:%M %p}",
         style: {
@@ -74,7 +77,7 @@ export const useAreaChartState = (
       itemStyle: {
         color: other.charts.area.default.legend.color,
       },
-      enabled: true,
+      enabled: opts?.legend ?? false,
     },
     time: {
       useUTC: false,
@@ -115,6 +118,8 @@ export const useAreaChartState = (
     },
     // This is the calendar thing on the top right
     rangeSelector: {
+      floating: true,
+
       labelStyle: {
         color: other.charts.area.default.rangeSelector.labelStyle.color,
         backgroundColor: other.charts.area.default.rangeSelector.labelStyle.backgroundColor,

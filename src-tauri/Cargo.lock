@@ -81,13 +81,14 @@ checksum = "25bdb32cbbdce2b519a9cd7df3a678443100e265d5e25ca763b7572a5104f5f3"
 
 [[package]]
 name = "app"
-version = "0.7.4"
+version = "0.8.0"
 dependencies = [
  "chrono",
  "cocoa 0.25.0",
  "hex_color",
  "log",
  "objc",
+ "rayon",
  "serde",
  "serde_json",
  "sysinfo",
@@ -99,6 +100,8 @@ dependencies = [
  "tauri-plugin-window-state",
  "tokio",
  "ts-rs",
+ "winapi",
+ "winapi-util",
  "windows 0.52.0",
  "winver",
 ]
