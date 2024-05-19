@@ -5,12 +5,15 @@ import { useParams } from "react-router-dom";
 
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
+import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { commands, Disk } from "@/lib";
 import { Grid, LoadingOverlay, Stack, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
+import formatBytes from "../utils/format-bytes";
 
 const FileExplorerNoData = () => {
   return (
@@ -54,6 +57,9 @@ const deepCompare = <A, B>(a: A, b: B) => {
 const MemoizedDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView, (prevProps, nextProps) =>
   deepCompare(prevProps.data, nextProps.data)
 );
+const MemoizedTreemapChart = React.memo(TreemapChart, (prevProps, nextProps) =>
+  deepCompare(prevProps.options, nextProps.options)
+);
 
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   // TODO: Use Stores to make this more performant
@@ -61,9 +67,27 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
   const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
-
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
+
+  const [chartOptions, setChartOptions] = useTreemapChartState({
+    title: {
+      text: `Disk Usage`,
+    },
+
+    yAxis: {
+      labels: {
+        formatter: (x) => formatBytes(x.value as number),
+      },
+    },
+    tooltip: {
+      pointFormatter: function () {
+        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
+          this.y as number
+        )}</b><br/>`;
+      },
+    },
+  });
 
   useEffect(() => {
     if (!disks) return;
@@ -78,6 +102,9 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     setIsLoading(true);
 
     const item = await commands.deepScan({ path: disk.mountPoint });
+
+    setIsLoading(false);
+    // Populate File Explorer
     setDiskAnalysis(
       flattenTree({
         name: disk.mountPoint,
@@ -85,8 +112,25 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
       })
     );
 
-    setIsLoading(false);
-  }, [disk.mountPoint]); // Adding disk.mountPoint as dependency
+    // Populate Treemap
+    setChartOptions({
+      series: [
+        {
+          type: "treemap",
+          layoutAlgorithm: "squarified",
+          data: item.map((i) => {
+            console.log(i);
+            return {
+              name: i?.name,
+              value: i?.metadata?.size ?? 0,
+            };
+          }),
+        },
+      ],
+    });
+
+    console.log("Done");
+  }, [disk.mountPoint]);
 
   return (
     <PageWrapper name={id}>
@@ -104,7 +148,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col span={12}>
           <Card height="560px">
-            <Text>Chart goes here</Text>
+            <MemoizedTreemapChart options={chartOptions} />
           </Card>
         </Grid.Col>
       </Grid>
