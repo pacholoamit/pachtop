@@ -2,77 +2,12 @@ import useServerEventsContext from "@/hooks/useServerEventsContext";
 import PageWrapper from "@/components/page-wrapper";
 import DiskNotFound from "@/features/metrics/components/disks/disk.notfound";
 import Card from "@/components/card";
-import {
-  Text,
-  Stack,
-  Title,
-  Center,
-  Container,
-  Button,
-  Grid,
-  Group,
-  Badge,
-  Space,
-  DefaultMantineColor,
-} from "@mantine/core";
+import { Title, Grid } from "@mantine/core";
 import { Disk, commands } from "@/lib";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import formatBytes from "../utils/format-bytes";
 
-const DiskInformationAnalyticsCard = ({ disk }: { disk: Disk }) => {
-  const data: { label: string; value: string; color: DefaultMantineColor }[] = [
-    {
-      label: "Disk Type",
-      value: disk.diskType,
-      color: "blue",
-    },
-    {
-      label: "File System",
-      value: disk.fileSystem,
-      color: "cyan",
-    },
-    {
-      label: "Removable",
-      value: disk.isRemovable ? "Yes" : "No",
-      color: "lime",
-    },
-    {
-      label: "Free Space",
-      value: formatBytes(disk.free),
-      color: "green",
-    },
-    {
-      label: "Used Space",
-      value: formatBytes(disk.used),
-      color: "red",
-    },
-    {
-      label: "Total Space",
-      value: formatBytes(disk.total),
-      color: "gray",
-    },
-  ];
-
-  return (
-    <Card>
-      <Title order={4}>Disk Information</Title>
-      <Space h={8} />
-      <Stack spacing={3}>
-        {data.map((d, i) => (
-          <Group key={i} position="apart">
-            <Text c="dimmed" size={"sm"}>
-              {d.label}
-            </Text>
-            <Badge size="sm" variant="light" color={d.color}>
-              {d.value}
-            </Badge>
-          </Group>
-        ))}
-      </Stack>
-    </Card>
-  );
-};
+import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytcs";
 
 interface DiskAnalyticsPageProps {}
 
