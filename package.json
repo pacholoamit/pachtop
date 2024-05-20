@@ -41,7 +41,7 @@
     "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.13",
+    "@tauri-apps/cli": "^1.5.14",
     "@types/lodash.sortby": "^4.7.9",
     "@types/node": "^20.12.11",
     "@types/react": "^18.3.2",
