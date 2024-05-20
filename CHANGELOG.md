@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
-## 0.8.1
+## 0.9.0
+- Added Disk Analysis feature
+- Added File explorer feature
 - Improve internal theme design so users can build their own themes in the future*
 
 ## 0.8.0
