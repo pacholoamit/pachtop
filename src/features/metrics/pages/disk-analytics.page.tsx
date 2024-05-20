@@ -97,10 +97,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     const item = await commands.deepScan({ path: disk.mountPoint });
     setIsLoading(false);
     // Populate File Explorer
-    const flattened = flattenTree({
-      name: disk.mountPoint,
-      children: item as any, //TODO: Crutch fix this later
-    });
+    const flattened = flattenTree(item as any);
     setDiskAnalysis(flattened);
 
     // TODO: Move to rust?
@@ -108,8 +105,8 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
       return (b.metadata?.size as number) - (a.metadata?.size as number);
     });
 
-    // First 500
-    const sample = stortedBySize.slice(0, 1000);
+    // Remove roout node and get top 500
+    const sample = stortedBySize.slice(1, 500);
 
     const data = sample.map((i) => {
       const id = i.id.toString();
