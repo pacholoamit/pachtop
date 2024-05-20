@@ -1,7 +1,10 @@
-import useMediaQuery from "@/hooks/useMediaQuery";
-import { IconLayoutDashboard, IconServer, IconArticle, IconCpu, IconSettings } from "@tabler/icons-react";
-import { UnstyledButton, Group, ThemeIcon, Text, MediaQuery, MantineTheme } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { Group, MantineTheme, MediaQuery, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
+import {
+    IconArticle, IconCpu, IconLayoutDashboard, IconServer, IconSettings
+} from '@tabler/icons-react';
 
 interface NavbarOptionProps {
   icon: React.ReactNode;

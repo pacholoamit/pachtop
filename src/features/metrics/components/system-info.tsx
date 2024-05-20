@@ -1,6 +1,6 @@
-import Card from "@/components/card";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { ScrollArea, Space, Text } from "@mantine/core";
+import Card from '@/components/card';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { ScrollArea, Space, Text } from '@mantine/core';
 
 const SystemInfo = () => {
   const { globalCpu, sysInfo } = useServerEventsContext();

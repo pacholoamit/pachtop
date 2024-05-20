@@ -1,5 +1,6 @@
-import ReactApexChart from "react-apexcharts";
-import Card from "@/components/card";
+import ReactApexChart from 'react-apexcharts';
+
+import Card from '@/components/card';
 
 interface GradientRadialChartProps {
   series: ApexAxisChartSeries | ApexNonAxisChartSeries;

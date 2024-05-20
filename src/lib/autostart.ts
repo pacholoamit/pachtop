@@ -1,4 +1,4 @@
-import { enable, isEnabled, disable } from "tauri-plugin-autostart-api";
+import { disable, enable, isEnabled } from 'tauri-plugin-autostart-api';
 
 export const enableAutostart = async () => {
   if (await isEnabled()) {

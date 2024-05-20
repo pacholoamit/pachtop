@@ -1,10 +1,12 @@
-import { MantineProvider, MantineThemeOverride } from "@mantine/core";
-import { createContext, useEffect, useState } from "react";
-import { setWindowColor } from "@/lib";
-import store from "@/lib/store";
-import { DEFAULT_TITLEBAR_COLOR } from "@/contants";
-import "non.geist";
-import "non.geist/mono";
+import 'non.geist';
+import 'non.geist/mono';
+
+import { createContext, useEffect, useState } from 'react';
+
+import { DEFAULT_TITLEBAR_COLOR } from '@/contants';
+import { setWindowColor } from '@/lib';
+import store from '@/lib/store';
+import { MantineProvider, MantineThemeOverride } from '@mantine/core';
 
 interface ThemeProviderProps {
   children: React.ReactNode;

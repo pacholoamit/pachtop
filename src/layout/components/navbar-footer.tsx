@@ -1,6 +1,7 @@
-import { Space, Text, Divider, MediaQuery } from "@mantine/core";
-import { getVersion } from "@tauri-apps/api/app";
-import React from "react";
+import React from 'react';
+
+import { Divider, MediaQuery, Space, Text } from '@mantine/core';
+import { getVersion } from '@tauri-apps/api/app';
 
 const NavbarFooter = () => {
   const [version, setVersion] = React.useState<string>("");

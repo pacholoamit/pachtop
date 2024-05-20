@@ -1,9 +1,9 @@
-import * as Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { useState } from "react";
-import { useViewportSize } from "@mantine/hooks";
+import * as Highcharts from "highcharts/highstock";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+
 import { useMantineTheme } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 
 export interface InitialAreaChartStateInput {
   title: {
@@ -27,6 +27,9 @@ export const useAreaChartState = (
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
+    accessibility: {
+      enabled: true,
+    },
     title: {
       text: opts.title.text,
       style: {

@@ -1,0 +1,32 @@
+.tree {
+  list-style: none;
+  margin: 0;
+  padding: 20px;
+  font-family: 'Geist Mono Variable','Geist Variable';
+}
+ .tree-node,
+ .tree-node-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ .tree-branch-wrapper,
+ .tree-node__leaf {
+  outline: none;
+}
+
+ .tree-node--focused {
+  outline-color: rgb(77, 144, 254);
+  outline-style: auto;
+  outline-width: 2px;
+  display: block;
+}
+
+ .tree-node__branch {
+  display: block;
+}
+
+ .tree-node {
+  cursor: pointer;
+}

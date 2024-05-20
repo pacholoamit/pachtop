@@ -1,4 +1,4 @@
-import { showNotification } from "@mantine/notifications";
+import { showNotification } from '@mantine/notifications';
 
 interface NotificationOpts {
   title: string;
