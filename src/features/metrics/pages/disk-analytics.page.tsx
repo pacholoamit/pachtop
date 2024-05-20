@@ -10,8 +10,7 @@ import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.dire
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { commands, Disk } from "@/lib";
-import { Grid, LoadingOverlay, Stack, Text, Title } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
 import formatBytes from "../utils/format-bytes";
 
@@ -69,6 +68,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const [disk, setDisk] = React.useState<Disk>(defaultDisk);
   const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const { colors } = useMantineTheme();
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
@@ -94,9 +94,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   const startDiskAnalysis = useCallback(async () => {
     setIsLoading(true);
-
     const item = await commands.deepScan({ path: disk.mountPoint });
-
     setIsLoading(false);
     // Populate File Explorer
     const flattened = flattenTree({
@@ -130,8 +128,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
       };
     });
 
-    console.log(data);
-    setChartOptions({
+    setChartOptions((prev) => ({
       series: [
         {
           type: "treemap",
@@ -153,6 +150,8 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
               },
               borderWidth: 3,
               layoutAlgorithm: "squarified",
+              color: colors.dark[6], // TODO: Create own color for this
+              borderColor: colors.dark[3], // TODO: Create own color for this
             },
             {
               level: 1,
@@ -161,12 +160,14 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
                   fontSize: "14px",
                 },
               },
+              color: colors.dark[6], // TODO: Create own color for this
+              borderColor: colors.dark[3], // TODO: Create own color for this
             },
           ],
           data: data as any, //TODO: Crutch fix this later
         },
       ],
-    });
+    }));
 
     console.log("Done");
   }, [disk.mountPoint]);

@@ -1,13 +1,14 @@
 import Highcharts, { Point } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsTreemap from "highcharts/modules/treemap";
+import DarkUnica from "highcharts/themes/dark-unica";
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
 HighchartsTreemap(Highcharts);
+DarkUnica(Highcharts);
 
 export interface InitialTreemapChartStateInput {
   title: {
@@ -32,7 +33,6 @@ interface FormatterScope extends Point {
 export const useTreemapChartState = (
   opts: InitialTreemapChartStateInput
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
-  const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     accessibility: {
       enabled: true,
@@ -58,14 +58,53 @@ export const useTreemapChartState = (
       text: opts.title.text,
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
-        fontWeight: "bold",
-        fontSize: "16px",
-        color: "#dce1e8",
+        fontWeight: "700",
+        fontSize: "20",
+        color: "#c1c2c5",
       },
     },
     credits: {
       enabled: false,
     },
+
+    series: [
+      {
+        type: "treemap",
+        layoutAlgorithm: "squarified",
+        animationLimit: 1000,
+        allowTraversingTree: true,
+        allowPointSelect: true,
+        accessibility: {
+          exposeAsGroupOnly: true,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        levels: [
+          {
+            level: 1,
+            dataLabels: {
+              enabled: true,
+            },
+            borderWidth: 3,
+            layoutAlgorithm: "squarified",
+            color: "red",
+            borderColor: "black",
+          },
+          {
+            level: 1,
+            dataLabels: {
+              style: {
+                fontSize: "14px",
+              },
+            },
+            borderColor: "black",
+            color: "red",
+          },
+        ],
+        data: [],
+      },
+    ],
   });
 
   return [chartOptions, setChartOptions];
