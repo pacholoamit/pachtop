@@ -9,6 +9,7 @@ use tauri::{State, Window};
 use crate::dirstat::{DiskItem, DiskItemMetadata, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
+use rayon::prelude::*;
 
 pub struct AppState(Arc<Mutex<App>>);
 
@@ -132,40 +133,62 @@ pub fn delete_folder(path: String) {
 }
 
 // Result<Vec<FileEntry>, String>
+
 #[tauri::command]
-pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
+pub async fn deep_scan(path: String) -> Result<DiskItem, String> {
+    let time = std::time::Instant::now();
     dbg!("Scanning folder:", &path);
     let path_buf = PathBuf::from(&path);
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 
     let analysed = match file_info {
         FileInfo::Directory { volume_id } => {
-            let sub_entries = fs::read_dir(path_buf)
-                .map_err(|e| e.to_string())?
-                .filter_map(Result::ok)
-                .collect::<Vec<_>>();
-
-            let mut sub_items = sub_entries
-                .par_iter()
-                .filter_map(|entry| DiskItem::from_analyze(&entry.path(), true, volume_id).ok())
-                .collect::<Vec<_>>();
-
-            sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
-
-            sub_items
+            DiskItem::from_analyze(&path_buf, true, volume_id).map_err(|e| e.to_string())?
         }
-        FileInfo::File { size, .. } => vec![DiskItem {
-            name: path_buf
-                .file_name()
-                .unwrap_or(OsStr::new("."))
-                .to_string_lossy()
-                .to_string(),
-            metadata: DiskItemMetadata { size },
-            children: None,
-        }],
+        _ => return Err("Not a directory".into()),
     };
 
     dbg!("Scanning complete");
+    dbg!("Time taken:", time.elapsed().as_secs_f32());
 
     Ok(analysed)
 }
+
+// #[tauri::command]  355.9603 seconds
+// pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
+//     let time = std::time::Instant::now();
+//     dbg!("Scanning folder:", &path);
+//     let path_buf = PathBuf::from(&path);
+//     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
+
+//     let analysed = match file_info {
+//         FileInfo::Directory { volume_id } => {
+//             let sub_entries = fs::read_dir(path_buf)
+//                 .map_err(|e| e.to_string())?
+//                 .filter_map(Result::ok)
+//                 .collect::<Vec<_>>();
+
+//             let mut sub_items = sub_entries
+//                 .par_iter() // Use rayon's parallel iterator
+//                 .filter_map(|entry| DiskItem::from_analyze(&entry.path(), true, volume_id).ok())
+//                 .collect::<Vec<_>>();
+
+//             sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
+
+//             sub_items
+//         }
+//         FileInfo::File { size, .. } => vec![DiskItem {
+//             name: path_buf
+//                 .file_name()
+//                 .unwrap_or(OsStr::new("."))
+//                 .to_string_lossy()
+//                 .to_string(),
+//             metadata: DiskItemMetadata { size },
+//             children: None,
+//         }],
+//     };
+
+//     dbg!("Scanning complete");
+//     dbg!("Time taken:", time.elapsed().as_secs_f32());
+//     Ok(analysed)
+// }
