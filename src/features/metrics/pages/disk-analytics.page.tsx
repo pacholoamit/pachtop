@@ -105,31 +105,63 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     });
     setDiskAnalysis(flattened);
 
-    console.log(flattened);
+    // TODO: Move to rust?
+    const stortedBySize = flattened.sort((a, b) => {
+      return (b.metadata?.size as number) - (a.metadata?.size as number);
+    });
 
-    const sample = flattened.slice(-1000);
-    // Populate Treemap
+    // First 500
+    const sample = stortedBySize.slice(0, 1000);
+
+    const data = sample.map((i) => {
+      if (!i.parent) {
+        return {
+          id: i?.id.toString(),
+          name: i?.name as string,
+          value: (i?.metadata?.size as number) ?? 0,
+        };
+      }
+      return {
+        id: i?.id.toString(),
+        name: (i?.name as string) || "unknown",
+        parent: i?.parent?.toString() || undefined,
+        value: (i?.metadata?.size as number) ?? 0,
+      };
+    });
+
+    console.log(data);
     setChartOptions({
       series: [
         {
           type: "treemap",
           layoutAlgorithm: "squarified",
           animationLimit: 1000,
-
-          tooltip: {
-            format: "{point.name}: <b>{point.value}</b>",
+          allowTraversingTree: true,
+          accessibility: {
+            exposeAsGroupOnly: true,
           },
           dataLabels: {
             enabled: false,
           },
-          data: sample.map((i) => {
-            console.log(i);
-            return {
-              name: (i?.name as string) || "unknown",
-              parent: (i?.parent as string) || "unknown",
-              value: (i?.metadata?.size as number) ?? 0,
-            };
-          }),
+          levels: [
+            {
+              level: 1,
+              dataLabels: {
+                enabled: true,
+              },
+              borderWidth: 3,
+              layoutAlgorithm: "squarified",
+            },
+            {
+              level: 1,
+              dataLabels: {
+                style: {
+                  fontSize: "14px",
+                },
+              },
+            },
+          ],
+          data,
         },
       ],
     });

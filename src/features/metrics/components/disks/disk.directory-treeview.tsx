@@ -37,7 +37,6 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
         multiSelect
         data={data}
         nodeRenderer={({ element, isBranch, isExpanded, getNodeProps, level, handleExpand }) => {
-          console.log("Render");
           return (
             <Group position="apart">
               <div {...getNodeProps({ onClick: handleExpand })} style={{ paddingLeft: 20 * (level - 1) }}>
