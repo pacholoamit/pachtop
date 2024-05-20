@@ -54,21 +54,23 @@ impl DiskItem {
                     .filter_map(Result::ok)
                     .collect::<Vec<_>>();
 
-                let mut sub_items = sub_entries
-                    .par_iter()
+                let sub_items: Vec<DiskItem> = sub_entries
+                    .into_par_iter()
                     .filter_map(|entry| {
                         DiskItem::from_analyze(&entry.path(), apparent, root_dev).ok()
                     })
-                    .collect::<Vec<_>>();
+                    .collect();
 
-                sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
+                let mut sorted_sub_items = sub_items;
+                sorted_sub_items
+                    .sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
 
                 Ok(DiskItem {
                     name,
                     metadata: DiskItemMetadata {
-                        size: sub_items.iter().map(|di| di.metadata.size).sum(),
+                        size: sorted_sub_items.iter().map(|di| di.metadata.size).sum(),
                     },
-                    children: Some(sub_items),
+                    children: Some(sorted_sub_items),
                 })
             }
             FileInfo::File { size, .. } => Ok(DiskItem {
