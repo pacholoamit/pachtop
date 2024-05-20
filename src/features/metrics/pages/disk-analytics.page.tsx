@@ -114,18 +114,19 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     const sample = stortedBySize.slice(0, 1000);
 
     const data = sample.map((i) => {
+      const id = i.id.toString();
+      const name = i.name || "unknown";
+      const value = i.metadata?.size ?? 0;
+
       if (!i.parent) {
-        return {
-          id: i?.id.toString(),
-          name: i?.name as string,
-          value: (i?.metadata?.size as number) ?? 0,
-        };
+        return { id, name, value };
       }
+
       return {
-        id: i?.id.toString(),
-        name: (i?.name as string) || "unknown",
-        parent: i?.parent?.toString() || undefined,
-        value: (i?.metadata?.size as number) ?? 0,
+        id,
+        name,
+        parent: i.parent.toString(),
+        value,
       };
     });
 
@@ -137,6 +138,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
           layoutAlgorithm: "squarified",
           animationLimit: 1000,
           allowTraversingTree: true,
+          allowPointSelect: true,
           accessibility: {
             exposeAsGroupOnly: true,
           },
@@ -161,7 +163,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
               },
             },
           ],
-          data,
+          data: data as any, //TODO: Crutch fix this later
         },
       ],
     });
