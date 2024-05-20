@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use tauri::{State, Window};
 
-use crate::dirstat::{DiskItem, FileInfo};
+use crate::dirstat::{DiskItem, DiskItemMetadata, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
 
@@ -150,7 +150,7 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
                 .filter_map(|entry| DiskItem::from_analyze(&entry.path(), true, volume_id).ok())
                 .collect::<Vec<_>>();
 
-            sub_items.sort_unstable_by(|a, b| a.disk_size.cmp(&b.disk_size).reverse());
+            sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
 
             sub_items
         }
@@ -160,7 +160,7 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
                 .unwrap_or(OsStr::new("."))
                 .to_string_lossy()
                 .to_string(),
-            disk_size: size,
+            metadata: DiskItemMetadata { size },
             children: None,
         }],
     };
@@ -169,57 +169,3 @@ pub async fn deep_scan(path: String) -> Result<Vec<DiskItem>, String> {
 
     Ok(analysed)
 }
-
-// #[tauri::command]
-// pub fn deep_scan(path: String) -> String {
-//     dbg!("Scanning folder", &path);
-//     "Hello from Rust!".to_string()
-// }
-// #[tauri::command]
-// pub fn deep_scan(path: String) -> Result<Vec<FileEntry>, String> {
-//     dbg!("Scanning folder:", &path);
-
-//     let mut files: Vec<FileEntry> = Vec::new();
-//     let path = PathBuf::from(&path);
-
-//     if path.exists() {
-//         if path.is_dir() {
-//             dbg!("Path is a directory");
-//             for entry in fs::read_dir(&path).map_err(|e| e.to_string())? {
-//                 let entry = entry.map_err(|e| e.to_string())?;
-//                 let path = entry.path();
-//                 if path.is_dir() {
-//                     // Recursively check the subdirectory and merge the result
-//                     let sub_dir_files = deep_scan(path.display().to_string())?;
-//                     files.extend(sub_dir_files);
-//                 } else if path.is_file() {
-//                     let metadata = fs::metadata(&path).map_err(|e| e.to_string())?;
-//                     let file_size = metadata.len();
-
-//                     let file_entry = FileEntry {
-//                         path: path.to_str().unwrap().to_string(),
-//                         file_size,
-//                     };
-
-//                     dbg!(&file_entry);
-//                     files.push(file_entry);
-//                 }
-//             }
-//         } else if path.is_file() {
-//             let metadata = fs::metadata(&path).map_err(|e| e.to_string())?;
-//             let file_size = metadata.len();
-
-//             let file_entry = FileEntry {
-//                 path: path.to_str().unwrap().to_string(),
-//                 file_size,
-//             };
-
-//             dbg!(&file_entry);
-//             files.push(file_entry);
-//         }
-//     }
-
-//     format!("{:?}", files);
-
-//     Ok(files)
-// }

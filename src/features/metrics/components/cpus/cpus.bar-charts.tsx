@@ -1,8 +1,8 @@
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { Space, useMantineTheme } from "@mantine/core";
+import ReactApexChart from 'react-apexcharts';
 
-import ReactApexChart from "react-apexcharts";
-import Card from "@/components/card";
+import Card from '@/components/card';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { Space, useMantineTheme } from '@mantine/core';
 
 const CpusBarChart: React.FC = () => {
   const { cpus } = useServerEventsContext();

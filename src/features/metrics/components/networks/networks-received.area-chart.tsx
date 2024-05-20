@@ -1,10 +1,10 @@
-import Card from "@/components/card";
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import AreaChart, { useAreaChartState } from "@/components/area-chart";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import { useMantineTheme } from "@mantine/core";
+import AreaChart, { useAreaChartState } from '@/components/area-chart';
+import Card from '@/components/card';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { useMantineTheme } from '@mantine/core';
 
 const NetworksReceivedAreaChart: React.FC = ({}) => {
   const { networks } = useServerEventsContext();

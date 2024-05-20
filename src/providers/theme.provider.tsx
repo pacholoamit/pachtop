@@ -1,10 +1,12 @@
-import { MantineProvider, MantineThemeOverride } from "@mantine/core";
-import { createContext, useEffect, useState } from "react";
-import { setWindowColor } from "@/lib";
-import store from "@/lib/store";
-import { DEFAULT_TITLEBAR_COLOR } from "@/contants";
-import "non.geist";
-import "non.geist/mono";
+import 'non.geist';
+import 'non.geist/mono';
+
+import { createContext, useEffect, useState } from 'react';
+
+import { DEFAULT_TITLEBAR_COLOR } from '@/contants';
+import { setWindowColor } from '@/lib';
+import store from '@/lib/store';
+import { MantineProvider, MantineThemeOverride } from '@mantine/core';
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -16,6 +18,46 @@ export enum THEME_OPTION {
   BUMBLEBEE = "bumblebee",
 }
 
+const commonColors = {
+  slate: {
+    cardBorder: "#324363",
+    layoutEdge: "#324363",
+    cardColor: "#152847",
+    background: "#0d1830",
+    gridLine: "#263858",
+    label: "#8192ac",
+    scrollbar: "#324363",
+    tooltipBg: "#263858",
+    titlebar: "#0d1830",
+    legend: "#dce1e8",
+  },
+  midnight: {
+    cardBorder: "#27272a",
+    layoutEdge: "#27272a",
+    cardColor: "#0a0a0a",
+    background: "#09090b",
+    gridLine: "#27272a",
+    label: "white",
+    scrollbar: "#27272a",
+    tooltipBg: "#09090b",
+    titlebar: "#09090b",
+    legend: "#dce1e8",
+  },
+  bumblebee: {
+    cardBorder: "#27272a",
+    layoutEdge: "#27272a",
+    cardColor: "#0a0a0a",
+    background: "#09090b",
+    gridLine: "#27272a",
+    label: "white",
+    scrollbar: "#27272a",
+    tooltipBg: "#09090b",
+    titlebar: "#09090b",
+    legend: "#dce1e8",
+    yellow: "#fdd450",
+  },
+};
+
 export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
   [THEME_OPTION.SLATE]: {
     fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
@@ -26,18 +68,17 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#A6A7AB",
         "#909296",
         "#5C5F66",
-        "#324363", // Card Borders
-        "#324363", // Layout edges
-        "#152847", // Card colors
-        "#0d1830", // Background of layout
-        "#0d1830", // Background
+        commonColors.slate.cardBorder, // Card Borders
+        commonColors.slate.layoutEdge, // Layout edges
+        commonColors.slate.cardColor, // Card colors
+        commonColors.slate.background, // Background of layout
+        commonColors.slate.background, // Background
         "#101113",
       ],
     },
     other: {
-      titlebar: "#0d1830",
+      titlebar: commonColors.slate.titlebar,
       charts: {
-        // Use DefaultMantineColor for the color
         statsRing: {
           cpu: "blue",
           memory: "cyan",
@@ -46,46 +87,42 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         },
         area: {
           default: {
-            // This is the rectangle box that u can use to navigate
             navigator: {
               handles: {
                 backgroundColor: "white",
               },
-              // This is the mask that covers the area
               maskFill: "rgba(255, 255, 255, 0.2)",
             },
-
-            gridLineColor: "#263858",
-            lineColor: "#263858",
-            labelColor: "#8192ac",
+            gridLineColor: commonColors.slate.gridLine,
+            lineColor: commonColors.slate.gridLine,
+            labelColor: commonColors.slate.label,
             tooltip: {
-              color: "#dce1e8",
-              backgroundColor: "#263858",
+              color: commonColors.slate.legend,
+              backgroundColor: commonColors.slate.tooltipBg,
             },
             scrollbar: {
-              rifleColor: "#324363",
-              barBackgroundColor: "#324363",
-              buttonBackgroundColor: "#324363",
-              trackBorderColor: "#324363",
+              rifleColor: commonColors.slate.scrollbar,
+              barBackgroundColor: commonColors.slate.scrollbar,
+              buttonBackgroundColor: commonColors.slate.scrollbar,
+              trackBorderColor: commonColors.slate.scrollbar,
             },
             rangeSelector: {
               labelStyle: {
-                color: "#8192ac",
-                backgroundColor: "#263858",
+                color: commonColors.slate.label,
+                backgroundColor: commonColors.slate.gridLine,
               },
-
               inputStyle: {
-                color: "#8192ac",
+                color: commonColors.slate.label,
               },
             },
             buttonTheme: {
               style: {
-                color: "#8192ac",
-                backgroundColor: "#263858",
+                color: commonColors.slate.label,
+                backgroundColor: commonColors.slate.gridLine,
               },
             },
             legend: {
-              color: "#dce1e8",
+              color: commonColors.slate.legend,
             },
           },
           swap: {
@@ -152,18 +189,17 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#A6A7AB",
         "#909296",
         "#27272a",
-        "#27272a", // Card Borders
-        "#27272a", // Layout edges
-        "#0a0a0a", // Card colors
-        "#09090b", // Background of layout
-        "#09090b", // Background
-        "#09090b",
+        commonColors.midnight.cardBorder, // Card Borders
+        commonColors.midnight.layoutEdge, // Layout edges
+        commonColors.midnight.cardColor, // Card colors
+        commonColors.midnight.background, // Background of layout
+        commonColors.midnight.background, // Background
+        commonColors.midnight.background,
       ],
     },
     other: {
-      titlebar: "#09090b",
+      titlebar: commonColors.midnight.titlebar,
       charts: {
-        // Use DefaultMantineColor for the color
         statsRing: {
           cpu: "white",
           memory: "white",
@@ -172,52 +208,49 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         },
         area: {
           default: {
-            // This is the rectangle box that u can use to navigate
             navigator: {
               handles: {
                 backgroundColor: "white",
               },
-              // This is the mask that covers the area
               maskFill: "rgba(255, 255, 255, 0.2)",
             },
-            gridLineColor: "#27272a",
-            lineColor: "#27272a",
-            labelColor: "white",
+            gridLineColor: commonColors.midnight.gridLine,
+            lineColor: commonColors.midnight.gridLine,
+            labelColor: commonColors.midnight.label,
             tooltip: {
-              color: "#dce1e8",
-              backgroundColor: "#09090b",
+              color: commonColors.midnight.legend,
+              backgroundColor: commonColors.midnight.tooltipBg,
             },
             scrollbar: {
-              rifleColor: "#27272a",
-              barBackgroundColor: "#27272a",
-              buttonBackgroundColor: "#27272a",
-              trackBorderColor: "#27272a",
+              rifleColor: commonColors.midnight.scrollbar,
+              barBackgroundColor: commonColors.midnight.scrollbar,
+              buttonBackgroundColor: commonColors.midnight.scrollbar,
+              trackBorderColor: commonColors.midnight.scrollbar,
             },
             rangeSelector: {
               labelStyle: {
-                color: "white",
-                backgroundColor: "#27272a",
+                color: commonColors.midnight.label,
+                backgroundColor: commonColors.midnight.gridLine,
               },
-
               inputStyle: {
-                color: "white",
+                color: commonColors.midnight.label,
               },
             },
             buttonTheme: {
               style: {
-                color: "white",
-                backgroundColor: "#27272a",
+                color: commonColors.midnight.label,
+                backgroundColor: commonColors.midnight.gridLine,
               },
             },
             legend: {
-              color: "#dce1e8",
+              color: commonColors.midnight.legend,
             },
           },
           swap: {
             color: "white",
           },
           networkReceived: {
-            color: "white", // Make it random
+            color: "white",
           },
           networksTransmitted: {
             color: "white",
@@ -247,87 +280,82 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#A6A7AB",
         "#909296",
         "#27272a",
-        "#27272a", // Card Borders
-        "#27272a", // Layout edges
-        "#0a0a0a", // Card colors
-        "#09090b", // Background of layout
-        "#09090b", // Background
-        "#09090b",
+        commonColors.bumblebee.cardBorder, // Card Borders
+        commonColors.bumblebee.layoutEdge, // Layout edges
+        commonColors.bumblebee.cardColor, // Card colors
+        commonColors.bumblebee.background, // Background of layout
+        commonColors.bumblebee.background, // Background
+        commonColors.bumblebee.background,
       ],
     },
     other: {
-      titlebar: "#09090b",
+      titlebar: commonColors.bumblebee.titlebar,
       charts: {
-        // Use DefaultMantineColor for the color
         statsRing: {
-          cpu: "yellow",
-          memory: "yellow",
-          swap: "yellow",
-          disk: "yellow",
+          cpu: commonColors.bumblebee.yellow,
+          memory: commonColors.bumblebee.yellow,
+          swap: commonColors.bumblebee.yellow,
+          disk: commonColors.bumblebee.yellow,
         },
         area: {
           default: {
-            // This is the rectangle box that u can use to navigate
             navigator: {
               handles: {
                 backgroundColor: "white",
               },
-              // This is the mask that covers the area
               maskFill: "rgba(255, 255, 255, 0.1)",
             },
-
-            gridLineColor: "#27272a",
-            lineColor: "#27272a",
-            labelColor: "white",
+            gridLineColor: commonColors.bumblebee.gridLine,
+            lineColor: commonColors.bumblebee.gridLine,
+            labelColor: commonColors.bumblebee.label,
             tooltip: {
-              color: "#dce1e8",
-              backgroundColor: "#09090b",
+              color: commonColors.bumblebee.legend,
+              backgroundColor: commonColors.bumblebee.tooltipBg,
             },
             scrollbar: {
-              rifleColor: "#27272a",
-              barBackgroundColor: "#27272a",
-              buttonBackgroundColor: "#27272a",
-              trackBorderColor: "#27272a",
+              rifleColor: commonColors.bumblebee.scrollbar,
+              barBackgroundColor: commonColors.bumblebee.scrollbar,
+              buttonBackgroundColor: commonColors.bumblebee.scrollbar,
+              trackBorderColor: commonColors.bumblebee.scrollbar,
             },
             rangeSelector: {
               labelStyle: {
-                color: "white",
-                backgroundColor: "#27272a",
+                color: commonColors.bumblebee.label,
+                backgroundColor: commonColors.bumblebee.gridLine,
               },
-
               inputStyle: {
-                color: "white",
+                color: commonColors.bumblebee.label,
               },
             },
             buttonTheme: {
               style: {
-                color: "white",
-                backgroundColor: "#27272a",
+                color: commonColors.bumblebee.label,
+                backgroundColor: commonColors.bumblebee.gridLine,
               },
             },
             legend: {
-              color: "#dce1e8",
+              color: commonColors.bumblebee.legend,
             },
           },
           swap: {
-            color: "#fdd450",
+            color: commonColors.bumblebee.yellow,
           },
           networkReceived: {
-            color: "#fdd450", // Make it random
+            color: commonColors.bumblebee.yellow,
           },
           networksTransmitted: {
-            color: "#fdd450",
+            color: commonColors.bumblebee.yellow,
           },
           memory: {
-            color: "#fdd450",
+            color: commonColors.bumblebee.yellow,
           },
           globalCpu: {
-            color: "#fdd450",
+            color: commonColors.bumblebee.yellow,
           },
         },
         bar: {
           cpus: {
-            colors: ["#fdd450"],
+            colors: [commonColors.bumblebee.yellow],
           },
         },
       },

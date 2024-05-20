@@ -1,6 +1,7 @@
-import { DefaultMantineColor, Paper, Group, RingProgress, Center, rem, Text } from "@mantine/core";
-import { IconArrowUpRight, IconArrowDownRight, TablerIconsProps } from "@tabler/icons-react";
-import Card from "./card";
+import { Center, DefaultMantineColor, Group, Paper, rem, RingProgress, Text } from '@mantine/core';
+import { IconArrowDownRight, IconArrowUpRight, TablerIconsProps } from '@tabler/icons-react';
+
+import Card from './card';
 
 interface StatsRingProps {
   label: string;

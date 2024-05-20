@@ -1,8 +1,9 @@
-import ThemeProvider from "@/providers/theme.provider";
-import ServerEventsProvider from "@/providers/server-events.provider";
-import AnalyticsProvider from "@/providers/analytics.provider";
-import { Notifications } from "@mantine/notifications";
-import { Geiger } from "react-geiger";
+import { Geiger } from 'react-geiger';
+
+import AnalyticsProvider from '@/providers/analytics.provider';
+import ServerEventsProvider from '@/providers/server-events.provider';
+import ThemeProvider from '@/providers/theme.provider';
+import { Notifications } from '@mantine/notifications';
 
 interface AppProvider {
   children: React.ReactNode;

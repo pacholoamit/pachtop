@@ -1,7 +1,7 @@
-import { Command, invoke } from "@/lib";
-import { KillProcessOpts, Process } from "@/lib";
-import notification from "@/utils/notification";
-import { useCallback } from "react";
+import { useCallback } from 'react';
+
+import { Command, invoke, KillProcessOpts, Process } from '@/lib';
+import notification from '@/utils/notification';
 
 interface UseKillProcessOpts {
   onKill?: () => void;

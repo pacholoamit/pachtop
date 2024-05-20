@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import GitHubButton from "react-github-btn";
-import PageWrapper from "@/components/page-wrapper";
-import Card from "@/components/card";
-import { Grid, Space, Stack, Switch, Title, Text, SegmentedControl, Group } from "@mantine/core";
-import useTheme from "@/hooks/useTheme";
-import { autostart } from "@/lib";
-import { THEME_OPTION } from "@/providers/theme.provider";
-import { LinearGradient } from "react-text-gradients";
+import { useEffect, useState } from 'react';
+import GitHubButton from 'react-github-btn';
+import { LinearGradient } from 'react-text-gradients';
+
+import Card from '@/components/card';
+import PageWrapper from '@/components/page-wrapper';
+import useTheme from '@/hooks/useTheme';
+import { autostart } from '@/lib';
+import { THEME_OPTION } from '@/providers/theme.provider';
+import { Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from '@mantine/core';
 
 const GeneralSectionInfo = () => {
   return (

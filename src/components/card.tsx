@@ -1,4 +1,4 @@
-import { Card as MantineCard } from "@mantine/core";
+import { Card as MantineCard } from '@mantine/core';
 
 interface CardProps {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ children, style, height = "300px" }) => {
-  const styles: React.CSSProperties = { height, ...style };
+  const styles: React.CSSProperties = { height, padding: 16, ...style };
   return (
     <MantineCard style={styles} shadow="xl" p="sm" radius={"md"} withBorder>
       {children}

@@ -1,8 +1,9 @@
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
-import { Disk } from "@/lib";
-import AreaChart, { useAreaChartState } from "@/components/area-chart";
-import { useEffect } from "react";
+import { useEffect } from 'react';
+
+import AreaChart, { useAreaChartState } from '@/components/area-chart';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
+import { Disk } from '@/lib';
 
 interface DiskAreaChartProps {
   disk: Enumerable<Disk>;

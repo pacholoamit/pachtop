@@ -1,24 +1,14 @@
+import drive from '/drive.png';
+import { useNavigate } from 'react-router-dom';
+
+import DynamicProgress, { DynamicProgressRangeInput } from '@/components/dynamic-progress';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
+import { commands, Disk } from '@/lib';
 import {
-  ActionIcon,
-  Badge,
-  Card,
-  Group,
-  Stack,
-  Image,
-  Text,
-  createStyles,
-  Button,
-  Center,
-  Title,
-  Popover,
-} from "@mantine/core";
-import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
-import { Disk, commands } from "@/lib";
-import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
-import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
-import drive from "/drive.png";
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import notification from "@/utils/notification";
+    ActionIcon, Badge, Button, Card, Center, createStyles, Group, Image, Popover, Stack, Text, Title
+} from '@mantine/core';
+import { IconAlertCircle, IconFolderOpen } from '@tabler/icons-react';
 
 interface DiskInfoProps {
   disk: Enumerable<Disk>;
@@ -45,7 +35,7 @@ const useStyles = createStyles((theme) => ({
 
 const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   const range: DynamicProgressRangeInput[] = [
-    { from: 0, to: 50, color: "green" },
+    { from: 0, to: 50, color: "#47d6ab" },
     { from: 50, to: 80, color: "yellow" },
     { from: 80, to: 100, color: "red" },
   ];
@@ -78,56 +68,63 @@ const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
           </Popover.Dropdown>
         </Popover>
       </Group>
-      <DynamicProgress value={disk?.usedPercentage || 0} range={range} />
+      <DynamicProgress value={disk?.usedPercentage || 0} range={range} size={"xs"} />
     </>
   );
 };
 
 const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
+  const data: { label: string; value: string; color: string }[] = [
+    {
+      label: "Location",
+      value: disk?.mountPoint || "unknown",
+      color: "blue",
+    },
+    {
+      label: "Disk Type",
+      value: disk?.diskType || "unknown",
+      color: "yellow",
+    },
+    {
+      label: "File System",
+      value: disk?.fileSystem || "unknown",
+      color: "cyan",
+    },
+  ];
   return (
     <Stack spacing={3}>
-      <Group position="apart">
-        <Text c="dimmed" size={"sm"}>
-          Location
-        </Text>
-        <Badge size="sm" variant="light" color="indigo">
-          {disk?.mountPoint}
-        </Badge>
-      </Group>
-      <Group position="apart" align="center">
-        <Text c="dimmed" size={"sm"}>
-          Disk Type
-        </Text>
-        <Badge size="sm" variant="light" color="red">
-          {disk?.diskType}
-        </Badge>
-      </Group>
-      <Group position="apart">
-        <Text c="dimmed" size={"sm"}>
-          File System
-        </Text>
-        <Badge size="sm" variant="light" color="grape">
-          {disk?.fileSystem}
-        </Badge>
-      </Group>
+      {data.map((d, i) => (
+        <Group key={i} position="apart">
+          <Text c="dimmed" size={"sm"}>
+            {d.label}
+          </Text>
+          <Badge size="sm" variant="light" color={d.color}>
+            {d.value}
+          </Badge>
+        </Group>
+      ))}
     </Stack>
   );
 };
 
-const DiskActionGroup: React.FC<{ onShowDirectory: () => void }> = ({ onShowDirectory }) => {
+const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) => {
   const { classes } = useStyles();
-  const onShowDetailsClick = () => {
-    notification.error({
-      message: "Feature coming soon! 🙏",
-      title: "Thank you for your patience",
-    });
+  const navigate = useNavigate();
+
+  const showDirectory = async () => {
+    if (!disk?.mountPoint) return;
+    await commands.showInFolder(disk.mountPoint);
   };
+
+  // Encode this id to avoid any issues with special characters
+  const onShowDetailsClick = () => navigate(`/disks/${encodeURI(id)}`);
+
   return (
     <Group mt="xs">
       <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick}>
         Disk Analysis
       </Button>
-      <ActionIcon variant="default" radius="md" size={36} onClick={onShowDirectory}>
+      <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
         <IconFolderOpen className={classes.folder} stroke={1.5} />
       </ActionIcon>
     </Group>
@@ -135,30 +132,19 @@ const DiskActionGroup: React.FC<{ onShowDirectory: () => void }> = ({ onShowDire
 };
 
 const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
-  const last = disk.data.at(-1);
+  const id = disk?.id;
+  const latest = disk.data.at(-1);
   const { classes } = useStyles();
-
-  const showDirectory = async () => {
-    if (!last?.mountPoint) return;
-    await commands.showInFolder(last.mountPoint);
-  };
-
-  const onCheckDisk = async (mountPoint: string) => {
-    console.log("Checking disk", mountPoint);
-    await commands.deepScan({ path: mountPoint }).then((res) => {
-      console.log(res);
-    });
-  };
 
   return (
     <Card shadow="xl" p="xs" radius={"md"} withBorder>
       <Card.Section className={classes.section}>
-        <DiskDetailsSection disk={last} />
+        <DiskDetailsSection disk={latest} />
       </Card.Section>
       <Card.Section className={classes.section}>
-        <DiskInfoSection disk={last} />
+        <DiskInfoSection disk={latest} />
       </Card.Section>
-      <DiskActionGroup onShowDirectory={showDirectory} />
+      <DiskActionGroup disk={latest} id={id} />
     </Card>
   );
 };

@@ -1,4 +1,4 @@
-import formatBytes from "./format-bytes";
+import formatBytes from './format-bytes';
 
 const formatOverallStats = (used: number, total: number) => {
   const usedFormatted = formatBytes(used);

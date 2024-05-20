@@ -1,5 +1,5 @@
-import { useMantineTheme } from "@mantine/core";
-import { useMediaQuery as useMantineMediaQuery } from "@mantine/hooks";
+import { useMantineTheme } from '@mantine/core';
+import { useMediaQuery as useMantineMediaQuery } from '@mantine/hooks';
 
 const useMediaQuery = () => {
   const theme = useMantineTheme();

@@ -13,11 +13,21 @@ use winapi_util::{file, Handle};
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
+
+pub struct DiskItemMetadata {
+    #[ts(type = "number")]
+    pub size: u64,
+}
+// TODO Reduce dupication after confirmed is working
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct DiskItem {
     pub name: String,
-    #[ts(type = "number")]
-    pub disk_size: u64,
+    // #[ts(type = "number")]
+    // pub size: u64,
     pub children: Option<Vec<DiskItem>>,
+    pub metadata: DiskItemMetadata,
 }
 
 impl DiskItem {
@@ -51,17 +61,19 @@ impl DiskItem {
                     })
                     .collect::<Vec<_>>();
 
-                sub_items.sort_unstable_by(|a, b| a.disk_size.cmp(&b.disk_size).reverse());
+                sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
 
                 Ok(DiskItem {
                     name,
-                    disk_size: sub_items.iter().map(|di| di.disk_size).sum(),
+                    metadata: DiskItemMetadata {
+                        size: sub_items.iter().map(|di| di.metadata.size).sum(),
+                    },
                     children: Some(sub_items),
                 })
             }
             FileInfo::File { size, .. } => Ok(DiskItem {
                 name,
-                disk_size: size,
+                metadata: DiskItemMetadata { size },
                 children: None,
             }),
         }

@@ -1,10 +1,10 @@
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import StatsRing from "@/components/stats-ring";
-import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
-import React from "react";
+import React from 'react';
 
-import { IconCpu } from "@tabler/icons-react";
-import { useMantineTheme } from "@mantine/core";
+import StatsRing from '@/components/stats-ring';
+import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
+import useServerEventsContext from '@/hooks/useServerEventsContext';
+import { useMantineTheme } from '@mantine/core';
+import { IconCpu } from '@tabler/icons-react';
 
 const GlobalCpuStatsRing: React.FC = ({}) => {
   const { globalCpu } = useServerEventsContext();
