@@ -39,7 +39,8 @@
     "react-text-gradients": "^1.0.2",
     "tauri-plugin-autostart-api": "https://github.com/tauri-apps/tauri-plugin-autostart",
     "tauri-plugin-log-api": "https://github.com/tauri-apps/tauri-plugin-log",
-    "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store"
+    "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.13",

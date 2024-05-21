@@ -1,14 +1,26 @@
-import drive from '/drive.png';
-import { useNavigate } from 'react-router-dom';
+import drive from "/drive.png";
+import { useNavigate } from "react-router-dom";
 
-import DynamicProgress, { DynamicProgressRangeInput } from '@/components/dynamic-progress';
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
-import { commands, Disk } from '@/lib';
+import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
+import useDisksStore from "@/features/metrics/stores/disk.store";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
+import { commands, Disk } from "@/lib";
 import {
-    ActionIcon, Badge, Button, Card, Center, createStyles, Group, Image, Popover, Stack, Text, Title
-} from '@mantine/core';
-import { IconAlertCircle, IconFolderOpen } from '@tabler/icons-react';
+  ActionIcon,
+  Badge,
+  Button,
+  Card,
+  Center,
+  createStyles,
+  Group,
+  Image,
+  Popover,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
+import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInfoProps {
   disk: Enumerable<Disk>;
@@ -109,6 +121,7 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
 
 const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) => {
   const { classes } = useStyles();
+  const setViewedDisk = useDisksStore((state) => state.setViewedDisk);
   const navigate = useNavigate();
 
   const showDirectory = async () => {
@@ -117,7 +130,10 @@ const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) =>
   };
 
   // Encode this id to avoid any issues with special characters
-  const onShowDetailsClick = () => navigate(`/disks/${encodeURI(id)}`);
+  const onShowDetailsClick = () => {
+    setViewedDisk(id);
+    navigate(`/disks/${encodeURI(id)}`);
+  };
 
   return (
     <Group mt="xs">

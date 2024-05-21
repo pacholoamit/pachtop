@@ -1,11 +1,9 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-import { VIEWABLE_ELEMENT_COUNT } from '@/contants';
-import useServerEventsEnumerableStore, { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
-import useServerEventsStore from '@/hooks/useServerEventsStore';
-import {
-    Cpu, Disk, GlobalCpu, Memory, Network, Process, ServerEvent, Swap, SysInfo
-} from '@/lib/types';
+import { VIEWABLE_ELEMENT_COUNT } from "@/contants";
+import useServerEventsEnumerableStore, { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
+import useServerEventsStore from "@/hooks/useServerEventsStore";
+import { Cpu, Disk, GlobalCpu, Memory, Network, Process, ServerEvent, Swap, SysInfo } from "@/lib/types";
 
 interface ServerEventsProviderProps {
   children: React.ReactNode;
