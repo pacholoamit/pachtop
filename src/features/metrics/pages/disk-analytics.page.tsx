@@ -97,76 +97,80 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     const item = await commands.deepScan({ path: disk.mountPoint });
     setIsLoading(false);
     // Populate File Explorer
-    const flattened = flattenTree(item as any);
-    setDiskAnalysis(flattened);
 
-    // TODO: Move to rust?
-    const stortedBySize = flattened.sort((a, b) => {
-      return (b.metadata?.size as number) - (a.metadata?.size as number);
-    });
+    // Navigate into the root since it's a directory
+    // console.log(item.children);
+    setDiskAnalysis(item.children as any);
 
-    // Remove roout node and get top 500
-    const sample = stortedBySize.slice(1, 500);
+    console.log(item.children);
 
-    const data = sample.map((i) => {
-      const id = i.id.toString();
-      const name = i.name || "unknown";
-      const value = i.metadata?.size ?? 0;
+    // // TODO: Move to rust?
+    // const stortedBySize = flattened.sort((a, b) => {
+    //   return (b.metadata?.size as number) - (a.metadata?.size as number);
+    // });
 
-      if (!i.parent) {
-        return { id, name, value };
-      }
+    // // Remove roout node and get top 500
+    // const sample = stortedBySize.slice(1, 500);
 
-      return {
-        id,
-        name,
-        parent: i.parent.toString(),
-        value,
-      };
-    });
+    // const data = sample.map((i) => {
+    //   const id = i.id.toString();
+    //   const name = i.name || "unknown";
+    //   const value = i.metadata?.size ?? 0;
 
-    setChartOptions((prev) => ({
-      series: [
-        {
-          type: "treemap",
-          layoutAlgorithm: "squarified",
-          animationLimit: 1000,
-          allowTraversingTree: true,
-          allowPointSelect: true,
-          accessibility: {
-            exposeAsGroupOnly: true,
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          levels: [
-            {
-              level: 1,
-              dataLabels: {
-                enabled: true,
-              },
-              borderWidth: 3,
-              layoutAlgorithm: "squarified",
-              color: colors.dark[6], // TODO: Create own color for this
-              borderColor: colors.dark[3], // TODO: Create own color for this
-            },
-            {
-              level: 1,
-              dataLabels: {
-                style: {
-                  fontSize: "14px",
-                },
-              },
-              color: colors.dark[6], // TODO: Create own color for this
-              borderColor: colors.dark[3], // TODO: Create own color for this
-            },
-          ],
-          data: data as any, //TODO: Crutch fix this later
-        },
-      ],
-    }));
+    //   if (!i.parent) {
+    //     return { id, name, value };
+    //   }
 
-    console.log("Done");
+    //   return {
+    //     id,
+    //     name,
+    //     parent: i.parent.toString(),
+    //     value,
+    //   };
+    // });
+
+    // setChartOptions((prev) => ({
+    //   series: [
+    //     {
+    //       type: "treemap",
+    //       layoutAlgorithm: "squarified",
+    //       animationLimit: 1000,
+    //       allowTraversingTree: true,
+    //       allowPointSelect: true,
+    //       accessibility: {
+    //         exposeAsGroupOnly: true,
+    //       },
+    //       dataLabels: {
+    //         enabled: false,
+    //       },
+    //       levels: [
+    //         {
+    //           level: 1,
+    //           dataLabels: {
+    //             enabled: true,
+    //           },
+    //           borderWidth: 3,
+    //           layoutAlgorithm: "squarified",
+    //           color: colors.dark[6], // TODO: Create own color for this
+    //           borderColor: colors.dark[3], // TODO: Create own color for this
+    //         },
+    //         {
+    //           level: 1,
+    //           dataLabels: {
+    //             style: {
+    //               fontSize: "14px",
+    //             },
+    //           },
+    //           color: colors.dark[6], // TODO: Create own color for this
+    //           borderColor: colors.dark[3], // TODO: Create own color for this
+    //         },
+    //       ],
+    //       data: data as any, //TODO: Crutch fix this later
+    //     },
+    //   ],
+    // }));
+
+    // console.log("Done");
   }, [disk.mountPoint]);
 
   return (
@@ -184,9 +188,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
           </Card>
         </Grid.Col>
         <Grid.Col span={12}>
-          <Card height="560px">
-            <MemoizedTreemapChart options={chartOptions} />
-          </Card>
+          <Card height="560px">h{/* <MemoizedTreemapChart options={chartOptions} /> */}</Card>
         </Grid.Col>
       </Grid>
     </PageWrapper>

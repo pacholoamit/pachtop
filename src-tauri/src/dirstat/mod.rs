@@ -6,9 +6,27 @@ use std::error::Error;
 use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::Once;
 use ts_rs::TS;
 #[cfg(target_os = "windows")]
 use winapi_util::{file, Handle};
+
+static INIT: Once = Once::new();
+static mut COUNTER: Option<AtomicU64> = None;
+
+fn get_next_id() -> String {
+    unsafe {
+        INIT.call_once(|| {
+            COUNTER = Some(AtomicU64::new(1));
+        });
+        COUNTER
+            .as_ref()
+            .expect("COUNTER is not initialized")
+            .fetch_add(1, Ordering::SeqCst)
+            .to_string()
+    }
+}
 
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
@@ -18,14 +36,13 @@ pub struct DiskItemMetadata {
     #[ts(type = "number")]
     pub size: u64,
 }
-// TODO Reduce dupication after confirmed is working
+
 #[derive(Serialize, Deserialize, Debug, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct DiskItem {
+    pub id: String,
     pub name: String,
-    // #[ts(type = "number")]
-    // pub size: u64,
     pub children: Option<Vec<DiskItem>>,
     pub metadata: DiskItemMetadata,
 }
@@ -36,6 +53,7 @@ impl DiskItem {
         apparent: bool,
         root_dev: u64,
     ) -> Result<Self, Box<dyn Error>> {
+        let id = get_next_id();
         let name = path
             .file_name()
             .unwrap_or(OsStr::new("."))
@@ -62,10 +80,10 @@ impl DiskItem {
                     .collect();
 
                 let mut sorted_sub_items = sub_items;
-                sorted_sub_items
-                    .sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
+                sorted_sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
 
                 Ok(DiskItem {
+                    id,
                     name,
                     metadata: DiskItemMetadata {
                         size: sorted_sub_items.iter().map(|di| di.metadata.size).sum(),
@@ -74,6 +92,7 @@ impl DiskItem {
                 })
             }
             FileInfo::File { size, .. } => Ok(DiskItem {
+                id,
                 name,
                 metadata: DiskItemMetadata { size },
                 children: None,
