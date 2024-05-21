@@ -29,12 +29,13 @@ interface DiskDirectoryTreeViewProps {
 const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
   const { data } = props;
 
+  console.log("render");
   return (
     <Tree
       data={data}
       openByDefault={false}
       width={"100%"}
-      height={1000}
+      // height={"100%"}
       indent={24}
       rowHeight={36}
       overscanCount={1}

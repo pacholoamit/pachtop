@@ -188,7 +188,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
           </Card>
         </Grid.Col>
         <Grid.Col span={12}>
-          <Card height="560px">h{/* <MemoizedTreemapChart options={chartOptions} /> */}</Card>
+          <Card height="560px">TODO{/* <MemoizedTreemapChart options={chartOptions} /> */}</Card>
         </Grid.Col>
       </Grid>
     </PageWrapper>
