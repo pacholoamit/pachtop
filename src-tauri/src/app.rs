@@ -1,15 +1,12 @@
 use log::info;
-use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
-use std::ffi::OsStr;
-use std::fs;
+
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use tauri::{State, Window};
 
-use crate::dirstat::{DiskItem, DiskItemMetadata, FileInfo};
+use crate::dirstat::{DiskItem, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
-use rayon::prelude::*;
 
 pub struct AppState(Arc<Mutex<App>>);
 
