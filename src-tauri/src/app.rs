@@ -7,7 +7,7 @@ use tauri::{State, Window};
 
 use crate::dirstat::{DiskItem, FileInfo};
 use crate::metrics::Metrics;
-use crate::{models::*, win};
+use crate::models::*;
 
 pub struct AppState(Arc<Mutex<App>>);
 
@@ -131,6 +131,7 @@ pub fn delete_folder(path: String) {
 }
 
 #[tauri::command]
+// multi threaded fast version but emits data
 pub fn deep_scan_emit(window: tauri::Window, path: String) -> Result<(), String> {
     let time = std::time::Instant::now();
     dbg!("Scanning folder:", &path);
@@ -168,9 +169,11 @@ pub fn deep_scan_emit(window: tauri::Window, path: String) -> Result<(), String>
 }
 
 #[tauri::command]
+// Multithreaded fast version, uses high cpu/memory
 pub async fn deep_scan(path: String) -> Result<DiskItem, String> {
     let time = std::time::Instant::now();
     dbg!("Scanning folder:", &path);
+    dbg!("Triggering Deep scan");
     let path_buf = PathBuf::from(&path);
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 

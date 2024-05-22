@@ -65,18 +65,12 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const startDiskAnalysis = useCallback(async () => {
     setIsLoading(true);
 
-    const item = await commands.deepScanEmit({ path: disk.mountPoint });
+    const item = await commands.deepScan({ path: disk.mountPoint });
 
-    const unlisten = listen(ServerEvent.DeepScanAnalysis, async ({ payload }) => {
-      console.log(payload);
-      setDiskAnalysis(payload as any);
-    });
-
-    console.log(diskAnalysis);
-    // setIsLoading(false);
-    // // Populate File Explorer
-    // // Navigate into the root since it's a directory
-    // setDiskAnalysis(item.children as any);
+    setIsLoading(false);
+    // Populate File Explorer
+    // Navigate into the root since it's a directory
+    setDiskAnalysis(item.children as any);
 
     // console.log(item.children);
 

@@ -28,7 +28,7 @@ fn get_next_id() -> String {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, TS)]
+#[derive(Serialize, Deserialize, Debug, TS, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 
@@ -37,7 +37,7 @@ pub struct DiskItemMetadata {
     pub size: u64,
 }
 
-#[derive(Serialize, Deserialize, Debug, TS)]
+#[derive(Serialize, Deserialize, Debug, TS, Clone)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct DiskItem {
@@ -80,7 +80,8 @@ impl DiskItem {
                     .collect();
 
                 let mut sorted_sub_items = sub_items;
-                sorted_sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
+                sorted_sub_items
+                    .sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
 
                 Ok(DiskItem {
                     id,
@@ -128,18 +129,24 @@ impl DiskItem {
                 let sub_items: Vec<DiskItem> = sub_entries
                     .into_par_iter()
                     .filter_map(|entry| {
-                        match DiskItem::from_analyze_callback(&entry.path(), apparent, root_dev, Arc::clone(&callback)) {
+                        match DiskItem::from_analyze_callback(
+                            &entry.path(),
+                            apparent,
+                            root_dev,
+                            Arc::clone(&callback),
+                        ) {
                             Ok(item) => {
                                 callback(&item);
                                 Some(item)
-                            },
+                            }
                             Err(_) => None,
                         }
                     })
                     .collect();
 
                 let mut sorted_sub_items = sub_items;
-                sorted_sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
+                sorted_sub_items
+                    .sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
 
                 let item = DiskItem {
                     id,
