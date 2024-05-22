@@ -7,7 +7,7 @@ use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
 use std::sync::atomic::{AtomicU64, Ordering};
-use std::sync::Once;
+use std::sync::{Arc, Once};
 use ts_rs::TS;
 #[cfg(target_os = "windows")]
 use winapi_util::{file, Handle};
@@ -97,6 +97,75 @@ impl DiskItem {
                 metadata: DiskItemMetadata { size },
                 children: None,
             }),
+        }
+    }
+
+    pub fn from_analyze_callback(
+        path: &Path,
+        apparent: bool,
+        root_dev: u64,
+        callback: Arc<dyn Fn(&DiskItem) + Send + Sync>,
+    ) -> Result<Self, Box<dyn Error>> {
+        let id = get_next_id();
+        let name = path
+            .file_name()
+            .unwrap_or(OsStr::new("."))
+            .to_string_lossy()
+            .to_string();
+
+        let file_info = FileInfo::from_path(path, apparent)?;
+
+        match file_info {
+            FileInfo::Directory { volume_id } => {
+                if volume_id != root_dev {
+                    return Err("Filesystem boundary crossed".into());
+                }
+
+                let sub_entries = fs::read_dir(path)?
+                    .filter_map(Result::ok)
+                    .collect::<Vec<_>>();
+
+                let sub_items: Vec<DiskItem> = sub_entries
+                    .into_par_iter()
+                    .filter_map(|entry| {
+                        match DiskItem::from_analyze_callback(&entry.path(), apparent, root_dev, Arc::clone(&callback)) {
+                            Ok(item) => {
+                                callback(&item);
+                                Some(item)
+                            },
+                            Err(_) => None,
+                        }
+                    })
+                    .collect();
+
+                let mut sorted_sub_items = sub_items;
+                sorted_sub_items.sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
+
+                let item = DiskItem {
+                    id,
+                    name,
+                    metadata: DiskItemMetadata {
+                        size: sorted_sub_items.iter().map(|di| di.metadata.size).sum(),
+                    },
+                    children: Some(sorted_sub_items),
+                };
+
+                callback(&item);
+
+                Ok(item)
+            }
+            FileInfo::File { size, .. } => {
+                let item = DiskItem {
+                    id,
+                    name,
+                    metadata: DiskItemMetadata { size },
+                    children: None,
+                };
+
+                callback(&item);
+
+                Ok(item)
+            }
         }
     }
 }

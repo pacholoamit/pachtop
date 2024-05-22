@@ -1,14 +1,8 @@
 import "@/features/metrics/styles/disk-treeview.css";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import TreeView, { INode } from "react-accessible-treeview";
-import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
 import { Tree } from "react-arborist";
-import TreeModel from "tree-model-improved";
 
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { Group, ScrollArea, Text } from "@mantine/core";
-import { useResizeObserver } from "@mantine/hooks";
 import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
 
 const iconStyle = { paddingRight: "5px", verticalAlign: "middle" };
@@ -26,12 +20,8 @@ const FileIcon = ({ fileName }: { fileName: string }) => {
   }
 };
 
-function findById(node: any, id: string): TreeModel.Node<any> | null {
-  return node.first((n: any) => n.model.id === id);
-}
-
 interface DiskDirectoryTreeViewProps {
-  data: INode<IFlatMetadata>[];
+  data: any;
 }
 const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
   const { data } = props;

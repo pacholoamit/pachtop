@@ -8,8 +8,9 @@ import PageWrapper from "@/components/page-wrapper";
 import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import { commands, Disk } from "@/lib";
+import { commands, Disk, ServerEvent } from "@/lib";
 import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { listen } from "@tauri-apps/api/event";
 
 import useDisksStore from "../stores/disk.store";
 import formatBytes from "../utils/format-bytes";
@@ -47,7 +48,6 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const { colors } = useMantineTheme();
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
@@ -64,13 +64,21 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   const startDiskAnalysis = useCallback(async () => {
     setIsLoading(true);
-    const item = await commands.deepScan({ path: disk.mountPoint });
-    setIsLoading(false);
-    // Populate File Explorer
-    // Navigate into the root since it's a directory
-    setDiskAnalysis(item.children as any);
 
-    console.log(item.children);
+    const item = await commands.deepScanEmit({ path: disk.mountPoint });
+
+    const unlisten = listen(ServerEvent.DeepScanAnalysis, async ({ payload }) => {
+      console.log(payload);
+      setDiskAnalysis(payload as any);
+    });
+
+    console.log(diskAnalysis);
+    // setIsLoading(false);
+    // // Populate File Explorer
+    // // Navigate into the root since it's a directory
+    // setDiskAnalysis(item.children as any);
+
+    // console.log(item.children);
 
     // const flattened = flattenTree(item as any);
 
