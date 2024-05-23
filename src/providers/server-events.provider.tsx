@@ -20,8 +20,6 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
 const maxSize = VIEWABLE_ELEMENT_COUNT;
 
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
-  const [memory] = useServerEventsStore<Memory>(ServerEvent.Memory, { maxSize });
-
   const [networks] = useServerEventsEnumerableStore<Network>(ServerEvent.Networks, { maxSize });
 
   return (

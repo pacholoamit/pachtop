@@ -1,4 +1,4 @@
-import { GlobalCpu, Memory, streams } from "@/lib";
+import { Memory, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
 
 import useMetricsStore from "./metrics.store";
