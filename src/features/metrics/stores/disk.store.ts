@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { Disk, ServerEvent } from "@/lib";
+import { Disk, ServerEvent, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
 import { listen } from "@tauri-apps/api/event";
 
@@ -33,13 +33,7 @@ const useDisksStore = create<DisksState>()((set, get) => ({
     set({ selectedDisk });
   },
 
-  listen: () => {
-    listen<Disk[]>(ServerEvent.Disks, ({ payload }) => {
-      set((state) => ({
-        disks: payload,
-      }));
-    });
-  },
+  listen: () => streams.disks((disks) => set({ disks })),
 }));
 
 // Start listening for disk events as soon as the store is created
