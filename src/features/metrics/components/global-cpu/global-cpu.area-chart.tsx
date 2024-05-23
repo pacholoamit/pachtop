@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import Card from "@/components/card";
 import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
+import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
 import { useMantineTheme } from "@mantine/core";
 
 // TODO: Remove Luxon and ChartJS
@@ -18,13 +19,15 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
     },
     yAxis: {
       labels: {
-        formatter: (x) => `${x.value}%`,
+        formatter: (x) => `${fromNumberToPercentageString(x.value as number)}`,
       },
       max: 100,
     },
     tooltip: {
       pointFormatter: function () {
-        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${this.y}%</b><br/>`;
+        return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${fromNumberToPercentageString(
+          this.y || 0
+        )}</b><br/>`;
       },
     },
   });
