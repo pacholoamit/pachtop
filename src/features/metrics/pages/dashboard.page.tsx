@@ -1,18 +1,18 @@
-import PageWrapper from "@/components/page-wrapper";
-import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-charts";
-import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
-import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu.area-chart";
-import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
-import MemoryAreaChart from "@/features/metrics/components/memory/memory.area-chart";
-import MemoryRadialChart from "@/features/metrics/components/memory/memory.radial-chart";
-import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-ring";
-import NetworksReceivedAreaChart from "@/features/metrics/components/networks/networks-received.area-chart";
-import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
-import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
-import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
-import useGlobalCpuSelectors from "@/features/metrics/stores/globalCpu.store";
-import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
-import { Grid, Group, Title } from "@mantine/core";
+import PageWrapper from '@/components/page-wrapper';
+import CpusBarChart from '@/features/metrics/components/cpus/cpus.bar-charts';
+import DiskStatsRing from '@/features/metrics/components/disks/disk.stats-ring';
+import GlobalCpuAreaChart from '@/features/metrics/components/global-cpu/global-cpu.area-chart';
+import GlobalCpuStatsRing from '@/features/metrics/components/global-cpu/global-cpu.stats-ring';
+import MemoryAreaChart from '@/features/metrics/components/memory/memory.area-chart';
+import MemoryRadialChart from '@/features/metrics/components/memory/memory.radial-chart';
+import MemoryStatsRing from '@/features/metrics/components/memory/memory.stats-ring';
+import NetworksReceivedAreaChart from '@/features/metrics/components/networks/networks-received.area-chart';
+import NetworksTransmittedAreaChart from '@/features/metrics/components/networks/networks-transmitted.area-chart';
+import SwapAreaChart from '@/features/metrics/components/swap/swap.area-chart';
+import SwapStatsRing from '@/features/metrics/components/swap/swap.stats-ring';
+import useGlobalCpuSelectors from '@/features/metrics/stores/global-cpu.store';
+import useSystemStoreSelectors from '@/features/metrics/stores/system.store';
+import { Grid, Group, Title } from '@mantine/core';
 
 const StatsRings = () => {
   return (
@@ -75,11 +75,8 @@ const DisksSection = () => {
 const SystemInformationWidget = () => {
   const systemInformation = useSystemStoreSelectors.use.info();
   const globalCpu = useGlobalCpuSelectors.use.globalCpu();
-
   return (
     <Group>
-      {/* <Title order={4}>OS: {systemInformation.hostname}</Title> */}
-
       <Title order={5}>CPU: {globalCpu.brand}</Title>
       <Title order={5}>Core count: {systemInformation.coreCount}</Title>
       <Title order={5}>OS Version: {systemInformation.osVersion}</Title>
