@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import AreaChart, { useAreaChartState } from '@/components/area-chart';
-import Card from '@/components/card';
-import useServerEventsContext from '@/hooks/useServerEventsContext';
-import { useMantineTheme } from '@mantine/core';
+import AreaChart, { useAreaChartState } from "@/components/area-chart";
+import Card from "@/components/card";
+import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
+import { useMantineTheme } from "@mantine/core";
 
 // TODO: Remove Luxon and ChartJS
 // TODO: Make timestamp work automatically
 // TODO: fix time
 
 const GlobalCpuAreaChart: React.FC = ({}) => {
-  const { globalCpu } = useServerEventsContext();
+  const metrics = useGlobalCpuSelectors.use.metrics();
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
@@ -35,12 +35,12 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
         {
           name: "CPU Usage",
           type: "area",
-          data: globalCpu.map((cpu) => [cpu.timestamp, cpu.usage]),
+          data: metrics.map((cpu) => [cpu.timestamp, cpu.usage]),
           color: other.charts.area.globalCpu.color,
         },
       ],
     });
-  }, [globalCpu]);
+  }, [metrics]);
 
   return (
     <Card style={{ height: "410px" }}>
