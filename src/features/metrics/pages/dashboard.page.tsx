@@ -9,17 +9,10 @@ import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-r
 import NetworksReceivedAreaChart from "@/features/metrics/components/networks/networks-received.area-chart";
 import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
-import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-chart";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
+import useGlobalCpuSelectors from "@/features/metrics/stores/globalCpu.store";
+import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import { Grid, Group, Title } from "@mantine/core";
-
-import useSystemStoreSelectors from "../stores/system.store";
-
-// TODO: Unused metrics
-
-/* <CpusBarChart /> */
-// <SwapRadialChart /> */
-/* <SystemInfo /> */
 
 const StatsRings = () => {
   return (
@@ -81,13 +74,16 @@ const DisksSection = () => {
 
 const SystemInformationWidget = () => {
   const systemInformation = useSystemStoreSelectors.use.info();
+  const globalCpu = useGlobalCpuSelectors.use.globalCpu();
 
   return (
     <Group>
-      <Title order={4}>OS: {systemInformation.hostname}</Title>
+      {/* <Title order={4}>OS: {systemInformation.hostname}</Title> */}
+
+      <Title order={5}>CPU: {globalCpu.brand}</Title>
       <Title order={5}>Core count: {systemInformation.coreCount}</Title>
-      <Title order={5}>Kernel: {systemInformation.kernelVersion}</Title>
       <Title order={5}>OS Version: {systemInformation.osVersion}</Title>
+      <Title order={5}>Kernel: {systemInformation.kernelVersion}</Title>
     </Group>
   );
 };
