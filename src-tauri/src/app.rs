@@ -1,15 +1,13 @@
 use log::info;
-use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
-use std::ffi::OsStr;
-use std::fs;
+
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
+use std::thread;
 use tauri::{State, Window};
 
-use crate::dirstat::{DiskItem, DiskItemMetadata, FileInfo};
+use crate::dirstat::{DiskItem, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
-use rayon::prelude::*;
 
 pub struct AppState(Arc<Mutex<App>>);
 
@@ -132,12 +130,52 @@ pub fn delete_folder(path: String) {
     }
 }
 
-// Result<Vec<FileEntry>, String>
+#[tauri::command]
+// multi threaded fast version but emits data
+pub fn deep_scan_emit(window: tauri::Window, path: String) -> Result<(), String> {
+    let time = std::time::Instant::now();
+    dbg!("Scanning folder:", &path);
+    let path_buf = PathBuf::from(&path);
+
+    let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
+
+    let callback: Arc<dyn Fn(&DiskItem) + Send + Sync> = Arc::new(move |item: &DiskItem| {
+        if let Err(e) = window.emit("deep_scan_analysis", item) {
+            eprintln!("Failed to send signal: {}", e);
+        }
+    });
+
+    thread::spawn(move || {
+        let analysed = match file_info {
+            FileInfo::Directory { volume_id } => {
+                DiskItem::from_analyze_callback(&path_buf, true, volume_id, Arc::clone(&callback))
+                    .map_err(|e| e.to_string())
+            }
+            _ => Err("Not a directory".into()),
+        };
+
+        match analysed {
+            Ok(_) => {
+                dbg!("Scanning complete");
+                dbg!("Time taken:", time.elapsed().as_secs_f32());
+            }
+            Err(err) => {
+                eprintln!("Error during analysis: {}", err);
+            }
+        }
+    });
+
+    Ok(())
+}
 
 #[tauri::command]
+// Multithreaded fast version, uses high cpu/memory
 pub async fn deep_scan(path: String) -> Result<DiskItem, String> {
     let time = std::time::Instant::now();
     dbg!("Scanning folder:", &path);
+    dbg!("Triggering Deep scan");
+
+    
     let path_buf = PathBuf::from(&path);
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 

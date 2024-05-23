@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.9.2
+- Performance improvements for disk analysis 
+- Added System information metrics to dashboard
+- UI performance improvements
+- Improve responsiveness of Disks analytics page
+
+
+## 0.9.1
+- Perf improvements
+
 ## 0.9.0
 - Added Disk Analysis feature
 - Added File explorer feature

@@ -1,11 +1,11 @@
-import ReactApexChart from 'react-apexcharts';
+import ReactApexChart from "react-apexcharts";
 
-import Card from '@/components/card';
-import useServerEventsContext from '@/hooks/useServerEventsContext';
-import { Space, useMantineTheme } from '@mantine/core';
+import Card from "@/components/card";
+import useCpusSelectors from "@/features/metrics/stores/cpus.store";
+import { Space, useMantineTheme } from "@mantine/core";
 
 const CpusBarChart: React.FC = () => {
-  const { cpus } = useServerEventsContext();
+  const cpus = useCpusSelectors.use.cpus();
   const { other } = useMantineTheme();
 
   const options: ApexCharts.ApexOptions = {
@@ -78,19 +78,12 @@ const CpusBarChart: React.FC = () => {
     },
   };
 
-  const last2 = cpus.map((cpu) => ({
-    name: cpu.id,
-    data: cpu.data.slice(-2),
-  }));
-
   const series: ApexAxisChartSeries = [
     {
-      data: last2.map((cpu, i) => {
-        return {
-          x: cpu.name,
-          y: cpu.data[0].usage,
-        };
-      }),
+      data: cpus.map((cpu) => ({
+        x: cpu.name,
+        y: cpu.usage,
+      })),
     },
   ];
 

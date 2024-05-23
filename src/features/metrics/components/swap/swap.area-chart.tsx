@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import AreaChart, { useAreaChartState } from '@/components/area-chart';
-import Card from '@/components/card';
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import useServerEventsContext from '@/hooks/useServerEventsContext';
-import { useMantineTheme } from '@mantine/core';
+import AreaChart, { useAreaChartState } from "@/components/area-chart";
+import Card from "@/components/card";
+import useSwapSelectors from "@/features/metrics/stores/swap.store";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import { useMantineTheme } from "@mantine/core";
 
 const SwapAreaChart: React.FC = ({}) => {
-  const { swap } = useServerEventsContext();
+  const swap = useSwapSelectors.use.metrics();
+
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {

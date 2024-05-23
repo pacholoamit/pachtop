@@ -22,6 +22,7 @@
     "classnames": "^2.5.1",
     "highcharts": "^11.4.1",
     "highcharts-react-official": "^3.2.1",
+    "immer": "^10.1.1",
     "lodash.sortby": "^4.7.0",
     "mantine-datatable": "^2.9.14",
     "non.geist": "^1.0.3",
@@ -30,6 +31,7 @@
     "react": "^18.3.1",
     "react-accessible-treeview": "^2.9.0",
     "react-apexcharts": "^1.4.1",
+    "react-arborist": "^3.4.0",
     "react-dom": "^18.3.1",
     "react-geiger": "^1.2.0",
     "react-github-btn": "^1.4.0",
@@ -38,7 +40,8 @@
     "react-text-gradients": "^1.0.2",
     "tauri-plugin-autostart-api": "https://github.com/tauri-apps/tauri-plugin-autostart",
     "tauri-plugin-log-api": "https://github.com/tauri-apps/tauri-plugin-log",
-    "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store"
+    "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.14",
