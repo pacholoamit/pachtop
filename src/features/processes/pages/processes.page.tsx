@@ -6,14 +6,11 @@ import PageWrapper from "@/components/page-wrapper";
 import KillProcessVerification from "@/features/processes/components/processes.kill-verification";
 import ProcessesTable from "@/features/processes/components/processes.table";
 import useProcessesSelectors from "@/features/processes/stores/processes.store";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { Process } from "@/lib";
 import { TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 
 const ProcessesPage = () => {
-  console.log("render");
-  // const { processes } = useServerEventsContext();
   const processes = useProcessesSelectors.use.processes();
   const [query, setQuery] = useState("");
   const [records, setRecords] = useState<Process[]>([]);
