@@ -77,10 +77,10 @@ const SystemInformationWidget = () => {
   const globalCpu = useGlobalCpuSelectors.use.latest();
   return (
     <Group>
-      <Title order={5}>CPU: {globalCpu.brand}</Title>
-      <Title order={5}>Core count: {systemInformation.coreCount}</Title>
-      <Title order={5}>OS Version: {systemInformation.osVersion}</Title>
-      <Title order={5}>Kernel: {systemInformation.kernelVersion}</Title>
+      <Title order={6}>CPU: {globalCpu.brand}</Title>
+      <Title order={6}>Core count: {systemInformation.coreCount}</Title>
+      <Title order={6}>OS Version: {systemInformation.osVersion}</Title>
+      <Title order={6}>Kernel: {systemInformation.kernelVersion}</Title>
     </Group>
   );
 };
