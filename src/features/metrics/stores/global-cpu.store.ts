@@ -1,8 +1,7 @@
-import { create } from "zustand";
-
-import { VIEWABLE_ELEMENT_COUNT } from "@/contants";
 import { GlobalCpu, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
+
+import useMetricsStore from "./metrics.store";
 
 const DEFAULT_GLOBAL_CPU: GlobalCpu = {
   brand: "unknown",
@@ -12,37 +11,11 @@ const DEFAULT_GLOBAL_CPU: GlobalCpu = {
   usage: 0,
   vendor: "unknown",
 };
-interface GlobalCpuState {
-  metrics: GlobalCpu[];
-  latest: GlobalCpu;
-  limit: number;
-  setLimit: (limit: number) => void;
-  add: (data: GlobalCpu) => void;
-  remove: () => void;
-  clear: () => void;
-  listen: () => void;
-}
 
-const useGlobalCpuStore = create<GlobalCpuState>()((set, get) => ({
-  metrics: [DEFAULT_GLOBAL_CPU],
-  latest: DEFAULT_GLOBAL_CPU,
-  limit: VIEWABLE_ELEMENT_COUNT,
-  setLimit: (limit: number) => set({ limit }),
-  add: (data: GlobalCpu) => set((state) => ({ metrics: [...state.metrics, data] })),
-  remove: () => set((state) => ({ metrics: state.metrics.slice(1) })),
-  clear: () => set({ metrics: [] }),
-  listen: () =>
-    streams.globalCpu((stream) => {
-      const state = get();
-      const buffer = [...state.metrics, stream];
-      if (buffer.length > state.limit) {
-        buffer.shift();
-      }
-
-      set({ latest: stream });
-      set({ metrics: buffer });
-    }),
-}));
+const useGlobalCpuStore = useMetricsStore<GlobalCpu>({
+  default: DEFAULT_GLOBAL_CPU,
+  stream: streams.globalCpu,
+});
 
 useGlobalCpuStore.getState().listen();
 
