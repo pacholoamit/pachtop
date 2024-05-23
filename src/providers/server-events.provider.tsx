@@ -13,7 +13,6 @@ interface ServerEventsContext {
   globalCpu: GlobalCpu[];
   memory: Memory[];
   swap: Swap[];
-  sysInfo: SysInfo | null;
   processes: Process[];
   networks: Enumerable<Network>[];
   cpus: Enumerable<Cpu>[];
@@ -23,7 +22,6 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
   globalCpu: [],
   memory: [],
   swap: [],
-  sysInfo: null,
   processes: [],
   networks: [],
   cpus: [],
@@ -32,7 +30,6 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
 const maxSize = VIEWABLE_ELEMENT_COUNT;
 
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
-  const [sysInfo] = useServerEventsStore<SysInfo>(ServerEvent.SysInfo, { maxSize: 1 });
   const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus, { maxSize: 1 });
 
   const [processes] = useServerEventsStore<Process[]>(ServerEvent.Processes, { maxSize: 1 });
@@ -44,7 +41,6 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
   return (
     <ServerEventsContext.Provider
       value={{
-        sysInfo: sysInfo[sysInfo.length - 1] ?? null, // Get latest sysInfo
         globalCpu,
         memory,
         swap,

@@ -11,8 +11,9 @@ import NetworksTransmittedAreaChart from "@/features/metrics/components/networks
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import SwapRadialChart from "@/features/metrics/components/swap/swap.radial-chart";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
-import SystemInfo from "@/features/metrics/components/system-info";
-import { Grid } from "@mantine/core";
+import { Grid, Group, Title } from "@mantine/core";
+
+import useSystemStoreSelectors from "../stores/system.store";
 
 // TODO: Unused metrics
 
@@ -78,9 +79,22 @@ const DisksSection = () => {
   );
 };
 
+const SystemInformationWidget = () => {
+  const systemInformation = useSystemStoreSelectors.use.info();
+
+  return (
+    <Group>
+      <Title order={4}>OS: {systemInformation.hostname}</Title>
+      <Title order={5}>Core count: {systemInformation.coreCount}</Title>
+      <Title order={5}>Kernel: {systemInformation.kernelVersion}</Title>
+      <Title order={5}>OS Version: {systemInformation.osVersion}</Title>
+    </Group>
+  );
+};
+
 const DashboardPage = () => {
   return (
-    <PageWrapper name="Dashboard">
+    <PageWrapper name="Dashboard" widget={<SystemInformationWidget />}>
       <Grid gutter="sm">
         <StatsRings />
         <CpuSection />
