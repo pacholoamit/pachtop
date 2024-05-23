@@ -18,7 +18,7 @@ const range: DynamicProgressRangeInput[] = [
 
 const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) => {
   const { startDiskAnalysis } = props;
-  const disk = useDisksStore((state) => state.viewedDisk);
+  const disk = useDisksStore((state) => state.selectedDisk);
 
   const data: { label: string; value: string; color: DefaultMantineColor }[] = [
     {

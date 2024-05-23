@@ -44,7 +44,7 @@ const MemoizedDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
-  const disk = useDisksStore((state) => state.viewedDisk);
+  const disk = useDisksStore((state) => state.selectedDisk);
 
   const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);

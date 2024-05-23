@@ -23,7 +23,7 @@ import {
 import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInfoProps {
-  disk: Enumerable<Disk>;
+  disk: Disk;
 }
 
 const useStyles = createStyles((theme) => ({
@@ -119,20 +119,20 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   );
 };
 
-const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) => {
+const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
   const setViewedDisk = useDisksStore((state) => state.setViewedDisk);
   const navigate = useNavigate();
 
   const showDirectory = async () => {
-    if (!disk?.mountPoint) return;
+    if (!disk.mountPoint) return;
     await commands.showInFolder(disk.mountPoint);
   };
 
   // Encode this id to avoid any issues with special characters
   const onShowDetailsClick = () => {
-    setViewedDisk(id);
-    navigate(`/disks/${encodeURI(id)}`);
+    setViewedDisk(disk.name);
+    navigate(`/disks/${encodeURI(disk.name)}`);
   };
 
   return (
@@ -148,19 +148,17 @@ const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) =>
 };
 
 const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
-  const id = disk?.id;
-  const latest = disk.data.at(-1);
   const { classes } = useStyles();
 
   return (
     <Card shadow="xl" p="xs" radius={"md"} withBorder>
       <Card.Section className={classes.section}>
-        <DiskDetailsSection disk={latest} />
+        <DiskDetailsSection disk={disk} />
       </Card.Section>
       <Card.Section className={classes.section}>
-        <DiskInfoSection disk={latest} />
+        <DiskInfoSection disk={disk} />
       </Card.Section>
-      <DiskActionGroup disk={latest} id={id} />
+      <DiskActionGroup disk={disk} />
     </Card>
   );
 };

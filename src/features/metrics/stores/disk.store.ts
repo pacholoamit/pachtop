@@ -17,18 +17,18 @@ const DEFAULT_DISK: Disk = {
 };
 interface DisksState {
   disks: Disk[];
-  viewedDisk: Disk;
+  selectedDisk: Disk;
   setViewedDisk: (disk: string) => void;
   listenForDisks: () => void;
 }
 
 const useDisksStore = create<DisksState>()((set, get) => ({
   disks: [],
-  viewedDisk: DEFAULT_DISK,
+  selectedDisk: DEFAULT_DISK,
   setViewedDisk: (disk: string) => {
     const state = get();
-    const viewedDisk = state.disks.find((d) => d.name === disk) || DEFAULT_DISK;
-    set({ viewedDisk });
+    const selectedDisk = state.disks.find((d) => d.name === disk) || DEFAULT_DISK;
+    set({ selectedDisk });
   },
 
   listenForDisks: () => {

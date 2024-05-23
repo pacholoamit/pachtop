@@ -5,7 +5,7 @@ const formatBytes = (bytes: number): string => {
   const factor = 1024;
 
   if (bytes < factor) {
-    return `${bytes} Bytes`;
+    return `${bytes} B`;
   }
 
   let unitIndex = 0;

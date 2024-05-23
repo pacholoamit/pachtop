@@ -174,6 +174,8 @@ pub async fn deep_scan(path: String) -> Result<DiskItem, String> {
     let time = std::time::Instant::now();
     dbg!("Scanning folder:", &path);
     dbg!("Triggering Deep scan");
+
+    
     let path_buf = PathBuf::from(&path);
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 

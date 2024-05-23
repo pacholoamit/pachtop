@@ -17,7 +17,6 @@ interface ServerEventsContext {
   processes: Process[];
   networks: Enumerable<Network>[];
   cpus: Enumerable<Cpu>[];
-  disks: Enumerable<Disk>[];
 }
 
 export const ServerEventsContext = createContext<ServerEventsContext>({
@@ -28,7 +27,6 @@ export const ServerEventsContext = createContext<ServerEventsContext>({
   processes: [],
   networks: [],
   cpus: [],
-  disks: [],
 });
 
 const maxSize = VIEWABLE_ELEMENT_COUNT;
@@ -36,7 +34,7 @@ const maxSize = VIEWABLE_ELEMENT_COUNT;
 const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children }) => {
   const [sysInfo] = useServerEventsStore<SysInfo>(ServerEvent.SysInfo, { maxSize: 1 });
   const [cpus] = useServerEventsEnumerableStore<Cpu>(ServerEvent.Cpus, { maxSize: 1 });
-  const [disks] = useServerEventsEnumerableStore<Disk>(ServerEvent.Disks, { maxSize: 1 });
+
   const [processes] = useServerEventsStore<Process[]>(ServerEvent.Processes, { maxSize: 1 });
   const [globalCpu] = useServerEventsStore<GlobalCpu>(ServerEvent.GlobalCpu, { maxSize });
   const [memory] = useServerEventsStore<Memory>(ServerEvent.Memory, { maxSize });
@@ -53,7 +51,6 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
         processes: processes[processes.length - 1] ?? [], // Get latest processes
         networks,
         cpus,
-        disks,
       }}
     >
       {children}
