@@ -2222,6 +2222,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^10.1.1":
+  version: 10.1.1
+  resolution: "immer@npm:10.1.1"
+  checksum: 07c67970b7d22aded73607193d84861bf786f07d47f7d7c98bb10016c7a88f6654ad78ae1e220b3c623695b133aabbf24f5eb8d9e8060cff11e89ccd81c9c10b
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.2.1":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -2692,6 +2699,7 @@ __metadata:
     classnames: ^2.5.1
     highcharts: ^11.4.1
     highcharts-react-official: ^3.2.1
+    immer: ^10.1.1
     lodash.sortby: ^4.7.0
     mantine-datatable: ^2.9.14
     non.geist: ^1.0.3

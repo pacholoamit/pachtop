@@ -8,9 +8,8 @@ import PageWrapper from "@/components/page-wrapper";
 import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import { commands, Disk, ServerEvent } from "@/lib";
-import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
-import { listen } from "@tauri-apps/api/event";
+import { commands } from "@/lib";
+import { Grid, LoadingOverlay, Stack, Text, Title } from "@mantine/core";
 
 import useDisksStore from "../stores/disk.store";
 import formatBytes from "../utils/format-bytes";
@@ -44,7 +43,7 @@ const MemoizedDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
-  const disk = useDisksStore((state) => state.selectedDisk);
+  const disk = useDisksStore.use.selectedDisk();
 
   const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);

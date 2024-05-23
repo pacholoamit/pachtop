@@ -2,7 +2,7 @@ import Card from "@/components/card";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { commands, Disk } from "@/lib";
+import { commands } from "@/lib";
 import { ActionIcon, Badge, Button, DefaultMantineColor, Group, Space, Stack, Text, Title } from "@mantine/core";
 import { IconFolderOpen } from "@tabler/icons-react";
 
@@ -18,7 +18,7 @@ const range: DynamicProgressRangeInput[] = [
 
 const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) => {
   const { startDiskAnalysis } = props;
-  const disk = useDisksStore((state) => state.selectedDisk);
+  const disk = useDisksStore.use.selectedDisk();
 
   const data: { label: string; value: string; color: DefaultMantineColor }[] = [
     {

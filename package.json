@@ -22,6 +22,7 @@
     "classnames": "^2.5.1",
     "highcharts": "^11.4.1",
     "highcharts-react-official": "^3.2.1",
+    "immer": "^10.1.1",
     "lodash.sortby": "^4.7.0",
     "mantine-datatable": "^2.9.14",
     "non.geist": "^1.0.3",

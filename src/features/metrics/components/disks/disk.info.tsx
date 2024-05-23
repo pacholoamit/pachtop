@@ -121,7 +121,7 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
 
 const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
-  const setViewedDisk = useDisksStore((state) => state.setViewedDisk);
+  const setSelectedDisk = useDisksStore.use.setSelectedDisk();
   const navigate = useNavigate();
 
   const showDirectory = async () => {
@@ -131,7 +131,7 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
 
   // Encode this id to avoid any issues with special characters
   const onShowDetailsClick = () => {
-    setViewedDisk(disk.name);
+    setSelectedDisk(disk.name);
     navigate(`/disks/${encodeURI(disk.name)}`);
   };
 

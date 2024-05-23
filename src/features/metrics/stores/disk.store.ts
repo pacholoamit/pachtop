@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { Disk, ServerEvent } from "@/lib";
+import createSelectors from "@/utils/create-selectors";
 import { listen } from "@tauri-apps/api/event";
 
 const DEFAULT_DISK: Disk = {
@@ -15,23 +16,24 @@ const DEFAULT_DISK: Disk = {
   used: 0,
   usedPercentage: 0,
 };
+
 interface DisksState {
   disks: Disk[];
   selectedDisk: Disk;
-  setViewedDisk: (disk: string) => void;
-  listenForDisks: () => void;
+  setSelectedDisk: (disk: string) => void;
+  listen: () => void;
 }
 
 const useDisksStore = create<DisksState>()((set, get) => ({
-  disks: [],
+  disks: [{ ...DEFAULT_DISK }],
   selectedDisk: DEFAULT_DISK,
-  setViewedDisk: (disk: string) => {
+  setSelectedDisk: (disk: string) => {
     const state = get();
     const selectedDisk = state.disks.find((d) => d.name === disk) || DEFAULT_DISK;
     set({ selectedDisk });
   },
 
-  listenForDisks: () => {
+  listen: () => {
     listen<Disk[]>(ServerEvent.Disks, ({ payload }) => {
       set((state) => ({
         disks: payload,
@@ -41,6 +43,8 @@ const useDisksStore = create<DisksState>()((set, get) => ({
 }));
 
 // Start listening for disk events as soon as the store is created
-useDisksStore.getState().listenForDisks();
+useDisksStore.getState().listen();
 
-export default useDisksStore;
+const useDisksSelectors = createSelectors(useDisksStore);
+
+export default useDisksSelectors;

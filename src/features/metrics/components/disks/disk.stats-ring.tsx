@@ -7,7 +7,7 @@ import { useMantineTheme } from "@mantine/core";
 import { IconFolders } from "@tabler/icons-react";
 
 const DiskStatsRing: React.FC = ({}) => {
-  const [disk] = useDisksStore((state) => state.disks);
+  const [disk] = useDisksStore.use.disks();
   const { other } = useMantineTheme();
 
   const available = disk.total || 0;
