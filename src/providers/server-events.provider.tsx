@@ -10,14 +10,10 @@ interface ServerEventsProviderProps {
 }
 
 interface ServerEventsContext {
-  memory: Memory[];
-
   networks: Enumerable<Network>[];
 }
 
 export const ServerEventsContext = createContext<ServerEventsContext>({
-  memory: [],
-
   networks: [],
 });
 
@@ -31,8 +27,6 @@ const ServerEventsProvider: React.FC<ServerEventsProviderProps> = ({ children })
   return (
     <ServerEventsContext.Provider
       value={{
-        memory,
-
         networks,
       }}
     >

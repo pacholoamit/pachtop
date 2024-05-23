@@ -4,7 +4,6 @@ import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu.area-chart";
 import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
 import MemoryAreaChart from "@/features/metrics/components/memory/memory.area-chart";
-import MemoryRadialChart from "@/features/metrics/components/memory/memory.radial-chart";
 import MemoryStatsRing from "@/features/metrics/components/memory/memory.stats-ring";
 import NetworksReceivedAreaChart from "@/features/metrics/components/networks/networks-received.area-chart";
 import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";

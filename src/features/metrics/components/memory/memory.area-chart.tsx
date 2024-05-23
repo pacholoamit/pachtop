@@ -2,12 +2,12 @@ import { useEffect } from "react";
 
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import Card from "@/components/card";
+import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useMantineTheme } from "@mantine/core";
 
 const MemoryAreaChart: React.FC = ({}) => {
-  const { memory } = useServerEventsContext();
+  const memory = useMemorySelectors.use.metrics();
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {

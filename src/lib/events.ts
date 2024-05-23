@@ -1,6 +1,6 @@
 import { emit, listen } from "@tauri-apps/api/event";
 
-import { Cpu, Disk, GlobalCpu, Process, ServerEvent, Swap, SysInfo } from "./types";
+import { Cpu, Disk, GlobalCpu, Memory, Process, ServerEvent, Swap, SysInfo } from "./types";
 
 export const setWindowColor = (color: string) => emit(ServerEvent.ThemeChanged, color);
 
@@ -27,5 +27,9 @@ export const streams = {
 
   swap: (callback: (data: Swap) => void) => {
     listen<Swap>(ServerEvent.Swap, ({ payload }) => callback(payload));
+  },
+
+  memory: (callback: (data: Memory) => void) => {
+    listen<Memory>(ServerEvent.Memory, ({ payload }) => callback(payload));
   },
 };
