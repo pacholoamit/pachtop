@@ -3,9 +3,7 @@ import React from "react";
 import PageWrapper from "@/components/page-wrapper";
 import DiskInfo from "@/features/metrics/components/disks/disk.info";
 import useDisksStore from "@/features/metrics/stores/disk.store";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { Alert, Grid } from "@mantine/core";
-import { IconAlertCircle } from "@tabler/icons-react";
+import { Grid } from "@mantine/core";
 
 const DisksPage = () => {
   const disks = useDisksStore((state) => state.disks);

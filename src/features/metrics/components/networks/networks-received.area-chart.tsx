@@ -4,12 +4,10 @@ import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import Card from "@/components/card";
 import useNetworkSelectors from "@/features/metrics/stores/networks.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useMantineTheme } from "@mantine/core";
 
 // TODO: Fix typescript
 const NetworksReceivedAreaChart: React.FC = ({}) => {
-  // const { networks } = useServerEventsContext();
   const networks = useNetworkSelectors.use.enumerables();
   const { other } = useMantineTheme();
 
