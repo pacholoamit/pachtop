@@ -1,43 +1,54 @@
 import { create } from "zustand";
 
-interface MetricsEnumerableState<T extends Enumerable[]> {
-  enumerables: Map<string, T>;
-  enumerableByName: (name: string) => T;
+interface EnumerableInput {
+  name: string;
+}
+
+interface Enumerable<T> {
+  id: string;
+  data: T[];
+}
+
+interface EnumerableStore<T> {
+  enumerables: Enumerable<T>[];
+  maxSize: number;
   listen: () => void;
 }
 
-interface MetricsEnumerableStoreInput<T extends Enumerable[]> {
+interface EnumerableStoreInput<T> {
   default: T;
   stream: (cb: (data: T) => void) => void;
 }
 
-interface Enumerable {
-  // NOTE: Name acts as a key for the enumerable
-  name: string;
-}
+const useEnumerableMetricsStore = <T extends EnumerableInput[]>(input: EnumerableStoreInput<T>) => {
+  return create<EnumerableStore<T>>()((set, get) => ({
+    enumerables: [],
+    maxSize: 100, // Default value, can be overridden in the hook
 
-const useEnumerableMetricsStore = <T extends Enumerable[]>(input: MetricsEnumerableStoreInput<T>) => {
-  return create<MetricsEnumerableState<T>>()((set, get) => ({
-    enumerables: new Map<string, T>([["default", input.default] as [string, T]]),
-    enumerableByName: (name: string) => get().enumerables.get(name) || input.default,
-
-    listen: () =>
-      input.stream((events) => {
+    listen: () => {
+      input.stream((stream) => {
         const state = get();
 
-        events.forEach((event) => {
-          if (!state.enumerables.has(event.name)) {
-            state.enumerables.set(event.name, input.default);
-            return;
+        // TODO: Set correct types for item
+        stream.find((item) => {
+          // If the item name is not in the uniqueItems array, add it
+          if (!state.enumerables.find((unique) => unique.id === item.name)) {
+            const newEnumerable: Enumerable<T> = {
+              id: item.name,
+              data: [item as any],
+            };
+
+            set((state) => ({ enumerables: [...state.enumerables, newEnumerable] }));
           }
 
-          // Find enumerable by name that has the same name as event
-          if (state.enumerables.has(event.name)) {
-            const enumerable = state.enumerables.get(event.name);
-            enumerable && enumerable.push(event);
-          }
+          // If the item name is in the uniqueItems array, append the data
+          const index = state.enumerables.findIndex((u) => u.id === item.name);
+          if (index === -1) return;
+
+          state.enumerables[index].data.push(item as any);
         });
-      }),
+      });
+    },
   }));
 };
 
