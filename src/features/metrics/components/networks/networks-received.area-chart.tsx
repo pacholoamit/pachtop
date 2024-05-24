@@ -7,12 +7,13 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useMantineTheme } from "@mantine/core";
 
+// TODO: Fix typescript
 const NetworksReceivedAreaChart: React.FC = ({}) => {
-  const { networks } = useServerEventsContext();
-  const networks2 = useNetworkSelectors.use.enumerables();
+  // const { networks } = useServerEventsContext();
+  const networks = useNetworkSelectors.use.enumerables();
   const { other } = useMantineTheme();
 
-  console.log(networks2);
+  console.log(networks);
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
       text: "Network Activity (Received)",

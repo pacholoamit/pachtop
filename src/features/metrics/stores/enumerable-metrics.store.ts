@@ -45,7 +45,24 @@ const useEnumerableMetricsStore = <T extends EnumerableInput[]>(input: Enumerabl
           const index = state.enumerables.findIndex((u) => u.id === item.name);
           if (index === -1) return;
 
-          state.enumerables[index].data.push(item as any);
+          set((state) => {
+            const newEnumerable = state.enumerables[index];
+            const newData = [...newEnumerable.data, item as any];
+
+            if (newData.length > state.maxSize) {
+              newData.shift();
+            }
+
+            const updatedEnumerable = {
+              ...newEnumerable,
+              data: newData,
+            };
+
+            const updatedEnumerables = [...state.enumerables];
+            updatedEnumerables[index] = updatedEnumerable;
+
+            return { enumerables: updatedEnumerables };
+          });
         });
       });
     },
