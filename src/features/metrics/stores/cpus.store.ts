@@ -6,7 +6,7 @@ import createSelectors from "@/utils/create-selectors";
 const DEFAULT_CPUS: Cpu = {
   name: "unknown",
   usage: 0,
-  timestamp: BigInt(0),
+  timestamp: 0,
 };
 interface CpusState {
   cpus: Cpu[];

@@ -8,7 +8,7 @@ const DEFAULT_SYS_INFO: SysInfo = {
   hostname: "unknown",
   kernelVersion: "unknown",
   osVersion: "unknown",
-  timestamp: BigInt(0),
+  timestamp: 0,
 };
 interface SystemState {
   info: SysInfo;

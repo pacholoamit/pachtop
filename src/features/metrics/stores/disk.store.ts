@@ -12,7 +12,7 @@ const DEFAULT_DISK: Disk = {
   mountPoint: "unknown",
   total: 0,
   name: "unknown",
-  timestamp: BigInt(0),
+  timestamp: 0,
   used: 0,
   usedPercentage: 0,
 };
