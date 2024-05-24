@@ -7,7 +7,7 @@ const DEFAULT_GLOBAL_CPU: GlobalCpu = {
   brand: "unknown",
   frequency: BigInt(0),
   name: "unknown",
-  timestamp: BigInt(0),
+  timestamp: 0,
   usage: 0,
   vendor: "unknown",
 };

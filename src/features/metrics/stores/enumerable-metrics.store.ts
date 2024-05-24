@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+import { VIEWABLE_ELEMENT_COUNT } from "@/contants";
+
 interface EnumerableInput {
   name: string;
 }
@@ -9,12 +11,12 @@ interface Enumerable<T> {
   data: T[];
 }
 
-interface EnumerableStore<T> {
-  enumerables: Enumerable<T>[];
+interface EnumerableStore<Input extends EnumerableInput, Enumerated> {
+  enumerables: Enumerable<Input>[];
   maxSize: number;
   listen: () => void;
-  addEnumerable: (item: T) => void;
-  updateEnumerable: (index: number, item: any) => void;
+  addEnumerable: (item: Input) => void;
+  appendMetricToEnumerable: (index: number, item: Input) => void;
 }
 
 interface EnumerableStoreInput<T> {
@@ -22,14 +24,16 @@ interface EnumerableStoreInput<T> {
   stream: (cb: (data: T) => void) => void;
 }
 
-const useEnumerableMetricsStore = <T extends EnumerableInput[]>(input: EnumerableStoreInput<T>) => {
-  return create<EnumerableStore<T>>()((set, get) => ({
+const useEnumerableMetricsStore = <Input extends EnumerableInput, Enumerated extends EnumerableInput = EnumerableInput>(
+  input: EnumerableStoreInput<Input[]>
+) => {
+  return create<EnumerableStore<Input, Enumerated>>((set, get) => ({
     enumerables: [],
-    maxSize: 100, // Default value, can be overridden in the hook
+    maxSize: VIEWABLE_ELEMENT_COUNT, // Default value, can be overridden in the hook
 
-    addEnumerable: (item: any) => {
+    addEnumerable: (item) => {
       set((state) => {
-        const newEnumerable: Enumerable<T> = {
+        const newEnumerable = {
           id: item.name,
           data: [item],
         };
@@ -37,19 +41,14 @@ const useEnumerableMetricsStore = <T extends EnumerableInput[]>(input: Enumerabl
       });
     },
 
-    updateEnumerable: (index: number, item: any) => {
+    appendMetricToEnumerable: (index, item) => {
       set((state) => {
-        const newEnumerable = state.enumerables[index];
-        const newData = [...newEnumerable.data, item];
+        const existingEnumerable = state.enumerables[index];
+        const data = [...existingEnumerable.data, item];
 
-        if (newData.length > state.maxSize) {
-          newData.shift();
-        }
+        if (data.length > state.maxSize) data.shift();
 
-        const updatedEnumerable = {
-          ...newEnumerable,
-          data: newData,
-        };
+        const updatedEnumerable = { ...existingEnumerable, data };
 
         const updatedEnumerables = [...state.enumerables];
         updatedEnumerables[index] = updatedEnumerable;
@@ -61,14 +60,17 @@ const useEnumerableMetricsStore = <T extends EnumerableInput[]>(input: Enumerabl
     listen: () => {
       input.stream((stream) => {
         const state = get();
-        stream.find((item) => {
-          const index = state.enumerables.findIndex((u) => u.id === item.name);
 
-          if (index === -1) {
-            get().addEnumerable(item);
-          } else {
-            get().updateEnumerable(index, item);
+        stream.forEach((item) => {
+          const index = state.enumerables.findIndex((u) => u.id === item.name);
+          const isExistingEnumerable = index !== -1;
+
+          if (!isExistingEnumerable) {
+            state.addEnumerable(item);
+            return;
           }
+
+          state.appendMetricToEnumerable(index, item);
         });
       });
     },

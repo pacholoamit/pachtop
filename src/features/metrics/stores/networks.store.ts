@@ -6,11 +6,11 @@ import useEnumerableMetricsStore from "./enumerable-metrics.store";
 const DEFAULT_NETWORK: Network = {
   name: "Unknown",
   received: 0,
-  timestamp: BigInt(0),
+  timestamp: 0,
   transmitted: 0,
 };
 
-const useNetworkStore = useEnumerableMetricsStore<Network[]>({
+const useNetworkStore = useEnumerableMetricsStore<Network>({
   default: [DEFAULT_NETWORK],
   stream: streams.network,
 });

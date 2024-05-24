@@ -5,7 +5,7 @@ import useMetricsStore from "./metrics.store";
 
 const DEFAULT_MEMORY: Memory = {
   free: 0,
-  timestamp: BigInt(0),
+  timestamp: 0,
   total: 0,
   used: 0,
   usedPercentage: 0,
