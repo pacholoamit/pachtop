@@ -21,9 +21,11 @@ mod app;
 mod dirstat;
 mod metrics;
 mod models;
+pub mod tree;
 mod utils;
 
 use app::AppState;
+use tree::Trie;
 
 use std::time::Duration;
 use tauri::api::path::cache_dir;
