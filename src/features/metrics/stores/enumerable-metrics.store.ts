@@ -2,16 +2,16 @@ import { create } from "zustand";
 
 import { VIEWABLE_ELEMENT_COUNT } from "@/contants";
 
-interface EnumerableInput {
+export interface EnumerableInput {
   name: string;
 }
 
-interface Enumerable<T> {
+export interface Enumerable<T> {
   id: string;
   data: T[];
 }
 
-interface EnumerableStore<Input extends EnumerableInput, Enumerated> {
+export interface EnumerableStore<Input extends EnumerableInput, Enumerated> {
   enumerables: Enumerable<Input>[];
   maxSize: number;
   listen: () => void;
@@ -19,7 +19,7 @@ interface EnumerableStore<Input extends EnumerableInput, Enumerated> {
   appendMetricToEnumerable: (index: number, item: Input) => void;
 }
 
-interface EnumerableStoreInput<T> {
+export interface EnumerableStoreInput<T> {
   default: T;
   stream: (cb: (data: T) => void) => void;
 }

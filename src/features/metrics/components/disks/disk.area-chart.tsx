@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import AreaChart, { useAreaChartState } from '@/components/area-chart';
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
-import { Disk } from '@/lib';
+import AreaChart, { useAreaChartState } from "@/components/area-chart";
+import { Enumerable } from "@/features/metrics/stores/enumerable-metrics.store";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import { Disk } from "@/lib";
 
 interface DiskAreaChartProps {
   disk: Enumerable<Disk>;
@@ -14,7 +14,6 @@ const DiskAreaChart: React.FC<DiskAreaChartProps> = ({ disk }) => {
     title: {
       text: `${disk.id} Disk Usage`,
     },
-    
 
     yAxis: {
       labels: {

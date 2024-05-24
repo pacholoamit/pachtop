@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { Enumerable } from "@/hooks/useServerEventsEnumerableStore";
 import { commands, Disk } from "@/lib";
 import {
   ActionIcon,
