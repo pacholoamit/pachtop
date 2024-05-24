@@ -13,6 +13,8 @@ interface EnumerableStore<T> {
   enumerables: Enumerable<T>[];
   maxSize: number;
   listen: () => void;
+  addEnumerable: (item: T) => void;
+  updateEnumerable: (index: number, item: any) => void;
 }
 
 interface EnumerableStoreInput<T> {
@@ -25,44 +27,48 @@ const useEnumerableMetricsStore = <T extends EnumerableInput[]>(input: Enumerabl
     enumerables: [],
     maxSize: 100, // Default value, can be overridden in the hook
 
+    addEnumerable: (item: any) => {
+      set((state) => {
+        const newEnumerable: Enumerable<T> = {
+          id: item.name,
+          data: [item],
+        };
+        return { enumerables: [...state.enumerables, newEnumerable] };
+      });
+    },
+
+    updateEnumerable: (index: number, item: any) => {
+      set((state) => {
+        const newEnumerable = state.enumerables[index];
+        const newData = [...newEnumerable.data, item];
+
+        if (newData.length > state.maxSize) {
+          newData.shift();
+        }
+
+        const updatedEnumerable = {
+          ...newEnumerable,
+          data: newData,
+        };
+
+        const updatedEnumerables = [...state.enumerables];
+        updatedEnumerables[index] = updatedEnumerable;
+
+        return { enumerables: updatedEnumerables };
+      });
+    },
+
     listen: () => {
       input.stream((stream) => {
         const state = get();
-
-        // TODO: Set correct types for item
         stream.find((item) => {
-          // If the item name is not in the uniqueItems array, add it
-          if (!state.enumerables.find((unique) => unique.id === item.name)) {
-            const newEnumerable: Enumerable<T> = {
-              id: item.name,
-              data: [item as any],
-            };
-
-            set((state) => ({ enumerables: [...state.enumerables, newEnumerable] }));
-          }
-
-          // If the item name is in the uniqueItems array, append the data
           const index = state.enumerables.findIndex((u) => u.id === item.name);
-          if (index === -1) return;
 
-          set((state) => {
-            const newEnumerable = state.enumerables[index];
-            const newData = [...newEnumerable.data, item as any];
-
-            if (newData.length > state.maxSize) {
-              newData.shift();
-            }
-
-            const updatedEnumerable = {
-              ...newEnumerable,
-              data: newData,
-            };
-
-            const updatedEnumerables = [...state.enumerables];
-            updatedEnumerables[index] = updatedEnumerable;
-
-            return { enumerables: updatedEnumerables };
-          });
+          if (index === -1) {
+            get().addEnumerable(item);
+          } else {
+            get().updateEnumerable(index, item);
+          }
         });
       });
     },
