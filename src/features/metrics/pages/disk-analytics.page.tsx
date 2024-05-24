@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import { flattenTree, INode } from "react-accessible-treeview";
-import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
 import { useParams } from "react-router-dom";
 
 import Card from "@/components/card";
@@ -8,7 +6,7 @@ import PageWrapper from "@/components/page-wrapper";
 import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import { commands } from "@/lib";
+import { commands, DiskItem } from "@/lib";
 import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
 import useDisksStore from "../stores/disk.store";
@@ -46,7 +44,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
 
-  const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
+  const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
 
@@ -70,79 +68,76 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     setIsLoading(false);
     // Populate File Explorer
     // Navigate into the root since it's a directory
-    setDiskAnalysis(item.children as any);
+    setDiskAnalysis(item.children as DiskItem[]);
 
-    const flattened = flattenTree(item as any);
+    // const flattened = flattenTree(item as any);
 
-    // TODO: Move to rust?
-    const stortedBySize = flattened.sort((a, b) => {
-      return (b.metadata?.size as number) - (a.metadata?.size as number);
-    });
+    // // TODO: Move to rust?
 
-    // Remove roout node and get top 500
-    const sample = stortedBySize.slice(1, 500);
+    // // Remove roout node and get top 500
+    // const sample = flattened.slice(1, 500);
 
-    console.log(sample);
+    // console.log(sample);
 
-    const data = sample.map((i) => {
-      const id = i.id.toString();
-      const name = i.name || "unknown";
-      const value = i.metadata?.size ?? 0;
+    // const data = sample.map((i) => {
+    //   const id = i.id.toString();
+    //   const name = i.name || "unknown";
+    //   const value = i.metadata?.size ?? 0;
 
-      if (!i.parent) {
-        return { id, name, value };
-      }
+    //   if (!i.parent) {
+    //     return { id, name, value };
+    //   }
 
-      return {
-        id,
-        name,
-        parent: i.parent.toString(),
-        value,
-      };
-    });
+    //   return {
+    //     id,
+    //     name,
+    //     parent: i.parent.toString(),
+    //     value,
+    //   };
+    // });
 
-    setChartOptions((prev) => ({
-      series: [
-        {
-          type: "treemap",
-          layoutAlgorithm: "squarified",
-          animationLimit: 1000,
-          allowTraversingTree: true,
-          allowPointSelect: true,
-          accessibility: {
-            exposeAsGroupOnly: true,
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          levels: [
-            {
-              level: 1,
-              dataLabels: {
-                enabled: true,
-              },
-              borderWidth: 3,
-              layoutAlgorithm: "squarified",
-              color: colors.dark[6], // TODO: Create own color for this
-              borderColor: colors.dark[3], // TODO: Create own color for this
-            },
-            {
-              level: 1,
-              dataLabels: {
-                style: {
-                  fontSize: "14px",
-                },
-              },
-              color: colors.dark[6], // TODO: Create own color for this
-              borderColor: colors.dark[3], // TODO: Create own color for this
-            },
-          ],
-          data: data as any, //TODO: Crutch fix this later
-        },
-      ],
-    }));
+    // setChartOptions((prev) => ({
+    //   series: [
+    //     {
+    //       type: "treemap",
+    //       layoutAlgorithm: "squarified",
+    //       animationLimit: 1000,
+    //       allowTraversingTree: true,
+    //       allowPointSelect: true,
+    //       accessibility: {
+    //         exposeAsGroupOnly: true,
+    //       },
+    //       dataLabels: {
+    //         enabled: false,
+    //       },
+    //       levels: [
+    //         {
+    //           level: 1,
+    //           dataLabels: {
+    //             enabled: true,
+    //           },
+    //           borderWidth: 3,
+    //           layoutAlgorithm: "squarified",
+    //           color: colors.dark[6], // TODO: Create own color for this
+    //           borderColor: colors.dark[3], // TODO: Create own color for this
+    //         },
+    //         {
+    //           level: 1,
+    //           dataLabels: {
+    //             style: {
+    //               fontSize: "14px",
+    //             },
+    //           },
+    //           color: colors.dark[6], // TODO: Create own color for this
+    //           borderColor: colors.dark[3], // TODO: Create own color for this
+    //         },
+    //       ],
+    //       data: data as any, //TODO: Crutch fix this later
+    //     },
+    //   ],
+    // }));
 
-    console.log("Done");
+    // console.log("Done");
   }, [disk.mountPoint]);
 
   return (
@@ -161,7 +156,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         <Grid.Col xl={12}>
           <Card height="560px">
             Disk Usage
-            <MemoizedTreemapChart options={chartOptions} />
+            {/* <MemoizedTreemapChart options={chartOptions} /> */}
           </Card>
         </Grid.Col>
       </Grid>

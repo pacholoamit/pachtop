@@ -29,7 +29,6 @@
     "pocketbase": "^0.21.2",
     "posthog-js": "^1.131.4",
     "react": "^18.3.1",
-    "react-accessible-treeview": "^2.9.0",
     "react-apexcharts": "^1.4.1",
     "react-arborist": "^3.4.0",
     "react-dom": "^18.3.1",

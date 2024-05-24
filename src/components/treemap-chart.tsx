@@ -53,6 +53,7 @@ export const useTreemapChartState = (
       enabled: true,
       useGPUTranslations: true,
       allowForce: true,
+      usePreallocated: true,
     },
     title: {
       text: opts.title.text,
@@ -72,6 +73,8 @@ export const useTreemapChartState = (
         type: "treemap",
         layoutAlgorithm: "squarified",
         animationLimit: 1000,
+        turboThreshold: 1000,
+
         allowTraversingTree: true,
         allowPointSelect: true,
         accessibility: {

@@ -2706,7 +2706,6 @@ __metadata:
     pocketbase: ^0.21.2
     posthog-js: ^1.131.4
     react: ^18.3.1
-    react-accessible-treeview: ^2.9.0
     react-apexcharts: ^1.4.1
     react-arborist: ^3.4.0
     react-dom: ^18.3.1
@@ -2833,18 +2832,6 @@ __metadata:
     object-assign: ^4.1.1
     react-is: ^16.13.1
   checksum: c056d3f1c057cb7ff8344c645450e14f088a915d078dcda795041765047fa080d38e5d626560ccaac94a4e16e3aa15f3557c1a9a8d1174530955e992c675e459
-  languageName: node
-  linkType: hard
-
-"react-accessible-treeview@npm:^2.9.0":
-  version: 2.9.0
-  resolution: "react-accessible-treeview@npm:2.9.0"
-  peerDependencies:
-    classnames: ^2.2.6
-    prop-types: ^15.7.2
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 7ddd94960f9887aeb3518cddc3c7954c705a4651cfdaeb582a368af2b0bfb5e58b94e899be1d4ea509355703361e327a5b5d111b511a9f5db92739bb1a2725be
   languageName: node
   linkType: hard
 
