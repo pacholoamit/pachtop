@@ -35,8 +35,7 @@ const useMetricsStore = <T>(input: MetricsStoreInput<T>) => {
           buffer.shift();
         }
 
-        set({ latest: stream });
-        set({ metrics: buffer });
+        set({ latest: stream, metrics: buffer });
       }),
   }));
 };

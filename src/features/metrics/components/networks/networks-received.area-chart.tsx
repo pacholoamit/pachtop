@@ -2,13 +2,17 @@ import { useEffect } from "react";
 
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import Card from "@/components/card";
+import useNetworkSelectors from "@/features/metrics/stores/networks.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import useServerEventsContext from "@/hooks/useServerEventsContext";
 import { useMantineTheme } from "@mantine/core";
 
 const NetworksReceivedAreaChart: React.FC = ({}) => {
   const { networks } = useServerEventsContext();
+  const networks2 = useNetworkSelectors.use.enumerables();
   const { other } = useMantineTheme();
+
+  console.log(networks2);
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
       text: "Network Activity (Received)",

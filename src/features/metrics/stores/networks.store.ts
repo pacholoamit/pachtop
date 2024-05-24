@@ -1,9 +1,8 @@
 import { Network, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
 
-import useMetricsStore from "./metrics.store";
+import useEnumerableMetricsStore from "./enumerable-metrics.store";
 
-// TODO: Use this as it's not currently being used
 const DEFAULT_NETWORK: Network = {
   name: "Unknown",
   received: 0,
@@ -11,12 +10,12 @@ const DEFAULT_NETWORK: Network = {
   transmitted: 0,
 };
 
-const useNetworkStore = useMetricsStore<Network[]>({
+const useNetworkStore = useEnumerableMetricsStore<Network[]>({
   default: [DEFAULT_NETWORK],
   stream: streams.network,
 });
 
-// useNetworkStore.getState().listen();
+useNetworkStore.getState().listen();
 
 const useNetworkSelectors = createSelectors(useNetworkStore);
 
