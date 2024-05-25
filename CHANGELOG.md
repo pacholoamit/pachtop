@@ -3,10 +3,12 @@
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## 0.10.0
+
 - Make Statscard fully responsive 
 - Improve MacOS support for theming
 - Add Footer for mini metrics
 - Implement Disk analysis progress indicator
+- Update dependencies
 
 
 ## 0.9.2
