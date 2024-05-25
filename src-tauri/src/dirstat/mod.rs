@@ -51,7 +51,7 @@ impl DiskItem {
 
         fn flatten_tree_helper(
             item: &DiskItem,
-            parent_id: Option<String>,
+
             flattened_tree: Arc<Mutex<Vec<DiskItem>>>,
             unique_check: Arc<Mutex<HashSet<String>>>,
             internal_count: Arc<Mutex<u64>>,
@@ -80,7 +80,6 @@ impl DiskItem {
                 children.par_iter().for_each(|child| {
                     flatten_tree_helper(
                         child,
-                        Some(node.id.clone()),
                         Arc::clone(&flattened_tree),
                         Arc::clone(&unique_check),
                         Arc::clone(&internal_count),
@@ -96,7 +95,6 @@ impl DiskItem {
 
         flatten_tree_helper(
             self,
-            None,
             Arc::clone(&flattened_tree),
             Arc::clone(&unique_check),
             Arc::clone(&internal_count),
