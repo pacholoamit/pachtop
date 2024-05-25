@@ -11,6 +11,7 @@ export * from "@/lib/bindings/SysInfo";
 export * from "@/lib/bindings/Timestamp";
 export * from "@/lib/bindings/DiskItem";
 export * from "@/lib/bindings/FileEntry";
+export * from "@/lib/bindings/DiskAnalysisProgress";
 
 export enum Command {
   KillProcess = "kill_process",
@@ -20,7 +21,7 @@ export enum Command {
 }
 
 export enum ServerEvent {
-  DeepScanAnalysis = "deep_scan_analysis",
+  DiskAnalysisProgress = "disk_analysis_progress",
   SysInfo = "emit_sysinfo",
   GlobalCpu = "emit_global_cpu",
   Cpus = "emit_cpus",

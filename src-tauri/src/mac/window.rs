@@ -115,7 +115,7 @@ impl<R: Runtime> WindowExt for Window<R> {
 
 #[cfg(target_os = "macos")]
 #[derive(Debug)]
-struct HoppAppState {
+struct PachtopAppstate {
     window: Window,
 }
 
@@ -127,10 +127,10 @@ pub fn setup_mac_window(app: &mut App) {
     use objc::runtime::{Object, Sel};
     use std::ffi::c_void;
 
-    fn with_hopp_app<F: FnOnce(&mut HoppAppState) -> T, T>(this: &Object, func: F) {
+    fn with_pachtop_app<F: FnOnce(&mut PachtopAppstate) -> T, T>(this: &Object, func: F) {
         let ptr = unsafe {
-            let x: *mut c_void = *this.get_ivar("hoppApp");
-            &mut *(x as *mut HoppAppState)
+            let x: *mut c_void = *this.get_ivar("pachtopApp");
+            &mut *(x as *mut PachtopAppstate)
         };
         func(ptr);
     }
@@ -156,7 +156,7 @@ pub fn setup_mac_window(app: &mut App) {
         }
         extern "C" fn on_window_did_resize(this: &Object, _cmd: Sel, notification: id) {
             unsafe {
-                with_hopp_app(&*this, |state| {
+                with_pachtop_app(&*this, |state| {
                     let id = state.window.ns_window().unwrap() as id;
 
                     set_window_controls_pos(id, WINDOW_CONTROL_PAD_X, WINDOW_CONTROL_PAD_Y);
@@ -241,7 +241,7 @@ pub fn setup_mac_window(app: &mut App) {
         }
         extern "C" fn on_window_did_enter_full_screen(this: &Object, _cmd: Sel, notification: id) {
             unsafe {
-                with_hopp_app(&*this, |state| {
+                with_pachtop_app(&*this, |state| {
                     state.window.emit("did-enter-fullscreen", ()).unwrap();
                 });
 
@@ -251,7 +251,7 @@ pub fn setup_mac_window(app: &mut App) {
         }
         extern "C" fn on_window_will_enter_full_screen(this: &Object, _cmd: Sel, notification: id) {
             unsafe {
-                with_hopp_app(&*this, |state| {
+                with_pachtop_app(&*this, |state| {
                     state.window.emit("will-enter-fullscreen", ()).unwrap();
                 });
 
@@ -261,7 +261,7 @@ pub fn setup_mac_window(app: &mut App) {
         }
         extern "C" fn on_window_did_exit_full_screen(this: &Object, _cmd: Sel, notification: id) {
             unsafe {
-                with_hopp_app(&*this, |state| {
+                with_pachtop_app(&*this, |state| {
                     state.window.emit("did-exit-fullscreen", ()).unwrap();
 
                     let id = state.window.ns_window().unwrap() as id;
@@ -274,7 +274,7 @@ pub fn setup_mac_window(app: &mut App) {
         }
         extern "C" fn on_window_will_exit_full_screen(this: &Object, _cmd: Sel, notification: id) {
             unsafe {
-                with_hopp_app(&*this, |state| {
+                with_pachtop_app(&*this, |state| {
                     state.window.emit("will-exit-fullscreen", ()).unwrap();
                 });
 
@@ -338,12 +338,12 @@ pub fn setup_mac_window(app: &mut App) {
         // }
 
         // Are we deallocing this properly ? (I miss safe Rust :(  )
-        let app_state = HoppAppState { window };
+        let app_state = PachtopAppstate { window };
         let app_box = Box::into_raw(Box::new(app_state)) as *mut c_void;
 
         ns_win.setDelegate_(delegate!("MainWindowDelegate", {
       window: id = ns_win,
-      hoppApp: *mut c_void = app_box,
+      pachtopApp: *mut c_void = app_box,
       toolbar: id = cocoa::base::nil,
       super_delegate: id = current_delegate,
       // (dealloc) => on_dealloc as extern fn(&Object, Sel),
@@ -375,10 +375,10 @@ pub fn setup_mac_window(app: &mut App) {
     app.get_window("main").unwrap().set_transparent_titlebar();
 
     let window_handle = app.get_window("main").unwrap();
-    update_window_theme(&window_handle, HexColor::WHITE);
+    update_window_theme(&window_handle, HexColor::rgb(14, 24, 47));
 
     // Control window theme based on app update_window
-    app.listen_global("hopp-bg-changed", move |ev| {
+    app.listen_global("theme_changed", move |ev| {
         let payload = serde_json::from_str::<&str>(ev.payload().unwrap())
             .unwrap()
             .trim();

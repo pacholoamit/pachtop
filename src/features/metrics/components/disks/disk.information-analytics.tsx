@@ -1,5 +1,5 @@
 import Card from "@/components/card";
-import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
+import DynamicProgress, { DEFAULT_RANGE } from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands } from "@/lib";
@@ -9,12 +9,6 @@ import { IconFolderOpen } from "@tabler/icons-react";
 interface DiskInformationAnalyticsCardProps {
   startDiskAnalysis: () => Promise<void>;
 }
-
-const range: DynamicProgressRangeInput[] = [
-  { from: 0, to: 50, color: "#47d6ab" },
-  { from: 50, to: 80, color: "yellow" },
-  { from: 80, to: 100, color: "red" },
-];
 
 const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) => {
   const { startDiskAnalysis } = props;
@@ -60,7 +54,7 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
   const sections = [
     {
       value: disk.usedPercentage,
-      color: range.find((r) => disk.usedPercentage >= r.from && disk.usedPercentage <= r.to)?.color || "blue",
+      color: DEFAULT_RANGE.find((r) => disk.usedPercentage >= r.from && disk.usedPercentage <= r.to)?.color || "blue",
       label: disk.usedPercentage + "%",
     },
   ];
@@ -88,7 +82,7 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
             </Group>
           ))}
         </Stack>
-        <DynamicProgress size={34} range={range} sections={sections} />
+        <DynamicProgress size={34} sections={sections} />
         <Group>
           <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
             <IconFolderOpen stroke={1.5} />

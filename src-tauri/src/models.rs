@@ -127,6 +127,17 @@ pub struct Disk {
 
 pub trait DisksTrait {
     fn get_disks(&mut self) -> Vec<Disk>;
+    fn find_disk(&mut self, path: &str) -> Disk;
+}
+
+#[derive(Debug, Serialize, Deserialize, TS, Clone)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/lib/bindings/")]
+pub struct DiskAnalysisProgress {
+    #[ts(type = "number")]
+    pub scanned: u64,
+    #[ts(type = "number")]
+    pub total: u64,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
