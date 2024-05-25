@@ -3,7 +3,8 @@ use log::info;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::atomic::AtomicU64;
-use std::sync::{Arc, Mutex};
+use std::sync::{mpsc, Arc, Mutex};
+use std::thread;
 
 use tauri::{State, Window};
 
@@ -154,6 +155,7 @@ pub fn delete_folder(path: String) {
 
 #[tauri::command]
 // Multithreaded fast version, uses high cpu/memory
+
 pub async fn disk_analysis(
     window: tauri::Window,
     state: tauri::State<'_, AppState>,
@@ -167,13 +169,18 @@ pub async fn disk_analysis(
     let total_bytes = state.0.lock().unwrap().metrics.find_disk(&path).total;
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 
+    // Create a channel for sending progress updates from the thread
+    let (tx, rx) = mpsc::channel();
+
     // Define the callback here
     let callback = move |scanned: u64, total: u64| {
         let progress = DiskAnalysisProgress { scanned, total };
-        window.emit("disk_analysis_progress", &progress).unwrap();
+        if tx.send(progress).is_err() {
+            eprintln!("Failed to send progress update: receiver dropped");
+        }
     };
 
-    let analysed = match file_info {
+    let handle = thread::spawn(move || match file_info {
         FileInfo::Directory { volume_id } => DiskItem::from_analyze(
             &path_buf,
             true,
@@ -182,9 +189,21 @@ pub async fn disk_analysis(
             total_bytes,
             Arc::clone(&bytes_scanned),
         )
-        .map_err(|e| e.to_string())?,
-        _ => return Err("Not a directory".into()),
-    };
+        .map_err(|e| e.to_string()),
+        _ => Err("Not a directory".into()),
+    });
+
+    // Process progress updates from the thread
+    thread::spawn(move || {
+        while let Ok(progress) = rx.recv() {
+            if window.emit("disk_analysis_progress", &progress).is_err() {
+                eprintln!("Failed to emit progress update: window closed");
+                break;
+            }
+        }
+    });
+
+    let analysed = handle.join().unwrap()?;
 
     state.set_disk_analysis(path, analysed.clone());
 
