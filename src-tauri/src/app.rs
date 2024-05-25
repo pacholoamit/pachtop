@@ -2,8 +2,9 @@ use log::info;
 
 use std::collections::HashMap;
 use std::path::PathBuf;
+use std::sync::atomic::AtomicU64;
 use std::sync::{Arc, Mutex};
-use std::thread;
+
 use tauri::{State, Window};
 
 use crate::dirstat::{DiskItem, FileInfo};
@@ -19,9 +20,19 @@ impl AppState {
 }
 
 #[derive(Default)]
+pub struct DiskStore {
+    analysis: HashMap<String, DiskItem>,
+}
+
+#[derive(Default)]
+pub struct AppStore {
+    pub disk: DiskStore,
+}
+
+#[derive(Default)]
 pub struct App {
     pub metrics: Metrics,
-    pub disk_analysis: HashMap<String, DiskItem>,
+    pub store: AppStore,
 }
 
 impl AppState {
@@ -29,7 +40,9 @@ impl AppState {
         self.0
             .lock()
             .unwrap()
-            .disk_analysis
+            .store
+            .disk
+            .analysis
             .insert(name, disk_analysis);
     }
     pub fn emit_sysinfo(&self, window: &Window) {
@@ -142,24 +155,41 @@ pub fn delete_folder(path: String) {
 #[tauri::command]
 // Multithreaded fast version, uses high cpu/memory
 pub fn disk_analysis(state: tauri::State<AppState>, path: String) -> Result<DiskItem, String> {
+    let bytes_scanned = Arc::new(AtomicU64::new(0));
     let time = std::time::Instant::now();
     dbg!("Scanning folder:", &path);
     dbg!("Triggering Disk Analysis");
 
     let path_buf = PathBuf::from(&path);
+    let total_bytes = state.0.lock().unwrap().metrics.find_disk(&path).total;
+
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
 
+    let callback = |scanned: u64, total: u64| {
+        println!("Scanned {} out of {} bytes", scanned, total);
+    };
+
     let analysed = match file_info {
-        FileInfo::Directory { volume_id } => {
-            DiskItem::from_analyze(&path_buf, true, volume_id).map_err(|e| e.to_string())?
-        }
+        FileInfo::Directory { volume_id } => DiskItem::from_analyze(
+            &path_buf,
+            true,
+            volume_id,
+            &callback,
+            total_bytes,
+            Arc::clone(&bytes_scanned),
+        )
+        .map_err(|e| e.to_string())?,
         _ => return Err("Not a directory".into()),
     };
 
     state.set_disk_analysis(path, analysed.clone());
 
-    dbg!("Scanning complete");
-    dbg!("Time taken:", time.elapsed().as_secs_f32());
+    dbg!("Total bytes:", total_bytes);
+
+    dbg!(
+        "Scanning complete Time taken:",
+        time.elapsed().as_secs_f32()
+    );
 
     Ok(analysed)
 }
@@ -172,7 +202,14 @@ pub async fn disk_analysis_flattened<'a>(
 ) -> Result<Vec<DiskItem>, String> {
     let time = std::time::Instant::now();
     dbg!("Starting Disk Analysis flattened", time);
-    let analysis_map = &state.0.lock().map_err(|e| e.to_string())?.disk_analysis;
+    let analysis_map = &state
+        .0
+        .lock()
+        .map_err(|e| e.to_string())?
+        .store
+        .disk
+        .analysis;
+
     let analysis = analysis_map.get(&path).cloned();
 
     match analysis {

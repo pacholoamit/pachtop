@@ -85,6 +85,52 @@ impl CpuTrait for Metrics {
 }
 
 impl DisksTrait for Metrics {
+    fn find_disk(&mut self, mountpoint: &str) -> Disk {
+        let disk = self
+            .sys
+            .disks()
+            .iter()
+            .find(|disk| match disk.mount_point().to_str() {
+                Some(mount) => mount == mountpoint,
+                None => false,
+            });
+
+        match disk {
+            Some(disk) => Disk {
+                name: disk.name().to_str().unwrap_or("Unknown").to_owned(),
+                free: disk.available_space(),
+                used: disk.total_space() - disk.available_space(),
+                total: disk.total_space(),
+                mount_point: disk.mount_point().to_owned(),
+                file_system: str::from_utf8(disk.file_system())
+                    .unwrap_or("Unknown")
+                    .to_owned(),
+                is_removable: disk.is_removable(),
+                used_percentage: get_percentage(
+                    &(disk.total_space() - disk.available_space()),
+                    &disk.total_space(),
+                ),
+                disk_type: match disk.kind() {
+                    sysinfo::DiskKind::HDD => "HDD".to_owned(),
+                    sysinfo::DiskKind::SSD => "SSD".to_owned(),
+                    _ => "Unknown".to_owned(),
+                },
+                timestamp: current_time(),
+            },
+            None => Disk {
+                name: "Unknown".to_owned(),
+                free: 0,
+                used: 0,
+                total: 0,
+                mount_point: "Unknown".to_owned().into(),
+                file_system: "Unknown".to_owned(),
+                is_removable: false,
+                used_percentage: 0.0,
+                disk_type: "Unknown".to_owned(),
+                timestamp: current_time(),
+            },
+        }
+    }
     fn get_disks(&mut self) -> Vec<Disk> {
         self.sys.refresh_disks_list();
         self.sys.refresh_disks();
