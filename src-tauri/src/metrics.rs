@@ -1,7 +1,7 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
 use std::str::{self, FromStr};
-use sysinfo::{MemoryRefreshKind, Pid, RefreshKind, System};
+use sysinfo::{MemoryRefreshKind, Pid, System};
 
 pub struct Metrics {
     sys: System,
@@ -65,6 +65,9 @@ impl GlobalCpuTrait for Metrics {
 impl CpuTrait for Metrics {
     fn get_cpus(&mut self) -> Vec<Cpu> {
         self.sys.refresh_cpu();
+
+        dbg!(self.sys.cpus());
+
         let cpus: Vec<Cpu> = self
             .sys
             .cpus()
@@ -135,9 +138,10 @@ impl DisksTrait for Metrics {
         }
     }
     fn get_disks(&mut self) -> Vec<Disk> {
-        let disks = sysinfo::Disks::new_with_refreshed_list();
-
-        let disks: Vec<Disk> = disks
+        self.disks.refresh_list();
+        self.disks.refresh();
+        let disks: Vec<Disk> = self
+            .disks
             .iter()
             .map(|disk| {
                 let name = match disk.name().to_str() {

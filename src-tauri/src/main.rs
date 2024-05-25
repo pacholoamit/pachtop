@@ -64,7 +64,7 @@ fn build_and_run_app(app: AppState) {
                     state.emit_networks(&window);
                     state.emit_disks(&window);
                     state.emit_processes(&window);
-                    std::thread::sleep(sysinfo::MINIMUM_CPU_UPDATE_INTERVAL);
+                    std::thread::sleep(Duration::from_secs(1))
                 }
             });
 
