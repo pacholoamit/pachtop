@@ -5,6 +5,7 @@ import DarkUnica from "highcharts/themes/dark-unica";
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
 HighchartsTreemap(Highcharts);
@@ -33,15 +34,17 @@ interface FormatterScope extends Point {
 export const useTreemapChartState = (
   opts: InitialTreemapChartStateInput
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
+  const { colors, primaryColor } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     accessibility: {
       enabled: true,
     },
 
     tooltip: {
+      backgroundColor: colors.dark[6],
       formatter: function () {
         // TODO: Move this to Disk to be more generic
-        console.log(this.point);
+
         const point: FormatterScope = this.point as FormatterScope;
         return `<b>${this.point.name}</b>: ${formatBytes(point["value"]) as any}`;
       },
@@ -60,54 +63,14 @@ export const useTreemapChartState = (
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
         fontWeight: "700",
-        fontSize: "20",
+        fontSize: "18",
         color: "#c1c2c5",
       },
     },
     credits: {
       enabled: false,
     },
-
-    series: [
-      {
-        type: "treemap",
-        layoutAlgorithm: "squarified",
-        animationLimit: 1000,
-        turboThreshold: 1000,
-
-        allowTraversingTree: true,
-        allowPointSelect: true,
-        accessibility: {
-          exposeAsGroupOnly: true,
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        levels: [
-          {
-            level: 1,
-            dataLabels: {
-              enabled: true,
-            },
-            borderWidth: 3,
-            layoutAlgorithm: "squarified",
-            color: "red",
-            borderColor: "black",
-          },
-          {
-            level: 1,
-            dataLabels: {
-              style: {
-                fontSize: "14px",
-              },
-            },
-            borderColor: "black",
-            color: "red",
-          },
-        ],
-        data: [],
-      },
-    ],
+    series: [],
   });
 
   return [chartOptions, setChartOptions];

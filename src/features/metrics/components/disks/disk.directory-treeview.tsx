@@ -32,7 +32,7 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
         </div>
 
         <Text size="xs" color="dimmed">
-          {formatBytes(node.data.metadata.size as number)}
+          {formatBytes(node.data.size as number)}
         </Text>
       </Group>
     </div>

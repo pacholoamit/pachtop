@@ -11,7 +11,6 @@ const NetworksReceivedAreaChart: React.FC = ({}) => {
   const networks = useNetworkSelectors.use.enumerables();
   const { other } = useMantineTheme();
 
-  console.log(networks);
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
       text: "Network Activity (Received)",

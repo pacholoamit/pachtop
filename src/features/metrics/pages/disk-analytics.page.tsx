@@ -63,79 +63,62 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const startDiskAnalysis = useCallback(async () => {
     setIsLoading(true);
 
-    const item = await commands.deepScan({ path: disk.mountPoint });
+    const rootFsTree = await commands.disk_analysis({ path: disk.mountPoint }).then((res) => {
+      setIsLoading(false);
+      return res;
+    });
 
-    setIsLoading(false);
     // Populate File Explorer
-    // Navigate into the root since it's a directory
-    setDiskAnalysis(item.children as DiskItem[]);
+    setDiskAnalysis(rootFsTree.children as DiskItem[]);
 
-    // const flattened = flattenTree(item as any);
+    const flattened = await commands.disk_analysis_flattened({ path: disk.mountPoint });
 
-    // // TODO: Move to rust?
+    const flattenedTreemapData = flattened.map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        value: item.size,
+      };
+    });
 
-    // // Remove roout node and get top 500
-    // const sample = flattened.slice(1, 500);
-
-    // console.log(sample);
-
-    // const data = sample.map((i) => {
-    //   const id = i.id.toString();
-    //   const name = i.name || "unknown";
-    //   const value = i.metadata?.size ?? 0;
-
-    //   if (!i.parent) {
-    //     return { id, name, value };
-    //   }
-
-    //   return {
-    //     id,
-    //     name,
-    //     parent: i.parent.toString(),
-    //     value,
-    //   };
-    // });
-
-    // setChartOptions((prev) => ({
-    //   series: [
-    //     {
-    //       type: "treemap",
-    //       layoutAlgorithm: "squarified",
-    //       animationLimit: 1000,
-    //       allowTraversingTree: true,
-    //       allowPointSelect: true,
-    //       accessibility: {
-    //         exposeAsGroupOnly: true,
-    //       },
-    //       dataLabels: {
-    //         enabled: false,
-    //       },
-    //       levels: [
-    //         {
-    //           level: 1,
-    //           dataLabels: {
-    //             enabled: true,
-    //           },
-    //           borderWidth: 3,
-    //           layoutAlgorithm: "squarified",
-    //           color: colors.dark[6], // TODO: Create own color for this
-    //           borderColor: colors.dark[3], // TODO: Create own color for this
-    //         },
-    //         {
-    //           level: 1,
-    //           dataLabels: {
-    //             style: {
-    //               fontSize: "14px",
-    //             },
-    //           },
-    //           color: colors.dark[6], // TODO: Create own color for this
-    //           borderColor: colors.dark[3], // TODO: Create own color for this
-    //         },
-    //       ],
-    //       data: data as any, //TODO: Crutch fix this later
-    //     },
-    //   ],
-    // }));
+    setChartOptions((prev) => ({
+      ...prev,
+      series: [
+        {
+          type: "treemap",
+          layoutAlgorithm: "squarified",
+          animationLimit: 1000,
+          allowTraversingTree: true,
+          allowPointSelect: true,
+          accessibility: {
+            exposeAsGroupOnly: true,
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          levels: [
+            {
+              level: 1,
+              colorVariation: {
+                key: "brightness",
+                to: 0.5,
+              },
+              dataLabels: {
+                enabled: true,
+                style: {
+                  fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
+                },
+              },
+              borderWidth: 0.5,
+              layoutAlgorithm: "squarified",
+              color: colors.dark[6], // TODO: Create own color for this
+              borderColor: colors.dark[3], // TODO: Create own color for this
+            },
+          ],
+          data: flattenedTreemapData, //TODO: Crutch fix this later
+        },
+      ],
+    }));
 
     // console.log("Done");
   }, [disk.mountPoint]);
@@ -155,8 +138,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col xl={12}>
           <Card height="560px">
-            Disk Usage
-            {/* <MemoizedTreemapChart options={chartOptions} /> */}
+            <MemoizedTreemapChart options={chartOptions} />
           </Card>
         </Grid.Col>
       </Grid>
