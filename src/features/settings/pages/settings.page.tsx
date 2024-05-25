@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
-import GitHubButton from 'react-github-btn';
-import { LinearGradient } from 'react-text-gradients';
+import { useEffect, useState } from "react";
+import GitHubButton from "react-github-btn";
+import { LinearGradient } from "react-text-gradients";
 
-import Card from '@/components/card';
-import PageWrapper from '@/components/page-wrapper';
-import useTheme from '@/hooks/useTheme';
-import { autostart } from '@/lib';
-import { THEME_OPTION } from '@/providers/theme.provider';
-import { Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from '@mantine/core';
+import Card from "@/components/card";
+import PageWrapper from "@/components/page-wrapper";
+import useTheme from "@/hooks/useTheme";
+import { autostart } from "@/lib";
+import { THEME_OPTION } from "@/providers/theme.provider";
+import notification from "@/utils/notification";
+import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
+import { checkUpdate, installUpdate } from "@tauri-apps/api/updater";
 
 const GeneralSectionInfo = () => {
   return (
@@ -20,9 +22,33 @@ const GeneralSectionInfo = () => {
   );
 };
 const GeneralSection = () => {
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const checkAutoStart = async () => setChecked(await autostart.isEnabled());
   const { setTheme, currentTheme } = useTheme();
+
+  const onCheckUpdate = async () => {
+    setIsUpdateLoading(true);
+    const update = await checkUpdate().then((res) => {
+      setIsUpdateLoading(false);
+      return res;
+    });
+
+    if (update.shouldUpdate) {
+      notification.success({
+        title: "🥳 Update available",
+        message: `New Pachtop version available.`,
+      });
+
+      await installUpdate();
+      return;
+    }
+
+    notification.success({
+      title: "🥳 No updates",
+      message: `You are already using the latest version of Pachtop.`,
+    });
+  };
 
   useEffect(() => {
     checkAutoStart();
@@ -40,22 +66,33 @@ const GeneralSection = () => {
   return (
     <Grid gutter={"xl"}>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
-        <Text size={"sm"} color="white">
-          Theme
-        </Text>
-        <SegmentedControl
-          defaultValue={currentTheme}
-          size="xs"
-          onChange={(value) => setTheme(value as THEME_OPTION)}
-          data={[
-            { value: THEME_OPTION.SLATE, label: "Slate" },
-            { value: THEME_OPTION.MIDNIGHT, label: "Midnight" },
-            { value: THEME_OPTION.BUMBLEBEE, label: "Bumblebee" },
-          ]}
-        />
+        <Stack spacing={4} align="flex-start">
+          <Text size="sm">Check for updates</Text>
+          <Button loading={isUpdateLoading} onClick={onCheckUpdate} variant="outline">
+            Update
+          </Button>
+        </Stack>
       </Grid.Col>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
-        <Switch checked={checked} onChange={onChange} label="Start on system startup" />
+        <Stack spacing={4} align="flex-start">
+          <Text size={"sm"}>Theme</Text>
+          <SegmentedControl
+            defaultValue={currentTheme}
+            size="xs"
+            onChange={(value) => setTheme(value as THEME_OPTION)}
+            data={[
+              { value: THEME_OPTION.SLATE, label: "Slate" },
+              { value: THEME_OPTION.MIDNIGHT, label: "Midnight" },
+              { value: THEME_OPTION.BUMBLEBEE, label: "Bumblebee" },
+            ]}
+          />
+        </Stack>
+      </Grid.Col>
+      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+        <Stack spacing={4} align="flex-start">
+          <Text size={"sm"}>Start on system startup</Text>
+          <Switch checked={checked} onChange={onChange} />
+        </Stack>
       </Grid.Col>
     </Grid>
   );
