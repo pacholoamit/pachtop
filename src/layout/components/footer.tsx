@@ -4,7 +4,8 @@ import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
 import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { Box, Footer, Group, Text } from "@mantine/core";
+import { ActionIcon, Box, Footer, Group, Text } from "@mantine/core";
+import { IconBrandGithub } from "@tabler/icons-react";
 
 const ProgressContainer = ({ value }: { value: number }) => {
   return (
