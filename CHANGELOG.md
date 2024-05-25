@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 - Added System information metrics to dashboard
 - UI performance improvements
 - Improve responsiveness of Disks analytics page
+- Make Treemap chart in Disk analysis renderable
 
 
 ## 0.9.1
