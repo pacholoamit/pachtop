@@ -1,7 +1,8 @@
-import { Center, DefaultMantineColor, Group, Paper, rem, RingProgress, Text } from '@mantine/core';
-import { IconArrowDownRight, IconArrowUpRight, TablerIconsProps } from '@tabler/icons-react';
+import { Box, Center, DefaultMantineColor, Group, Paper, rem, RingProgress, Text } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
+import { IconArrowDownRight, IconArrowUpRight, TablerIconsProps } from "@tabler/icons-react";
 
-import Card from './card';
+import Card from "./card";
 
 interface StatsRingProps {
   label: string;
@@ -12,13 +13,21 @@ interface StatsRingProps {
 }
 
 const StatsRing: React.FC<StatsRingProps> = (props) => {
+  const { width } = useViewportSize();
+
+  const isCardOverflowing = width < 1780; // At 1780px, the card starts to overflow
+
+  const statsFontSize = isCardOverflowing ? "sm" : "xl";
+  const ringSize = isCardOverflowing ? 50 : 80;
+  const thickness = isCardOverflowing ? 5 : 8;
+
   return (
     <Card height="100%">
       <Group>
         <RingProgress
-          size={80}
+          size={ringSize}
           roundCaps
-          thickness={8}
+          thickness={thickness}
           sections={[{ value: props.progress, color: props.color }]}
           label={
             <Center>
@@ -26,14 +35,14 @@ const StatsRing: React.FC<StatsRingProps> = (props) => {
             </Center>
           }
         />
-        <div>
+        <Box>
           <Text c="dimmed" size="xs" tt="uppercase" fw={700}>
             {props.label}
           </Text>
-          <Text fw={700} size="xl">
+          <Text fw={700} size={statsFontSize}>
             {props.stats}
           </Text>
-        </div>
+        </Box>
       </Group>
     </Card>
   );

@@ -1,8 +1,8 @@
-import formatBytes from './format-bytes';
+import formatBytes from "./format-bytes";
 
-const formatOverallStats = (used: number, total: number) => {
-  const usedFormatted = formatBytes(used);
-  const totalFormatted = formatBytes(total);
+const formatOverallStats = (used: number, total: number, toFixed: number = 2) => {
+  const usedFormatted = formatBytes(used, toFixed);
+  const totalFormatted = formatBytes(total, toFixed);
 
   return `${usedFormatted} / ${totalFormatted}`;
 };

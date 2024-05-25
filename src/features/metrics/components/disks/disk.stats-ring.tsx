@@ -15,7 +15,7 @@ const DiskStatsRing: React.FC = ({}) => {
 
   // TODO: Use USED PERCENTAGE property
   const progress = (used / available) * 100;
-  const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
+  const stats = React.useMemo(() => formatOverallStats(used, available, 2), [used, available]);
   const label = `Disk ${disk.name}`;
 
   return (
