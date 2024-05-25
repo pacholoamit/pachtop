@@ -1,5 +1,6 @@
 use log::info;
 
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -20,10 +21,17 @@ impl AppState {
 #[derive(Default)]
 pub struct App {
     pub metrics: Metrics,
-    pub disk_analysis: DiskItem,
+    pub disk_analysis: HashMap<String, DiskItem>,
 }
 
 impl AppState {
+    pub fn set_disk_analysis(&self, name: String, disk_analysis: DiskItem) {
+        self.0
+            .lock()
+            .unwrap()
+            .disk_analysis
+            .insert(name, disk_analysis);
+    }
     pub fn emit_sysinfo(&self, window: &Window) {
         let sys_info = self.0.lock().unwrap().metrics.get_system_information();
         window.emit("emit_sysinfo", &sys_info).unwrap();
@@ -132,49 +140,11 @@ pub fn delete_folder(path: String) {
 }
 
 #[tauri::command]
-// multi threaded fast version but emits data
-pub fn deep_scan_emit(window: tauri::Window, path: String) -> Result<(), String> {
-    let time = std::time::Instant::now();
-    dbg!("Scanning folder:", &path);
-    let path_buf = PathBuf::from(&path);
-
-    let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
-
-    let callback: Arc<dyn Fn(&DiskItem) + Send + Sync> = Arc::new(move |item: &DiskItem| {
-        if let Err(e) = window.emit("deep_scan_analysis", item) {
-            eprintln!("Failed to send signal: {}", e);
-        }
-    });
-
-    thread::spawn(move || {
-        let analysed = match file_info {
-            FileInfo::Directory { volume_id } => {
-                DiskItem::from_analyze_callback(&path_buf, true, volume_id, Arc::clone(&callback))
-                    .map_err(|e| e.to_string())
-            }
-            _ => Err("Not a directory".into()),
-        };
-
-        match analysed {
-            Ok(_) => {
-                dbg!("Scanning complete");
-                dbg!("Time taken:", time.elapsed().as_secs_f32());
-            }
-            Err(err) => {
-                eprintln!("Error during analysis: {}", err);
-            }
-        }
-    });
-
-    Ok(())
-}
-
-#[tauri::command]
 // Multithreaded fast version, uses high cpu/memory
-pub async fn deep_scan(path: String) -> Result<DiskItem, String> {
+pub fn disk_analysis(state: tauri::State<AppState>, path: String) -> Result<DiskItem, String> {
     let time = std::time::Instant::now();
     dbg!("Scanning folder:", &path);
-    dbg!("Triggering Deep scan");
+    dbg!("Triggering Disk Analysis");
 
     let path_buf = PathBuf::from(&path);
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
@@ -186,8 +156,34 @@ pub async fn deep_scan(path: String) -> Result<DiskItem, String> {
         _ => return Err("Not a directory".into()),
     };
 
+    state.set_disk_analysis(path, analysed.clone());
+
     dbg!("Scanning complete");
     dbg!("Time taken:", time.elapsed().as_secs_f32());
 
     Ok(analysed)
+}
+
+#[tauri::command]
+// Multithreaded fast version, uses high cpu/memory
+pub async fn disk_analysis_flattened<'a>(
+    state: tauri::State<'a, AppState>,
+    path: String,
+) -> Result<Vec<DiskItem>, String> {
+    let time = std::time::Instant::now();
+    dbg!("Starting Disk Analysis flattened", time);
+    let analysis_map = &state.0.lock().map_err(|e| e.to_string())?.disk_analysis;
+    let analysis = analysis_map.get(&path).cloned();
+
+    match analysis {
+        Some(analysis) => {
+            dbg!("Analysis found");
+            dbg!("Time taken:", time.elapsed().as_secs_f32());
+            Ok(analysis.flatten(500))
+        }
+        None => {
+            dbg!("Analysis not found");
+            Err("Analysis not found".into())
+        }
+    }
 }

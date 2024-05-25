@@ -2,12 +2,13 @@ pub mod ffi;
 
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
+use std::collections::HashSet;
 use std::error::Error;
 use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
 use std::sync::atomic::{AtomicU64, Ordering};
-use std::sync::{Arc, Once};
+use std::sync::{Arc, Mutex, Once};
 use ts_rs::TS;
 #[cfg(target_os = "windows")]
 use winapi_util::{file, Handle};
@@ -28,26 +29,93 @@ fn get_next_id() -> String {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, TS, Default)]
-#[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "../../src/lib/bindings/")]
-
-pub struct DiskItemMetadata {
-    #[ts(type = "number")]
-    pub size: u64,
-}
-
-#[derive(Serialize, Deserialize, Debug, TS, Default)]
+#[derive(Serialize, Deserialize, Debug, TS, Default, Clone)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct DiskItem {
     pub id: String,
     pub name: String,
     pub children: Option<Vec<DiskItem>>,
-    pub metadata: DiskItemMetadata,
+    #[ts(type = "number")]
+    pub size: u64,
 }
 
 impl DiskItem {
+    pub fn flatten(&self, max_records: usize) -> Vec<DiskItem> {
+        let flattened_tree = Arc::new(Mutex::new(vec![]));
+        let unique_check = Arc::new(Mutex::new(HashSet::new()));
+        let internal_count = Arc::new(Mutex::new(0));
+
+        fn flatten_tree_helper(
+            item: &DiskItem,
+            parent_id: Option<String>,
+            flattened_tree: Arc<Mutex<Vec<DiskItem>>>,
+            unique_check: Arc<Mutex<HashSet<String>>>,
+            internal_count: Arc<Mutex<u64>>,
+        ) -> DiskItem {
+            let mut node = item.clone();
+
+            {
+                let mut internal_count = internal_count.lock().unwrap();
+                if node.id.is_empty() {
+                    node.id = internal_count.to_string();
+                }
+                *internal_count += 1;
+            }
+
+            {
+                let mut unique_check = unique_check.lock().unwrap();
+                if !unique_check.insert(node.id.clone()) {
+                    panic!(
+                        "Multiple DiskItem nodes have the same ID ({}). IDs must be unique.",
+                        node.id
+                    );
+                }
+            }
+
+            if let Some(ref children) = node.children {
+                children
+                    .par_iter()
+                    .for_each(|child| {
+                        flatten_tree_helper(
+                            child,
+                            Some(node.id.clone()),
+                            Arc::clone(&flattened_tree),
+                            Arc::clone(&unique_check),
+                            Arc::clone(&internal_count),
+                        );
+                    });
+            } else {
+                let mut flattened_tree = flattened_tree.lock().unwrap();
+                flattened_tree.push(node.clone());
+            }
+
+            node
+        }
+
+        flatten_tree_helper(
+            self,
+            None,
+            Arc::clone(&flattened_tree),
+            Arc::clone(&unique_check),
+            Arc::clone(&internal_count),
+        );
+
+        let mut result = Arc::try_unwrap(flattened_tree)
+            .unwrap()
+            .into_inner()
+            .unwrap();
+        // Sort the items by size in descending order
+        result.sort_unstable_by(|a, b| b.size.cmp(&a.size));
+
+        // Truncate the result to the max_records specified
+        if result.len() > max_records {
+            result.truncate(max_records);
+        }
+
+        result
+    }
+    
     pub fn from_analyze(
         path: &Path,
         apparent: bool,
@@ -80,99 +148,21 @@ impl DiskItem {
                     .collect();
 
                 let mut sorted_sub_items = sub_items;
-                sorted_sub_items
-                    .sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
+                sorted_sub_items.sort_unstable_by(|a, b| a.size.cmp(&b.size).reverse());
 
                 Ok(DiskItem {
                     id,
                     name,
-                    metadata: DiskItemMetadata {
-                        size: sorted_sub_items.iter().map(|di| di.metadata.size).sum(),
-                    },
+                    size: sorted_sub_items.iter().map(|item| item.size).sum(),
                     children: Some(sorted_sub_items),
                 })
             }
             FileInfo::File { size, .. } => Ok(DiskItem {
                 id,
                 name,
-                metadata: DiskItemMetadata { size },
+                size,
                 children: None,
             }),
-        }
-    }
-
-    pub fn from_analyze_callback(
-        path: &Path,
-        apparent: bool,
-        root_dev: u64,
-        callback: Arc<dyn Fn(&DiskItem) + Send + Sync>,
-    ) -> Result<Self, Box<dyn Error>> {
-        let id = get_next_id();
-        let name = path
-            .file_name()
-            .unwrap_or(OsStr::new("."))
-            .to_string_lossy()
-            .to_string();
-
-        let file_info = FileInfo::from_path(path, apparent)?;
-
-        match file_info {
-            FileInfo::Directory { volume_id } => {
-                if volume_id != root_dev {
-                    return Err("Filesystem boundary crossed".into());
-                }
-
-                let sub_entries = fs::read_dir(path)?
-                    .filter_map(Result::ok)
-                    .collect::<Vec<_>>();
-
-                let sub_items: Vec<DiskItem> = sub_entries
-                    .into_par_iter()
-                    .filter_map(|entry| {
-                        match DiskItem::from_analyze_callback(
-                            &entry.path(),
-                            apparent,
-                            root_dev,
-                            Arc::clone(&callback),
-                        ) {
-                            Ok(item) => {
-                                callback(&item);
-                                Some(item)
-                            }
-                            Err(_) => None,
-                        }
-                    })
-                    .collect();
-
-                let mut sorted_sub_items = sub_items;
-                sorted_sub_items
-                    .sort_unstable_by(|a, b| a.metadata.size.cmp(&b.metadata.size).reverse());
-
-                let item = DiskItem {
-                    id,
-                    name,
-                    metadata: DiskItemMetadata {
-                        size: sorted_sub_items.iter().map(|di| di.metadata.size).sum(),
-                    },
-                    children: Some(sorted_sub_items),
-                };
-
-                callback(&item);
-
-                Ok(item)
-            }
-            FileInfo::File { size, .. } => {
-                let item = DiskItem {
-                    id,
-                    name,
-                    metadata: DiskItemMetadata { size },
-                    children: None,
-                };
-
-                callback(&item);
-
-                Ok(item)
-            }
         }
     }
 }

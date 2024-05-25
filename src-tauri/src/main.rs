@@ -25,7 +25,6 @@ pub mod tree;
 mod utils;
 
 use app::AppState;
-use tree::Trie;
 
 use std::time::Duration;
 use tauri::api::path::cache_dir;
@@ -110,9 +109,9 @@ fn build_and_run_app(app: AppState) {
         .invoke_handler(tauri::generate_handler![
             app::kill_process,
             app::show_folder,
-            app::deep_scan,
             app::delete_folder,
-            app::deep_scan_emit,
+            app::disk_analysis,
+            app::disk_analysis_flattened,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
