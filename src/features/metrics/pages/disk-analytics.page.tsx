@@ -50,7 +50,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
-      text: `Disk Usage`,
+      text: `Largest Files in ${disk.mountPoint}`,
     },
 
     yAxis: {
@@ -82,7 +82,6 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     });
 
     setChartOptions((prev) => ({
-      ...prev,
       series: [
         {
           type: "treemap",
