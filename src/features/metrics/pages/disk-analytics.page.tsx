@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import { flattenTree, INode } from "react-accessible-treeview";
-import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
 import { useParams } from "react-router-dom";
 
 import Card from "@/components/card";
@@ -8,7 +6,7 @@ import PageWrapper from "@/components/page-wrapper";
 import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import { commands } from "@/lib";
+import { commands, DiskItem } from "@/lib";
 import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
 import useDisksStore from "../stores/disk.store";
@@ -46,13 +44,13 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
 
-  const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
+  const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
-      text: `Disk Usage`,
+      text: `Largest Files in ${disk.mountPoint}`,
     },
 
     yAxis: {
@@ -65,39 +63,21 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const startDiskAnalysis = useCallback(async () => {
     setIsLoading(true);
 
-    const item = await commands.deepScan({ path: disk.mountPoint });
-
-    setIsLoading(false);
-    // Populate File Explorer
-    // Navigate into the root since it's a directory
-    setDiskAnalysis(item.children as any);
-
-    const flattened = flattenTree(item as any);
-
-    // TODO: Move to rust?
-    const stortedBySize = flattened.sort((a, b) => {
-      return (b.metadata?.size as number) - (a.metadata?.size as number);
+    const rootFsTree = await commands.disk_analysis({ path: disk.mountPoint }).then((res) => {
+      setIsLoading(false);
+      return res;
     });
 
-    // Remove roout node and get top 500
-    const sample = stortedBySize.slice(1, 500);
+    // Populate File Explorer
+    setDiskAnalysis(rootFsTree.children as DiskItem[]);
 
-    console.log(sample);
+    const flattened = await commands.disk_analysis_flattened({ path: disk.mountPoint });
 
-    const data = sample.map((i) => {
-      const id = i.id.toString();
-      const name = i.name || "unknown";
-      const value = i.metadata?.size ?? 0;
-
-      if (!i.parent) {
-        return { id, name, value };
-      }
-
+    const flattenedTreemapData = flattened.map((item) => {
       return {
-        id,
-        name,
-        parent: i.parent.toString(),
-        value,
+        id: item.id,
+        name: item.name,
+        value: item.size,
       };
     });
 
@@ -118,31 +98,28 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
           levels: [
             {
               level: 1,
+              colorVariation: {
+                key: "brightness",
+                to: 0.5,
+              },
               dataLabels: {
                 enabled: true,
+                style: {
+                  fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
+                },
               },
-              borderWidth: 3,
+              borderWidth: 0.5,
               layoutAlgorithm: "squarified",
               color: colors.dark[6], // TODO: Create own color for this
               borderColor: colors.dark[3], // TODO: Create own color for this
             },
-            {
-              level: 1,
-              dataLabels: {
-                style: {
-                  fontSize: "14px",
-                },
-              },
-              color: colors.dark[6], // TODO: Create own color for this
-              borderColor: colors.dark[3], // TODO: Create own color for this
-            },
           ],
-          data: data as any, //TODO: Crutch fix this later
+          data: flattenedTreemapData, //TODO: Crutch fix this later
         },
       ],
     }));
 
-    console.log("Done");
+    // console.log("Done");
   }, [disk.mountPoint]);
 
   return (
@@ -160,7 +137,6 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col xl={12}>
           <Card height="560px">
-            Disk Usage
             <MemoizedTreemapChart options={chartOptions} />
           </Card>
         </Grid.Col>

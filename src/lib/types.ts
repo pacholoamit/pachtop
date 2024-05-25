@@ -15,8 +15,8 @@ export * from "@/lib/bindings/FileEntry";
 export enum Command {
   KillProcess = "kill_process",
   ShowInFolder = "show_folder",
-  DeepScan = "deep_scan",
-  DeepScanEmit = "deep_scan_emit",
+  DiskAnalysis = "disk_analysis",
+  DiskAnalysisFlattened = "disk_analysis_flattened",
 }
 
 export enum ServerEvent {
