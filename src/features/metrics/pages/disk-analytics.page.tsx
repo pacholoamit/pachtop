@@ -23,11 +23,12 @@ const AnalysisIndicator: React.FC<AnalysisProgressIndicatorProps> = (props) => {
 
   if (isShowProgress) {
     const percentage = (props.progress.scanned / props.progress.total) * 100;
+    const isScanningCompleted = props.progress.scanned === props.progress.total;
+    const scanningProgress = `Scanned ${formatBytes(props.progress.scanned)} of ${formatBytes(props.progress.total)}`;
+    const serializingProgress = `Scanning completed, serializing data...`;
     return (
       <Stack align="center" justify="center" spacing="xs" pt={props.pt}>
-        <Title order={3}>
-          Scanned {formatBytes(props.progress.scanned)} of {formatBytes(props.progress.total)}
-        </Title>
+        <Title order={3}>{isScanningCompleted ? serializingProgress : scanningProgress}</Title>
         <Box style={{ width: "300px" }}>
           <Progress value={percentage} size={"lg"} />
         </Box>
