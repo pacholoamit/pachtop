@@ -1,5 +1,6 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
+use std::cmp::Ordering;
 use std::str::{self, FromStr};
 use sysinfo::{MemoryRefreshKind, Pid, System};
 
@@ -65,8 +66,6 @@ impl GlobalCpuTrait for Metrics {
 impl CpuTrait for Metrics {
     fn get_cpus(&mut self) -> Vec<Cpu> {
         self.sys.refresh_cpu();
-
-        dbg!(self.sys.cpus());
 
         let cpus: Vec<Cpu> = self
             .sys
@@ -140,7 +139,8 @@ impl DisksTrait for Metrics {
     fn get_disks(&mut self) -> Vec<Disk> {
         self.disks.refresh_list();
         self.disks.refresh();
-        let disks: Vec<Disk> = self
+
+        let mut disks: Vec<Disk> = self
             .disks
             .iter()
             .map(|disk| {
@@ -178,6 +178,19 @@ impl DisksTrait for Metrics {
                 }
             })
             .collect();
+        // Sort disks so that the boot drive comes first (mount point containing "C://")
+        // This is a hack right now
+        disks.sort_by(|a, b| {
+            if a.mount_point.to_str().unwrap_or("").contains("C:\\") {
+                return Ordering::Less;
+            }
+
+            if b.mount_point.to_str().unwrap_or("").contains("C:\\") {
+                return Ordering::Greater;
+            }
+
+            Ordering::Equal
+        });
 
         disks
     }
