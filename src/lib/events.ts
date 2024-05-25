@@ -1,6 +1,17 @@
 import { emit, listen } from "@tauri-apps/api/event";
 
-import { Cpu, Disk, GlobalCpu, Memory, Network, Process, ServerEvent, Swap, SysInfo } from "./types";
+import {
+  Cpu,
+  Disk,
+  DiskAnalysisProgress,
+  GlobalCpu,
+  Memory,
+  Network,
+  Process,
+  ServerEvent,
+  Swap,
+  SysInfo,
+} from "./types";
 
 export const setWindowColor = (color: string) => emit(ServerEvent.ThemeChanged, color);
 
@@ -35,5 +46,9 @@ export const streams = {
 
   network: (callback: (data: Network[]) => void) => {
     listen<Network[]>(ServerEvent.Networks, ({ payload }) => callback(payload));
+  },
+
+  diskAnalysisProgress: (callback: (data: DiskAnalysisProgress) => void) => {
+    listen<DiskAnalysisProgress>(ServerEvent.DiskAnalysisProgress, ({ payload }) => callback(payload));
   },
 };

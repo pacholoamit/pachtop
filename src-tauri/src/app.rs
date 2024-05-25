@@ -2,9 +2,8 @@ use log::info;
 
 use std::collections::HashMap;
 use std::path::PathBuf;
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::AtomicU64;
 use std::sync::{Arc, Mutex};
-use std::thread;
 
 use tauri::{State, Window};
 
@@ -155,9 +154,9 @@ pub fn delete_folder(path: String) {
 
 #[tauri::command]
 // Multithreaded fast version, uses high cpu/memory
-pub async fn disk_analysis<'a>(
+pub async fn disk_analysis(
     window: tauri::Window,
-    state: tauri::State<'a, AppState>,
+    state: tauri::State<'_, AppState>,
     path: String,
 ) -> Result<DiskItem, String> {
     dbg!("Disk analysis on:", &path);
@@ -166,24 +165,13 @@ pub async fn disk_analysis<'a>(
 
     let path_buf = PathBuf::from(&path);
     let total_bytes = state.0.lock().unwrap().metrics.find_disk(&path).total;
-
     let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
-
-    // Clone the Arc to use it in the thread
-    let bytes_scanned_clone = Arc::clone(&bytes_scanned);
 
     // Define the callback here
     let callback = move |scanned: u64, total: u64| {
         println!("Scanned {} out of {} bytes", scanned, total);
         let progress = DiskAnalysisProgress { scanned, total };
-        window.emit("disk_analysis_progress", progress).unwrap();
-    };
-
-    thread::spawn(move || callback(bytes_scanned_clone.load(Ordering::SeqCst), total_bytes));
-
-    // Define the callback for DiskItem analysis
-    let analysis_callback = |scanned: u64, total: u64| {
-        println!("Scanned {} out of {} bytes", scanned, total);
+        window.emit("disk_analysis_progress", &progress).unwrap();
     };
 
     let analysed = match file_info {
@@ -191,7 +179,7 @@ pub async fn disk_analysis<'a>(
             &path_buf,
             true,
             volume_id,
-            &analysis_callback,
+            &callback,
             total_bytes,
             Arc::clone(&bytes_scanned),
         )
@@ -210,8 +198,8 @@ pub async fn disk_analysis<'a>(
 
 #[tauri::command]
 // Multithreaded fast version, uses high cpu/memory
-pub async fn disk_analysis_flattened<'a>(
-    state: tauri::State<'a, AppState>,
+pub async fn disk_analysis_flattened(
+    state: tauri::State<'_, AppState>,
     path: String,
 ) -> Result<Vec<DiskItem>, String> {
     let time = std::time::Instant::now();

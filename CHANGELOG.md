@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 - Make Statscard fully responsive - DONE
 - Improve MacOS support for theming - DONE
 - Add Footer for mini metrics - DONE
-
+- Implement Disk analysis progress indicator - DONE
 
 
 ## 0.9.2
