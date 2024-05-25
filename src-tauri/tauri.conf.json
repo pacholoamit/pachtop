@@ -106,11 +106,11 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 1080,
+        "height": 600,
         "resizable": true,
         "title": "pachtop",
         "alwaysOnTop": false,
-        "width": 1920,
+        "width": 800,
         "decorations": true
       }
     ]
