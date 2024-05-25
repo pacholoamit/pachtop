@@ -1,4 +1,4 @@
-import { InvokeArgs } from '@tauri-apps/api/tauri';
+import { InvokeArgs } from "@tauri-apps/api/tauri";
 
 export * from "@/lib/bindings/Cpu";
 export * from "@/lib/bindings/Disk";
@@ -15,10 +15,12 @@ export * from "@/lib/bindings/FileEntry";
 export enum Command {
   KillProcess = "kill_process",
   ShowInFolder = "show_folder",
-  DeepScan = "deep_scan",
+  DiskAnalysis = "disk_analysis",
+  DiskAnalysisFlattened = "disk_analysis_flattened",
 }
 
 export enum ServerEvent {
+  DeepScanAnalysis = "deep_scan_analysis",
   SysInfo = "emit_sysinfo",
   GlobalCpu = "emit_global_cpu",
   Cpus = "emit_cpus",

@@ -1,7 +1,7 @@
 {
   "name": "pachtop",
   "private": true,
-  "version": "0.9.1",
+  "version": "0.9.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -22,14 +22,15 @@
     "classnames": "^2.5.1",
     "highcharts": "^11.4.1",
     "highcharts-react-official": "^3.2.1",
+    "immer": "^10.1.1",
     "lodash.sortby": "^4.7.0",
     "mantine-datatable": "^2.9.14",
     "non.geist": "^1.0.3",
     "pocketbase": "^0.21.2",
     "posthog-js": "^1.131.4",
     "react": "^18.3.1",
-    "react-accessible-treeview": "^2.9.0",
     "react-apexcharts": "^1.4.1",
+    "react-arborist": "^3.4.0",
     "react-dom": "^18.3.1",
     "react-geiger": "^1.2.0",
     "react-github-btn": "^1.4.0",
@@ -38,15 +39,17 @@
     "react-text-gradients": "^1.0.2",
     "tauri-plugin-autostart-api": "https://github.com/tauri-apps/tauri-plugin-autostart",
     "tauri-plugin-log-api": "https://github.com/tauri-apps/tauri-plugin-log",
-    "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store"
+    "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.13",
+    "@tauri-apps/cli": "^1.5.14",
     "@types/lodash.sortby": "^4.7.9",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^3.7.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
   },

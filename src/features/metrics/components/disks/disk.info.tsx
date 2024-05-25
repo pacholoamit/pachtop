@@ -1,17 +1,28 @@
-import drive from '/drive.png';
-import { useNavigate } from 'react-router-dom';
+import drive from "/drive.png";
+import { useNavigate } from "react-router-dom";
 
-import DynamicProgress, { DynamicProgressRangeInput } from '@/components/dynamic-progress';
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import { Enumerable } from '@/hooks/useServerEventsEnumerableStore';
-import { commands, Disk } from '@/lib';
+import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
+import useDisksStore from "@/features/metrics/stores/disk.store";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import { commands, Disk } from "@/lib";
 import {
-    ActionIcon, Badge, Button, Card, Center, createStyles, Group, Image, Popover, Stack, Text, Title
-} from '@mantine/core';
-import { IconAlertCircle, IconFolderOpen } from '@tabler/icons-react';
+  ActionIcon,
+  Badge,
+  Button,
+  Card,
+  Center,
+  createStyles,
+  Group,
+  Image,
+  Popover,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
+import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInfoProps {
-  disk: Enumerable<Disk>;
+  disk: Disk;
 }
 
 const useStyles = createStyles((theme) => ({
@@ -107,17 +118,21 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
   );
 };
 
-const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) => {
+const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
+  const setSelectedDisk = useDisksStore.use.setSelectedDisk();
   const navigate = useNavigate();
 
   const showDirectory = async () => {
-    if (!disk?.mountPoint) return;
+    if (!disk.mountPoint) return;
     await commands.showInFolder(disk.mountPoint);
   };
 
   // Encode this id to avoid any issues with special characters
-  const onShowDetailsClick = () => navigate(`/disks/${encodeURI(id)}`);
+  const onShowDetailsClick = () => {
+    setSelectedDisk(disk.name);
+    navigate(`/disks/${encodeURI(disk.name)}`);
+  };
 
   return (
     <Group mt="xs">
@@ -132,19 +147,17 @@ const DiskActionGroup: React.FC<{ disk?: Disk; id: string }> = ({ disk, id }) =>
 };
 
 const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
-  const id = disk?.id;
-  const latest = disk.data.at(-1);
   const { classes } = useStyles();
 
   return (
     <Card shadow="xl" p="xs" radius={"md"} withBorder>
       <Card.Section className={classes.section}>
-        <DiskDetailsSection disk={latest} />
+        <DiskDetailsSection disk={disk} />
       </Card.Section>
       <Card.Section className={classes.section}>
-        <DiskInfoSection disk={latest} />
+        <DiskInfoSection disk={disk} />
       </Card.Section>
-      <DiskActionGroup disk={latest} id={id} />
+      <DiskActionGroup disk={disk} />
     </Card>
   );
 };

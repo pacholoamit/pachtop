@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import { flattenTree, INode } from "react-accessible-treeview";
-import { IFlatMetadata } from "react-accessible-treeview/dist/TreeView/utils";
 import { useParams } from "react-router-dom";
 
 import Card from "@/components/card";
@@ -8,10 +6,10 @@ import PageWrapper from "@/components/page-wrapper";
 import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import useServerEventsContext from "@/hooks/useServerEventsContext";
-import { commands, Disk } from "@/lib";
+import { commands, DiskItem } from "@/lib";
 import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
+import useDisksStore from "../stores/disk.store";
 import formatBytes from "../utils/format-bytes";
 
 const FileExplorerNoData = () => {
@@ -36,44 +34,23 @@ const FileExplorerNoData = () => {
 
 interface DiskAnalyticsPageProps {}
 
-const defaultDisk: Disk = {
-  diskType: "unknown",
-  fileSystem: "unknown",
-  free: 0,
-  isRemovable: false,
-  mountPoint: "unknown",
-  total: 0,
-  name: "unknown",
-  timestamp: BigInt(0),
-  used: 0,
-  usedPercentage: 0,
-};
+const MemoizedTreemapChart = React.memo(TreemapChart);
 
-const deepCompare = <A, B>(a: A, b: B) => {
-  return JSON.stringify(a) === JSON.stringify(b);
-};
-
-const MemoizedDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView, (prevProps, nextProps) =>
-  deepCompare(prevProps.data, nextProps.data)
-);
-const MemoizedTreemapChart = React.memo(TreemapChart, (prevProps, nextProps) =>
-  deepCompare(prevProps.options, nextProps.options)
-);
+const MemoizedDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
-  // TODO: Use Stores to make this more performant
-  const { disks } = useServerEventsContext();
   const { id = "" } = useParams();
-  const [disk, setDisk] = React.useState<Disk>(defaultDisk);
-  const [diskAnalysis, setDiskAnalysis] = React.useState<INode<IFlatMetadata>[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
+
+  const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
-      text: `Disk Usage`,
+      text: `Largest Files in ${disk.mountPoint}`,
     },
 
     yAxis: {
@@ -83,45 +60,24 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     },
   });
 
-  useEffect(() => {
-    if (!disks) return;
-    const disk = disks.find((d) => d.id === id);
-
-    if (disk?.data?.length ?? 0 > 0) {
-      setDisk(disk?.data?.at(-1) || defaultDisk);
-    }
-  }, []);
-
   const startDiskAnalysis = useCallback(async () => {
     setIsLoading(true);
-    const item = await commands.deepScan({ path: disk.mountPoint });
-    setIsLoading(false);
-    // Populate File Explorer
-    const flattened = flattenTree(item as any);
-    setDiskAnalysis(flattened);
 
-    // TODO: Move to rust?
-    const stortedBySize = flattened.sort((a, b) => {
-      return (b.metadata?.size as number) - (a.metadata?.size as number);
+    const rootFsTree = await commands.disk_analysis({ path: disk.mountPoint }).then((res) => {
+      setIsLoading(false);
+      return res;
     });
 
-    // Remove roout node and get top 500
-    const sample = stortedBySize.slice(1, 500);
+    // Populate File Explorer
+    setDiskAnalysis(rootFsTree.children as DiskItem[]);
 
-    const data = sample.map((i) => {
-      const id = i.id.toString();
-      const name = i.name || "unknown";
-      const value = i.metadata?.size ?? 0;
+    const flattened = await commands.disk_analysis_flattened({ path: disk.mountPoint });
 
-      if (!i.parent) {
-        return { id, name, value };
-      }
-
+    const flattenedTreemapData = flattened.map((item) => {
       return {
-        id,
-        name,
-        parent: i.parent.toString(),
-        value,
+        id: item.id,
+        name: item.name,
+        value: item.size,
       };
     });
 
@@ -142,48 +98,44 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
           levels: [
             {
               level: 1,
+              colorVariation: {
+                key: "brightness",
+                to: 0.5,
+              },
               dataLabels: {
                 enabled: true,
+                style: {
+                  fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
+                },
               },
-              borderWidth: 3,
+              borderWidth: 0.5,
               layoutAlgorithm: "squarified",
               color: colors.dark[6], // TODO: Create own color for this
               borderColor: colors.dark[3], // TODO: Create own color for this
             },
-            {
-              level: 1,
-              dataLabels: {
-                style: {
-                  fontSize: "14px",
-                },
-              },
-              color: colors.dark[6], // TODO: Create own color for this
-              borderColor: colors.dark[3], // TODO: Create own color for this
-            },
           ],
-          data: data as any, //TODO: Crutch fix this later
+          data: flattenedTreemapData, //TODO: Crutch fix this later
         },
       ],
     }));
 
-    console.log("Done");
+    // console.log("Done");
   }, [disk.mountPoint]);
 
   return (
     <PageWrapper name={id}>
       <Grid>
-        <Grid.Col span={3}>
-          <DiskInformationAnalyticsCard disk={disk} startDiskAnalysis={startDiskAnalysis} />
+        <Grid.Col md={12} lg={4} xl={3}>
+          <DiskInformationAnalyticsCard startDiskAnalysis={startDiskAnalysis} />
         </Grid.Col>
-        <Grid.Col span={9}>
+        <Grid.Col md={12} lg={8} xl={9}>
           <Card height="350px">
             <LoadingOverlay visible={isLoading} overlayBlur={3} />
             <Title order={4}>File Explorer</Title>
-
             {isDiskAnalysisEmpty ? <FileExplorerNoData /> : <MemoizedDiskDirectoryTreeView data={diskAnalysis} />}
           </Card>
         </Grid.Col>
-        <Grid.Col span={12}>
+        <Grid.Col xl={12}>
           <Card height="560px">
             <MemoizedTreemapChart options={chartOptions} />
           </Card>

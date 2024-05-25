@@ -1,17 +1,17 @@
-import sortBy from 'lodash.sortby';
-import { DataTableSortStatus } from 'mantine-datatable';
-import { useEffect, useMemo, useState } from 'react';
+import sortBy from "lodash.sortby";
+import { DataTableSortStatus } from "mantine-datatable";
+import { useEffect, useMemo, useState } from "react";
 
-import PageWrapper from '@/components/page-wrapper';
-import KillProcessVerification from '@/features/processes/components/processes.kill-verification';
-import ProcessesTable from '@/features/processes/components/processes.table';
-import useServerEventsContext from '@/hooks/useServerEventsContext';
-import { Process } from '@/lib';
-import { TextInput } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import PageWrapper from "@/components/page-wrapper";
+import KillProcessVerification from "@/features/processes/components/processes.kill-verification";
+import ProcessesTable from "@/features/processes/components/processes.table";
+import useProcessesSelectors from "@/features/processes/stores/processes.store";
+import { Process } from "@/lib";
+import { TextInput } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
 
 const ProcessesPage = () => {
-  const { processes } = useServerEventsContext();
+  const processes = useProcessesSelectors.use.processes();
   const [query, setQuery] = useState("");
   const [records, setRecords] = useState<Process[]>([]);
   const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);

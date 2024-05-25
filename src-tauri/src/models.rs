@@ -4,7 +4,8 @@ use ts_rs::TS;
 
 #[derive(Clone, Debug, Serialize, Deserialize, TS)]
 #[ts(export, export_to = "../../src/lib/bindings/")]
-pub struct Timestamp(pub i64);
+
+pub struct Timestamp(#[ts(type = "number")] pub i64);
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]

@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import PageWrapper from '@/components/page-wrapper';
-import DiskInfo from '@/features/metrics/components/disks/disk.info';
-import useServerEventsContext from '@/hooks/useServerEventsContext';
-import { Alert, Grid } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons-react';
+import PageWrapper from "@/components/page-wrapper";
+import DiskInfo from "@/features/metrics/components/disks/disk.info";
+import useDisksStore from "@/features/metrics/stores/disk.store";
+import { Grid } from "@mantine/core";
 
 const DisksPage = () => {
-  const { disks } = useServerEventsContext();
+  const disks = useDisksStore((state) => state.disks);
 
   return (
     <PageWrapper name="Disks">
       <Grid>
-        {disks?.map((disk, i) => (
-          <React.Fragment key={disk.id + i}>
+        {disks.map((disk, i) => (
+          <React.Fragment key={i}>
             <Grid.Col xl={2} lg={3} xs={6}>
-              <DiskInfo key={disk.id} disk={disk} />
+              <DiskInfo disk={disk} />
             </Grid.Col>
           </React.Fragment>
         ))}
