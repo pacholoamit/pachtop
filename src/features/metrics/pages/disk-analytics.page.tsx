@@ -6,15 +6,18 @@ import PageWrapper from "@/components/page-wrapper";
 import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import { commands, DiskItem, streams } from "@/lib";
+import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
 import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
 import useDisksStore from "../stores/disk.store";
 import formatBytes from "../utils/format-bytes";
 
-const FileExplorerNoData = () => {
+interface FileExplorerNoDataProps {
+  pt: string;
+}
+const FileExplorerNoData: React.FC<FileExplorerNoDataProps> = (props) => {
   return (
-    <Stack align="center" justify="center" spacing="xs" pt={"86px"}>
+    <Stack align="center" justify="center" spacing="xs" pt={props.pt}>
       <Title
         order={1}
         style={{
@@ -34,17 +37,17 @@ const FileExplorerNoData = () => {
 
 interface DiskAnalyticsPageProps {}
 
-const MemoizedTreemapChart = React.memo(TreemapChart);
+const MemoTreemapChart = React.memo(TreemapChart);
 
-const MemoizedDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
+const MemoDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
-
   const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
+  const [progress, setProgress] = React.useState<DiskAnalysisProgress>({ scanned: 0, total: 0 });
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskAnalysisEmpty = diskAnalysis.length === 0;
 
@@ -61,7 +64,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   const populateFileExplorer = useCallback(async () => {
     if (disk.mountPoint) {
-      streams.diskAnalysisProgress((data) => console.log(data));
+      streams.diskAnalysisProgress((stream) => setProgress(stream));
       const rootFsTree = await commands.disk_analysis({ path: disk.mountPoint });
       setDiskAnalysis(rootFsTree.children as DiskItem[]);
     }
@@ -136,12 +139,12 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
           <Card height="350px">
             <LoadingOverlay visible={isLoading} overlayBlur={3} />
             <Title order={4}>File Explorer</Title>
-            {isDiskAnalysisEmpty ? <FileExplorerNoData /> : <MemoizedDiskDirectoryTreeView data={diskAnalysis} />}
+            {isDiskAnalysisEmpty ? <FileExplorerNoData pt="86px" /> : <MemoDiskDirectoryTreeView data={diskAnalysis} />}
           </Card>
         </Grid.Col>
         <Grid.Col xl={12}>
           <Card height="560px">
-            <MemoizedTreemapChart options={chartOptions} />
+            {isDiskAnalysisEmpty ? <FileExplorerNoData pt="188px" /> : <MemoTreemapChart options={chartOptions} />}
           </Card>
         </Grid.Col>
       </Grid>
