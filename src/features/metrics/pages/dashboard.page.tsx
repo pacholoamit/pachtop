@@ -16,16 +16,16 @@ import { Grid, Group, Title } from "@mantine/core";
 const StatsRings = () => {
   return (
     <>
-      <Grid.Col sm={6} md={6} lg={3} xl={3}>
+      <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <GlobalCpuStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={3} xl={3}>
+      <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <MemoryStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={3} xl={3}>
+      <Grid.Col sm={6} md={6} lg={4} xl={3}>
         <SwapStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={3} xl={3}>
+      <Grid.Col sm={6} md={6} lg={12} xl={3}>
         <DiskStatsRing />
       </Grid.Col>
     </>
@@ -48,10 +48,10 @@ const MemorySection = () => {
 const CpuSection = () => {
   return (
     <>
-      <Grid.Col lg={7.5} md={12}>
+      <Grid.Col xl={7.5} lg={6} md={12}>
         <GlobalCpuAreaChart />
       </Grid.Col>
-      <Grid.Col lg={4.5} md={12}>
+      <Grid.Col xl={4.5} lg={6} md={12}>
         <CpusBarChart />
       </Grid.Col>
     </>

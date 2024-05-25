@@ -45,12 +45,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
-  const range: DynamicProgressRangeInput[] = [
-    { from: 0, to: 50, color: "#47d6ab" },
-    { from: 50, to: 80, color: "yellow" },
-    { from: 80, to: 100, color: "red" },
-  ];
-
   const free = formatBytes(disk?.free || 0);
   const used = formatBytes(disk?.used || 0);
   const total = formatBytes(disk?.total || 0);
@@ -79,7 +73,7 @@ const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
           </Popover.Dropdown>
         </Popover>
       </Group>
-      <DynamicProgress value={disk?.usedPercentage || 0} range={range} size={"xs"} />
+      <DynamicProgress value={disk?.usedPercentage || 0} size={"xs"} />
     </>
   );
 };

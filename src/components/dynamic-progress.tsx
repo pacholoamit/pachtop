@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { DefaultMantineColor, MantineNumberSize, Progress, ProgressProps } from '@mantine/core';
+import { DefaultMantineColor, MantineNumberSize, Progress, ProgressProps } from "@mantine/core";
 
 export interface DynamicProgressRangeInput {
   from: number;
@@ -9,12 +9,18 @@ export interface DynamicProgressRangeInput {
 }
 export interface DynamicProgressProps extends ProgressProps {
   value?: number;
-  range: DynamicProgressRangeInput[];
+  range?: DynamicProgressRangeInput[];
   size: MantineNumberSize;
 }
 
+export const DEFAULT_RANGE: DynamicProgressRangeInput[] = [
+  { from: 0, to: 50, color: "#47d6ab" },
+  { from: 50, to: 80, color: "yellow" },
+  { from: 80, to: 100, color: "red" },
+];
+
 const DynamicProgress: React.FC<DynamicProgressProps> = (props) => {
-  const { value = 0, range } = props;
+  const { value = 0, range = DEFAULT_RANGE } = props;
   const [color, setColor] = useState("blue");
 
   useEffect(() => {

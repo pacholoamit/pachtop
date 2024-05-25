@@ -40,6 +40,9 @@ pub struct DiskItem {
     pub size: u64,
 }
 
+// Define a type alias for the callback
+type ProgressCallback = dyn Fn(u64, u64) + Send + Sync;
+
 impl DiskItem {
     pub fn flatten(&self, max_records: usize) -> Vec<DiskItem> {
         let flattened_tree = Arc::new(Mutex::new(vec![]));
@@ -48,7 +51,7 @@ impl DiskItem {
 
         fn flatten_tree_helper(
             item: &DiskItem,
-            parent_id: Option<String>,
+
             flattened_tree: Arc<Mutex<Vec<DiskItem>>>,
             unique_check: Arc<Mutex<HashSet<String>>>,
             internal_count: Arc<Mutex<u64>>,
@@ -74,17 +77,14 @@ impl DiskItem {
             }
 
             if let Some(ref children) = node.children {
-                children
-                    .par_iter()
-                    .for_each(|child| {
-                        flatten_tree_helper(
-                            child,
-                            Some(node.id.clone()),
-                            Arc::clone(&flattened_tree),
-                            Arc::clone(&unique_check),
-                            Arc::clone(&internal_count),
-                        );
-                    });
+                children.par_iter().for_each(|child| {
+                    flatten_tree_helper(
+                        child,
+                        Arc::clone(&flattened_tree),
+                        Arc::clone(&unique_check),
+                        Arc::clone(&internal_count),
+                    );
+                });
             } else {
                 let mut flattened_tree = flattened_tree.lock().unwrap();
                 flattened_tree.push(node.clone());
@@ -95,7 +95,6 @@ impl DiskItem {
 
         flatten_tree_helper(
             self,
-            None,
             Arc::clone(&flattened_tree),
             Arc::clone(&unique_check),
             Arc::clone(&internal_count),
@@ -115,11 +114,14 @@ impl DiskItem {
 
         result
     }
-    
+
     pub fn from_analyze(
         path: &Path,
         apparent: bool,
         root_dev: u64,
+        callback: &ProgressCallback,
+        total_bytes: u64,
+        bytes_scanned: Arc<AtomicU64>,
     ) -> Result<Self, Box<dyn Error>> {
         let id = get_next_id();
         let name = path
@@ -143,7 +145,16 @@ impl DiskItem {
                 let sub_items: Vec<DiskItem> = sub_entries
                     .into_par_iter()
                     .filter_map(|entry| {
-                        DiskItem::from_analyze(&entry.path(), apparent, root_dev).ok()
+                        let result = DiskItem::from_analyze(
+                            &entry.path(),
+                            apparent,
+                            root_dev,
+                            callback,
+                            total_bytes,
+                            Arc::clone(&bytes_scanned),
+                        );
+
+                        result.ok()
                     })
                     .collect();
 
@@ -157,12 +168,16 @@ impl DiskItem {
                     children: Some(sorted_sub_items),
                 })
             }
-            FileInfo::File { size, .. } => Ok(DiskItem {
-                id,
-                name,
-                size,
-                children: None,
-            }),
+            FileInfo::File { size, .. } => {
+                bytes_scanned.fetch_add(size, Ordering::SeqCst);
+                callback(bytes_scanned.load(Ordering::SeqCst), total_bytes);
+                Ok(DiskItem {
+                    id,
+                    name,
+                    size,
+                    children: None,
+                })
+            }
         }
     }
 }

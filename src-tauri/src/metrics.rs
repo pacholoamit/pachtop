@@ -1,28 +1,31 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
+use std::cmp::Ordering;
 use std::str::{self, FromStr};
-use sysinfo::{CpuExt, DiskExt, NetworkExt, NetworksExt, Pid, ProcessExt, System, SystemExt};
+use sysinfo::{MemoryRefreshKind, Pid, System};
 
 pub struct Metrics {
     sys: System,
+    disks: sysinfo::Disks,
+    networks: sysinfo::Networks,
 }
 
 impl Default for Metrics {
     fn default() -> Self {
-        let mut sys = System::new_all();
-        sys.refresh_all();
         Metrics {
             sys: System::new_all(),
+            disks: sysinfo::Disks::new_with_refreshed_list(),
+            networks: sysinfo::Networks::new_with_refreshed_list(),
         }
     }
 }
 
 impl SystemInformationTrait for Metrics {
     fn get_system_information(&mut self) -> SysInfo {
-        let kernel_version = self.sys.kernel_version().unwrap_or("Unknown".to_string());
-        let os_version = self.sys.long_os_version().unwrap_or("Unknown".to_string());
-        let hostname = self.sys.host_name().unwrap_or("Unknown".to_string());
-        let core_count = self.sys.physical_core_count().unwrap_or(0).to_string();
+        let kernel_version = System::kernel_version().unwrap_or("Unknown".to_string());
+        let os_version = System::os_version().unwrap_or("Unknown".to_string());
+        let hostname = System::host_name().unwrap_or("Unknown".to_string());
+        let core_count = System::physical_core_count(&self.sys).unwrap_or(0);
 
         SysInfo {
             kernel_version,
@@ -63,6 +66,7 @@ impl GlobalCpuTrait for Metrics {
 impl CpuTrait for Metrics {
     fn get_cpus(&mut self) -> Vec<Cpu> {
         self.sys.refresh_cpu();
+
         let cpus: Vec<Cpu> = self
             .sys
             .cpus()
@@ -85,13 +89,59 @@ impl CpuTrait for Metrics {
 }
 
 impl DisksTrait for Metrics {
-    fn get_disks(&mut self) -> Vec<Disk> {
-        self.sys.refresh_disks_list();
-        self.sys.refresh_disks();
+    fn find_disk(&mut self, mountpoint: &str) -> Disk {
+        self.disks.refresh_list();
+        self.disks.refresh();
 
-        let disks: Vec<Disk> = self
-            .sys
-            .disks()
+        let disk = self
+            .disks
+            .iter()
+            .find(|disk| match disk.mount_point().to_str() {
+                Some(mount) => mount == mountpoint,
+                None => false,
+            });
+
+        match disk {
+            Some(disk) => Disk {
+                name: disk.name().to_str().unwrap_or("Unknown").to_owned(),
+                free: disk.available_space(),
+                used: disk.total_space() - disk.available_space(),
+                total: disk.total_space(),
+                mount_point: disk.mount_point().to_owned(),
+                file_system: disk.file_system().to_str().unwrap_or("Unknown").to_owned(),
+
+                is_removable: disk.is_removable(),
+                used_percentage: get_percentage(
+                    &(disk.total_space() - disk.available_space()),
+                    &disk.total_space(),
+                ),
+                disk_type: match disk.kind() {
+                    sysinfo::DiskKind::HDD => "HDD".to_owned(),
+                    sysinfo::DiskKind::SSD => "SSD".to_owned(),
+                    _ => "Unknown".to_owned(),
+                },
+                timestamp: current_time(),
+            },
+            None => Disk {
+                name: "Unknown".to_owned(),
+                free: 0,
+                used: 0,
+                total: 0,
+                mount_point: "Unknown".to_owned().into(),
+                file_system: "Unknown".to_owned(),
+                is_removable: false,
+                used_percentage: 0.0,
+                disk_type: "Unknown".to_owned(),
+                timestamp: current_time(),
+            },
+        }
+    }
+    fn get_disks(&mut self) -> Vec<Disk> {
+        self.disks.refresh_list();
+        self.disks.refresh();
+
+        let mut disks: Vec<Disk> = self
+            .disks
             .iter()
             .map(|disk| {
                 let name = match disk.name().to_str() {
@@ -105,13 +155,7 @@ impl DisksTrait for Metrics {
                     sysinfo::DiskKind::SSD => "SSD".to_owned(),
                     _ => "Unknown".to_owned(),
                 };
-                let file_system = match str::from_utf8(disk.file_system()) {
-                    Ok(v) => v.to_owned().to_ascii_uppercase(),
-                    Err(e) => {
-                        println!("Invalid UTF-8 sequence: {}", e);
-                        "Unknown".to_owned()
-                    }
-                };
+                let file_system = disk.file_system().to_str().unwrap_or("Unknown").to_owned();
 
                 let total = disk.total_space();
                 let free = disk.available_space();
@@ -134,6 +178,19 @@ impl DisksTrait for Metrics {
                 }
             })
             .collect();
+        // Sort disks so that the boot drive comes first (mount point containing "C://")
+        // This is a hack right now
+        disks.sort_by(|a, b| {
+            if a.mount_point.to_str().unwrap_or("").contains("C:\\") {
+                return Ordering::Less;
+            }
+
+            if b.mount_point.to_str().unwrap_or("").contains("C:\\") {
+                return Ordering::Greater;
+            }
+
+            Ordering::Equal
+        });
 
         disks
     }
@@ -141,7 +198,8 @@ impl DisksTrait for Metrics {
 
 impl MemoryTrait for Metrics {
     fn get_memory(&mut self) -> Memory {
-        self.sys.refresh_memory();
+        self.sys
+            .refresh_memory_specifics(MemoryRefreshKind::new().with_ram());
 
         Memory {
             free: self.sys.free_memory(),
@@ -155,7 +213,8 @@ impl MemoryTrait for Metrics {
 
 impl SwapTrait for Metrics {
     fn get_swap(&mut self) -> Swap {
-        self.sys.refresh_memory();
+        self.sys
+            .refresh_memory_specifics(MemoryRefreshKind::new().with_swap());
 
         Swap {
             free: self.sys.free_swap(),
@@ -241,11 +300,8 @@ impl ProcessesTrait for Metrics {
 
 impl NetworkTrait for Metrics {
     fn get_networks(&mut self) -> Vec<Network> {
-        self.sys.refresh_networks();
-
         let networks: Vec<Network> = self
-            .sys
-            .networks()
+            .networks
             .iter()
             .map(|(name, network)| {
                 let name = name.to_owned();

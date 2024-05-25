@@ -1,4 +1,4 @@
-const formatBytes = (bytes: number): string => {
+const formatBytes = (bytes: number, toFixed: number = 2): string => {
   if (bytes < 0) return "0 Bytes";
 
   const units = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -16,7 +16,7 @@ const formatBytes = (bytes: number): string => {
     unitIndex++;
   }
 
-  return `${value.toFixed(2)} ${units[unitIndex]}`;
+  return `${value.toFixed(toFixed)} ${units[unitIndex]}`;
 };
 
 export default formatBytes;
