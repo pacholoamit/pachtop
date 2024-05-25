@@ -7,15 +7,33 @@ import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
 import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
-import { Grid, LoadingOverlay, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
 import useDisksStore from "../stores/disk.store";
 import formatBytes from "../utils/format-bytes";
 
-interface FileExplorerNoDataProps {
+interface AnalysisProgressIndicatorProps {
+  enableStatus?: boolean;
+  progress: DiskAnalysisProgress;
   pt: string;
 }
-const FileExplorerNoData: React.FC<FileExplorerNoDataProps> = (props) => {
+const AnalysisIndicator: React.FC<AnalysisProgressIndicatorProps> = (props) => {
+  const { progress, enableStatus = false } = props;
+  const isShowProgress = progress.total > 0 && progress.scanned > 0 && enableStatus;
+
+  if (isShowProgress) {
+    const percentage = (props.progress.scanned / props.progress.total) * 100;
+    return (
+      <Stack align="center" justify="center" spacing="xs" pt={props.pt}>
+        <Title order={3}>
+          Scanned {formatBytes(props.progress.scanned)} of {formatBytes(props.progress.total)}
+        </Title>
+        <Box style={{ width: "300px" }}>
+          <Progress value={percentage} size={"lg"} />
+        </Box>
+      </Stack>
+    );
+  }
   return (
     <Stack align="center" justify="center" spacing="xs" pt={props.pt}>
       <Title
@@ -137,14 +155,22 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col md={12} lg={8} xl={9}>
           <Card height="350px">
-            <LoadingOverlay visible={isLoading} overlayBlur={3} />
             <Title order={4}>File Explorer</Title>
-            {isDiskAnalysisEmpty ? <FileExplorerNoData pt="86px" /> : <MemoDiskDirectoryTreeView data={diskAnalysis} />}
+            {isDiskAnalysisEmpty ? (
+              <AnalysisIndicator progress={progress} enableStatus={true} pt="86px" />
+            ) : (
+              <MemoDiskDirectoryTreeView data={diskAnalysis} />
+            )}
           </Card>
         </Grid.Col>
         <Grid.Col xl={12}>
           <Card height="560px">
-            {isDiskAnalysisEmpty ? <FileExplorerNoData pt="188px" /> : <MemoTreemapChart options={chartOptions} />}
+            <LoadingOverlay visible={isLoading} overlayBlur={3} />
+            {isDiskAnalysisEmpty ? (
+              <AnalysisIndicator progress={progress} pt="188px" />
+            ) : (
+              <MemoTreemapChart options={chartOptions} />
+            )}
           </Card>
         </Grid.Col>
       </Grid>

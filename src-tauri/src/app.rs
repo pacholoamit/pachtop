@@ -169,7 +169,6 @@ pub async fn disk_analysis(
 
     // Define the callback here
     let callback = move |scanned: u64, total: u64| {
-        println!("Scanned {} out of {} bytes", scanned, total);
         let progress = DiskAnalysisProgress { scanned, total };
         window.emit("disk_analysis_progress", &progress).unwrap();
     };
