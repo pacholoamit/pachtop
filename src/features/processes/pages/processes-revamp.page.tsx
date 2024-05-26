@@ -93,14 +93,14 @@ const diskColumns: ColDef[] = [
     flex: 4,
     headerName: "Writes",
     cellClass: "number",
-
+    cellRenderer: "agAnimateShowChangeCellRenderer",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
     sort: "desc",
   },
   {
     field: "diskUsage.totalReadBytes",
     flex: 4,
-
+    cellRenderer: "agAnimateShowChangeCellRenderer",
     headerName: "Reads",
     cellClass: "number",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
