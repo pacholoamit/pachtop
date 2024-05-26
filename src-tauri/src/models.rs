@@ -142,7 +142,7 @@ pub struct DiskAnalysisProgress {
     pub total: u64,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize, TS, Clone)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct Process {
@@ -153,6 +153,7 @@ pub struct Process {
     #[ts(type = "number")]
     pub memory_usage: u64,
     pub status: String,
+    pub children: Vec<Process>,
 }
 
 pub trait ProcessesTrait {

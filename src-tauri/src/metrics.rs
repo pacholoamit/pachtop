@@ -1,8 +1,10 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
+use rayon::prelude::*;
 use std::cmp::Ordering;
+use std::collections::HashMap;
 use std::str::{self, FromStr};
-use sysinfo::{CpuRefreshKind, MemoryRefreshKind, Pid, System};
+use sysinfo::{MemoryRefreshKind, Pid, System};
 
 pub struct Metrics {
     sys: System,
@@ -233,58 +235,69 @@ impl SwapTrait for Metrics {
 impl ProcessesTrait for Metrics {
     fn get_processes(&mut self) -> Vec<Process> {
         self.sys.refresh_processes();
-        let cpu_count = self.sys.physical_core_count().unwrap_or(1);
 
-        let processes: Vec<Process> = self
-            .sys
-            .processes()
-            .iter()
-            .map(|(pid, process)| {
-                let name = process.name().to_owned();
-                let cpu_usage = round(process.cpu_usage() / cpu_count as f32);
-                let pid = pid.to_string();
-                let memory_usage = process.memory();
+        let mut process_map: HashMap<String, Process> = HashMap::new();
 
-                let status = match process.status() {
-                    sysinfo::ProcessStatus::Run => "Running".to_owned(),
-                    sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
-                    sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
-                    sysinfo::ProcessStatus::Idle => "Idle".to_owned(),
-                    sysinfo::ProcessStatus::Zombie => "Zombie".to_owned(),
-                    _ => "Unknown".to_owned(),
-                };
+        // Aggregate metrics for each group
+        self.sys.processes().values().for_each(|process| {
+            if let Some(process_in_map) = process_map.get_mut(process.name()) {
+                process_in_map.children.push(Process {
+                    name: process.name().to_owned(),
+                    pid: process.pid().to_string(),
+                    cpu_usage: process.cpu_usage(),
+                    memory_usage: process.memory(),
+                    status: match process.status() {
+                        sysinfo::ProcessStatus::Run => "Running".to_owned(),
+                        sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
+                        sysinfo::ProcessStatus::Idle => "Idle".to_owned(),
+                        sysinfo::ProcessStatus::Zombie => "Zombie".to_owned(),
+                        sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
+                        _ => "Unknown".to_owned(),
+                    },
+                    children: Vec::new(),
+                });
 
-                Process {
-                    name,
-                    pid,
-                    cpu_usage,
-                    memory_usage,
-                    status,
-                }
-            })
-            .collect();
+                let aggregated_metrics = process_in_map.children.iter().fold(
+                    Process {
+                        name: process_in_map.name.to_owned(),
+                        pid: process_in_map.pid.to_owned(),
+                        cpu_usage: 0.0,
+                        memory_usage: 0,
+                        status: process_in_map.status.to_owned(),
+                        children: Vec::new(),
+                    },
+                    |mut acc, child_process| {
+                        acc.cpu_usage += child_process.cpu_usage;
+                        acc.memory_usage += child_process.memory_usage;
+                        acc
+                    },
+                );
 
-        // TODO: modify processes so it can deliver the grouped processes
-        // let mut grouped_processes: Vec<Process> = Vec::new();
-        // for process in processes {
-        //     let mut found = false;
-        //     for grouped_process in &mut grouped_processes {
-        //         if grouped_process.name == process.name {
-        //             grouped_process.cpu_usage += process.cpu_usage;
-        //             grouped_process.memory_usage += process.memory_usage;
-        //             found = true;
-        //             break;
-        //         }
-        //     }
+                process_in_map.cpu_usage = aggregated_metrics.cpu_usage;
+                process_in_map.memory_usage = aggregated_metrics.memory_usage;
+            } else {
+                process_map.insert(
+                    process.name().to_owned(),
+                    Process {
+                        name: process.name().to_owned(),
+                        pid: process.pid().to_string(),
+                        cpu_usage: process.cpu_usage(),
+                        memory_usage: process.memory(),
+                        status: match process.status() {
+                            sysinfo::ProcessStatus::Run => "Running".to_owned(),
+                            sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
+                            sysinfo::ProcessStatus::Idle => "Idle".to_owned(),
+                            sysinfo::ProcessStatus::Zombie => "Zombie".to_owned(),
+                            sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
+                            _ => "Unknown".to_owned(),
+                        },
+                        children: Vec::new(),
+                    },
+                );
+            }
+        });
 
-        //     if !found {
-        //         grouped_processes.push(process);
-        //     }
-        // }
-
-        // grouped_processes
-
-        processes
+        process_map.values().cloned().collect()
     }
 
     fn kill_process(&mut self, pid: &str) -> bool {
@@ -304,6 +317,9 @@ impl ProcessesTrait for Metrics {
 
 impl NetworkTrait for Metrics {
     fn get_networks(&mut self) -> Vec<Network> {
+        self.networks.refresh_list();
+        self.networks.refresh();
+
         let networks: Vec<Network> = self
             .networks
             .iter()

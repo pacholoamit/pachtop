@@ -11,7 +11,10 @@ import { TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 
 const ProcessesPage = () => {
-  const processes = useProcessesSelectors.use.processes();
+  const processesAll = useProcessesSelectors.use.processes();
+  // Get last 50 only
+  const processes = processesAll.slice(50);
+
   const [query, setQuery] = useState("");
   const [records, setRecords] = useState<Process[]>([]);
   const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);
@@ -25,9 +28,8 @@ const ProcessesPage = () => {
     if (query) {
       filteredRecords = filteredRecords.filter((process) => {
         const filteredName = process.name.toLowerCase().includes(query.toLowerCase());
-        const filteredPid = process.pid.toString().toLowerCase().includes(query.toLowerCase());
 
-        return filteredName || filteredPid;
+        return filteredName;
       });
     }
 
@@ -41,6 +43,7 @@ const ProcessesPage = () => {
 
   return (
     <PageWrapper name="Processes">
+      Hello world
       <TextInput
         placeholder="Search Process..."
         icon={<IconSearch size={16} />}
