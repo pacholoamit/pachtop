@@ -1,7 +1,32 @@
+import "ag-grid-community/styles/ag-grid.css";
+import "@/features/processes/styles/ag-grid-theme-slate.css";
+
+import { AgGridReact } from "ag-grid-react";
+import { DataTable } from "mantine-datatable";
+import { useEffect, useState } from "react";
+
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
 import useProcessesSelectors from "@/features/processes/stores/processes.store";
-import { Grid, Text } from "@mantine/core";
+// @ts-ignore
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import { ColDef, ModuleRegistry } from "@ag-grid-community/core";
+import { ActionIcon, Grid, Group, Space, Text } from "@mantine/core";
+import { IconCircleX } from "@tabler/icons-react";
+
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+
+const ActionsColumn = () => {
+  return (
+    <Group position="center">
+      <ActionIcon color="red" radius={"xl"} size={"sm"} variant="subtle">
+        <IconCircleX />
+      </ActionIcon>
+    </Group>
+  );
+};
 
 const TimelineChart = () => {
   return (
@@ -20,33 +45,82 @@ const ProcessesInsights = () => {
 };
 
 const ProcessesByMemory = () => {
+  const processes = useProcessesSelectors.use.processes();
+  const sorted = processes.sort((a, b) => b.memoryUsage - a.memoryUsage);
+
+  const [columns, setColumns] = useState<ColDef[]>([
+    { field: "name", flex: 4, filter: true },
+    {
+      field: "memoryUsage",
+      flex: 4,
+      headerName: "RAM Usage",
+      cellClass: "number",
+      cellRenderer: "agAnimateShowChangeCellRenderer",
+      valueFormatter: ({ value }) => formatBytes(value),
+      sort: "desc",
+    },
+    {
+      field: "Actions",
+      cellRenderer: ActionsColumn,
+      flex: 2,
+    },
+  ]);
   return (
-    <Card height="590px">
-      <Text>Processes By Memory</Text>
+    <Card height="580px">
+      <Text>Processes by Memory Usage</Text>
+      <Space h={12} />
+
+      <div style={{ height: "512px", width: "100%" }} className="ag-theme-slate">
+        <AgGridReact rowData={processes} columnDefs={columns as any} />
+      </div>
     </Card>
   );
 };
 
 const ProcessesByCPU = () => {
+  const processes = useProcessesSelectors.use.processes();
+  const [columns, setColumns] = useState<ColDef[]>([
+    {
+      field: "name",
+      flex: 4,
+      filter: true,
+    },
+    {
+      field: "cpuUsage",
+      flex: 4,
+      headerName: "CPU Usage",
+      cellClass: "number",
+      cellRenderer: "agAnimateShowChangeCellRenderer",
+      valueFormatter: ({ value }) => fromNumberToPercentageString(value),
+      sort: "desc",
+    },
+    {
+      field: "Actions",
+      cellRenderer: ActionsColumn,
+      flex: 2,
+    },
+  ]);
+
   return (
-    <Card height="590px">
-      <Text>Processes By CPU</Text>
+    <Card height="580px">
+      <Text>Processes by CPU Usage</Text>
+      <Space h={12} />
+      <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
+        <AgGridReact rowData={processes} columnDefs={columns as any} />
+      </div>
     </Card>
   );
 };
 
 const ProcessesByTime = () => {
   return (
-    <Card height="590px">
+    <Card height="580px">
       <Text>Processes By Time</Text>
     </Card>
   );
 };
 
 const ProcessesPage = () => {
-  const processes = useProcessesSelectors.use.processes();
-  console.log(processes);
-
   return (
     <PageWrapper name="Processes">
       <Grid>

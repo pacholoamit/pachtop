@@ -154,7 +154,9 @@ pub struct Process {
     pub cmd: Vec<String>,
     pub exe: String,
     pub root: String,
+    #[ts(type = "number")]
     pub start_time: u64,
+    #[ts(type = "number")]
     pub run_time: u64,
     pub disk_usage: ProcessDiskUsage,
     pub status: String,
@@ -164,9 +166,13 @@ pub struct Process {
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct ProcessDiskUsage {
+    #[ts(type = "number")]
     pub read_bytes: u64,
+    #[ts(type = "number")]
     pub written_bytes: u64,
+    #[ts(type = "number")]
     pub total_read_bytes: u64,
+    #[ts(type = "number")]
     pub total_written_bytes: u64,
 }
 
