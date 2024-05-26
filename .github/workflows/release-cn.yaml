@@ -15,7 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - name: create draft release
         uses: crabnebula-dev/cloud-release@v0.1.0
         with:
@@ -65,6 +64,7 @@ jobs:
         with:
           command: release upload pachtop --framework tauri
           api-key: ${{ secrets.CN_API_KEY }}
+          path: dist
 
   publish:
     needs: build
