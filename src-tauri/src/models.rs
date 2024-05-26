@@ -79,6 +79,7 @@ pub trait SwapTrait {
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct SysInfo {
     pub kernel_version: String,
+    pub os: String,
     pub os_version: String,
     pub hostname: String,
     #[ts(type = "number")]

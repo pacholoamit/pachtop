@@ -2,7 +2,7 @@ use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
 use std::cmp::Ordering;
 use std::str::{self, FromStr};
-use sysinfo::{MemoryRefreshKind, Pid, System};
+use sysinfo::{CpuRefreshKind, MemoryRefreshKind, Pid, System};
 
 pub struct Metrics {
     sys: System,
@@ -26,9 +26,11 @@ impl SystemInformationTrait for Metrics {
         let os_version = System::os_version().unwrap_or("Unknown".to_string());
         let hostname = System::host_name().unwrap_or("Unknown".to_string());
         let core_count = System::physical_core_count(&self.sys).unwrap_or(0);
+        let os = System::long_os_version().unwrap_or("Unknown".to_string());
 
         SysInfo {
             kernel_version,
+            os,
             os_version,
             hostname,
             core_count,
@@ -42,15 +44,17 @@ impl GlobalCpuTrait for Metrics {
         self.sys.refresh_cpu();
 
         let cpu = self.sys.global_cpu_info();
+        let sample = self.sys.cpus().first().unwrap();
         let usage = if cpu.cpu_usage().is_nan() {
             0.0
         } else {
             cpu.cpu_usage()
         };
-        let brand = cpu.brand().to_owned();
-        let frequency = cpu.frequency().to_owned();
-        let name = cpu.name().to_owned();
-        let vendor = cpu.vendor_id().to_owned();
+
+        let brand = sample.brand().to_owned();
+        let frequency = sample.frequency().to_owned();
+        let name = sample.name().to_owned();
+        let vendor = sample.vendor_id().to_owned();
 
         GlobalCpu {
             usage,
