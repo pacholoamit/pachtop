@@ -2,8 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
-## 0.9.4
+## 0.9.5
 - Improve Theming options
+
+## 0.9.4
 - Fix CPU information not displaying
 
 ## 0.9.3
