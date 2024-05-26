@@ -12,8 +12,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  CN_APP_SLUG: ${{ github.event.inputs.app-slug }}
+
 
 jobs:
   draft:
@@ -25,7 +24,7 @@ jobs:
       - name: create draft release
         uses: crabnebula-dev/cloud-release@v0.1.0
         with:
-          command: release draft ${{ env.CN_APP_SLUG }} --framework tauri
+          command: release draft pachtop --framework tauri
           api-key: ${{ secrets.CN_API_KEY }}
 
   build:
@@ -53,10 +52,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y webkit2gtk-4.0
 
+      - name: install app dependencies
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          enable-corepack: false
+          cache-install-state: true
+          cache-node-modules: true          
       - name: build tauri app
         run: |
-          npm install
-          npm run tauri build
+          yarn build
         env:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
@@ -64,7 +68,7 @@ jobs:
       - name: upload assets
         uses: crabnebula-dev/cloud-release@v0.1.0
         with:
-          command: release upload ${{ env.CN_APP_SLUG }} --framework tauri
+          command: release upload pachtop --framework tauri
           api-key: ${{ secrets.CN_API_KEY }}
 
   publish:
@@ -78,5 +82,5 @@ jobs:
       - name: publish release
         uses: crabnebula-dev/cloud-release@v0.1.0
         with:
-          command: release publish ${{ env.CN_APP_SLUG }} --framework tauri
+          command: release publish pachtop --framework tauri
           api-key: ${{ secrets.CN_API_KEY }}
