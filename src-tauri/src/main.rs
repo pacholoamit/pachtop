@@ -32,7 +32,6 @@ use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::LogTarget;
 
 fn build_and_run_app(app: AppState) {
-    #[cfg(debug_assertions)]
     let log_plugin = tauri_plugin_log::Builder::default()
         .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
         .build();
