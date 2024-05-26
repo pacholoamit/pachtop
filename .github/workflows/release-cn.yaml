@@ -64,7 +64,7 @@ jobs:
         with:
           command: release upload pachtop --framework tauri
           api-key: ${{ secrets.CN_API_KEY }}
-          path: dist
+          path: ../dist
 
   publish:
     needs: build
