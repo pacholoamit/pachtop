@@ -1,12 +1,13 @@
 import { AgGridReact } from "ag-grid-react";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 
 import Card from "@/components/card";
 import useProcessesSelectors from "@/features/processes/stores/processes.store";
 // @ts-ignore
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import { ColDef, GetRowIdParams, ModuleRegistry } from "@ag-grid-community/core";
-import { Space, Text } from "@mantine/core";
+import { ActionIcon, Group, Space, Text } from "@mantine/core";
+import { IconTransform } from "@tabler/icons-react";
 
 interface ProcessTableProps {
   title: string;
@@ -17,16 +18,36 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
   const processes = useProcessesSelectors.use.processes();
+  const [columnDefState, setColumnDefsState] = React.useState<ColDef[]>(columnDefs);
   const getRowId = useCallback((params: GetRowIdParams) => params.data.name, []);
+
+  const onDisableChangeRenderer = useCallback(() => {
+    setColumnDefsState((prev) => {
+      return prev.map((column) => {
+        if (column.cellRenderer === "agAnimateShowChangeCellRenderer") {
+          column.cellRenderer = "";
+        } else if (column.cellRenderer === "") {
+          column.cellRenderer = "agAnimateShowChangeCellRenderer";
+        }
+        return column;
+      });
+    });
+  }, []);
 
   return (
     <Card height="580px">
-      <Text>{title}</Text>
+      <Group position="apart" pl={4} pr={4}>
+        <Text>{title}</Text>
+        <ActionIcon radius="xl" size="xs" variant="subtle" onClick={onDisableChangeRenderer}>
+          <IconTransform />
+        </ActionIcon>
+      </Group>
+
       <Space h={12} />
       <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
         <AgGridReact
           rowData={processes}
-          columnDefs={columnDefs as any}
+          columnDefs={columnDefState as any}
           getRowId={getRowId as any}
           animateRows={false}
         />
