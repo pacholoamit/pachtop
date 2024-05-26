@@ -40,7 +40,7 @@ const TimelineChart = () => {
 const ProcessesInsights = () => {
   return (
     <Card>
-      <Text>Processes Insights</Text>
+      <Text>Insights</Text>
     </Card>
   );
 };
@@ -93,12 +93,14 @@ const diskColumns: ColDef[] = [
     flex: 4,
     headerName: "Writes",
     cellClass: "number",
+
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
     sort: "desc",
   },
   {
     field: "diskUsage.totalReadBytes",
     flex: 4,
+
     headerName: "Reads",
     cellClass: "number",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
@@ -112,6 +114,7 @@ const allColumns: ColDef[] = [
     field: "diskUsage.totalWrittenBytes",
     flex: 4,
     headerName: "Writes",
+    cellRenderer: "agAnimateShowChangeCellRenderer",
     cellClass: "number",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
   },
@@ -119,6 +122,7 @@ const allColumns: ColDef[] = [
     field: "diskUsage.totalReadBytes",
     flex: 4,
     headerName: "Reads",
+    cellRenderer: "agAnimateShowChangeCellRenderer",
     cellClass: "number",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
   },
