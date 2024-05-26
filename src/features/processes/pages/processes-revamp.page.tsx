@@ -183,7 +183,14 @@ const ProcessesAll = () => {
       cellRenderer: "agAnimateShowChangeCellRenderer",
       valueFormatter: ({ value }) => fromNumberToPercentageString(value),
     },
-
+    {
+      field: "runTime",
+      flex: 4,
+      headerName: "Run Time",
+      cellClass: "number",
+      cellRenderer: "agAnimateShowChangeCellRenderer",
+      valueFormatter: ({ value }) => formatSecondsToReadable(value),
+    },
     {
       field: "memoryUsage",
       flex: 4,
@@ -205,7 +212,7 @@ const ProcessesAll = () => {
   ]);
   return (
     <Card height="580px">
-      <Text>Processes by CPU Usage</Text>
+      <Text>Processes</Text>
       <Space h={12} />
       <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
         <AgGridReact rowData={processes} columnDefs={columns as any} />

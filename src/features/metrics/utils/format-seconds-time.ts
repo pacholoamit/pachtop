@@ -1,20 +1,26 @@
 const formatSecondsToReadable = (seconds: number): string => {
-  const units = ["s", "m", "h"];
   const factor = 60;
+  const hours = Math.floor(seconds / (factor * factor));
+  const minutes = Math.floor((seconds % (factor * factor)) / factor);
+  // Exclude seconds calculation
+  // const remainingSeconds = seconds % factor;
 
-  if (seconds < factor) {
-    return `${seconds} s`;
+  let result = "";
+
+  if (hours > 0) {
+    result += `${hours} hr${hours > 1 ? "s" : ""}`;
+    if (minutes > 0) {
+      result += ` and ${minutes} min${minutes > 1 ? "s" : ""}`;
+    }
+  } else {
+    if (minutes > 0) {
+      result += `${minutes} min${minutes > 1 ? "s" : ""}`;
+    } else {
+      result += `${seconds} sec${seconds > 1 ? "s" : ""}`;
+    }
   }
 
-  let unitIndex = 0;
-  let value = seconds;
-
-  while (value >= factor && unitIndex < units.length - 1) {
-    value /= factor;
-    unitIndex++;
-  }
-
-  return `${value.toFixed(2)} ${units[unitIndex]}`;
+  return result;
 };
 
 export default formatSecondsToReadable;
