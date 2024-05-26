@@ -59,12 +59,15 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
 
+      - name: list files
+        run: |
+          ls -la
       - name: upload assets
         uses: crabnebula-dev/cloud-release@v0.1.0
         with:
           command: release upload pachtop --framework tauri
           api-key: ${{ secrets.CN_API_KEY }}
-          path: ./dist
+          # path: ./dist
 
   publish:
     needs: build
