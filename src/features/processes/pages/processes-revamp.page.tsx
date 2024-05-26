@@ -21,7 +21,7 @@ const ProcessesInsights = () => {
 
 const ProcessesByMemory = () => {
   return (
-    <Card>
+    <Card height="590px">
       <Text>Processes By Memory</Text>
     </Card>
   );
@@ -29,7 +29,7 @@ const ProcessesByMemory = () => {
 
 const ProcessesByCPU = () => {
   return (
-    <Card>
+    <Card height="590px">
       <Text>Processes By CPU</Text>
     </Card>
   );
@@ -37,7 +37,7 @@ const ProcessesByCPU = () => {
 
 const ProcessesByTime = () => {
   return (
-    <Card>
+    <Card height="590px">
       <Text>Processes By Time</Text>
     </Card>
   );
@@ -50,19 +50,19 @@ const ProcessesPage = () => {
   return (
     <PageWrapper name="Processes">
       <Grid>
-        <Grid.Col span={8}>
+        <Grid.Col xl={8} lg={6}>
           <TimelineChart />
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col xl={4} lg={6}>
           <ProcessesInsights />
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col xl={4} lg={6}>
           <ProcessesByMemory />
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col xl={4} lg={6}>
           <ProcessesByCPU />
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col xl={4} lg={6}>
           <ProcessesByTime />
         </Grid.Col>
       </Grid>
