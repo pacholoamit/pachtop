@@ -2,11 +2,6 @@ name: Tauri Workflow Release Process
 
 on:
   workflow_dispatch:
-    inputs:
-      app-slug:
-        type: string
-        description: Slug of the application
-        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
