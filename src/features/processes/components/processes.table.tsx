@@ -1,65 +1,38 @@
-import { DataTable, DataTableSortStatus } from 'mantine-datatable';
-import { memo } from 'react';
+import { AgGridReact } from "ag-grid-react";
+import { useCallback } from "react";
 
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import { Process } from '@/lib';
-import { Button } from '@mantine/core';
+import Card from "@/components/card";
+import useProcessesSelectors from "@/features/processes/stores/processes.store";
+// @ts-ignore
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import { ColDef, GetRowIdParams, ModuleRegistry } from "@ag-grid-community/core";
+import { Space, Text } from "@mantine/core";
 
-interface ProcessesTableProps {
-  records: Process[];
-  setRecords: React.Dispatch<React.SetStateAction<Process[]>>;
-  sortStatus: DataTableSortStatus;
-  setSortStatus: React.Dispatch<React.SetStateAction<DataTableSortStatus>>;
-  selectedProcess: Process | null;
-  setSelectedProcess: React.Dispatch<React.SetStateAction<Process | null>>;
+interface ProcessTableProps {
+  title: string;
+  columnDefs: ColDef[];
 }
 
-const ProcessesTable: React.FC<ProcessesTableProps> = memo((props) => {
-  const { records, setSortStatus, sortStatus, setSelectedProcess } = props;
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+
+const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
+  const processes = useProcessesSelectors.use.processes();
+  const getRowId = useCallback((params: GetRowIdParams) => params.data.name, []);
 
   return (
-    <>
-      <DataTable
-        striped
-        highlightOnHover
-        records={records}
-        idAccessor="pid"
-        sortStatus={sortStatus}
-        onSortStatusChange={setSortStatus}
-        minHeight={"calc(100vh - 500px)"}
-        height={"90vh"}
-        columns={[
-          {
-            accessor: "pid",
-            textAlignment: "right",
-            title: "PID",
-            sortable: true,
-          },
-          { accessor: "name", sortable: true },
-          {
-            accessor: "cpuUsage",
-            render: ({ cpuUsage }) => `${Math.round(cpuUsage * 100) / 100}%`,
-            sortable: true,
-            title: "CPU Usage",
-          },
-          {
-            accessor: "memoryUsage",
-            sortable: true,
-            render: ({ memoryUsage }) => formatBytes(memoryUsage),
-          },
-          { accessor: "status", sortable: true },
-          {
-            accessor: "actions",
-            render: (record, index) => (
-              <Button variant="outline" onClick={() => setSelectedProcess(record)} color="red">
-                Kill
-              </Button>
-            ),
-          },
-        ]}
-      />
-    </>
+    <Card height="580px">
+      <Text>{title}</Text>
+      <Space h={12} />
+      <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
+        <AgGridReact
+          rowData={processes}
+          columnDefs={columnDefs as any}
+          getRowId={getRowId as any}
+          animateRows={false}
+        />
+      </div>
+    </Card>
   );
-});
+};
 
-export default ProcessesTable;
+export default ProcessTable;

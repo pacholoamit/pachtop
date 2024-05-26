@@ -1,23 +1,15 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "@/features/processes/styles/ag-grid-theme-slate.css";
 
-import { AgGridReact } from "ag-grid-react";
-import { DataTable } from "mantine-datatable";
-import React, { useCallback, useEffect, useState } from "react";
-
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import formatSecondsToReadable from "@/features/metrics/utils/format-seconds-time";
 import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
+import ProcessTable from "@/features/processes/components/processes.table";
 import useProcessesSelectors from "@/features/processes/stores/processes.store";
-// @ts-ignore
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { ColDef, GetRowIdParams, ModuleRegistry } from "@ag-grid-community/core";
+import { ColDef } from "@ag-grid-community/core";
 import { ActionIcon, Grid, Group, Space, Tabs, Text, TextInput } from "@mantine/core";
 import { IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
-
-ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const ActionsColumn = () => {
   return (
@@ -28,45 +20,6 @@ const ActionsColumn = () => {
     </Group>
   );
 };
-
-const TimelineChart = () => {
-  return (
-    <Card>
-      <Text>Timeline Chart</Text>
-    </Card>
-  );
-};
-
-const ProcessesInsights = () => {
-  return (
-    <Card>
-      <Text>Insights</Text>
-    </Card>
-  );
-};
-
-interface ProcessTableProps {
-  title: string;
-  columnDefs: ColDef[];
-}
-
-const memoryColumns: ColDef[] = [
-  { field: "name", flex: 4, filter: true },
-  {
-    field: "memoryUsage",
-    flex: 4,
-    headerName: "RAM Usage",
-    cellClass: "number",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
-    valueFormatter: ({ value }) => formatBytes(value),
-    sort: "desc",
-  },
-  {
-    field: "Actions",
-    cellRenderer: ActionsColumn,
-    flex: 2,
-  },
-];
 
 const cpuColumns: ColDef[] = [
   { field: "name", flex: 4, filter: true },
@@ -162,22 +115,36 @@ const allColumns: ColDef[] = [
   },
 ];
 
-const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
-  const processes = useProcessesSelectors.use.processes();
-  const getRowId = useCallback((params: GetRowIdParams) => params.data.name, []);
+const memoryColumns: ColDef[] = [
+  { field: "name", flex: 4, filter: true },
+  {
+    field: "memoryUsage",
+    flex: 4,
+    headerName: "RAM Usage",
+    cellClass: "number",
+    cellRenderer: "agAnimateShowChangeCellRenderer",
+    valueFormatter: ({ value }) => formatBytes(value),
+    sort: "desc",
+  },
+  {
+    field: "Actions",
+    cellRenderer: ActionsColumn,
+    flex: 2,
+  },
+];
 
+const TimelineChart = () => {
   return (
-    <Card height="580px">
-      <Text>{title}</Text>
-      <Space h={12} />
-      <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
-        <AgGridReact
-          rowData={processes}
-          columnDefs={columnDefs as any}
-          getRowId={getRowId as any}
-          animateRows={false}
-        />
-      </div>
+    <Card>
+      <Text>Timeline Chart</Text>
+    </Card>
+  );
+};
+
+const ProcessesInsights = () => {
+  return (
+    <Card>
+      <Text>Insights</Text>
     </Card>
   );
 };
@@ -204,7 +171,6 @@ const TAB_OPTIONS = {
 };
 
 const ProcessesPage = () => {
-  const [isMultiTables, setIsMultiTables] = useState(false);
   return (
     <PageWrapper name="Processes">
       <Grid>
