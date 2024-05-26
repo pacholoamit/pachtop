@@ -237,51 +237,43 @@ impl ProcessesTrait for Metrics {
         self.sys.refresh_processes();
 
         let mut process_map: HashMap<String, Process> = HashMap::new();
+        let core_count = self.sys.physical_core_count().unwrap_or(1);
 
         // Aggregate metrics for each group
         self.sys.processes().values().for_each(|process| {
             if let Some(process_in_map) = process_map.get_mut(process.name()) {
-                process_in_map.children.push(Process {
-                    name: process.name().to_owned(),
-                    pid: process.pid().to_string(),
-                    cpu_usage: process.cpu_usage(),
-                    memory_usage: process.memory(),
-                    status: match process.status() {
-                        sysinfo::ProcessStatus::Run => "Running".to_owned(),
-                        sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
-                        sysinfo::ProcessStatus::Idle => "Idle".to_owned(),
-                        sysinfo::ProcessStatus::Zombie => "Zombie".to_owned(),
-                        sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
-                        _ => "Unknown".to_owned(),
-                    },
-                    children: Vec::new(),
-                });
-
-                let aggregated_metrics = process_in_map.children.iter().fold(
-                    Process {
-                        name: process_in_map.name.to_owned(),
-                        pid: process_in_map.pid.to_owned(),
-                        cpu_usage: 0.0,
-                        memory_usage: 0,
-                        status: process_in_map.status.to_owned(),
-                        children: Vec::new(),
-                    },
-                    |mut acc, child_process| {
-                        acc.cpu_usage += child_process.cpu_usage;
-                        acc.memory_usage += child_process.memory_usage;
-                        acc
-                    },
-                );
-
-                process_in_map.cpu_usage = aggregated_metrics.cpu_usage;
-                process_in_map.memory_usage = aggregated_metrics.memory_usage;
+                // Aggregate metrics into the existing process entry
+                process_in_map.cpu_usage += process.cpu_usage() / core_count as f32;
+                process_in_map.memory_usage += process.memory();
+                process_in_map.disk_usage.read_bytes += process.disk_usage().read_bytes;
+                process_in_map.disk_usage.written_bytes += process.disk_usage().written_bytes;
+                process_in_map.disk_usage.total_read_bytes += process.disk_usage().total_read_bytes;
+                process_in_map.disk_usage.total_written_bytes +=
+                    process.disk_usage().total_written_bytes;
             } else {
+                // Insert the process as a new entry in the map
                 process_map.insert(
                     process.name().to_owned(),
                     Process {
                         name: process.name().to_owned(),
-                        pid: process.pid().to_string(),
-                        cpu_usage: process.cpu_usage(),
+                        cmd: process.cmd().to_owned(),
+                        disk_usage: ProcessDiskUsage {
+                            read_bytes: process.disk_usage().read_bytes,
+                            written_bytes: process.disk_usage().written_bytes,
+                            total_read_bytes: process.disk_usage().total_read_bytes,
+                            total_written_bytes: process.disk_usage().total_written_bytes,
+                        },
+                        exe: match process.exe() {
+                            Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
+                            None => "".to_owned(),
+                        },
+                        root: match process.root() {
+                            Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
+                            None => "".to_owned(),
+                        },
+                        start_time: process.start_time(),
+                        run_time: process.run_time(),
+                        cpu_usage: process.cpu_usage() / core_count as f32,
                         memory_usage: process.memory(),
                         status: match process.status() {
                             sysinfo::ProcessStatus::Run => "Running".to_owned(),
@@ -291,7 +283,6 @@ impl ProcessesTrait for Metrics {
                             sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
                             _ => "Unknown".to_owned(),
                         },
-                        children: Vec::new(),
                     },
                 );
             }

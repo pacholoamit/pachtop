@@ -142,18 +142,32 @@ pub struct DiskAnalysisProgress {
     pub total: u64,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS, Clone)]
+#[derive(Debug, Default, Serialize, Deserialize, TS, Clone)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct Process {
     pub name: String,
-    pub pid: String,
     #[ts(type = "number")]
     pub cpu_usage: f32,
     #[ts(type = "number")]
     pub memory_usage: u64,
+    pub cmd: Vec<String>,
+    pub exe: String,
+    pub root: String,
+    pub start_time: u64,
+    pub run_time: u64,
+    pub disk_usage: ProcessDiskUsage,
     pub status: String,
-    pub children: Vec<Process>,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize, TS, Clone)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/lib/bindings/")]
+pub struct ProcessDiskUsage {
+    pub read_bytes: u64,
+    pub written_bytes: u64,
+    pub total_read_bytes: u64,
+    pub total_written_bytes: u64,
 }
 
 pub trait ProcessesTrait {
