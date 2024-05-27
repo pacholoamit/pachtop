@@ -19,6 +19,7 @@ export const DEFAULT_PROCESS: Process = {
     totalWrittenBytes: 0,
     writtenBytes: 0,
   },
+  timestamp: 0,
 };
 interface ProcessesState {
   processes: Process[];
