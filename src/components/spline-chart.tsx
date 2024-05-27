@@ -43,11 +43,21 @@ export const useSplineChartState = (
         // enabled: false,
         step: 2,
         format: "{value:%I:%M:%S %p}",
+        // TODO: Set this to SPline chart color
         style: {
           color: other.charts.area.default.labelColor,
         },
       },
     },
+
+    legend: {
+      backgroundColor: "transparent",
+      itemStyle: {
+        // TODO: Set this to SPline chart color
+        color: other.charts.area.default.legend.color,
+      },
+    },
+
     time: {
       useUTC: false,
     },

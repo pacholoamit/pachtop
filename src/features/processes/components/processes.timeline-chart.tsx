@@ -29,7 +29,7 @@ const ProcessTimelineChart = () => {
       },
     },
     title: {
-      text: "Memory Timeline",
+      text: "Memory Comparator",
 
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
