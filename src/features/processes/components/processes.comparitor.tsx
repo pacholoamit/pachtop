@@ -19,6 +19,8 @@ interface ComparitorMetricOption {
   yAxisFormatter: Highcharts.AxisLabelsFormatterCallbackFunction;
   tooltipFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
 }
+
+//! TODO: MAKE CPU DYNAMIC FORMATTING WORK
 const metricOptions: ComparitorMetricOption[] = [
   {
     label: "MEM",
