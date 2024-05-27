@@ -16,7 +16,8 @@ export * from "@/lib/bindings/DiskAnalysisProgress";
 export enum Command {
   KillProcess = "kill_process",
   ShowInFolder = "show_folder",
-  DiskAnalysis = "disk_analysis",
+  DiskTurboScan = "disk_turbo_scan",
+  DiskScan = "disk_scan",
   DiskAnalysisFlattened = "disk_analysis_flattened",
 }
 
@@ -47,7 +48,7 @@ export interface KillProcessOpts extends InvokeArgs {
   pid: string;
 }
 
-export interface DeepScanOpts extends InvokeArgs {
+export interface ScanOpts extends InvokeArgs {
   path: string;
 }
 

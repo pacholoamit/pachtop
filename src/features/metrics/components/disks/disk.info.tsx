@@ -19,7 +19,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
+import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
 
 interface DiskInfoProps {
   disk: Disk;
@@ -63,7 +63,7 @@ const DiskDetailsSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
         <Popover position="left-end" withArrow shadow="md">
           <Popover.Target>
             <ActionIcon variant="transparent">
-              <IconAlertCircle size="1rem" />
+              <IconInfoCircle size="1rem" />
             </ActionIcon>
           </Popover.Target>
           <Popover.Dropdown>
