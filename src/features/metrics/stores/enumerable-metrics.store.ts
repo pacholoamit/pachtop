@@ -22,6 +22,7 @@ export interface EnumerableStore<Input extends EnumerableInput, Enumerated> {
 export interface EnumerableStoreInput<T> {
   default: T;
   stream: (cb: (data: T) => void) => void;
+  maxSize?: number;
 }
 
 const useEnumerableMetricsStore = <Input extends EnumerableInput, Enumerated extends EnumerableInput = EnumerableInput>(
@@ -29,7 +30,7 @@ const useEnumerableMetricsStore = <Input extends EnumerableInput, Enumerated ext
 ) => {
   return create<EnumerableStore<Input, Enumerated>>((set, get) => ({
     enumerables: [],
-    maxSize: VIEWABLE_ELEMENT_COUNT, // Default value, can be overridden in the hook
+    maxSize: input.maxSize || VIEWABLE_ELEMENT_COUNT, // Default value, can be overridden in the hook
 
     addEnumerable: (item) => {
       set((state) => {
