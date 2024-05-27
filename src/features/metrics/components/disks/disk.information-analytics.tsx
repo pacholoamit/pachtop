@@ -77,7 +77,7 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
   };
 
   return (
-    <Popover width={200} position="bottom" withArrow shadow="md" opened={opened}>
+    <Popover width={200} position="right" withArrow shadow="md" opened={opened}>
       <Card height="350px">
         <Group position="apart">
           <Title order={4}>Disk Information</Title>
