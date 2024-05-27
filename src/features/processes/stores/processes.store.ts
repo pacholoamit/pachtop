@@ -25,7 +25,7 @@ interface ProcessesState {
   processes: Process[];
   listen: () => void;
 }
-
+// TODO: Use enumerable store instead of this
 const useProcessesStore = create<ProcessesState>()((set, get) => ({
   processes: [DEFAULT_PROCESS],
   listen: () => streams.processes((processes) => set({ processes })),
