@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 0.9.5
 - Patch Network metrics not displaying
+- Revamp Processes section
+- Created Processes comparitor
+- Create feature to do regular scan and turbo scan
 
 ## 0.9.4
 - Fix CPU information not displaying
