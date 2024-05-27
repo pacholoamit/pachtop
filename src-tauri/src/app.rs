@@ -153,8 +153,71 @@ pub fn delete_folder(path: String) {
 }
 
 #[tauri::command]
+// Slow version
+pub async fn disk_scan(
+    window: tauri::Window,
+    state: tauri::State<'_, AppState>,
+    path: String,
+) -> Result<DiskItem, String> {
+    dbg!("Disk analysis on:", &path);
+    let bytes_scanned = Arc::new(AtomicU64::new(0));
+    let time = std::time::Instant::now();
+
+    let path_buf = PathBuf::from(&path);
+    let total_bytes = state.0.lock().unwrap().metrics.find_disk(&path).total;
+    let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
+    let last_emit_time = Arc::new(Mutex::new(std::time::Instant::now()));
+
+    let emitter = window.clone();
+    let callback = move |scanned: u64, total: u64| {
+        let mut last_emit = last_emit_time.lock().unwrap();
+        // Emit progress every 200ms to not overwhelm the UI
+        if last_emit.elapsed() >= std::time::Duration::from_millis(100) {
+            let progress = DiskAnalysisProgress { scanned, total };
+            match emitter.emit("disk_analysis_progress", &progress) {
+                Ok(_) => {}
+                Err(e) => {
+                    dbg!("Error emitting disk_analysis_progress", e);
+                }
+            }
+            *last_emit = std::time::Instant::now();
+        }
+    };
+
+    let analysed = match file_info {
+        FileInfo::Directory { volume_id } => DiskItem::scan(
+            &path_buf,
+            true,
+            volume_id,
+            &callback,
+            total_bytes,
+            Arc::clone(&bytes_scanned),
+        )
+        .map_err(|e| e.to_string())?,
+        _ => return Err("Not a directory".into()),
+    };
+
+    let complete = DiskAnalysisProgress {
+        scanned: total_bytes,
+        total: total_bytes,
+    };
+
+    // Emit final progress to close the progress
+    window
+        .emit("disk_analysis_progress", complete)
+        .map_err(|e| e.to_string())?;
+
+    state.set_disk_analysis(path, analysed.clone());
+
+    dbg!("Total bytes:", total_bytes);
+    dbg!("Scanning complete:", time.elapsed().as_secs_f32());
+
+    Ok(analysed)
+}
+
+#[tauri::command]
 // Multithreaded fast version, uses high cpu/memory
-pub async fn disk_analysis(
+pub async fn disk_turbo_scan(
     window: tauri::Window,
     state: tauri::State<'_, AppState>,
     path: String,
@@ -185,7 +248,7 @@ pub async fn disk_analysis(
     };
 
     let analysed = match file_info {
-        FileInfo::Directory { volume_id } => DiskItem::from_analyze(
+        FileInfo::Directory { volume_id } => DiskItem::turbo_scan(
             &path_buf,
             true,
             volume_id,
