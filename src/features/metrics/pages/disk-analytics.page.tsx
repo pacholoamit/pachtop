@@ -7,9 +7,11 @@ import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
 import useDisksStore from "@/features/metrics/stores/disk.store";
+import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
-import { Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Alert, Anchor, Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { IconAlertCircle, IconInfoCircle } from "@tabler/icons-react";
 
 interface AnalysisProgressIndicatorProps {
   enableStatus?: boolean;
@@ -61,6 +63,7 @@ const MemoDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
+  const system = useSystemStoreSelectors.use.info();
   const { id = "" } = useParams();
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
@@ -68,6 +71,8 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const [progress, setProgress] = React.useState<DiskAnalysisProgress>({ scanned: 0, total: 0 });
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskScanEmpty = diskAnalysis.length === 0;
+
+  const isWindows = system.os.toLowerCase().includes("windows");
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
@@ -172,6 +177,13 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   return (
     <PageWrapper name={id}>
+      {isWindows && (
+        <Alert color="yellow" icon={<IconAlertCircle />}>
+          For Windows users, A scan causes a recursive file scan on your disk which may cause the{" "}
+          <Anchor>Antimalware Service Executable</Anchor> to block the scanning. To disable this, please see{" "}
+          <Anchor>here</Anchor>.
+        </Alert>
+      )}
       <Grid>
         <Grid.Col md={12} lg={4} xl={3}>
           <DiskInformationAnalyticsCard
