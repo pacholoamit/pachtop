@@ -2332,10 +2332,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highcharts@npm:^11.4.1":
-  version: 11.4.1
-  resolution: "highcharts@npm:11.4.1"
-  checksum: ecba6bab6a156e4b603ae04549327c1a54ef59fa10981024ab763c20540076f067334b48db8e1774e9a8248ee4a035323a7a34c815ce01fc2bd40b2bb3f8f468
+"highcharts@npm:^11.4.3":
+  version: 11.4.3
+  resolution: "highcharts@npm:11.4.3"
+  checksum: 51139b59466a14faadbd1a753ec3c90e0c8030d68805a111e564aa9218f6ab7de0d154a5e94b2e548cb56eb58fff8e0f8ec90ac20ee61db40080717fcbde58ea
   languageName: node
   linkType: hard
 
@@ -2854,7 +2854,7 @@ __metadata:
     ag-grid-react: ^31.3.2
     apexcharts: ^3.49.1
     classnames: ^2.5.1
-    highcharts: ^11.4.1
+    highcharts: ^11.4.3
     highcharts-react-official: ^3.2.1
     immer: ^10.1.1
     non.geist: ^1.0.3
