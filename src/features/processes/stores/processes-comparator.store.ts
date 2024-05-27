@@ -1,5 +1,21 @@
-import { create } from "zustand";
+import create from "zustand";
 
-interface ProcessesComparatorState {}
+import createSelectors from "@/utils/create-selectors";
 
-const useProcessesComparator = create<ProcessesComparatorState>(() => ({}));
+interface ComparitorState {
+  comparitorOptions: string[];
+  comparitorSelected: string[];
+  setComparitorOptions: (options: string[]) => void;
+  setComparitorSelected: (selected: string[]) => void;
+}
+
+const useComparitorStore = create<ComparitorState>((set) => ({
+  comparitorOptions: [],
+  comparitorSelected: [],
+  setComparitorOptions: (options) => set({ comparitorOptions: options }),
+  setComparitorSelected: (selected) => set({ comparitorSelected: selected }),
+}));
+
+const useComparitorSelectors = createSelectors(useComparitorStore);
+
+export default useComparitorSelectors;

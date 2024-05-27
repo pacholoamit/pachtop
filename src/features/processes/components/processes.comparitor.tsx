@@ -1,19 +1,19 @@
 import * as Highcharts from "highcharts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Card from "@/components/card";
 import SplineChart, { useSplineChartState } from "@/components/spline-chart";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
 import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
 import { Group, MultiSelect, Text } from "@mantine/core";
 
-// TODO: Segregate comparitor state to a separate store
 const ProcessComparitor = () => {
-  // Chart Options: Control & configure the chart
   const processesEnumerable = useProcessesEnumerableSelectors.use.enumerables();
-
-  const [comparitorOptions, setComparitorOptions] = useState<string[]>([]);
-  const [comparitorSelected, setComparitorSelected] = useState<string[]>([]);
+  const comparitorOptions = useComparitorSelector.use.comparitorOptions();
+  const comparitorSelected = useComparitorSelector.use.comparitorSelected();
+  const setComparitorOptions = useComparitorSelector.use.setComparitorOptions();
+  const setComparitorSelected = useComparitorSelector.use.setComparitorSelected();
   const [chartOptions, setChartOptions] = useSplineChartState({
     custom: {
       tooltip: {
@@ -25,9 +25,7 @@ const ProcessComparitor = () => {
       },
       yAxis: {
         labels: {
-          formatter: (x) => {
-            return formatBytes(x.value as number);
-          },
+          formatter: (x) => formatBytes(x.value as number),
         },
       },
     },
@@ -41,7 +39,6 @@ const ProcessComparitor = () => {
         color: "#dce1e8",
       },
     },
-
     xAxis: {
       labels: {
         formatter: function () {
@@ -51,25 +48,12 @@ const ProcessComparitor = () => {
     },
   });
 
-  const handleAddToComparitor = (value: string[]) => {
-    setComparitorSelected(value);
-  };
+  const handleAddToComparitor = (value: string[]) => setComparitorSelected(value);
 
   useEffect(() => {
-    setChartOptions((prev) => ({
-      ...prev,
-      series: comparitorSelected.map((id) => {
-        const process = processesEnumerable.find((proc) => proc.id === id);
-        return {
-          name: id,
-          type: "spline",
-          data: process?.data.map((data) => [data.timestamp, data.memoryUsage]) ?? [],
-        };
-      }),
-    }));
-  }, [comparitorSelected, processesEnumerable]);
-
-  useEffect(() => {
+    if (comparitorSelected.length === 0 && processesEnumerable.length > 0) {
+      setComparitorSelected([processesEnumerable[0].id]);
+    }
     setChartOptions((prev) => ({
       ...prev,
       series: comparitorSelected.map((id) => {
@@ -82,22 +66,23 @@ const ProcessComparitor = () => {
       }),
     }));
     setComparitorOptions(processesEnumerable.map((proc) => proc.id));
-  }, [processesEnumerable]);
+  }, [processesEnumerable, setComparitorOptions, comparitorSelected]);
 
   return (
     <Card>
-      <Group position="apart" align="baseline">
+      <Group position="apart" align="start">
         <Text>Comparitor</Text>
         <MultiSelect
           data={comparitorOptions}
           onChange={handleAddToComparitor}
+          defaultValue={comparitorSelected}
           searchable
           placeholder="Pick processes"
           maxSelectedValues={3}
           clearable
         />
       </Group>
-      <SplineChart options={chartOptions} />;
+      <SplineChart options={chartOptions} />
     </Card>
   );
 };
