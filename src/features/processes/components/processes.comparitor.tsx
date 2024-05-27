@@ -75,7 +75,7 @@ const ProcessComparitor = () => {
         <MultiSelect
           data={comparitorOptions}
           onChange={handleAddToComparitor}
-          defaultValue={comparitorSelected}
+          value={comparitorSelected}
           searchable
           placeholder="Pick processes"
           maxSelectedValues={3}
