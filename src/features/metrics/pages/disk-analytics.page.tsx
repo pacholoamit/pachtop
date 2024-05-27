@@ -72,7 +72,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskScanEmpty = diskAnalysis.length === 0;
 
-  const isWindows = system.os.toLowerCase().includes("windows");
+  // const isWindows = system.os.toLowerCase().includes("windows");
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
@@ -177,13 +177,6 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   return (
     <PageWrapper name={id}>
-      {isWindows && (
-        <Alert color="yellow" icon={<IconAlertCircle />}>
-          For Windows users, A scan causes a recursive file scan on your disk which may cause the{" "}
-          <Anchor>Antimalware Service Executable</Anchor> to block the scanning. To disable this, please see{" "}
-          <Anchor>here</Anchor>.
-        </Alert>
-      )}
       <Grid>
         <Grid.Col md={12} lg={4} xl={3}>
           <DiskInformationAnalyticsCard
