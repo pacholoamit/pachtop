@@ -6,7 +6,7 @@ import useProcessesSelectors from "@/features/processes/stores/processes.store";
 // @ts-ignore
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import { ColDef, GetRowIdParams, ModuleRegistry } from "@ag-grid-community/core";
-import { ActionIcon, Group, Space, Text } from "@mantine/core";
+import { ActionIcon, Group, Popover, Space, Text } from "@mantine/core";
 import { IconTransform } from "@tabler/icons-react";
 
 interface ProcessTableProps {
@@ -19,7 +19,15 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
   const processes = useProcessesSelectors.use.processes();
   const [columnDefState, setColumnDefsState] = React.useState<ColDef[]>(columnDefs);
+  const [opened, setOpened] = React.useState(false);
   const getRowId = useCallback((params: GetRowIdParams) => params.data.name, []);
+
+  const onHover = () => {
+    console.log("Hover");
+    setOpened(true);
+  };
+
+  const onExitHover = () => setOpened(false);
 
   const onDisableChangeRenderer = useCallback(() => {
     setColumnDefsState((prev) => {
@@ -35,24 +43,38 @@ const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
   }, []);
 
   return (
-    <Card height="580px">
-      <Group position="apart" pl={4} pr={4}>
-        <Text>{title}</Text>
-        <ActionIcon radius="xl" size="xs" variant="subtle" onClick={onDisableChangeRenderer}>
-          <IconTransform />
-        </ActionIcon>
-      </Group>
+    <Popover opened={opened}>
+      <Card height="580px">
+        <Group position="apart" pl={4} pr={4}>
+          <Text>{title}</Text>
+          <Popover.Target>
+            <ActionIcon
+              radius="xl"
+              size="xs"
+              variant="subtle"
+              onClick={onDisableChangeRenderer}
+              onMouseEnter={onHover}
+              onMouseLeave={onExitHover}
+            >
+              <IconTransform />
+            </ActionIcon>
+          </Popover.Target>
+        </Group>
 
-      <Space h={12} />
-      <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
-        <AgGridReact
-          rowData={processes}
-          columnDefs={columnDefState as any}
-          getRowId={getRowId as any}
-          animateRows={false}
-        />
-      </div>
-    </Card>
+        <Space h={12} />
+        <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
+          <AgGridReact
+            rowData={processes}
+            columnDefs={columnDefState as any}
+            getRowId={getRowId as any}
+            animateRows={false}
+          />
+        </div>
+      </Card>
+      <Popover.Dropdown sx={{ pointerEvents: "none" }}>
+        <Text size={"sm"}>Toggle Change Renderer</Text>
+      </Popover.Dropdown>
+    </Popover>
   );
 };
 
