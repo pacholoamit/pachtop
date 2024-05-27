@@ -71,7 +71,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
         </div>
       </Card>
       <Popover.Dropdown sx={{ pointerEvents: "none" }}>
-        <Text size={"sm"}>Toggle Change Renderer</Text>
+        <Text size={"sm"}>Toggle change indicators</Text>
       </Popover.Dropdown>
     </Popover>
   );

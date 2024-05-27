@@ -28,7 +28,7 @@ const cpuColumns: ColDef[] = [
     flex: 4,
     headerName: "CPU Usage",
     cellClass: "number",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "",
     valueFormatter: ({ value }) => fromNumberToPercentageString(value),
     sort: "desc",
   },
@@ -46,14 +46,14 @@ const diskColumns: ColDef[] = [
     flex: 4,
     headerName: "Writes",
     cellClass: "number",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "a",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
     sort: "desc",
   },
   {
     field: "diskUsage.totalReadBytes",
     flex: 4,
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "",
     headerName: "Reads",
     cellClass: "number",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
@@ -67,7 +67,7 @@ const allColumns: ColDef[] = [
     field: "diskUsage.totalWrittenBytes",
     flex: 4,
     headerName: "Writes",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "",
     cellClass: "number",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
   },
@@ -75,7 +75,7 @@ const allColumns: ColDef[] = [
     field: "diskUsage.totalReadBytes",
     flex: 4,
     headerName: "Reads",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "",
     cellClass: "number",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
   },
@@ -84,7 +84,7 @@ const allColumns: ColDef[] = [
     flex: 4,
     headerName: "CPU Usage",
     cellClass: "number",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "",
     valueFormatter: ({ value }) => fromNumberToPercentageString(value),
   },
   // {
@@ -100,7 +100,7 @@ const allColumns: ColDef[] = [
     flex: 4,
     headerName: "RAM Usage",
     cellClass: "number",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "",
     valueFormatter: ({ value }) => formatBytes(value),
   },
   {
@@ -122,7 +122,7 @@ const memoryColumns: ColDef[] = [
     flex: 4,
     headerName: "RAM Usage",
     cellClass: "number",
-    cellRenderer: "agAnimateShowChangeCellRenderer",
+    cellRenderer: "",
     valueFormatter: ({ value }) => formatBytes(value),
     sort: "desc",
   },
@@ -166,12 +166,10 @@ const ProcessesPage = () => {
   return (
     <PageWrapper name="Processes">
       <Grid>
-        <Grid.Col xl={8} lg={6}>
+        <Grid.Col xl={12}>
           <ProcessComparitor />
         </Grid.Col>
-        <Grid.Col xl={4} lg={6}>
-          <ProcessesInsights />
-        </Grid.Col>
+
         <Grid.Col span={12}>
           <Tabs defaultValue={TAB_OPTIONS.segmented.value}>
             <Tabs.List>

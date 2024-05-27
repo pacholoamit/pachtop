@@ -139,7 +139,7 @@ const ProcessComparitor = () => {
             value={comparitorSelected}
             searchable
             placeholder="Pick processes"
-            maxSelectedValues={3}
+            maxSelectedValues={4}
           />
         </Group>
       </Group>
