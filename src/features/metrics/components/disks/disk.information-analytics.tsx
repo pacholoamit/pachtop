@@ -8,10 +8,11 @@ import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-r
 
 interface DiskInformationAnalyticsCardProps {
   startDiskAnalysis: () => Promise<void>;
+  startDiskAnalysisTurbo: () => Promise<void>;
 }
 
 const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) => {
-  const { startDiskAnalysis } = props;
+  const { startDiskAnalysis, startDiskAnalysisTurbo } = props;
   const disk = useDisksStore.use.selectedDisk();
 
   const data: { label: string; value: string; color: DefaultMantineColor }[] = [
@@ -95,7 +96,7 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
             style={{ flex: 1 }}
             variant="gradient"
             gradient={{ from: "orange", to: "red" }}
-            onClick={startDiskAnalysis}
+            onClick={startDiskAnalysisTurbo}
           >
             Turbo Scan
           </Button>

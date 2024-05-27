@@ -222,7 +222,7 @@ pub async fn disk_turbo_scan(
     state: tauri::State<'_, AppState>,
     path: String,
 ) -> Result<DiskItem, String> {
-    dbg!("Disk analysis on:", &path);
+    dbg!("Turbo Disk analysis on:", &path);
     let bytes_scanned = Arc::new(AtomicU64::new(0));
     let time = std::time::Instant::now();
 
