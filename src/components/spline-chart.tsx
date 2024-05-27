@@ -6,26 +6,25 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import { Text, useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
-export interface InitialSplineChartStateInput extends Partial<Highcharts.Options> {
-  custom: {
-    // series?: Highcharts.SeriesOptionsType[];
-    yAxis: {
+export interface SplineChartStateProps extends Highcharts.Options {
+  custom?: {
+    yAxis?: {
       labels: {
-        formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
+        formatter: Highcharts.AxisLabelsFormatterCallbackFunction | undefined;
       };
     };
-    tooltip: {
-      pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
+    tooltip?: {
+      pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point> | undefined;
     };
   };
 }
 
 export const useSplineChartState = (
-  props: InitialSplineChartStateInput
-): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
+  props: SplineChartStateProps
+): [SplineChartStateProps, Dispatch<SetStateAction<SplineChartStateProps>>] => {
   const { other } = useMantineTheme();
 
-  const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
+  const [chartOptions, setChartOptions] = useState<SplineChartStateProps>({
     ...props,
     chart: {
       type: "spline",
@@ -69,7 +68,7 @@ export const useSplineChartState = (
       gridLineColor: other.charts.area.default.gridLineColor,
       lineColor: other.charts.area.default.lineColor,
       labels: {
-        formatter: props.custom.yAxis.labels.formatter,
+        formatter: props?.custom?.yAxis?.labels?.formatter,
         style: {
           color: "white",
         },
@@ -77,7 +76,7 @@ export const useSplineChartState = (
     },
     tooltip: {
       xDateFormat: "%I:%M:%S %p",
-      pointFormatter: props.custom.tooltip.pointFormatter,
+      pointFormatter: props?.custom?.tooltip?.pointFormatter,
       style: {
         color: other.charts.area.default.tooltip.color,
       },

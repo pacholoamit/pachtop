@@ -1,12 +1,46 @@
 import * as Highcharts from "highcharts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Card from "@/components/card";
 import SplineChart, { useSplineChartState } from "@/components/spline-chart";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
 import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
-import { Group, MultiSelect, Text } from "@mantine/core";
+import { Process } from "@/lib";
+import { Group, MultiSelect, SegmentedControl, Text } from "@mantine/core";
+
+import fromNumberToPercentageString from "../../metrics/utils/from-number-to-percentage-string";
+
+type ComparitorMetric = keyof Process;
+
+interface ComparitorMetricOption {
+  label: string;
+  value: ComparitorMetric;
+  yAxisFormatter: Highcharts.AxisLabelsFormatterCallbackFunction;
+  tooltipFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
+}
+const metricOptions: ComparitorMetricOption[] = [
+  {
+    label: "MEM",
+    value: "memoryUsage",
+    yAxisFormatter: (x) => formatBytes(x as unknown as number),
+    tooltipFormatter: function () {
+      return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
+        this.y as number
+      )}</b><br/>`;
+    },
+  },
+  {
+    label: "CPU",
+    value: "cpuUsage",
+    yAxisFormatter: (x) => fromNumberToPercentageString(x as unknown as number),
+    tooltipFormatter: function () {
+      return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${fromNumberToPercentageString(
+        this.y as number
+      )}</b><br/>`;
+    },
+  },
+];
 
 const ProcessComparitor = () => {
   const processesEnumerable = useProcessesEnumerableSelectors.use.enumerables();
@@ -14,6 +48,7 @@ const ProcessComparitor = () => {
   const comparitorSelected = useComparitorSelector.use.comparitorSelected();
   const setComparitorOptions = useComparitorSelector.use.setComparitorOptions();
   const setComparitorSelected = useComparitorSelector.use.setComparitorSelected();
+  const [comparitorMetric, setComparitorMetric] = useState<ComparitorMetricOption>(metricOptions[0]);
   const [chartOptions, setChartOptions] = useSplineChartState({
     custom: {
       tooltip: {
@@ -49,6 +84,7 @@ const ProcessComparitor = () => {
   });
 
   const handleAddToComparitor = (value: string[]) => setComparitorSelected(value);
+  const handleSetMetric = (value: string) => setComparitorMetric(metricOptions.find((opt) => opt.value === value)!);
 
   useEffect(() => {
     if (comparitorSelected.length === 0 && processesEnumerable.length > 0) {
@@ -56,31 +92,54 @@ const ProcessComparitor = () => {
     }
     setChartOptions((prev) => ({
       ...prev,
+      custom: {
+        tooltip: {
+          pointFormatter: comparitorMetric.tooltipFormatter,
+        },
+        yAxis: {
+          labels: {
+            formatter: comparitorMetric.yAxisFormatter,
+          },
+        },
+      },
+
       series: comparitorSelected.map((id) => {
         const process = processesEnumerable.find((proc) => proc.id === id);
         return {
           name: id,
           type: "spline",
-          data: process?.data.map((data) => [data.timestamp, data.memoryUsage]) ?? [],
+          data: process?.data.map((data) => [data.timestamp, data[comparitorMetric.value]]) ?? [],
         };
       }),
     }));
+
     setComparitorOptions(processesEnumerable.map((proc) => proc.id));
-  }, [processesEnumerable, setComparitorOptions, comparitorSelected]);
+  }, [processesEnumerable, setComparitorOptions, comparitorSelected, comparitorMetric, setChartOptions]);
 
   return (
     <Card>
       <Group position="apart" align="start">
-        <Text>Comparitor</Text>
-        <MultiSelect
-          data={comparitorOptions}
-          onChange={handleAddToComparitor}
-          value={comparitorSelected}
-          searchable
-          placeholder="Pick processes"
-          maxSelectedValues={3}
-          clearable
-        />
+        <Text>Metrics Comparitor</Text>
+        <Group>
+          <SegmentedControl
+            defaultValue={comparitorMetric.value}
+            data={metricOptions.map((opt) => ({
+              value: opt.value,
+              label: opt.label,
+              disabled: opt.value === "cpuUsage" && true,
+            }))}
+            onChange={handleSetMetric}
+            size="xs"
+          />
+          <MultiSelect
+            data={comparitorOptions}
+            onChange={handleAddToComparitor}
+            value={comparitorSelected}
+            searchable
+            placeholder="Pick processes"
+            maxSelectedValues={3}
+          />
+        </Group>
       </Group>
       <SplineChart options={chartOptions} />
     </Card>
