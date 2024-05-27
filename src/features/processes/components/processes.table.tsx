@@ -23,7 +23,6 @@ const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
   const getRowId = useCallback((params: GetRowIdParams) => params.data.name, []);
 
   const onHover = () => {
-    console.log("Hover");
     setOpened(true);
   };
 

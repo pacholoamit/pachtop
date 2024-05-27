@@ -271,6 +271,7 @@ impl ProcessesTrait for Metrics {
                             Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
                             None => "".to_owned(),
                         },
+                        timestamp: current_time(),
                         start_time: process.start_time(),
                         run_time: process.run_time(),
                         cpu_usage: process.cpu_usage() / core_count as f32,

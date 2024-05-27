@@ -1,11 +1,14 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "@/features/processes/styles/ag-grid-theme-slate.css";
 
+import { useEffect, useState } from "react";
+
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
 import ProcessTable from "@/features/processes/components/processes.table";
+import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
 import useProcessesSelectors from "@/features/processes/stores/processes.store";
 import { ColDef } from "@ag-grid-community/core";
 import { ActionIcon, Grid, Group, Space, Tabs, Text, TextInput } from "@mantine/core";
@@ -134,6 +137,9 @@ const memoryColumns: ColDef[] = [
 ];
 
 const TimelineChart = () => {
+  // Chart Options: Control & configure the chart
+  const processesEnumerable = useProcessesEnumerableSelectors.use.enumerables();
+
   return (
     <Card>
       <Text>Timeline Chart</Text>

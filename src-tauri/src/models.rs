@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use ts_rs::TS;
 
-#[derive(Clone, Debug, Serialize, Deserialize, TS)]
+#[derive(Clone, Debug, Serialize, Deserialize, TS, Default)]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 
 pub struct Timestamp(#[ts(type = "number")] pub i64);
@@ -160,6 +160,7 @@ pub struct Process {
     pub run_time: u64,
     pub disk_usage: ProcessDiskUsage,
     pub status: String,
+    pub timestamp: Timestamp,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, TS, Clone)]
