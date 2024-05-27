@@ -7,7 +7,7 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
 import { Text } from "@mantine/core";
 
-const ProcessTimelineChart = () => {
+const ProcessComparitor = () => {
   // Chart Options: Control & configure the chart
   const processesEnumerable = useProcessesEnumerableSelectors.use.enumerables();
 
@@ -69,4 +69,4 @@ const ProcessTimelineChart = () => {
   );
 };
 
-export default ProcessTimelineChart;
+export default ProcessComparitor;

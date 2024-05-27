@@ -1,19 +1,15 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "@/features/processes/styles/ag-grid-theme-slate.css";
 
-import { useEffect, useState } from "react";
-
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
+import ProcessComparitor from "@/features/processes/components/processes.comparitor";
 import ProcessTable from "@/features/processes/components/processes.table";
-import useProcessesSelectors from "@/features/processes/stores/processes.store";
 import { ColDef } from "@ag-grid-community/core";
 import { ActionIcon, Grid, Group, Space, Tabs, Text, TextInput } from "@mantine/core";
 import { IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
-
-import ProcessTimelineChart from "../components/processes.timeline-chart";
 
 const ActionsColumn = () => {
   return (
@@ -171,7 +167,7 @@ const ProcessesPage = () => {
     <PageWrapper name="Processes">
       <Grid>
         <Grid.Col xl={8} lg={6}>
-          <ProcessTimelineChart />
+          <ProcessComparitor />
         </Grid.Col>
         <Grid.Col xl={4} lg={6}>
           <ProcessesInsights />
