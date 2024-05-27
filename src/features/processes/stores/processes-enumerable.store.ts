@@ -7,7 +7,7 @@ import { DEFAULT_PROCESS } from "./processes.store";
 const useProcessesEnumerableStore = useEnumerableMetricsStore<Process>({
   default: [DEFAULT_PROCESS],
   stream: streams.processes,
-  maxSize: 10,
+  maxSize: 60,
 });
 
 useProcessesEnumerableStore.getState().listen();

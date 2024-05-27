@@ -14,9 +14,9 @@ export interface InitialSplineChartStateInput extends Partial<Highcharts.Options
         formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
       };
     };
-    // tooltip: {
-    //   pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
-    // };
+    tooltip: {
+      pointFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
+    };
   };
 }
 
@@ -66,7 +66,8 @@ export const useSplineChartState = (
       },
     },
     tooltip: {
-      xDateFormat: "%H:%M:%S",
+      xDateFormat: "%I:%M:%S %p",
+      pointFormatter: props.custom.tooltip.pointFormatter,
       style: {
         color: other.charts.area.default.tooltip.color,
       },
