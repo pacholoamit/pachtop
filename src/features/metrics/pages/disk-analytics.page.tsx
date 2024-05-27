@@ -1,16 +1,19 @@
-import React, { useCallback, useEffect } from "react";
-import { useParams } from "react-router-dom";
 
-import Card from "@/components/card";
-import PageWrapper from "@/components/page-wrapper";
-import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
-import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
-import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
-import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
-import { Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
-import useDisksStore from "../stores/disk.store";
-import formatBytes from "../utils/format-bytes";
+import React, { useCallback, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import Card from '@/components/card';
+import PageWrapper from '@/components/page-wrapper';
+import TreemapChart, { useTreemapChartState } from '@/components/treemap-chart';
+import DiskDirectoryTreeView from '@/features/metrics/components/disks/disk.directory-treeview';
+import DiskInformationAnalyticsCard from '@/features/metrics/components/disks/disk.information-analytics';
+import useDisksStore from '@/features/metrics/stores/disk.store';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import { commands, DiskAnalysisProgress, DiskItem, streams } from '@/lib';
+import {
+    Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme
+} from '@mantine/core';
 
 interface AnalysisProgressIndicatorProps {
   enableStatus?: boolean;

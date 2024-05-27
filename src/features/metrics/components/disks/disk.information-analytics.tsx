@@ -4,7 +4,7 @@ import useDisksStore from "@/features/metrics/stores/disk.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands } from "@/lib";
 import { ActionIcon, Badge, Button, DefaultMantineColor, Group, Space, Stack, Text, Title } from "@mantine/core";
-import { IconFolderOpen } from "@tabler/icons-react";
+import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
 
 interface DiskInformationAnalyticsCardProps {
   startDiskAnalysis: () => Promise<void>;
@@ -66,6 +66,9 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
     <Card height="350px">
       <Group position="apart">
         <Title order={4}>Disk Information</Title>
+        <ActionIcon size={"sm"} variant="light" onClick={showDirectory}>
+          <IconFolderOpen stroke={1.5} />
+        </ActionIcon>
       </Group>
       <Space h={8} />
 
@@ -82,13 +85,19 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
             </Group>
           ))}
         </Stack>
-        <DynamicProgress size={34} sections={sections} />
+        <DynamicProgress size={36} sections={sections} />
         <Group>
-          <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
-            <IconFolderOpen stroke={1.5} />
-          </ActionIcon>
-          <Button radius="md" style={{ flex: 1 }} variant="outline" onClick={startDiskAnalysis}>
-            Start Disk Analysis
+          <Button radius="md" variant="gradient" style={{ flex: 1 }} onClick={startDiskAnalysis}>
+            Scan
+          </Button>
+          <Button
+            radius="md"
+            style={{ flex: 1 }}
+            variant="gradient"
+            gradient={{ from: "orange", to: "red" }}
+            onClick={startDiskAnalysis}
+          >
+            Turbo Scan
           </Button>
         </Group>
       </Stack>
