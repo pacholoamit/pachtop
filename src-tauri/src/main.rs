@@ -109,8 +109,9 @@ fn build_and_run_app(app: AppState) {
             app::kill_process,
             app::show_folder,
             app::delete_folder,
-            app::disk_analysis,
+            app::disk_turbo_scan,
             app::disk_analysis_flattened,
+            app::disk_scan,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

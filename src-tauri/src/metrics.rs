@@ -1,8 +1,10 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage, round};
+use rayon::prelude::*;
 use std::cmp::Ordering;
+use std::collections::HashMap;
 use std::str::{self, FromStr};
-use sysinfo::{CpuRefreshKind, MemoryRefreshKind, Pid, System};
+use sysinfo::{MemoryRefreshKind, Pid, System};
 
 pub struct Metrics {
     sys: System,
@@ -233,58 +235,61 @@ impl SwapTrait for Metrics {
 impl ProcessesTrait for Metrics {
     fn get_processes(&mut self) -> Vec<Process> {
         self.sys.refresh_processes();
-        let cpu_count = self.sys.physical_core_count().unwrap_or(1);
 
-        let processes: Vec<Process> = self
-            .sys
-            .processes()
-            .iter()
-            .map(|(pid, process)| {
-                let name = process.name().to_owned();
-                let cpu_usage = round(process.cpu_usage() / cpu_count as f32);
-                let pid = pid.to_string();
-                let memory_usage = process.memory();
+        let mut process_map: HashMap<String, Process> = HashMap::new();
+        let core_count = self.sys.physical_core_count().unwrap_or(1);
 
-                let status = match process.status() {
-                    sysinfo::ProcessStatus::Run => "Running".to_owned(),
-                    sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
-                    sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
-                    sysinfo::ProcessStatus::Idle => "Idle".to_owned(),
-                    sysinfo::ProcessStatus::Zombie => "Zombie".to_owned(),
-                    _ => "Unknown".to_owned(),
-                };
+        // Aggregate metrics for each group
+        self.sys.processes().values().for_each(|process| {
+            if let Some(process_in_map) = process_map.get_mut(process.name()) {
+                // Aggregate metrics into the existing process entry
+                process_in_map.cpu_usage += process.cpu_usage() / core_count as f32;
+                process_in_map.memory_usage += process.memory();
+                process_in_map.disk_usage.read_bytes += process.disk_usage().read_bytes;
+                process_in_map.disk_usage.written_bytes += process.disk_usage().written_bytes;
+                process_in_map.disk_usage.total_read_bytes += process.disk_usage().total_read_bytes;
+                process_in_map.disk_usage.total_written_bytes +=
+                    process.disk_usage().total_written_bytes;
+            } else {
+                // Insert the process as a new entry in the map
+                process_map.insert(
+                    process.name().to_owned(),
+                    Process {
+                        name: process.name().to_owned(),
+                        cmd: process.cmd().to_owned(),
+                        disk_usage: ProcessDiskUsage {
+                            read_bytes: process.disk_usage().read_bytes,
+                            written_bytes: process.disk_usage().written_bytes,
+                            total_read_bytes: process.disk_usage().total_read_bytes,
+                            total_written_bytes: process.disk_usage().total_written_bytes,
+                        },
+                        exe: match process.exe() {
+                            Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
+                            None => "".to_owned(),
+                        },
+                        root: match process.root() {
+                            Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
+                            None => "".to_owned(),
+                        },
+                        timestamp: current_time(),
+                        start_time: process.start_time(),
+                        run_time: process.run_time(),
+                        cpu_usage: process.cpu_usage() / core_count as f32,
+                        memory_usage: process.memory(),
+                        status: match process.status() {
+                            sysinfo::ProcessStatus::Run => "Running".to_owned(),
+                            sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
+                            sysinfo::ProcessStatus::Idle => "Idle".to_owned(),
+                            sysinfo::ProcessStatus::Zombie => "Zombie".to_owned(),
+                            sysinfo::ProcessStatus::Stop => "Stopped".to_owned(),
+                            _ => "Unknown".to_owned(),
+                        },
+                    },
+                );
+            }
+        });
 
-                Process {
-                    name,
-                    pid,
-                    cpu_usage,
-                    memory_usage,
-                    status,
-                }
-            })
-            .collect();
-
-        // TODO: modify processes so it can deliver the grouped processes
-        // let mut grouped_processes: Vec<Process> = Vec::new();
-        // for process in processes {
-        //     let mut found = false;
-        //     for grouped_process in &mut grouped_processes {
-        //         if grouped_process.name == process.name {
-        //             grouped_process.cpu_usage += process.cpu_usage;
-        //             grouped_process.memory_usage += process.memory_usage;
-        //             found = true;
-        //             break;
-        //         }
-        //     }
-
-        //     if !found {
-        //         grouped_processes.push(process);
-        //     }
-        // }
-
-        // grouped_processes
-
-        processes
+        process_map.values().cloned().collect()
     }
 
     fn kill_process(&mut self, pid: &str) -> bool {
@@ -304,6 +309,9 @@ impl ProcessesTrait for Metrics {
 
 impl NetworkTrait for Metrics {
     fn get_networks(&mut self) -> Vec<Network> {
+        self.networks.refresh_list();
+        self.networks.refresh();
+
         let networks: Vec<Network> = self
             .networks
             .iter()
