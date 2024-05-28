@@ -119,7 +119,6 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const navigate = useNavigate();
   const system = useSystemStoreSelectors.use.info()
 
-  console.log(disk)
   const showDirectory = async () => {
     if (!disk.mountPoint) return;
     await commands.showInFolder(disk.mountPoint);
@@ -128,11 +127,14 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   // Encode this id to avoid any issues with special characters. (Disk.name for windows works)
   // TODO: Make this more ergonomic
   const onShowDetailsClick = () => {
+    console.log(disk)
     if (system.os.toLowerCase().includes("window")) {
       setSelectedDisk(disk.name)
+      navigate(`/disks/${encodeURI(disk.name)}`) 
+      return 
     }
     setSelectedDisk(disk.mountPoint);
-    navigate(`/disks/${encodeURI(disk.name)}`);
+    navigate(`/disks/${encodeURI(disk.mountPoint)}`);
   };
 
   return (
