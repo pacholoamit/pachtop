@@ -130,11 +130,14 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
     console.log(disk)
     if (system.os.toLowerCase().includes("window")) {
       setSelectedDisk(disk.name)
-      navigate(`/disks/${encodeURI(disk.name)}`) 
+      navigate(`/disks/${encodeURI(disk.name)}`)
+      console.log("Windows navigate") 
       return 
     }
+    
     setSelectedDisk(disk.mountPoint);
-    navigate(`/disks/${encodeURI(disk.mountPoint)}`);
+    navigate(`/disks/${encodeURIComponent(disk.mountPoint)}`);
+    console.log("Unix navigate: ", `/disks/${disk.mountPoint}`)
   };
 
   return (
