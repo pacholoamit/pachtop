@@ -1571,12 +1571,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.3.0":
-  version: 18.3.0
-  resolution: "@types/react-dom@npm:18.3.0"
+"@types/react-dom@npm:types-react-dom@rc":
+  version: 19.0.0-rc.0
+  resolution: "types-react-dom@npm:19.0.0-rc.0"
   dependencies:
     "@types/react": "*"
-  checksum: a0cd9b1b815a6abd2a367a9eabdd8df8dd8f13f95897b2f9e1359ea3ac6619f957c1432ece004af7d95e2a7caddbba19faa045f831f32d6263483fc5404a7596
+  checksum: 1541119a5a31d50998b6c4297b0d7b723d076d799369dacd3578d6783f8b5e8a5e9bf38928449ae25a196ac550e07ef6da8d3ea43985da72ab8e46fd0cb46753
   languageName: node
   linkType: hard
 
@@ -1591,13 +1591,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.3.3":
-  version: 18.3.3
-  resolution: "@types/react@npm:18.3.3"
+"@types/react@npm:types-react@rc":
+  version: 19.0.0-rc.0
+  resolution: "types-react@npm:19.0.0-rc.0"
   dependencies:
-    "@types/prop-types": "*"
     csstype: ^3.0.2
-  checksum: c63d6a78163244e2022b01ef79b0baec4fe4da3475dc4a90bb8accefad35ef0c43560fd0312e5974f92a0f1108aa4d669ac72d73d66396aa060ea03b5d2e3873
+  checksum: a9f0486882e626e69fbc1b9088e7c8e424c54e37f1f8e772ab6f135b8a05a3120600571f1f6239d362d5b0f178e5246208ae3a9439cb768f229d6a9595f4ed8b
   languageName: node
   linkType: hard
 
@@ -2581,7 +2580,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -2880,8 +2879,8 @@ __metadata:
     "@tauri-apps/cli": ^1.5.14
     "@types/lodash.sortby": ^4.7.9
     "@types/node": ^20.12.13
-    "@types/react": ^18.3.3
-    "@types/react-dom": ^18.3.0
+    "@types/react": "npm:types-react@rc"
+    "@types/react-dom": "npm:types-react-dom@rc"
     "@vitejs/plugin-react": ^4.3.0
     "@vitejs/plugin-react-swc": ^3.7.0
     ag-grid-react: ^31.3.2
@@ -2892,10 +2891,10 @@ __metadata:
     immer: ^10.1.1
     non.geist: ^1.0.3
     posthog-js: ^1.136.1
-    react: ^18.3.1
+    react: rc
     react-apexcharts: ^1.4.1
     react-arborist: ^3.4.0
-    react-dom: ^18.3.1
+    react-dom: rc
     react-geiger: ^1.2.0
     react-github-btn: ^1.4.0
     react-router-dom: ^6.23.1
@@ -3076,15 +3075,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.3.1":
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
+"react-dom@npm:rc":
+  version: 19.0.0-rc-38e3b23483-20240529
+  resolution: "react-dom@npm:19.0.0-rc-38e3b23483-20240529"
   dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.23.2
+    scheduler: 0.25.0-rc-38e3b23483-20240529
   peerDependencies:
-    react: ^18.3.1
-  checksum: 298954ecd8f78288dcaece05e88b570014d8f6dce5db6f66e6ee91448debeb59dcd31561dddb354eee47e6c1bb234669459060deb238ed0213497146e555a0b9
+    react: 19.0.0-rc-38e3b23483-20240529
+  checksum: 90f8e64a93b2a88f734948b81ab7d1537fecfbd175047821415d9c46e6d0fde60ef0a1a88a901136dcd696152c746f4a76ee61cd3620ab7f04ea604adf264ccf
   languageName: node
   linkType: hard
 
@@ -3248,12 +3246,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.3.1":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: a27bcfa8ff7c15a1e50244ad0d0c1cb2ad4375eeffefd266a64889beea6f6b64c4966c9b37d14ee32d6c9fcd5aa6ba183b6988167ab4d127d13e7cb5b386a376
+"react@npm:rc":
+  version: 19.0.0-rc-38e3b23483-20240529
+  resolution: "react@npm:19.0.0-rc-38e3b23483-20240529"
+  checksum: 6223139b0aa8eabd703eb141db66fa82812f3edd04b3a5728cf6c23defa1eae30d9cedfc77d2e15df190b6e26877ee1968687e3ae0719cc4dd030bd6296718dd
   languageName: node
   linkType: hard
 
@@ -3426,12 +3422,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.2":
-  version: 0.23.2
-  resolution: "scheduler@npm:0.23.2"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 3e82d1f419e240ef6219d794ff29c7ee415fbdc19e038f680a10c067108e06284f1847450a210b29bbaf97b9d8a97ced5f624c31c681248ac84c80d56ad5a2c4
+"scheduler@npm:0.25.0-rc-38e3b23483-20240529":
+  version: 0.25.0-rc-38e3b23483-20240529
+  resolution: "scheduler@npm:0.25.0-rc-38e3b23483-20240529"
+  checksum: 41ed4674caf2d65f0da251458106b57de7da977f6456bfcaa9d00a2aa235117df6a3797c79950981afe44d6dab1cc84296fa8ea7b263555327c83bb5ea693627
   languageName: node
   linkType: hard
 

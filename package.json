@@ -27,10 +27,10 @@
     "immer": "^10.1.1",
     "non.geist": "^1.0.3",
     "posthog-js": "^1.136.1",
-    "react": "^18.3.1",
+    "react": "rc",
     "react-apexcharts": "^1.4.1",
     "react-arborist": "^3.4.0",
-    "react-dom": "^18.3.1",
+    "react-dom": "rc",
     "react-geiger": "^1.2.0",
     "react-github-btn": "^1.4.0",
     "react-router-dom": "^6.23.1",
@@ -44,12 +44,16 @@
     "@tauri-apps/cli": "^1.5.14",
     "@types/lodash.sortby": "^4.7.9",
     "@types/node": "^20.12.13",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
     "@vitejs/plugin-react": "^4.3.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.12"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
   },
   "packageManager": "yarn@3.8.2"
 }
