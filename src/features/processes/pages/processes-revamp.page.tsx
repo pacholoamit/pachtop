@@ -12,18 +12,14 @@ import ProcessTable from "@/features/processes/components/processes.table";
 import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
 import { Process } from "@/lib";
 import { ColDef } from "@ag-grid-community/core";
-import { ActionIcon, Box, Center, Grid, Group, Image, Space, Tabs, Text, TextInput } from "@mantine/core";
-import { IconChartArcs, IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
+import { ActionIcon, Box, Center, Grid, Group, Image, Space, Tabs, Text, Tooltip } from "@mantine/core";
+import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
 
 // TODO: Make Action Icon X work
 const ActionsColumn = (props: CustomCellRendererProps<Process>) => {
   const addToCompparitorSelected = useComparitorSelector.use.addToComparitorSelected();
+  const handleAddToComparitor = () => props.data?.name && addToCompparitorSelected(props.data.name);
 
-  const handleAddToComparitor = () => {
-    if (props.data?.name) {
-      addToCompparitorSelected(props.data.name);
-    }
-  };
   return (
     <Group position="center">
       <ActionIcon color="blue" radius={"xl"} size={"sm"} variant="subtle" onClick={handleAddToComparitor}>
@@ -65,7 +61,26 @@ const cpuColumns: ColDef[] = [
   },
 ];
 
-const diskColumns: ColDef[] = [
+const diskReadColumns: ColDef[] = [
+  { field: "name", flex: 4, filter: true, cellRenderer: NameColumn },
+
+  {
+    field: "diskUsage.totalReadBytes",
+    flex: 4,
+    cellRenderer: "",
+    headerName: "Reads",
+    cellClass: "number",
+    valueFormatter: ({ value }) => formatBytes(value ?? 0),
+    sort: "desc",
+  },
+  {
+    field: "Actions",
+    cellRenderer: ActionsColumn,
+    flex: 2,
+  },
+];
+
+const diskWriteColumns: ColDef[] = [
   { field: "name", flex: 4, filter: true, cellRenderer: NameColumn },
   {
     field: "diskUsage.totalWrittenBytes",
@@ -77,13 +92,9 @@ const diskColumns: ColDef[] = [
     sort: "desc",
   },
   {
-    field: "diskUsage.totalReadBytes",
-    flex: 4,
-    cellRenderer: "",
-    headerName: "Reads",
-    cellClass: "number",
-    valueFormatter: ({ value }) => formatBytes(value ?? 0),
-    sort: "desc",
+    field: "Actions",
+    cellRenderer: ActionsColumn,
+    flex: 2,
   },
 ];
 
@@ -170,14 +181,14 @@ const ProcessesInsights = () => {
 const MultiTables = () => {
   return (
     <Grid>
-      <Grid.Col xl={4} lg={6}>
+      <Grid.Col xl={4} lg={6} md={12}>
         <ProcessTable title="Processes by Memory Usage" columnDefs={memoryColumns} />
       </Grid.Col>
-      <Grid.Col xl={4} lg={6}>
+      <Grid.Col xl={4} lg={6} md={12}>
         <ProcessTable title="Processes by CPU Usage" columnDefs={cpuColumns} />
       </Grid.Col>
-      <Grid.Col xl={4} lg={6}>
-        <ProcessTable title="Processes by Disk Usage" columnDefs={diskColumns} />
+      <Grid.Col xl={4} lg={6} md={12}>
+        <ProcessTable title="Processes by Disk Writes" columnDefs={diskWriteColumns} />
       </Grid.Col>
     </Grid>
   );
