@@ -257,7 +257,7 @@ impl ProcessesTrait for Metrics {
                     None => "".to_owned(),
                 };
 
-                let icon_bytes = systemicons::get_icon(&exe, 420);
+                let icon_bytes = systemicons::get_icon(&exe, 96);
                 let icon = match icon_bytes {
                     Ok(icon) => icon,
                     Err(_) => vec![],

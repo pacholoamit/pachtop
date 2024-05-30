@@ -1,14 +1,17 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "@/features/processes/styles/ag-grid-theme-slate.css";
 
+import { CustomCellRendererProps } from "ag-grid-react";
+
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
 import ProcessComparitor from "@/features/processes/components/processes.comparitor";
 import ProcessTable from "@/features/processes/components/processes.table";
+import { Process } from "@/lib";
 import { ColDef } from "@ag-grid-community/core";
-import { ActionIcon, Grid, Group, Space, Tabs, Text, TextInput } from "@mantine/core";
+import { ActionIcon, Box, Center, Grid, Group, Image, Space, Tabs, Text, TextInput } from "@mantine/core";
 import { IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
 
 const ActionsColumn = () => {
@@ -21,8 +24,19 @@ const ActionsColumn = () => {
   );
 };
 
+const NameColumn = (props: CustomCellRendererProps<Process>) => {
+  return (
+    <Group align="baseline">
+      <Box>
+        <img src={props.data?.icon} height={24} />
+      </Box>
+      <Text sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", flex: 1 }}>{props.value}</Text>
+    </Group>
+  );
+};
+
 const cpuColumns: ColDef[] = [
-  { field: "name", flex: 4, filter: true },
+  { field: "name", flex: 4, filter: true, cellRenderer: NameColumn, cellRendererParams: {} },
   {
     field: "cpuUsage",
     flex: 4,
@@ -40,7 +54,7 @@ const cpuColumns: ColDef[] = [
 ];
 
 const diskColumns: ColDef[] = [
-  { field: "name", flex: 4, filter: true },
+  { field: "name", flex: 4, filter: true, cellRenderer: NameColumn },
   {
     field: "diskUsage.totalWrittenBytes",
     flex: 4,
@@ -62,7 +76,7 @@ const diskColumns: ColDef[] = [
 ];
 
 const allColumns: ColDef[] = [
-  { field: "name", flex: 4, filter: true, sort: "asc" },
+  { field: "name", flex: 4, filter: true, cellRenderer: NameColumn },
   {
     field: "diskUsage.totalWrittenBytes",
     flex: 4,
@@ -116,7 +130,7 @@ const allColumns: ColDef[] = [
 ];
 
 const memoryColumns: ColDef[] = [
-  { field: "name", flex: 4, filter: true },
+  { field: "name", flex: 4, filter: true, cellRenderer: NameColumn },
   {
     field: "memoryUsage",
     flex: 4,
