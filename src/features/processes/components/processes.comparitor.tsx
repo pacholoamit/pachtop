@@ -51,6 +51,8 @@ const ProcessComparitor = () => {
   const setComparitorOptions = useComparitorSelector.use.setComparitorOptions();
   const setComparitorSelected = useComparitorSelector.use.setComparitorSelected();
   const [comparitorMetric, setComparitorMetric] = useState<ComparitorMetricOption>(metricOptions[0]);
+
+  console.log(processesEnumerable);
   const [chartOptions, setChartOptions] = useSplineChartState({
     custom: {
       tooltip: {

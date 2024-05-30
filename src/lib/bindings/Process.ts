@@ -2,4 +2,4 @@
 import type { ProcessDiskUsage } from "./ProcessDiskUsage";
 import type { Timestamp } from "./Timestamp";
 
-export type Process = { name: string, cpuUsage: number, memoryUsage: number, cmd: Array<string>, exe: string, root: string, startTime: number, runTime: number, diskUsage: ProcessDiskUsage, status: string, timestamp: Timestamp, };
+export type Process = { name: string, cpuUsage: number, memoryUsage: number, cmd: Array<string>, exe: string, root: string, startTime: number, runTime: number, diskUsage: ProcessDiskUsage, status: string, icon: string, timestamp: Timestamp, };
