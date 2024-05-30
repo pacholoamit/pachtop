@@ -12,6 +12,3 @@ pub fn get_percentage(value: &u64, total: &u64) -> f64 {
     let percentage = (*value as f64 / *total as f64) * 100.0;
     (percentage * 100.0).round() / 100.0
 }
-pub fn round(x: f32) -> f32 {
-    (x * 100.0).round() / 100.0
-}

@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import Card from "@/components/card";
 import SplineChart, { useSplineChartState } from "@/components/spline-chart";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
 import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
 import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
 import { Process } from "@/lib";
 import { Group, MultiSelect, SegmentedControl, Text } from "@mantine/core";
-
-import fromNumberToPercentageString from "../../metrics/utils/from-number-to-percentage-string";
 
 type ComparitorMetric = keyof Process;
 
@@ -51,6 +50,7 @@ const ProcessComparitor = () => {
   const setComparitorOptions = useComparitorSelector.use.setComparitorOptions();
   const setComparitorSelected = useComparitorSelector.use.setComparitorSelected();
   const [comparitorMetric, setComparitorMetric] = useState<ComparitorMetricOption>(metricOptions[0]);
+
   const [chartOptions, setChartOptions] = useSplineChartState({
     custom: {
       tooltip: {

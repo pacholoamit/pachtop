@@ -160,6 +160,7 @@ pub struct Process {
     pub run_time: u64,
     pub disk_usage: ProcessDiskUsage,
     pub status: String,
+    pub icon: String, // Base 64 encoded
     pub timestamp: Timestamp,
 }
 
