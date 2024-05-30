@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.9.6
+- Fix issue where linux users are not able to navigate into disk analytics page
+- Added icons to processes
+- Improved UI responsiveness of stats card
+
 ## 0.9.5
 - Patch Network metrics not displaying
 - Revamp Processes section
