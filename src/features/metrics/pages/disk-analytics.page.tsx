@@ -11,7 +11,7 @@ import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
 import { Alert, Anchor, Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
-import { IconAlertCircle, IconInfoCircle } from "@tabler/icons-react";
+import notification from "@/utils/notification";
 
 interface AnalysisProgressIndicatorProps {
   enableStatus?: boolean;
@@ -65,6 +65,7 @@ const MemoDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const system = useSystemStoreSelectors.use.info();
   const { id = "" } = useParams();
+  console.log("Params: ", id)
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
   const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
@@ -87,7 +88,10 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   const setProgressAndFetchData = useCallback(
     async (fetchData: () => Promise<DiskItem>) => {
-      if (!disk.mountPoint) return;
+      if (!disk.mountPoint) return notification.error({
+        title:"Oh no! An error",
+        message: "Error in retrieveing disk data"
+      })
       streams.diskAnalysisProgress((stream) => setProgress(stream));
       const rootFsTree = await fetchData();
       setDiskAnalysis(rootFsTree.children as DiskItem[]);

@@ -21,6 +21,8 @@ import {
 } from "@mantine/core";
 import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
 
+import useSystemStoreSelectors from "../../stores/system.store";
+
 interface DiskInfoProps {
   disk: Disk;
 }
@@ -116,16 +118,20 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
   const setSelectedDisk = useDisksStore.use.setSelectedDisk();
   const navigate = useNavigate();
+  const system = useSystemStoreSelectors.use.info();
+  const isWindows = system.os.toLowerCase().includes("windows");
 
   const showDirectory = async () => {
     if (!disk.mountPoint) return;
     await commands.showInFolder(disk.mountPoint);
   };
 
-  // Encode this id to avoid any issues with special characters
+  // Encode this id to avoid any issues with special characters. (Disk.name for windows works)
+  // TODO: Make this more ergonomic
   const onShowDetailsClick = () => {
-    setSelectedDisk(disk.name);
-    navigate(`/disks/${encodeURI(disk.name)}`);
+    setSelectedDisk(isWindows ? disk.name : disk.mountPoint);
+    navigate(`/disks/${encodeURIComponent(isWindows ? disk.name : disk.mountPoint)}`);
+    console.log("Unix navigate: ", `/disks/${disk.mountPoint}`);
   };
 
   return (
