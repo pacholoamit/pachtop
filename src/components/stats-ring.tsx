@@ -1,6 +1,5 @@
 import { Box, Center, DefaultMantineColor, Group, Paper, rem, RingProgress, Text } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
-import { IconArrowDownRight, IconArrowUpRight, TablerIconsProps } from "@tabler/icons-react";
+import { TablerIconsProps } from "@tabler/icons-react";
 
 import Card from "./card";
 
@@ -13,14 +12,6 @@ interface StatsRingProps {
 }
 
 const StatsRing: React.FC<StatsRingProps> = (props) => {
-  const { width } = useViewportSize();
-
-  // const isCardOverflowing = width < 1780; // At 1780px, the card starts to overflow
-
-  // const statsFontSize = isCardOverflowing ? "sm" : "xl";
-  // const ringSize = isCardOverflowing ? 50 : 80;
-  // const thickness = isCardOverflowing ? 5 : 8;
-
   return (
     <Card height="100%">
       <Group noWrap>
