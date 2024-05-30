@@ -9,14 +9,26 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
 import ProcessComparitor from "@/features/processes/components/processes.comparitor";
 import ProcessTable from "@/features/processes/components/processes.table";
+import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
 import { Process } from "@/lib";
 import { ColDef } from "@ag-grid-community/core";
 import { ActionIcon, Box, Center, Grid, Group, Image, Space, Tabs, Text, TextInput } from "@mantine/core";
-import { IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
+import { IconChartArcs, IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
 
-const ActionsColumn = () => {
+// TODO: Make Action Icon X work
+const ActionsColumn = (props: CustomCellRendererProps<Process>) => {
+  const addToCompparitorSelected = useComparitorSelector.use.addToComparitorSelected();
+
+  const handleAddToComparitor = () => {
+    if (props.data?.name) {
+      addToCompparitorSelected(props.data.name);
+    }
+  };
   return (
     <Group position="center">
+      <ActionIcon color="blue" radius={"xl"} size={"sm"} variant="subtle" onClick={handleAddToComparitor}>
+        <IconChartAreaLine />
+      </ActionIcon>
       <ActionIcon color="red" radius={"xl"} size={"sm"} variant="subtle">
         <IconCircleX />
       </ActionIcon>
