@@ -18,7 +18,7 @@
     "@mantine/hooks": "^6.0.21",
     "@mantine/notifications": "^6.0.21",
     "@tabler/icons-react": "^2.47.0",
-    "@tauri-apps/api": "^1.5.5",
+    "@tauri-apps/api": "^1.5.6",
     "ag-grid-react": "^31.3.2",
     "apexcharts": "^3.49.1",
     "classnames": "^2.5.1",
@@ -26,7 +26,7 @@
     "highcharts-react-official": "^3.2.1",
     "immer": "^10.1.1",
     "non.geist": "^1.0.3",
-    "posthog-js": "^1.131.4",
+    "posthog-js": "^1.136.1",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-arborist": "^3.4.0",
@@ -43,13 +43,13 @@
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.14",
     "@types/lodash.sortby": "^4.7.9",
-    "@types/node": "^20.12.12",
-    "@types/react": "^18.3.2",
+    "@types/node": "^20.12.13",
+    "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.3.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "typescript": "^5.4.5",
-    "vite": "^5.2.11"
+    "vite": "^5.2.12"
   },
   "packageManager": "yarn@3.8.2"
 }
