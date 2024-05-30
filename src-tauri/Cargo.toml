@@ -9,6 +9,11 @@ default-run = "app"
 edition = "2021"
 rust-version = "1.78"
 
+[workspace]
+
+members = [
+  "ws-systemicons"
+]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
