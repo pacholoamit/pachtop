@@ -52,7 +52,6 @@ const ProcessComparitor = () => {
   const setComparitorSelected = useComparitorSelector.use.setComparitorSelected();
   const [comparitorMetric, setComparitorMetric] = useState<ComparitorMetricOption>(metricOptions[0]);
 
-  console.log(processesEnumerable);
   const [chartOptions, setChartOptions] = useSplineChartState({
     custom: {
       tooltip: {
@@ -125,6 +124,7 @@ const ProcessComparitor = () => {
       <Group position="apart" align="start">
         <Text>Metrics Comparitor</Text>
         <Group>
+          <img src={processesEnumerable[0].data.at(-1)?.icon} alt="" />
           <SegmentedControl
             defaultValue={comparitorMetric.value}
             data={metricOptions.map((opt) => ({

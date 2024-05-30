@@ -284,7 +284,7 @@ impl ProcessesTrait for Metrics {
                         cpu_usage: process.cpu_usage() / core_count as f32,
                         memory_usage: process.memory(),
                         //TODO: Handle this error
-                        icon: BASE64_STANDARD.encode(&icon),
+                        icon: "data:image/png;base64, ".to_owned() + &BASE64_STANDARD.encode(&icon),
                         status: match process.status() {
                             sysinfo::ProcessStatus::Run => "Running".to_owned(),
                             sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),
