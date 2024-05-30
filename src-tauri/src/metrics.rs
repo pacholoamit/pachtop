@@ -1,11 +1,11 @@
 use crate::models::*;
-use crate::utils::{current_time, get_percentage, round};
-use rayon::prelude::*;
+use crate::utils::{current_time, get_percentage};
+use base64::prelude::*;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::str::{self, FromStr};
 use sysinfo::{MemoryRefreshKind, Pid, System};
-
+use systemicons;
 pub struct Metrics {
     sys: System,
     disks: sysinfo::Disks,
@@ -252,6 +252,16 @@ impl ProcessesTrait for Metrics {
                     process.disk_usage().total_written_bytes;
             } else {
                 // Insert the process as a new entry in the map
+                let exe = match process.exe() {
+                    Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
+                    None => "".to_owned(),
+                };
+
+                let icon_bytes = systemicons::get_icon(&exe, 96);
+                let icon = match icon_bytes {
+                    Ok(icon) => icon,
+                    Err(_) => vec![],
+                };
                 process_map.insert(
                     process.name().to_owned(),
                     Process {
@@ -263,10 +273,7 @@ impl ProcessesTrait for Metrics {
                             total_read_bytes: process.disk_usage().total_read_bytes,
                             total_written_bytes: process.disk_usage().total_written_bytes,
                         },
-                        exe: match process.exe() {
-                            Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
-                            None => "".to_owned(),
-                        },
+                        exe,
                         root: match process.root() {
                             Some(exe) => exe.to_str().unwrap_or_default().to_owned(),
                             None => "".to_owned(),
@@ -276,6 +283,8 @@ impl ProcessesTrait for Metrics {
                         run_time: process.run_time(),
                         cpu_usage: process.cpu_usage() / core_count as f32,
                         memory_usage: process.memory(),
+                        //TODO: Handle this error
+                        icon: "data:image/png;base64, ".to_owned() + &BASE64_STANDARD.encode(&icon),
                         status: match process.status() {
                             sysinfo::ProcessStatus::Run => "Running".to_owned(),
                             sysinfo::ProcessStatus::Sleep => "Sleeping".to_owned(),

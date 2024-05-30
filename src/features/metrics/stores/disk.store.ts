@@ -29,7 +29,8 @@ const useDisksStore = create<DisksState>()((set, get) => ({
   selectedDisk: DEFAULT_DISK,
   setSelectedDisk: (disk: string) => {
     const state = get();
-    const selectedDisk = state.disks.find((d) => d.name === disk) || DEFAULT_DISK;
+    // Hack for now.. Find by name applies to windows and find by mountpoint applies to unix
+    const selectedDisk = state.disks.find((d) => d.name === disk) || state.disks.find((d) => d.mountPoint === disk) || DEFAULT_DISK;
     set({ selectedDisk });
   },
 

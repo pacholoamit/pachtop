@@ -13,6 +13,7 @@ export const DEFAULT_PROCESS: Process = {
   runTime: 0,
   startTime: 0,
   status: "unknown",
+  icon: "",
   diskUsage: {
     readBytes: 0,
     totalReadBytes: 0,
