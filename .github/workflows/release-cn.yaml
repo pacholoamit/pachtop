@@ -54,7 +54,7 @@ jobs:
           cache-node-modules: true          
       - name: build tauri app
         run: |
-          yarn build
+          npm run build
         env:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
