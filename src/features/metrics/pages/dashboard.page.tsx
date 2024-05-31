@@ -10,8 +10,6 @@ import NetworksReceivedAreaChart from "@/features/metrics/components/networks/ne
 import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
-import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
-import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import { Grid } from "@mantine/core";
 
 const StatsRings = () => {
@@ -73,10 +71,8 @@ const DisksSection = () => {
 };
 
 const DashboardPage = () => {
-  const systemInformation = useSystemStoreSelectors.use.info();
-  const globalCpu = useGlobalCpuSelectors.use.latest();
   return (
-    <PageWrapper name="Dashboard" widget={<SystemInformationWidget cpu={globalCpu} info={systemInformation} />}>
+    <PageWrapper name="Dashboard" widget={<SystemInformationWidget />}>
       <Grid gutter="sm">
         <StatsRings />
         <CpuSection />

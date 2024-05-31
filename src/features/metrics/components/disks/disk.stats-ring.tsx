@@ -1,13 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 import StatsRing from "@/components/stats-ring";
-import useDisksStore from "@/features/metrics/stores/disk.store";
+import useDisksSelectors from "@/features/metrics/stores/disk.store";
 import { useMantineTheme } from "@mantine/core";
 import { IconFolders } from "@tabler/icons-react";
 
-const DiskStatsRing: React.FC = ({}) => {
-  const [disk] = useDisksStore(useShallow((state) => state.formattedDisks));
+const DiskStatsRing: React.FC = () => {
+  const [disk] = useDisksSelectors(useShallow((state) => state.formattedDisks));
   const { other } = useMantineTheme();
 
   return (

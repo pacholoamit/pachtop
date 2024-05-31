@@ -21,6 +21,15 @@ const DEFAULT_DISK: Disk = {
   usedPercentage: 0,
 };
 
+const DEFAULT_FORMATTED_DISK: FormattedDisk = {
+  ...DEFAULT_DISK,
+  free: "0",
+  total: "0",
+  used: "0",
+  usedPercentage: 0,
+  overall: "0",
+};
+
 type DiskCommonProperties = Pick<Disk, "diskType" | "fileSystem" | "isRemovable" | "mountPoint" | "name" | "timestamp">;
 
 export interface FormattedDisk extends DiskCommonProperties {
@@ -41,7 +50,7 @@ interface DisksState {
 
 const useDisksStore = create<DisksState>()((set, get) => ({
   disks: [{ ...DEFAULT_DISK }],
-  formattedDisks: [],
+  formattedDisks: [{ ...DEFAULT_FORMATTED_DISK }],
   selectedDisk: DEFAULT_DISK,
   setSelectedDisk: (disk: string) => {
     const state = get();

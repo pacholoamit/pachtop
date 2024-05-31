@@ -1,18 +1,16 @@
-import { memo } from "react";
+import { useShallow } from "zustand/react/shallow";
 
-import { GlobalCpu, SysInfo } from "@/lib";
-import { Grid, Group, Title } from "@mantine/core";
+import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
+import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
+import { Group, Title } from "@mantine/core";
 
-interface SystemInformationWidgetProps {
-  info: SysInfo;
-  cpu: GlobalCpu;
-}
-const SystemInformationWidget: React.FC<SystemInformationWidgetProps> = (props) => {
-  const { info, cpu } = props;
+const SystemInformationWidget: React.FC = () => {
+  const info = useSystemStoreSelectors(useShallow((state) => state.info));
+  const cpuBrand = useGlobalCpuSelectors(useShallow((state) => state.latest.brand));
 
   return (
     <Group>
-      <Title order={6}>CPU: {cpu.brand}</Title>
+      <Title order={6}>CPU: {cpuBrand}</Title>
       <Title order={6}>CPU cores: {info.coreCount}</Title>
       <Title order={6}>OS: {info.os}</Title>
       <Title order={6}>Kernel: {info.kernelVersion}</Title>
@@ -20,16 +18,4 @@ const SystemInformationWidget: React.FC<SystemInformationWidgetProps> = (props) 
   );
 };
 
-const areEqual = (
-  prev: Readonly<SystemInformationWidgetProps>,
-  next: Readonly<SystemInformationWidgetProps>
-): boolean => {
-  return (
-    prev.cpu.brand === next.cpu.brand &&
-    prev.info.coreCount === next.info.coreCount &&
-    prev.info.os === next.info.os &&
-    prev.info.kernelVersion === next.info.kernelVersion
-  );
-};
-
-export default memo(SystemInformationWidget, areEqual);
+export default SystemInformationWidget;
