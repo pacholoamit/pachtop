@@ -1,7 +1,9 @@
-import { Box, Center, DefaultMantineColor, Group, rem, RingProgress, Text } from "@mantine/core";
-import { TablerIconsProps } from "@tabler/icons-react";
+import { JSX } from 'react';
 
-import Card from "./card";
+import { Box, Center, DefaultMantineColor, Group, rem, RingProgress, Text } from '@mantine/core';
+import { TablerIconsProps } from '@tabler/icons-react';
+
+import Card from './card';
 
 interface StatsRingProps {
   label: string;

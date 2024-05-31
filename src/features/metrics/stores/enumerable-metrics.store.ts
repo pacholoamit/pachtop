@@ -28,7 +28,7 @@ export interface EnumerableStoreInput<T> {
 const useEnumerableMetricsStore = <Input extends EnumerableInput, Enumerated extends EnumerableInput = EnumerableInput>(
   input: EnumerableStoreInput<Input[]>
 ) => {
-  return create<EnumerableStore<Input, Enumerated>>((set, get) => ({
+  return create<EnumerableStore<Input>>((set, get) => ({
     enumerables: [],
     maxSize: input.maxSize || VIEWABLE_ELEMENT_COUNT, // Default value, can be overridden in the hook
 
