@@ -1,7 +1,7 @@
 import drive from "/drive.png";
 import { useNavigate } from "react-router-dom";
 
-import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
+import DynamicProgress from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, Disk } from "@/lib";
@@ -19,7 +19,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
+import { IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
 
 import useSystemStoreSelectors from "../../stores/system.store";
 

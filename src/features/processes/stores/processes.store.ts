@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { GlobalCpu, Process, streams, SysInfo } from "@/lib";
+import { Process, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
 
 export const DEFAULT_PROCESS: Process = {
@@ -27,7 +27,7 @@ interface ProcessesState {
   listen: () => void;
 }
 // TODO: Use enumerable store instead of this
-const useProcessesStore = create<ProcessesState>()((set, get) => ({
+const useProcessesStore = create<ProcessesState>()((set) => ({
   processes: [DEFAULT_PROCESS],
   listen: () => streams.processes((processes) => set({ processes })),
 }));

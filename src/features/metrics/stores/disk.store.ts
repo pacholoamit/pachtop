@@ -1,8 +1,7 @@
 import { create } from "zustand";
 
-import { Disk, ServerEvent, streams } from "@/lib";
+import { Disk, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
-import { listen } from "@tauri-apps/api/event";
 
 const DEFAULT_DISK: Disk = {
   diskType: "unknown",

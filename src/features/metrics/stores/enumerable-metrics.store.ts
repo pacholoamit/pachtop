@@ -11,7 +11,7 @@ export interface Enumerable<T> {
   data: T[];
 }
 
-export interface EnumerableStore<Input extends EnumerableInput, Enumerated> {
+export interface EnumerableStore<Input extends EnumerableInput> {
   enumerables: Enumerable<Input>[];
   maxSize: number;
   listen: () => void;

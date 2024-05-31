@@ -2,8 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { Group, MantineTheme, MediaQuery, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
-import {
-    IconArticle, IconCpu, IconLayoutDashboard, IconServer, IconSettings
+import { IconCpu, IconLayoutDashboard, IconServer, IconSettings
 } from '@tabler/icons-react';
 
 interface NavbarOptionProps {

@@ -1,4 +1,3 @@
-import logoAi from "/logo-ai-rasterized.png";
 import logoOnly from "/logo-only.png";
 import logoWithText from "/logo-white.png";
 
