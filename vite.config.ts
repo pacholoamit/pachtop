@@ -4,6 +4,8 @@ import eslint from "vite-plugin-eslint";
 
 import react from "@vitejs/plugin-react";
 
+const ReactCompilerConfig = { runtimeModule: "react-compiler-runtime" };
+
 // https://vitejs.dev/config/
 export default defineConfig({
   // prevent vite from obscuring rust errors
@@ -36,10 +38,10 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [["@babel-plugin-react-compiler"]],
+        plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
       },
     }),
-    eslint(),
+    eslint({}),
   ],
   resolve: {
     alias: { "@": path.resolve(__dirname, "src") },
