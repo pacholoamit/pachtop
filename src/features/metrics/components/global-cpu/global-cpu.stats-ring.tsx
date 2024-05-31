@@ -6,7 +6,7 @@ import fromNumberToPercentageString from "@/features/metrics/utils/from-number-t
 import { useMantineTheme } from "@mantine/core";
 import { IconCpu } from "@tabler/icons-react";
 
-const GlobalCpuStatsRing: React.FC = ({}) => {
+const GlobalCpuStatsRing: React.FC = () => {
   const globalCpu = useGlobalCpuSelectors.use.latest();
   const { other } = useMantineTheme();
 

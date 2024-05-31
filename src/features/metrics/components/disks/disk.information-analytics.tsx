@@ -16,7 +16,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
+import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInformationAnalyticsCardProps {
   startDiskAnalysis: () => Promise<void>;
@@ -28,7 +28,7 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
   const [opened, { close, open }] = useDisclosure(false);
   const disk = useDisksStore.use.selectedDisk();
 
-  console.log("chosen ", disk)
+  console.log("chosen ", disk);
 
   const data: { label: string; value: string; color: DefaultMantineColor }[] = [
     {

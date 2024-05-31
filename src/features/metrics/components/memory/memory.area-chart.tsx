@@ -6,7 +6,7 @@ import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { useMantineTheme } from "@mantine/core";
 
-const MemoryAreaChart: React.FC = ({}) => {
+const MemoryAreaChart: React.FC = () => {
   const memory = useMemorySelectors.use.metrics();
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({

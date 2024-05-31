@@ -40,9 +40,10 @@ export default defineConfig({
         plugins: [["babel-plugin-react-compiler"]],
       },
     }),
-    // eslint({
-    //   exclude: ["/virtual:/**", "node_modules/**"],
-    // }),
+    eslint({
+      lintOnStart: true,
+      fix: true,
+    }),
   ],
   resolve: {
     alias: { "@": path.resolve(__dirname, "src") },

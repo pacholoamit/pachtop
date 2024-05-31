@@ -10,7 +10,7 @@ import { useMantineTheme } from "@mantine/core";
 // TODO: Make timestamp work automatically
 // TODO: fix time
 
-const GlobalCpuAreaChart: React.FC = ({}) => {
+const GlobalCpuAreaChart: React.FC = () => {
   const metrics = useGlobalCpuSelectors.use.metrics();
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({

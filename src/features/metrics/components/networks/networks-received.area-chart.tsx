@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import AreaChart, { useAreaChartState } from "@/components/area-chart";
-import Card from "@/components/card";
-import useNetworkSelectors from "@/features/metrics/stores/networks.store";
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import { useMantineTheme } from "@mantine/core";
+import AreaChart, { useAreaChartState } from '@/components/area-chart';
+import Card from '@/components/card';
+import useNetworkSelectors from '@/features/metrics/stores/networks.store';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import { useMantineTheme } from '@mantine/core';
 
 // TODO: Fix typescript
-const NetworksReceivedAreaChart: React.FC = ({}) => {
+const NetworksReceivedAreaChart: React.FC = () => {
   const networks = useNetworkSelectors.use.enumerables();
   const { other } = useMantineTheme();
 

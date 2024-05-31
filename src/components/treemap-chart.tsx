@@ -34,7 +34,7 @@ interface FormatterScope extends Point {
 export const useTreemapChartState = (
   opts: InitialTreemapChartStateInput
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
-  const { colors, primaryColor } = useMantineTheme();
+  const { colors } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     accessibility: {
       enabled: true,
@@ -46,7 +46,7 @@ export const useTreemapChartState = (
         // TODO: Move this to Disk to be more generic
 
         const point: FormatterScope = this.point as FormatterScope;
-        return `<b>${this.point.name}</b>: ${formatBytes(point["value"]) as any}`;
+        return `<b>${this.point.name}</b>: ${formatBytes(point["value"]) as unknown}`;
       },
     },
     chart: {

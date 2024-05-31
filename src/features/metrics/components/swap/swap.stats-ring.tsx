@@ -6,7 +6,7 @@ import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
 import { useMantineTheme } from "@mantine/core";
 import { IconFile } from "@tabler/icons-react";
 
-const SwapStatsRing: React.FC = ({}) => {
+const SwapStatsRing: React.FC = () => {
   const swap = useSwapSelectors.use.latest();
   const { other } = useMantineTheme();
 

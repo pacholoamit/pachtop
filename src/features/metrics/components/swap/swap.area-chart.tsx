@@ -6,7 +6,7 @@ import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { useMantineTheme } from "@mantine/core";
 
-const SwapAreaChart: React.FC = ({}) => {
+const SwapAreaChart: React.FC = () => {
   const swap = useSwapSelectors.use.metrics();
 
   const { other } = useMantineTheme();

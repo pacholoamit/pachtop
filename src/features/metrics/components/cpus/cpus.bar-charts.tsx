@@ -59,7 +59,7 @@ const CpusBarChart: React.FC = () => {
     },
     yaxis: {
       labels: {
-        formatter(val, opts) {
+        formatter(val) {
           return `${val}%`;
         },
         style: {

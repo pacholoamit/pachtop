@@ -6,7 +6,7 @@ import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
 import { useMantineTheme } from "@mantine/core";
 import { IconFolders } from "@tabler/icons-react";
 
-const DiskStatsRing: React.FC = ({}) => {
+const DiskStatsRing: React.FC = () => {
   const [disk] = useDisksStore.use.disks();
   const { other } = useMantineTheme();
 

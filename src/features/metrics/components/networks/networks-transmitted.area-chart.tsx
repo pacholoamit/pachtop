@@ -6,7 +6,7 @@ import useNetworkSelectors from "@/features/metrics/stores/networks.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { useMantineTheme } from "@mantine/core";
 
-const NetworksTransmittedAreaChart: React.FC = ({}) => {
+const NetworksTransmittedAreaChart: React.FC = () => {
   const networks = useNetworkSelectors.use.enumerables();
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({

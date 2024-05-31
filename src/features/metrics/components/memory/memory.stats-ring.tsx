@@ -4,7 +4,7 @@ import StatsRing from "@/components/stats-ring";
 import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
 import { useMantineTheme } from "@mantine/core";
-import { IconChartArea, IconCpu2 } from "@tabler/icons-react";
+import { IconChartArea } from "@tabler/icons-react";
 
 const MemoryStatsRing: React.FC = ({}) => {
   const memory = useMemorySelectors.use.latest();
