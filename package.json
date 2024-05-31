@@ -1,7 +1,7 @@
 {
   "name": "pachtop",
   "private": true,
-  "version": "0.9.5",
+  "version": "0.9.6",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -29,10 +29,10 @@
     "immer": "^10.1.1",
     "non.geist": "^1.0.3",
     "posthog-js": "^1.136.1",
-    "react": "rc",
+    "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-arborist": "^3.4.0",
-    "react-dom": "rc",
+    "react-dom": "^18.3.1",
     "react-geiger": "^1.2.0",
     "react-github-btn": "^1.4.0",
     "react-router-dom": "^6.23.1",
@@ -46,18 +46,14 @@
     "@tauri-apps/cli": "^1.5.14",
     "@types/lodash.sortby": "^4.7.9",
     "@types/node": "^20.12.13",
-    "@types/react": "npm:types-react@rc",
-    "@types/react-dom": "npm:types-react-dom@rc",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.0",
     "eslint": "^9.3.0",
     "eslint-config-react-app": "^7.0.1",
     "typescript": "^5.4.5",
     "vite": "^5.2.12",
     "vite-plugin-eslint": "^1.8.1"
-  },
-  "overrides": {
-    "@types/react": "npm:types-react@rc",
-    "@types/react-dom": "npm:types-react-dom@rc"
   },
   "packageManager": "yarn@3.8.2"
 }
