@@ -1,10 +1,9 @@
-import * as path from 'path';
-import { defineConfig, optimizeDeps } from 'vite';
-import eslint from 'vite-plugin-eslint';
+import * as path from "path";
+import { defineConfig, optimizeDeps } from "vite";
+//@ts-ignore
+import eslint from "vite-plugin-eslint";
 
-import react from '@vitejs/plugin-react';
-
-const ReactCompilerConfig = { runtimeModule: "react-compiler-runtime" };
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -38,10 +37,12 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
+        plugins: [["babel-plugin-react-compiler"]],
       },
     }),
-    // eslint(),
+    // eslint({
+    //   exclude: ["/virtual:/**", "node_modules/**"],
+    // }),
   ],
   resolve: {
     alias: { "@": path.resolve(__dirname, "src") },
