@@ -74,7 +74,7 @@ const DisksSection = () => {
 const SystemInformationWidget = () => {
   const systemInformation = useSystemStoreSelectors.use.info();
   const globalCpu = useGlobalCpuSelectors.use.latest();
-
+  console.log(systemInformation);
   return (
     <Group>
       <Title order={6}>CPU: {globalCpu.brand}</Title>

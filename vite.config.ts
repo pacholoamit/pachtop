@@ -1,6 +1,6 @@
 import * as path from "path";
 import { defineConfig } from "vite";
-//@ts-expect-error no-types-exposed
+//@ts-ignore
 import eslint from "vite-plugin-eslint";
 
 import react from "@vitejs/plugin-react";
@@ -41,9 +41,10 @@ export default defineConfig({
       },
     }),
     eslint({
-      lintOnStart: false,
+      lintOnStart: true,
       fix: true,
       failOnError: false,
+      include: ["./src/**/*.ts", "src/**/*.tsx"],
     }),
   ],
   resolve: {

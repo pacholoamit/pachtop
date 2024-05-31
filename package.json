@@ -52,6 +52,7 @@
     "@types/react-dom": "npm:types-react-dom@rc",
     "@vitejs/plugin-react": "^4.3.0",
     "eslint": "^9.3.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-unused-imports": "^4.0.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.11.0",
