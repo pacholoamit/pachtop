@@ -1,7 +1,8 @@
 import * as path from "path";
 import { defineConfig, optimizeDeps } from "vite";
+import eslint from "vite-plugin-eslint";
 
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -32,7 +33,14 @@ export default defineConfig({
   optimizeDeps: {
     include: ["react/jsx-runtime"],
   },
-  plugins: [react()],
+  plugins: [
+    react({
+      babel: {
+        plugins: [["@babel-plugin-react-compiler"]],
+      },
+    }),
+    eslint(),
+  ],
   resolve: {
     alias: { "@": path.resolve(__dirname, "src") },
   },

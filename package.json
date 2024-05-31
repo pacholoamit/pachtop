@@ -21,7 +21,9 @@
     "@tauri-apps/api": "^1.5.6",
     "ag-grid-react": "^31.3.2",
     "apexcharts": "^3.49.1",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-487cb0e-20240529",
     "classnames": "^2.5.1",
+    "eslint-plugin-react-compiler": "^0.0.0-experimental-a97cca1-20240529",
     "highcharts": "^11.4.3",
     "highcharts-react-official": "^3.2.1",
     "immer": "^10.1.1",
@@ -47,9 +49,11 @@
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
     "@vitejs/plugin-react": "^4.3.0",
-    "@vitejs/plugin-react-swc": "^3.7.0",
+    "eslint": "^9.3.0",
+    "eslint-config-react-app": "^7.0.1",
     "typescript": "^5.4.5",
-    "vite": "^5.2.12"
+    "vite": "^5.2.12",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "overrides": {
     "@types/react": "npm:types-react@rc",
