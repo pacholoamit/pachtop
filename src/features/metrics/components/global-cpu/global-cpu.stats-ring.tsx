@@ -11,7 +11,7 @@ const GlobalCpuStatsRing: React.FC = () => {
   const { other } = useMantineTheme();
 
   const progress = globalCpu.usage;
-  const stats = React.useMemo(() => fromNumberToPercentageString(progress), [progress]);
+  const stats = fromNumberToPercentageString(progress);
 
   return <StatsRing color={other.charts.statsRing.cpu} Icon={IconCpu} stats={stats} label="CPU" progress={progress} />;
 };

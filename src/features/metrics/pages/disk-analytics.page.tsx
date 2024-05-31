@@ -56,10 +56,6 @@ const AnalysisIndicator: React.FC<AnalysisProgressIndicatorProps> = (props) => {
 
 interface DiskAnalyticsPageProps {}
 
-const MemoTreemapChart = React.memo(TreemapChart);
-
-const MemoDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
-
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
@@ -193,7 +189,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
             {isDiskScanEmpty ? (
               <AnalysisIndicator progress={progress} enableStatus={true} pt="86px" />
             ) : (
-              <MemoDiskDirectoryTreeView data={diskAnalysis} />
+              <DiskDirectoryTreeView data={diskAnalysis} />
             )}
           </Card>
         </Grid.Col>
@@ -203,7 +199,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
             {isDiskScanEmpty ? (
               <AnalysisIndicator progress={progress} pt="188px" />
             ) : (
-              <MemoTreemapChart options={chartOptions} />
+              <TreemapChart options={chartOptions} />
             )}
           </Card>
         </Grid.Col>

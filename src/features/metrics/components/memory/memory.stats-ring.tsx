@@ -14,7 +14,7 @@ const MemoryStatsRing: React.FC = ({}) => {
   const used = memory.used;
   const progress = memory.usedPercentage;
 
-  const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
+  const stats = formatOverallStats(used, available);
 
   return (
     <StatsRing

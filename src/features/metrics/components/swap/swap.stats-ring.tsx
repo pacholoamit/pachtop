@@ -14,7 +14,7 @@ const SwapStatsRing: React.FC = () => {
   const used = swap.used;
   const progress = swap.usedPercentage;
 
-  const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
+  const stats = formatOverallStats(used, available);
 
   return (
     <StatsRing color={other.charts.statsRing.swap} Icon={IconFile} stats={stats} label="Swap" progress={progress} />
