@@ -4,6 +4,10 @@ import { Disk, ServerEvent, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
 import { listen } from "@tauri-apps/api/event";
 
+import formatBytes from "../utils/format-bytes";
+import formatOverallStats from "../utils/format-overall-stats";
+import fromNumberToPercentageString from "../utils/from-number-to-percentage-string";
+
 const DEFAULT_DISK: Disk = {
   diskType: "unknown",
   fileSystem: "unknown",
@@ -17,8 +21,19 @@ const DEFAULT_DISK: Disk = {
   usedPercentage: 0,
 };
 
+type DiskCommonProperties = Pick<Disk, "diskType" | "fileSystem" | "isRemovable" | "mountPoint" | "name" | "timestamp">;
+
+export interface FormattedDisk extends DiskCommonProperties {
+  free: string;
+  total: string;
+  used: string;
+  usedPercentage: number;
+  overall: string;
+}
+
 interface DisksState {
   disks: Disk[];
+  formattedDisks: FormattedDisk[];
   selectedDisk: Disk;
   setSelectedDisk: (disk: string) => void;
   listen: () => void;
@@ -26,15 +41,29 @@ interface DisksState {
 
 const useDisksStore = create<DisksState>()((set, get) => ({
   disks: [{ ...DEFAULT_DISK }],
+  formattedDisks: [],
   selectedDisk: DEFAULT_DISK,
   setSelectedDisk: (disk: string) => {
     const state = get();
     // Hack for now.. Find by name applies to windows and find by mountpoint applies to unix
-    const selectedDisk = state.disks.find((d) => d.name === disk) || state.disks.find((d) => d.mountPoint === disk) || DEFAULT_DISK;
+    const selectedDisk =
+      state.disks.find((d) => d.name === disk) || state.disks.find((d) => d.mountPoint === disk) || DEFAULT_DISK;
     set({ selectedDisk });
   },
 
-  listen: () => streams.disks((disks) => set({ disks })),
+  listen: () =>
+    streams.disks((disks) => {
+      const formatted: FormattedDisk[] = disks.map((disk) => ({
+        ...disk,
+        used: formatBytes(disk.used),
+        usedPercentage: Math.round(disk.usedPercentage * 100) / 100,
+        total: formatBytes(disk.total),
+        free: formatBytes(disk.free),
+        overall: formatOverallStats(disk.used, disk.total, 2),
+      }));
+
+      set({ disks, formattedDisks: formatted });
+    }),
 }));
 
 // Start listening for disk events as soon as the store is created

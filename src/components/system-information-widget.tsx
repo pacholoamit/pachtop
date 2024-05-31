@@ -10,10 +10,6 @@ interface SystemInformationWidgetProps {
 const SystemInformationWidget: React.FC<SystemInformationWidgetProps> = (props) => {
   const { info, cpu } = props;
 
-  console.log({
-    info,
-    cpu,
-  });
   return (
     <Group>
       <Title order={6}>CPU: {cpu.brand}</Title>
