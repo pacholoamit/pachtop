@@ -1,7 +1,7 @@
-import { GlobalCpu, streams } from "@/lib";
-import createSelectors from "@/utils/create-selectors";
+import { GlobalCpu, streams } from '@/lib';
+import createSelectors from '@/utils/create-selectors';
 
-import useMetricsStore from "./metrics.store";
+import useMetricsStore from './metrics.store';
 
 const DEFAULT_GLOBAL_CPU: GlobalCpu = {
   brand: "unknown",

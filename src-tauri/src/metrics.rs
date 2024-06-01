@@ -36,7 +36,6 @@ impl SystemInformationTrait for Metrics {
             os_version,
             hostname,
             core_count,
-            timestamp: current_time(),
         }
     }
 }

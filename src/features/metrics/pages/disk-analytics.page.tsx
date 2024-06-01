@@ -10,8 +10,8 @@ import useDisksStore from "@/features/metrics/stores/disk.store";
 import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
-import { Alert, Anchor, Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import notification from "@/utils/notification";
+import { Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
 interface AnalysisProgressIndicatorProps {
   enableStatus?: boolean;
@@ -63,17 +63,13 @@ const MemoDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
-  const system = useSystemStoreSelectors.use.info();
   const { id = "" } = useParams();
-  console.log("Params: ", id)
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
   const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
   const [progress, setProgress] = React.useState<DiskAnalysisProgress>({ scanned: 0, total: 0 });
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskScanEmpty = diskAnalysis.length === 0;
-
-  // const isWindows = system.os.toLowerCase().includes("windows");
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
@@ -88,10 +84,11 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
   const setProgressAndFetchData = useCallback(
     async (fetchData: () => Promise<DiskItem>) => {
-      if (!disk.mountPoint) return notification.error({
-        title:"Oh no! An error",
-        message: "Error in retrieveing disk data"
-      })
+      if (!disk.mountPoint)
+        return notification.error({
+          title: "Oh no! An error",
+          message: "Error in retrieveing disk data",
+        });
       streams.diskAnalysisProgress((stream) => setProgress(stream));
       const rootFsTree = await fetchData();
       setDiskAnalysis(rootFsTree.children as DiskItem[]);

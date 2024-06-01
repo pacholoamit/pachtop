@@ -84,7 +84,6 @@ pub struct SysInfo {
     pub hostname: String,
     #[ts(type = "number")]
     pub core_count: usize,
-    pub timestamp: Timestamp,
 }
 
 pub trait SystemInformationTrait {

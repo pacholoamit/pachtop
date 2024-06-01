@@ -121,6 +121,7 @@ export const useAreaChartState = (
     },
     // This is the calendar thing on the top right
     rangeSelector: {
+      inputEnabled: false,
       floating: true,
 
       labelStyle: {
@@ -172,6 +173,8 @@ export const useAreaChartState = (
       allowForce: true,
     },
     chart: {
+      ignoreHiddenSeries: true,
+
       backgroundColor: "transparent",
     },
   });
