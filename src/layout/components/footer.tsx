@@ -30,7 +30,7 @@ const DiskIndicator = () => {
     })
   );
 
-  const diskUsed = useMemo(() => formatBytes(disk.used), [disk.used]);
+  const diskUsed = useMemo(() => formatBytes(disk.used), [formatBytes(disk.used)]);
 
   return (
     <>
@@ -43,14 +43,15 @@ const DiskIndicator = () => {
 };
 
 const MemoryIndicator = () => {
-  const memoryUsed = useMemorySelectors(useShallow((state) => state.latest.used));
-  const memoryUsedPercentage = useMemorySelectors(useShallow((state) => state.latest.usedPercentage));
+  const memory = useMemorySelectors(
+    useShallow((state) => ({ used: state.latest.used, usedPercentage: state.latest.usedPercentage }))
+  );
 
-  const memoryUsedLabel = useMemo(() => formatBytes(memoryUsed), [memoryUsed]);
+  const memoryUsedLabel = useMemo(() => formatBytes(memory.used), [formatBytes(memory.used)]);
   return (
     <>
       <Text size="xs">RAM: {memoryUsedLabel} </Text>
-      <ProgressContainer value={memoryUsedPercentage} />
+      <ProgressContainer value={memory.usedPercentage} />
     </>
   );
 };

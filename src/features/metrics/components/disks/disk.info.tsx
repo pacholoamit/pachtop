@@ -1,10 +1,13 @@
 import drive from "/drive.png";
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
+import DynamicProgress from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
+import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, Disk } from "@/lib";
+import hasBytesTextChanged from "@/utils/has-text-changed";
 import {
   ActionIcon,
   Badge,
@@ -19,9 +22,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
-
-import useSystemStoreSelectors from "../../stores/system.store";
+import { IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
 
 interface DiskInfoProps {
   disk: Disk;
@@ -162,4 +163,8 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
   );
 };
 
-export default DiskStatsCard;
+const isEqual = (prev: DiskInfoProps, next: DiskInfoProps) => {
+  return !hasBytesTextChanged(prev.disk.used, next.disk.used) && !hasBytesTextChanged(prev.disk.free, next.disk.free);
+};
+
+export default memo(DiskStatsCard, isEqual);
