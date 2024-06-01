@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({ children, style, height = "300px" }) => {
 };
 
 const areEqual = (prev: CardProps, next: CardProps) => {
-  return prev.children === next.children;
+  return prev.height === next.height && prev.children === next.children;
 };
 
 export default memo(Card, areEqual);

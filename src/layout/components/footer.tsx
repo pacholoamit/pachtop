@@ -43,26 +43,33 @@ const DiskIndicator = () => {
 };
 
 const MemoryIndicator = () => {
-  const memory = useMemorySelectors.use.latest();
+  const memoryUsed = useMemorySelectors(useShallow((state) => state.latest.used));
+  const memoryUsedPercentage = useMemorySelectors(useShallow((state) => state.latest.usedPercentage));
 
-  const memoryUsed = useMemo(() => formatBytes(memory.used), [memory.used]);
+  const memoryUsedLabel = useMemo(() => formatBytes(memoryUsed), [memoryUsed]);
   return (
     <>
-      <Text size="xs">RAM: {memoryUsed} </Text>
-      <ProgressContainer value={memory.usedPercentage} />
+      <Text size="xs">RAM: {memoryUsedLabel} </Text>
+      <ProgressContainer value={memoryUsedPercentage} />
     </>
   );
 };
 
 const SwapIndicator = () => {
-  const swapUsed = useSwapSelectors(useShallow((state) => state.latest.used));
-  const swapUsedPercentage = useSwapSelectors(useShallow((state) => state.latest.usedPercentage));
+  const swap = useSwapSelectors(
+    useShallow((state) => {
+      return {
+        used: state.latest.used,
+        usedPercentage: state.latest.usedPercentage,
+      };
+    })
+  );
 
-  const swapUsedLabel = useMemo(() => formatBytes(swapUsed), [swapUsed]);
+  const swapUsed = useMemo(() => formatBytes(swap.used), [swap.used]);
   return (
     <>
-      <Text size="xs">Swap: {swapUsedLabel}</Text>
-      <ProgressContainer value={swapUsedPercentage} />
+      <Text size="xs">Swap: {swapUsed}</Text>
+      <ProgressContainer value={swap.usedPercentage} />
     </>
   );
 };
