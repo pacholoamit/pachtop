@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Card as MantineCard } from "@mantine/core";
 
 interface CardProps {
@@ -15,4 +17,12 @@ const Card: React.FC<CardProps> = ({ children, style, height = "300px" }) => {
   );
 };
 
-export default Card;
+const areEqual = (prev: CardProps, next: CardProps) => {
+  return (
+    prev.height === next.height &&
+    JSON.stringify(prev.style) === JSON.stringify(next.style) &&
+    prev.children === next.children
+  );
+};
+
+export default memo(Card, areEqual);

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { useShallow } from "zustand/react/shallow";
 
 import StatsRing from "@/components/stats-ring";
