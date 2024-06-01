@@ -55,13 +55,14 @@ const MemoryIndicator = () => {
 };
 
 const SwapIndicator = () => {
-  const swap = useSwapSelectors(useShallow((state) => state.latest));
+  const swapUsed = useSwapSelectors(useShallow((state) => state.latest.used));
+  const swapUsedPercentage = useSwapSelectors(useShallow((state) => state.latest.usedPercentage));
 
-  const swapUsed = useMemo(() => formatBytes(swap.used), [swap.used]);
+  const swapUsedLabel = useMemo(() => formatBytes(swapUsed), [swapUsed]);
   return (
     <>
-      <Text size="xs">Swap: {swapUsed}</Text>
-      <ProgressContainer value={swap.usedPercentage} />
+      <Text size="xs">Swap: {swapUsedLabel}</Text>
+      <ProgressContainer value={swapUsedPercentage} />
     </>
   );
 };

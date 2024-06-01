@@ -10,6 +10,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, style, height = "300px" }) => {
   const styles: React.CSSProperties = { height, padding: 16, ...style };
+
   return (
     <MantineCard style={styles} shadow="lg" p="md" radius={"md"} withBorder>
       {children}
@@ -18,11 +19,7 @@ const Card: React.FC<CardProps> = ({ children, style, height = "300px" }) => {
 };
 
 const areEqual = (prev: CardProps, next: CardProps) => {
-  return (
-    prev.height === next.height &&
-    JSON.stringify(prev.style) === JSON.stringify(next.style) &&
-    prev.children === next.children
-  );
+  return prev.children === next.children;
 };
 
 export default memo(Card, areEqual);

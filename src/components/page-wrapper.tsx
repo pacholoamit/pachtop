@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Group, Stack, Title } from "@mantine/core";
 
 interface PageWrapperProps {
@@ -19,4 +21,4 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, name, height, widge
   );
 };
 
-export default PageWrapper;
+export default memo(PageWrapper);
