@@ -63,17 +63,13 @@ const MemoDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
 
 // TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
-  const system = useSystemStoreSelectors.use.info();
   const { id = "" } = useParams();
-  console.log("Params: ", id);
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
   const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
   const [progress, setProgress] = React.useState<DiskAnalysisProgress>({ scanned: 0, total: 0 });
   const [isLoading, setIsLoading] = React.useState(false);
   const isDiskScanEmpty = diskAnalysis.length === 0;
-
-  // const isWindows = system.os.toLowerCase().includes("windows");
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
