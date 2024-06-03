@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.9.7
+- Performance improvements for UI
+- IMprove Navigation page
+
 ## 0.9.6
 - Fix issue where linux users are not able to navigate into disk analytics page
 - Added icons to processes
