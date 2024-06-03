@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Navbar from "@/layout/components/navbar";
-import { AppShell, Box, Button, Styles, Tooltip, useMantineTheme } from "@mantine/core";
+import { AppShell, Box, Styles, useMantineTheme } from "@mantine/core";
 
 import AppFooter from "./components/footer";
 import Header from "./components/header";
@@ -16,7 +16,9 @@ const Layout: React.FC = () => {
 
   return (
     <AppShell styles={styles} navbar={<Navbar />} footer={<AppFooter />} header={<Header />} padding={"xl"}>
-      <Outlet />
+      <Box style={{ zIndex: -1 }}>
+        <Outlet />
+      </Box>
     </AppShell>
   );
 };
