@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { ActionIcon, Group, MantineTheme, Tooltip, UnstyledButton } from "@mantine/core";
+import { ActionIcon, Group, MantineTheme, Popover, Tooltip, UnstyledButton } from "@mantine/core";
 import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
 interface NavbarOptionProps {
@@ -32,7 +32,7 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   });
 
   return (
-    <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
+    <Tooltip label={label} position="right" withArrow>
       <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
         <Group position={position}>
           <ActionIcon variant="transparent" size={"md"}>
