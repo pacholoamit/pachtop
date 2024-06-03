@@ -1,14 +1,17 @@
-import { Grid, Title } from '@mantine/core';
+import logoOnly from "/logo-only.png";
+
+import { Center, Grid, Group, Header as MantineHeader, Image, Stack, TextInput, Title } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
 
 const Header = () => {
   return (
-    <Grid gutter={"xl"} justify="space-between" style={{ height: "90px" }}>
-      <Grid.Col span={3}>
-        <Title order={2} color={"#dce1e8"}>
-          Dashboard
-        </Title>
-      </Grid.Col>
-    </Grid>
+    <MantineHeader height={40}>
+      <Group position="apart" align="center">
+        <div />
+        <TextInput placeholder="Search..." size="xs" w={300} icon={<IconSearch size={14} />} />
+        <div />
+      </Group>
+    </MantineHeader>
   );
 };
 
