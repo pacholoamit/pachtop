@@ -1,7 +1,19 @@
 import logoOnly from "/logo-only.png";
 import React from "react";
 
-import { Center, Code, Grid, Group, Header as MantineHeader, Image, Stack, TextInput, Title } from "@mantine/core";
+import {
+  Badge,
+  Center,
+  Code,
+  Grid,
+  Group,
+  Header as MantineHeader,
+  Image,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { getVersion } from "@tauri-apps/api/app";
 
@@ -13,10 +25,12 @@ const Header = () => {
   }, []);
   return (
     <MantineHeader height={40}>
-      <Group position="apart" align="end" pl={16} pr={16}>
-        <div />
+      <Group position="apart" align="end" pl={8} pr={8}>
+        <Badge color="teal" variant="dot">
+          Pachtop {version && `v${version}`}
+        </Badge>
         <TextInput placeholder="Search..." size="xs" w={300} icon={<IconSearch size={14} />} />
-        {version && <Code>v{version}</Code>}
+        <div />
       </Group>
     </MantineHeader>
   );
