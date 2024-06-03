@@ -13,7 +13,7 @@ const Header = () => {
   }, []);
   return (
     <MantineHeader height={40}>
-      <Group position="apart" align="baseline" pl={16} pr={16}>
+      <Group position="apart" align="end" pl={16} pr={16}>
         <div />
         <TextInput placeholder="Search..." size="xs" w={300} icon={<IconSearch size={14} />} />
         {version && <Code>v{version}</Code>}
