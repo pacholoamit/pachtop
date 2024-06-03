@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { ActionIcon, Group, MantineTheme, Popover, Tooltip, UnstyledButton } from "@mantine/core";
+import { ActionIcon, Group, MantineTheme, Portal, Tooltip, UnstyledButton } from "@mantine/core";
 import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
 interface NavbarOptionProps {
@@ -31,6 +31,7 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
     },
   });
 
+  // TODO: Fix tooltip getting cut due to outlet
   return (
     <Tooltip label={label} position="right" withArrow>
       <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
