@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { ActionIcon, Group, MantineTheme, MediaQuery, Text, ThemeIcon, Tooltip, UnstyledButton } from "@mantine/core";
-import { IconArticle, IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
+import { ActionIcon, Group, MantineTheme, Tooltip, UnstyledButton } from "@mantine/core";
+import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
 interface NavbarOptionProps {
   icon: React.ReactNode;
@@ -12,7 +12,7 @@ interface NavbarOptionProps {
   active?: boolean;
 }
 
-const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
+export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   const { icon, label, onClick, active } = props;
   const { isSmallerThanMd } = useMediaQuery();
   const position = isSmallerThanMd ? "center" : "left";

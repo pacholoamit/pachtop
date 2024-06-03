@@ -29,7 +29,7 @@ const Header = () => {
         <Badge color="teal" variant="dot">
           Pachtop {version && `v${version}`}
         </Badge>
-        <TextInput placeholder="Search..." size="xs" w={300} icon={<IconSearch size={14} />} />
+        <TextInput placeholder="Search..." size="xs" w={300} icon={<IconSearch size={14} />} disabled />
         <div />
       </Group>
     </MantineHeader>
