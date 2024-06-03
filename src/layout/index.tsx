@@ -16,10 +16,7 @@ const Layout: React.FC = () => {
 
   return (
     <AppShell styles={styles} navbar={<Navbar />} footer={<AppFooter />} header={<Header />} padding={"xl"}>
-      <Space h={"sm"} />
-      <Card style={{ backgroundColor: theme.colors.dark[7] }} radius={"md"}>
-        <Outlet />
-      </Card>
+      <Outlet />
     </AppShell>
   );
 };
