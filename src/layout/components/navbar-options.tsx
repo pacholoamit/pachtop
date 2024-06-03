@@ -1,19 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import useMediaQuery from '@/hooks/useMediaQuery';
-import { Group, MantineTheme, MediaQuery, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
-import {
-    IconArticle, IconCpu, IconLayoutDashboard, IconServer, IconSettings
-} from '@tabler/icons-react';
+import useMediaQuery from "@/hooks/useMediaQuery";
+import { ActionIcon, Group, MantineTheme, MediaQuery, Text, ThemeIcon, Tooltip, UnstyledButton } from "@mantine/core";
+import { IconArticle, IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
 interface NavbarOptionProps {
   icon: React.ReactNode;
   label: string;
   onClick?: () => void;
+  active?: boolean;
 }
 
 const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
-  const { icon, label, onClick } = props;
+  const { icon, label, onClick, active } = props;
   const { isSmallerThanMd } = useMediaQuery();
   const position = isSmallerThanMd ? "center" : "left";
 
@@ -26,21 +26,26 @@ const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
     "&:hover": {
       backgroundColor: theme.colors.dark[6],
     },
+    "&[data-active]": {
+      backgroundColor: theme.colors.dark[6],
+    },
   });
 
   return (
-    <UnstyledButton sx={sx} onClick={onClick}>
-      <Group position={position}>
-        <ThemeIcon variant="outline">{icon}</ThemeIcon>
-        <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
-          <Text size={"sm"}>{label}</Text>
-        </MediaQuery>
-      </Group>
-    </UnstyledButton>
+    <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
+      <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
+        <Group position={position}>
+          <ActionIcon variant="transparent" size={"md"}>
+            {icon}
+          </ActionIcon>
+        </Group>
+      </UnstyledButton>
+    </Tooltip>
   );
 };
 
 const NavbarOptions = () => {
+  const [active, setActive] = useState(0);
   const navigate = useNavigate();
   const options: NavbarOptionProps[] = [
     {
@@ -69,7 +74,17 @@ const NavbarOptions = () => {
     },
   ];
 
-  const navbarOptions = options.map((option) => <NavbarOption {...option} key={option.label} />);
+  const navbarOptions = options.map((option, index) => (
+    <NavbarOption
+      {...option}
+      key={option.label}
+      active={index === active}
+      onClick={() => {
+        setActive(index);
+        option.onClick?.();
+      }}
+    />
+  ));
   return <>{navbarOptions}</>;
 };
 
