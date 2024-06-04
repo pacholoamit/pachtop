@@ -23,7 +23,7 @@ interface ProcessTableProps {
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
-  const { currentTheme } = useTheme();
+  const { isMidnight } = useTheme();
   const processes = useProcessesSelectors.use.processes();
   const [columnDefState, setColumnDefsState] = React.useState<ColDef[]>(columnDefs);
   const [opened, setOpened] = React.useState(false);
@@ -68,10 +68,7 @@ const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
         </Group>
 
         <Space h={12} />
-        <div
-          style={{ height: "100%", width: "100%" }}
-          className={currentTheme === THEME_OPTION.SLATE ? "ag-theme-slate" : "ag-theme-midnight"}
-        >
+        <div style={{ height: "100%", width: "100%" }} className={isMidnight ? "ag-theme-midnight" : "ag-theme-slate"}>
           <AgGridReact
             rowData={processes}
             columnDefs={columnDefState as any}

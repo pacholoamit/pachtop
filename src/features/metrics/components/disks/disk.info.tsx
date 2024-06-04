@@ -7,6 +7,7 @@ import DynamicProgress from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
 import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import useTheme from "@/hooks/useTheme";
 import { commands, Disk } from "@/lib";
 import hasBytesTextChanged from "@/utils/has-text-changed";
 import {
@@ -118,6 +119,7 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
 
 const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
+  const { isMidnight } = useTheme();
   const setSelectedDisk = useDisksStore.use.setSelectedDisk();
   const navigate = useNavigate();
   const system = useSystemStoreSelectors(useShallow((state) => state.info));
@@ -137,7 +139,7 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
 
   return (
     <Group mt="xs">
-      <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick}>
+      <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick} variant={isMidnight ? "white" : "default"}>
         Disk Analysis
       </Button>
       <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>

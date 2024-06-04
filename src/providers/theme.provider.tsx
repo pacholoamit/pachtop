@@ -14,16 +14,19 @@ interface ThemeProviderProps {
 interface ThemeContextType {
   currentTheme: THEME_OPTION;
   setTheme: (theme: THEME_OPTION) => void;
+  isMidnight: boolean;
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
   currentTheme: THEME_OPTION.SLATE,
   setTheme: () => {},
+  isMidnight: true,
 });
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<MantineThemeOverride>(themes[THEME_OPTION.MIDNIGHT]);
   const [currentTheme, setCurrentTheme] = useState<THEME_OPTION>(THEME_OPTION.MIDNIGHT);
+  const [isMidnight, setIsMidnight] = useState<boolean>(true);
 
   useEffect(() => {
     const loadTheme = async () => {
@@ -34,6 +37,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       }
       handleSetTheme(THEME_OPTION.SLATE);
     };
+    setIsMidnight(currentTheme === THEME_OPTION.MIDNIGHT);
     loadTheme();
   }, []);
 
@@ -46,7 +50,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ setTheme: handleSetTheme, currentTheme }}>
+    <ThemeContext.Provider value={{ setTheme: handleSetTheme, currentTheme, isMidnight }}>
       <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
         {children}
       </MantineProvider>

@@ -5,14 +5,13 @@ import useTheme from "@/hooks/useTheme";
 import Navbar from "@/layout/components/navbar";
 import { AppShell, Styles, useMantineTheme } from "@mantine/core";
 
-import { THEME_OPTION } from "../contants";
 import AppFooter from "./components/footer";
 import Header from "./components/header";
 
 const Layout: React.FC = () => {
   const theme = useMantineTheme();
-  const { currentTheme } = useTheme();
-  const isMidnight = currentTheme === THEME_OPTION.MIDNIGHT;
+  const { isMidnight } = useTheme();
+
   const styles: Styles<"body" | "main" | "root", never> | undefined = {
     main: {
       background: theme.colors.dark[8],
