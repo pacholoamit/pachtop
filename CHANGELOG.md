@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 0.9.7
 - Performance improvements for UI
-- IMprove Navigation page
+- Improve Navigation Header and Sidebar
 
 ## 0.9.6
 - Fix issue where linux users are not able to navigate into disk analytics page
