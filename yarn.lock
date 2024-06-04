@@ -1548,12 +1548,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.12.13":
-  version: 20.12.13
-  resolution: "@types/node@npm:20.12.13"
+"@types/node@npm:^20.14.0":
+  version: 20.14.0
+  resolution: "@types/node@npm:20.14.0"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 9ec8971a76b2435379c10689c639ba1bbf4451075709bdf4bf23b7972a63f7d966947914410f2d3711a315e1157d782b76cfadc32944e29db9dd444221aea699
+  checksum: b62383ea004deb1b40c0612f373eaf02247381b65a90f7957dc3034dda9b5622ab61b7afafa82f67909667a5cf9ea43a0643b2a78ea295dac8b77e75e11470d7
   languageName: node
   linkType: hard
 
@@ -2879,7 +2879,7 @@ __metadata:
     "@tauri-apps/api": ^1.5.6
     "@tauri-apps/cli": ^1.5.14
     "@types/lodash.sortby": ^4.7.9
-    "@types/node": ^20.12.13
+    "@types/node": ^20.14.0
     "@types/react": ^18.3.3
     "@types/react-dom": ^18.3.0
     "@vitejs/plugin-react": ^4.3.0
@@ -2891,7 +2891,7 @@ __metadata:
     highcharts-react-official: ^3.2.1
     immer: ^10.1.1
     non.geist: ^1.0.3
-    posthog-js: ^1.136.1
+    posthog-js: ^1.136.4
     react: ^18.3.1
     react-apexcharts: ^1.4.1
     react-arborist: ^3.4.0
@@ -2969,13 +2969,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"posthog-js@npm:^1.136.1":
-  version: 1.136.1
-  resolution: "posthog-js@npm:1.136.1"
+"posthog-js@npm:^1.136.4":
+  version: 1.136.4
+  resolution: "posthog-js@npm:1.136.4"
   dependencies:
     fflate: ^0.4.8
     preact: ^10.19.3
-  checksum: ce6ff1e1cb1c292270bfad3f83f835b6c3df93cc1b78385c3f66c63db8b01996f6d25679cedc28d6ec39b887b36a53ceb1d8bef3a9899e85ea8f3c4a1f0f8040
+  checksum: 8f2c0612ee964ba809925ddef6f1f2374465b6a38b4efcb84648b1e6a6773c3aba0ea6226634d014951231db56a8fccbaab62b48b4ddf4c89bf3381d9d11a02b
   languageName: node
   linkType: hard
 
