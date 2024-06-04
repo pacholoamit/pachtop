@@ -51,12 +51,6 @@ export const useAreaChartState = (
 
     plotOptions: {
       series: {
-        dataGrouping: {
-          anchor: "end",
-          firstAnchor: "lastPoint",
-          lastAnchor: "lastPoint",
-          enabled: true,
-        },
         marker: {
           enabled: false,
         },
@@ -179,6 +173,7 @@ export const useAreaChartState = (
     },
     chart: {
       ignoreHiddenSeries: true,
+      alignTicks: false,
       backgroundColor: "transparent",
     },
   });
