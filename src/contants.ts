@@ -27,7 +27,7 @@ export const commonColors = {
   midnight: {
     cardBorder: "#27272a",
     layoutEdge: "#27272a",
-    cardColor: "#0a0a0a",
+    cardColor: "transparent",
     background: "#09090b",
     gridLine: "#27272a",
     label: "white",

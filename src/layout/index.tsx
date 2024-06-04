@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "@/layout/components/navbar";
 import { AppShell, Box, Styles, Tooltip, useMantineTheme } from "@mantine/core";
 
+import Ellipsis from "../components/ellipsis";
 import AppFooter from "./components/footer";
 import Header from "./components/header";
 
@@ -16,6 +17,7 @@ const Layout: React.FC = () => {
 
   return (
     <AppShell styles={styles} navbar={<Navbar />} footer={<AppFooter />} header={<Header />} padding={"xl"}>
+      <Ellipsis right="0px" width="75%" blur="150px" />
       <Outlet />
     </AppShell>
   );
