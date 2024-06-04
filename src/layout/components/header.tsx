@@ -24,7 +24,7 @@ const Header = () => {
     getVersion().then((v) => setVersion(v));
   }, []);
   return (
-    <MantineHeader height={47} style={{ backgroundColor: "transparent", backdropFilter: "blur(15px)" }}>
+    <MantineHeader height={48} style={{ backgroundColor: "transparent", backdropFilter: "blur(15px)" }}>
       <Group position="apart" align="center" pl={8} pr={8} pt={8}>
         <Badge color="teal" variant="dot">
           Pachtop {version && `v${version}`}
