@@ -38,6 +38,54 @@ export const commonColors = {
   },
 };
 
+const areaChartThemeOptions = {
+  swap: {
+    color: {
+      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+      stops: [
+        [0, "rgba(53, 162, 235, 1)"],
+        [1, "rgba(53, 162, 235, 0.45)"],
+      ],
+    },
+  },
+  networkReceived: {
+    color: {
+      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+      stops: [
+        [0, "rgb(236, 18, 120,1)"],
+        [1, "rgb(236, 18, 120, 0.45)"],
+      ],
+    },
+  },
+  networksTransmitted: {
+    color: {
+      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+      stops: [
+        [0, "rgb(252, 169, 46,1)"],
+        [1, "rgb(252, 169, 46, 0.45)"],
+      ],
+    },
+  },
+  memory: {
+    color: {
+      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+      stops: [
+        [0, "rgb(0, 236, 254, 1)"],
+        [1, "rgba(0, 236, 254, 0.35)"],
+      ],
+    },
+  },
+  globalCpu: {
+    color: {
+      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+      stops: [
+        [0, "rgba(255, 99, 132, 1)"],
+        [1, "rgba(255, 99, 132, 0.45)"],
+      ],
+    },
+  },
+};
+
 export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
   [THEME_OPTION.SLATE]: {
     fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
@@ -105,51 +153,7 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
               color: commonColors.slate.legend,
             },
           },
-          swap: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgba(53, 162, 235, 1)"],
-                [1, "rgba(53, 162, 235, 0.45)"],
-              ],
-            },
-          },
-          networkReceived: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(236, 18, 120,1)"],
-                [1, "rgb(236, 18, 120, 0.45)"],
-              ],
-            },
-          },
-          networksTransmitted: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(252, 169, 46,1)"],
-                [1, "rgb(252, 169, 46, 0.45)"],
-              ],
-            },
-          },
-          memory: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(0, 236, 254,1)"],
-                [1, "rgb(0, 236, 254, 0.3)"],
-              ],
-            },
-          },
-          globalCpu: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgba(255, 99, 132, 1)"],
-                [1, "rgba(255, 99, 132, 0.45)"],
-              ],
-            },
-          },
+          ...areaChartThemeOptions,
         },
         bar: {
           cpus: {
@@ -226,51 +230,7 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
               color: commonColors.midnight.legend,
             },
           },
-          swap: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgba(53, 162, 235, 1)"],
-                [1, "rgba(53, 162, 235, 0.45)"],
-              ],
-            },
-          },
-          networkReceived: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(236, 18, 120,1)"],
-                [1, "rgb(236, 18, 120, 0.45)"],
-              ],
-            },
-          },
-          networksTransmitted: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(252, 169, 46,1)"],
-                [1, "rgb(252, 169, 46, 0.45)"],
-              ],
-            },
-          },
-          memory: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(0, 236, 254,1)"],
-                [1, "rgb(0, 236, 254, 0.3)"],
-              ],
-            },
-          },
-          globalCpu: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgba(255, 99, 132, 1)"],
-                [1, "rgba(255, 99, 132, 0.45)"],
-              ],
-            },
-          },
+          ...areaChartThemeOptions,
         },
         bar: {
           cpus: {
