@@ -31,12 +31,11 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
     },
   });
 
-  // TODO: Fix tooltip getting cut due to outlet
   return (
     <Tooltip label={label} position="right" withArrow color="blue">
       <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
         <Group position={position}>
-          <ActionIcon variant="transparent" size={"md"}>
+          <ActionIcon variant="transparent" size={"sm"}>
             {icon}
           </ActionIcon>
         </Group>
@@ -50,24 +49,24 @@ const NavbarOptions = () => {
   const navigate = useNavigate();
   const options: NavbarOptionProps[] = [
     {
-      icon: <IconLayoutDashboard size={16} />,
+      icon: <IconLayoutDashboard size={24} />,
       label: "Dashboard",
       onClick: () => navigate("/"),
     },
     {
-      icon: <IconServer size={16} />,
+      icon: <IconServer size={24} />,
       label: "Disks",
       onClick: () => navigate("/disks"),
     },
     {
-      icon: <IconCpu size={16} />,
+      icon: <IconCpu size={24} />,
       label: "Processes",
       onClick: () => {
         navigate("/processes");
       },
     },
     {
-      icon: <IconSettings size={16} />,
+      icon: <IconSettings size={24} />,
       label: "Settings",
       onClick: () => {
         navigate("/settings");
