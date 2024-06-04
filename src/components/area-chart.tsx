@@ -174,7 +174,6 @@ export const useAreaChartState = (
     },
     chart: {
       ignoreHiddenSeries: true,
-
       backgroundColor: "transparent",
     },
   });

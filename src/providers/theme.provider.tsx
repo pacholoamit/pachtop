@@ -1,12 +1,12 @@
-import 'non.geist';
-import 'non.geist/mono';
+import "non.geist";
+import "non.geist/mono";
 
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from "react";
 
-import { DEFAULT_TITLEBAR_COLOR } from '@/contants';
-import { setWindowColor } from '@/lib';
-import store from '@/lib/store';
-import { MantineProvider, MantineThemeOverride } from '@mantine/core';
+import { DEFAULT_TITLEBAR_COLOR } from "@/contants";
+import { setWindowColor } from "@/lib";
+import store from "@/lib/store";
+import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -156,8 +156,8 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
             color: {
               linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
               stops: [
-                [0, "rgba(10, 167, 147, 1)"],
-                [1, "rgba(10, 167, 147, 0.45)"],
+                [0, "rgb(0, 236, 254,1)"],
+                [1, "rgb(0, 236, 254, 0.3)"],
               ],
             },
           },
@@ -201,10 +201,10 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       titlebar: commonColors.midnight.titlebar,
       charts: {
         statsRing: {
-          cpu: "white",
-          memory: "white",
-          swap: "white",
-          disk: "white",
+          cpu: "blue",
+          memory: "cyan",
+          swap: "red",
+          disk: "grape",
         },
         area: {
           default: {
@@ -247,19 +247,49 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
             },
           },
           swap: {
-            color: "white",
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgba(53, 162, 235, 1)"],
+                [1, "rgba(53, 162, 235, 0.45)"],
+              ],
+            },
           },
           networkReceived: {
-            color: "white",
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(236, 18, 120,1)"],
+                [1, "rgb(236, 18, 120, 0.45)"],
+              ],
+            },
           },
           networksTransmitted: {
-            color: "white",
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(252, 169, 46,1)"],
+                [1, "rgb(252, 169, 46, 0.45)"],
+              ],
+            },
           },
           memory: {
-            color: "white",
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(0, 236, 254,1)"],
+                [1, "rgb(0, 236, 254, 0.3)"],
+              ],
+            },
           },
           globalCpu: {
-            color: "white",
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgba(255, 99, 132, 1)"],
+                [1, "rgba(255, 99, 132, 0.45)"],
+              ],
+            },
           },
         },
         bar: {
@@ -338,19 +368,49 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
             },
           },
           swap: {
-            color: commonColors.bumblebee.yellow,
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgba(53, 162, 235, 1)"],
+                [1, "rgba(53, 162, 235, 0.45)"],
+              ],
+            },
           },
           networkReceived: {
-            color: commonColors.bumblebee.yellow,
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(236, 18, 120,1)"],
+                [1, "rgb(236, 18, 120, 0.45)"],
+              ],
+            },
           },
           networksTransmitted: {
-            color: commonColors.bumblebee.yellow,
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(252, 169, 46,1)"],
+                [1, "rgb(252, 169, 46, 0.45)"],
+              ],
+            },
           },
           memory: {
-            color: commonColors.bumblebee.yellow,
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgb(0, 236, 254,1)"],
+                [1, "rgb(0, 236, 254, 0.3)"],
+              ],
+            },
           },
           globalCpu: {
-            color: commonColors.bumblebee.yellow,
+            color: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, "rgba(255, 99, 132, 1)"],
+                [1, "rgba(255, 99, 132, 0.45)"],
+              ],
+            },
           },
         },
         bar: {
