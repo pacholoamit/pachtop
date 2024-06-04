@@ -3,8 +3,8 @@ import { Navbar as MantineNavbar, ScrollArea, Space } from "@mantine/core";
 
 const AppNavbar = () => {
   return (
-    <MantineNavbar p={0} width={{ base: 50 }} zIndex={1000}>
-      <MantineNavbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+    <MantineNavbar p={0} width={{ base: 50 }}>
+      <MantineNavbar.Section mx="-xs" px="xs">
         <NavbarOptions />
       </MantineNavbar.Section>
     </MantineNavbar>
