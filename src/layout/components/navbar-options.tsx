@@ -32,7 +32,7 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   });
 
   return (
-    <Tooltip label={label} position="right" withArrow color="blue">
+    <Tooltip label={label} position="right" withArrow color={"dark"}>
       <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
         <Group position={position}>
           <ActionIcon variant="transparent" size={"sm"}>

@@ -1,19 +1,6 @@
-import logoOnly from "/logo-only.png";
 import React from "react";
 
-import {
-  Badge,
-  Center,
-  Code,
-  Grid,
-  Group,
-  Header as MantineHeader,
-  Image,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Badge, Group, Header as MantineHeader, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { getVersion } from "@tauri-apps/api/app";
 
