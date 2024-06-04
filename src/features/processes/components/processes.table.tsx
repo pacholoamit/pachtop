@@ -1,8 +1,14 @@
+import "ag-grid-community/styles/ag-grid.css";
+import "@/features/processes/styles/ag-grid-theme-slate.css";
+import "@/features/processes/styles/ag-grid-theme-midnight.css";
+
 import { AgGridReact } from "ag-grid-react";
 import React, { useCallback } from "react";
 
 import Card from "@/components/card";
+import { THEME_OPTION } from "@/contants";
 import useProcessesSelectors from "@/features/processes/stores/processes.store";
+import useTheme from "@/hooks/useTheme";
 // @ts-ignore
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import { ColDef, GetRowIdParams, ModuleRegistry } from "@ag-grid-community/core";
@@ -17,6 +23,7 @@ interface ProcessTableProps {
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
+  const { currentTheme } = useTheme();
   const processes = useProcessesSelectors.use.processes();
   const [columnDefState, setColumnDefsState] = React.useState<ColDef[]>(columnDefs);
   const [opened, setOpened] = React.useState(false);
@@ -61,7 +68,10 @@ const ProcessTable: React.FC<ProcessTableProps> = ({ title, columnDefs }) => {
         </Group>
 
         <Space h={12} />
-        <div style={{ height: "100%", width: "100%" }} className="ag-theme-slate">
+        <div
+          style={{ height: "100%", width: "100%" }}
+          className={currentTheme === THEME_OPTION.SLATE ? "ag-theme-slate" : "ag-theme-midnight"}
+        >
           <AgGridReact
             rowData={processes}
             columnDefs={columnDefState as any}

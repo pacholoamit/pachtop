@@ -70,7 +70,7 @@ const areaChartThemeOptions = {
     color: {
       linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
       stops: [
-        [0, "rgb(0, 236, 254, 1)"],
+        [0, "rgb(0, 236, 254, 0.75)"],
         [1, "rgba(0, 236, 254, 0.35)"],
       ],
     },
