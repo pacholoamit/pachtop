@@ -15,16 +15,16 @@ import { Grid } from "@mantine/core";
 const StatsRings = () => {
   return (
     <>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <GlobalCpuStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <MemoryStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <SwapStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={12} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <DiskStatsRing />
       </Grid.Col>
     </>
