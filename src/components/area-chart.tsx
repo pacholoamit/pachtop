@@ -51,6 +51,12 @@ export const useAreaChartState = (
 
     plotOptions: {
       series: {
+        dataGrouping: {
+          anchor: "end",
+          firstAnchor: "lastPoint",
+          lastAnchor: "lastPoint",
+          enabled: true,
+        },
         marker: {
           enabled: false,
         },

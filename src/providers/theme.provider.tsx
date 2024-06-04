@@ -42,19 +42,6 @@ const commonColors = {
     titlebar: "#09090b",
     legend: "#dce1e8",
   },
-  bumblebee: {
-    cardBorder: "#27272a",
-    layoutEdge: "#27272a",
-    cardColor: "#0a0a0a",
-    background: "#09090b",
-    gridLine: "#27272a",
-    label: "white",
-    scrollbar: "#27272a",
-    tooltipBg: "#09090b",
-    titlebar: "#09090b",
-    legend: "#dce1e8",
-    yellow: "#fdd450",
-  },
 };
 
 export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
