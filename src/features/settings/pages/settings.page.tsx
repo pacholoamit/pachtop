@@ -83,7 +83,6 @@ const GeneralSection = () => {
             data={[
               { value: THEME_OPTION.SLATE, label: "Slate" },
               { value: THEME_OPTION.MIDNIGHT, label: "Midnight" },
-              { value: THEME_OPTION.BUMBLEBEE, label: "Bumblebee" },
             ]}
           />
         </Stack>

@@ -68,7 +68,6 @@ export const useAreaChartState = (
       gridLineColor: other.charts.area.default.gridLineColor,
       lineColor: other.charts.area.default.lineColor,
       labels: {
-        // enabled: false,
         step: 2,
         format: "{value:%I:%M %p}",
         style: {

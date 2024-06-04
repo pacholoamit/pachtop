@@ -15,7 +15,6 @@ interface ThemeProviderProps {
 export enum THEME_OPTION {
   SLATE = "slate",
   MIDNIGHT = "midnight",
-  BUMBLEBEE = "bumblebee",
 }
 
 const commonColors = {
@@ -294,128 +293,7 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         },
         bar: {
           cpus: {
-            colors: ["#FFFFFF"],
-          },
-        },
-      },
-    },
-  },
-  [THEME_OPTION.BUMBLEBEE]: {
-    fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
-    colorScheme: "dark",
-    primaryColor: "yellow",
-    colors: {
-      dark: [
-        "#C1C2C5",
-        "#A6A7AB",
-        "#909296",
-        "#27272a",
-        commonColors.bumblebee.cardBorder, // Card Borders
-        commonColors.bumblebee.layoutEdge, // Layout edges
-        commonColors.bumblebee.cardColor, // Card colors
-        commonColors.bumblebee.background, // Background of layout
-        commonColors.bumblebee.background, // Background
-        commonColors.bumblebee.background,
-      ],
-    },
-    other: {
-      titlebar: commonColors.bumblebee.titlebar,
-      charts: {
-        statsRing: {
-          cpu: commonColors.bumblebee.yellow,
-          memory: commonColors.bumblebee.yellow,
-          swap: commonColors.bumblebee.yellow,
-          disk: commonColors.bumblebee.yellow,
-        },
-        area: {
-          default: {
-            navigator: {
-              handles: {
-                backgroundColor: "white",
-              },
-              maskFill: "rgba(255, 255, 255, 0.1)",
-            },
-            gridLineColor: commonColors.bumblebee.gridLine,
-            lineColor: commonColors.bumblebee.gridLine,
-            labelColor: commonColors.bumblebee.label,
-            tooltip: {
-              color: commonColors.bumblebee.legend,
-              backgroundColor: commonColors.bumblebee.tooltipBg,
-            },
-            scrollbar: {
-              rifleColor: commonColors.bumblebee.scrollbar,
-              barBackgroundColor: commonColors.bumblebee.scrollbar,
-              buttonBackgroundColor: commonColors.bumblebee.scrollbar,
-              trackBorderColor: commonColors.bumblebee.scrollbar,
-            },
-            rangeSelector: {
-              labelStyle: {
-                color: commonColors.bumblebee.label,
-                backgroundColor: commonColors.bumblebee.gridLine,
-              },
-              inputStyle: {
-                color: commonColors.bumblebee.label,
-              },
-            },
-            buttonTheme: {
-              style: {
-                color: commonColors.bumblebee.label,
-                backgroundColor: commonColors.bumblebee.gridLine,
-              },
-            },
-            legend: {
-              color: commonColors.bumblebee.legend,
-            },
-          },
-          swap: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgba(53, 162, 235, 1)"],
-                [1, "rgba(53, 162, 235, 0.45)"],
-              ],
-            },
-          },
-          networkReceived: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(236, 18, 120,1)"],
-                [1, "rgb(236, 18, 120, 0.45)"],
-              ],
-            },
-          },
-          networksTransmitted: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(252, 169, 46,1)"],
-                [1, "rgb(252, 169, 46, 0.45)"],
-              ],
-            },
-          },
-          memory: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgb(0, 236, 254,1)"],
-                [1, "rgb(0, 236, 254, 0.3)"],
-              ],
-            },
-          },
-          globalCpu: {
-            color: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "rgba(255, 99, 132, 1)"],
-                [1, "rgba(255, 99, 132, 0.45)"],
-              ],
-            },
-          },
-        },
-        bar: {
-          cpus: {
-            colors: [commonColors.bumblebee.yellow],
+            colors: ["#7B2EDA"],
           },
         },
       },
@@ -438,6 +316,13 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         setTheme(themes[theme as THEME_OPTION]);
         setCurrentTheme(theme as THEME_OPTION);
         setWindowColor(themes[theme as THEME_OPTION]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
+      }
+
+      // Default handler if there are theme issues
+      if (!theme?.includes("slate") && !theme?.includes("midnight")) {
+        setTheme(themes[THEME_OPTION.SLATE]);
+        setCurrentTheme(THEME_OPTION.SLATE);
+        setWindowColor(themes[THEME_OPTION.SLATE]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
       }
     });
   }, []);
