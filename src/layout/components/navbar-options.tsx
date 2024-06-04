@@ -24,15 +24,15 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
     borderRadius: theme.radius.sm,
     color: theme.colors.dark[0],
     "&:hover": {
-      backgroundColor: theme.colors.dark[6],
+      backgroundColor: theme.colors.dark[3],
     },
     "&[data-active]": {
-      backgroundColor: theme.colors.dark[6],
+      backgroundColor: theme.colors.dark[3],
     },
   });
 
   return (
-    <Tooltip label={label} position="right" withArrow color="blue">
+    <Tooltip label={label} position="right" withArrow color={"gray"}>
       <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
         <Group position={position}>
           <ActionIcon variant="transparent" size={"sm"}>

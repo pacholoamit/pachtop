@@ -89,5 +89,5 @@ pub fn setup_win_window(app: &mut App) {
         update_bg_color(&HWND(win_handle.0), color);
     });
 
-    update_bg_color(&HWND(win_handle.0), HexColor::rgb(14, 24, 47));
+    update_bg_color(&HWND(win_handle.0), HexColor::rgb(9, 9, 11));
 }

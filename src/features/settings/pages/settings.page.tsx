@@ -4,9 +4,9 @@ import { LinearGradient } from "react-text-gradients";
 
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
+import { THEME_OPTION } from "@/contants";
 import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
-import { THEME_OPTION } from "@/providers/theme.provider";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
 import { checkUpdate, installUpdate } from "@tauri-apps/api/updater";
@@ -83,7 +83,6 @@ const GeneralSection = () => {
             data={[
               { value: THEME_OPTION.SLATE, label: "Slate" },
               { value: THEME_OPTION.MIDNIGHT, label: "Midnight" },
-              { value: THEME_OPTION.BUMBLEBEE, label: "Bumblebee" },
             ]}
           />
         </Stack>

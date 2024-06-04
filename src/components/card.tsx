@@ -12,7 +12,7 @@ const Card: React.FC<CardProps> = ({ children, style, height = "300px" }) => {
   const styles: React.CSSProperties = { height, padding: 16, ...style };
 
   return (
-    <MantineCard style={styles} shadow="lg" p="md" radius={"md"} withBorder>
+    <MantineCard style={styles} shadow="lg" p="md" radius={"md"} withBorder styles={{ backdropFilter: "blur(15px)" }}>
       {children}
     </MantineCard>
   );
