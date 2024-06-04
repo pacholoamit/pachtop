@@ -22,8 +22,8 @@ export const ThemeContext = createContext<ThemeContextType>({
 });
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<MantineThemeOverride>(themes[THEME_OPTION.SLATE]);
-  const [currentTheme, setCurrentTheme] = useState<THEME_OPTION>(THEME_OPTION.SLATE);
+  const [theme, setTheme] = useState<MantineThemeOverride>(themes[THEME_OPTION.MIDNIGHT]);
+  const [currentTheme, setCurrentTheme] = useState<THEME_OPTION>(THEME_OPTION.MIDNIGHT);
 
   useEffect(() => {
     const loadTheme = async () => {
