@@ -66,7 +66,7 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
         "#C1C2C5",
         "#A6A7AB",
         "#909296",
-        "#5C5F66",
+        commonColors.slate.cardColor,
         commonColors.slate.cardBorder, // Card Borders
         commonColors.slate.layoutEdge, // Layout edges
         commonColors.slate.cardColor, // Card colors

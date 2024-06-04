@@ -24,10 +24,10 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
     borderRadius: theme.radius.sm,
     color: theme.colors.dark[0],
     "&:hover": {
-      backgroundColor: theme.colors.dark[6],
+      backgroundColor: theme.colors.dark[3],
     },
     "&[data-active]": {
-      backgroundColor: theme.colors.dark[6],
+      backgroundColor: theme.colors.dark[3],
     },
   });
 
