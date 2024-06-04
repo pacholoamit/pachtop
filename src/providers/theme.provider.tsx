@@ -30,9 +30,9 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       const storedTheme = await store.theme.get();
       if (storedTheme && themes[storedTheme as THEME_OPTION]) {
         handleSetTheme(storedTheme as THEME_OPTION);
-      } else {
-        handleSetTheme(THEME_OPTION.SLATE);
+        return;
       }
+      handleSetTheme(THEME_OPTION.SLATE);
     };
     loadTheme();
   }, []);
