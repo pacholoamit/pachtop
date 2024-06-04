@@ -1,7 +1,7 @@
 {
   "name": "pachtop",
   "private": true,
-  "version": "0.9.6",
+  "version": "0.9.7",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -26,7 +26,7 @@
     "highcharts-react-official": "^3.2.1",
     "immer": "^10.1.1",
     "non.geist": "^1.0.3",
-    "posthog-js": "^1.136.1",
+    "posthog-js": "^1.136.4",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-arborist": "^3.4.0",
@@ -35,6 +35,7 @@
     "react-github-btn": "^1.4.0",
     "react-router-dom": "^6.23.1",
     "react-text-gradients": "^1.0.2",
+    "styled-components": "^6.1.11",
     "tauri-plugin-autostart-api": "https://github.com/tauri-apps/tauri-plugin-autostart",
     "tauri-plugin-log-api": "https://github.com/tauri-apps/tauri-plugin-log",
     "tauri-plugin-store": "https://github.com/tauri-apps/tauri-plugin-store",
@@ -43,7 +44,7 @@
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.14",
     "@types/lodash.sortby": "^4.7.9",
-    "@types/node": "^20.12.13",
+    "@types/node": "^20.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.0",

@@ -1,4 +1,5 @@
 import PageWrapper from "@/components/page-wrapper";
+import SystemInformationWidget from "@/components/system-information-widget";
 import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-charts";
 import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu.area-chart";
@@ -9,23 +10,21 @@ import NetworksReceivedAreaChart from "@/features/metrics/components/networks/ne
 import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
-import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
-import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
-import { Grid, Group, Title } from "@mantine/core";
+import { Grid } from "@mantine/core";
 
 const StatsRings = () => {
   return (
     <>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <GlobalCpuStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <MemoryStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={4} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <SwapStatsRing />
       </Grid.Col>
-      <Grid.Col sm={6} md={6} lg={12} xl={3}>
+      <Grid.Col sm={6} md={6} lg={3} xl={3}>
         <DiskStatsRing />
       </Grid.Col>
     </>
@@ -68,20 +67,6 @@ const DisksSection = () => {
         <NetworksTransmittedAreaChart />
       </Grid.Col>
     </>
-  );
-};
-
-const SystemInformationWidget = () => {
-  const systemInformation = useSystemStoreSelectors.use.info();
-  const globalCpu = useGlobalCpuSelectors.use.latest();
-
-  return (
-    <Group>
-      <Title order={6}>CPU: {globalCpu.brand}</Title>
-      <Title order={6}>CPU cores: {systemInformation.coreCount}</Title>
-      <Title order={6}>OS: {systemInformation.os}</Title>
-      <Title order={6}>Kernel: {systemInformation.kernelVersion}</Title>
-    </Group>
   );
 };
 

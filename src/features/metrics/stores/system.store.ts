@@ -1,7 +1,7 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { streams, SysInfo } from '@/lib';
-import createSelectors from '@/utils/create-selectors';
+import { streams, SysInfo } from "@/lib";
+import createSelectors from "@/utils/create-selectors";
 
 const DEFAULT_SYS_INFO: SysInfo = {
   coreCount: 0,
@@ -9,8 +9,8 @@ const DEFAULT_SYS_INFO: SysInfo = {
   kernelVersion: "unknown",
   osVersion: "unknown",
   os: "unknown",
-  timestamp: 0,
 };
+
 interface SystemState {
   info: SysInfo;
   listen: () => void;

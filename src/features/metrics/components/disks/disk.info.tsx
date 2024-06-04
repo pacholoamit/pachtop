@@ -1,10 +1,15 @@
 import drive from "/drive.png";
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 
-import DynamicProgress, { DynamicProgressRangeInput } from "@/components/dynamic-progress";
+import DynamicProgress from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
+import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import useTheme from "@/hooks/useTheme";
 import { commands, Disk } from "@/lib";
+import hasBytesTextChanged from "@/utils/has-text-changed";
 import {
   ActionIcon,
   Badge,
@@ -19,9 +24,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
-
-import useSystemStoreSelectors from "../../stores/system.store";
+import { IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
 
 interface DiskInfoProps {
   disk: Disk;
@@ -116,10 +119,10 @@ const DiskInfoSection: React.FC<{ disk?: Disk }> = ({ disk }) => {
 
 const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
+  const { isMidnight } = useTheme();
   const setSelectedDisk = useDisksStore.use.setSelectedDisk();
   const navigate = useNavigate();
-  const system = useSystemStoreSelectors.use.info();
-  const isWindows = system.os.toLowerCase().includes("windows");
+  const system = useSystemStoreSelectors(useShallow((state) => state.info));
 
   const showDirectory = async () => {
     if (!disk.mountPoint) return;
@@ -129,14 +132,14 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   // Encode this id to avoid any issues with special characters. (Disk.name for windows works)
   // TODO: Make this more ergonomic
   const onShowDetailsClick = () => {
+    const isWindows = system.os.toLowerCase().includes("windows");
     setSelectedDisk(isWindows ? disk.name : disk.mountPoint);
     navigate(`/disks/${encodeURIComponent(isWindows ? disk.name : disk.mountPoint)}`);
-    console.log("Unix navigate: ", `/disks/${disk.mountPoint}`);
   };
 
   return (
     <Group mt="xs">
-      <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick}>
+      <Button radius="md" style={{ flex: 1 }} onClick={onShowDetailsClick} variant={isMidnight ? "white" : "default"}>
         Disk Analysis
       </Button>
       <ActionIcon variant="default" radius="md" size={36} onClick={showDirectory}>
@@ -162,4 +165,8 @@ const DiskStatsCard: React.FC<DiskInfoProps> = ({ disk }) => {
   );
 };
 
-export default DiskStatsCard;
+const isEqual = (prev: DiskInfoProps, next: DiskInfoProps) => {
+  return !hasBytesTextChanged(prev.disk.used, next.disk.used) && !hasBytesTextChanged(prev.disk.free, next.disk.free);
+};
+
+export default memo(DiskStatsCard, isEqual);

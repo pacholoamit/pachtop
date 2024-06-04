@@ -68,7 +68,6 @@ export const useAreaChartState = (
       gridLineColor: other.charts.area.default.gridLineColor,
       lineColor: other.charts.area.default.lineColor,
       labels: {
-        // enabled: false,
         step: 2,
         format: "{value:%I:%M %p}",
         style: {
@@ -121,6 +120,7 @@ export const useAreaChartState = (
     },
     // This is the calendar thing on the top right
     rangeSelector: {
+      inputEnabled: false,
       floating: true,
 
       labelStyle: {
@@ -172,6 +172,8 @@ export const useAreaChartState = (
       allowForce: true,
     },
     chart: {
+      ignoreHiddenSeries: true,
+      alignTicks: false,
       backgroundColor: "transparent",
     },
   });

@@ -11,19 +11,21 @@ import { useViewportSize } from "@mantine/hooks";
 HighchartsTreemap(Highcharts);
 DarkUnica(Highcharts);
 
-export interface InitialTreemapChartStateInput {
-  title: {
-    text: string;
-  };
-  series?: Highcharts.SeriesOptionsType[];
-  yAxis?: {
-    labels: {
-      formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
+export interface InitialTreemapChartStateInput extends Highcharts.Options {
+  custom?: {
+    title: {
+      text: string;
     };
-    max?: number;
-  };
+    series?: Highcharts.SeriesOptionsType[];
+    yAxis?: {
+      labels: {
+        formatter: Highcharts.AxisLabelsFormatterCallbackFunction;
+      };
+      max?: number;
+    };
 
-  legend?: boolean;
+    legend?: boolean;
+  };
 }
 
 // Crutch because types are incorrect in HighChartsReact lib
@@ -51,6 +53,9 @@ export const useTreemapChartState = (
     },
     chart: {
       backgroundColor: "transparent",
+      style: {
+        fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
+      },
     },
     boost: {
       enabled: true,
@@ -59,7 +64,7 @@ export const useTreemapChartState = (
       usePreallocated: true,
     },
     title: {
-      text: opts.title.text,
+      text: opts.custom?.title.text || "",
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
         fontWeight: "700",

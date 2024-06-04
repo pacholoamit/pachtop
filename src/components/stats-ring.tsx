@@ -1,3 +1,5 @@
+import { JSX, memo } from "react";
+
 import { Box, Center, DefaultMantineColor, Group, Paper, rem, RingProgress, Text } from "@mantine/core";
 import { TablerIconsProps } from "@tabler/icons-react";
 
@@ -45,4 +47,8 @@ const StatsRing: React.FC<StatsRingProps> = (props) => {
   );
 };
 
-export default StatsRing;
+const areEqual = (prev: StatsRingProps, next: StatsRingProps) => {
+  return prev.progress === next.progress && prev.stats === next.stats && prev.label === next.label;
+};
+
+export default memo(StatsRing, areEqual);

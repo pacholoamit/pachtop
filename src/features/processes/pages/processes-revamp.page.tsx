@@ -1,19 +1,20 @@
-import "ag-grid-community/styles/ag-grid.css";
-import "@/features/processes/styles/ag-grid-theme-slate.css";
 
-import { CustomCellRendererProps } from "ag-grid-react";
 
-import Card from "@/components/card";
-import PageWrapper from "@/components/page-wrapper";
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
-import ProcessComparitor from "@/features/processes/components/processes.comparitor";
-import ProcessTable from "@/features/processes/components/processes.table";
-import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
-import { Process } from "@/lib";
-import { ColDef } from "@ag-grid-community/core";
-import { ActionIcon, Box, Center, Grid, Group, Image, Space, Tabs, Text, Tooltip } from "@mantine/core";
-import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
+import { CustomCellRendererProps } from 'ag-grid-react';
+
+import Card from '@/components/card';
+import PageWrapper from '@/components/page-wrapper';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
+import ProcessComparitor from '@/features/processes/components/processes.comparitor';
+import ProcessTable from '@/features/processes/components/processes.table';
+import useComparitorSelector from '@/features/processes/stores/processes-comparator.store';
+import { Process } from '@/lib';
+import { ColDef } from '@ag-grid-community/core';
+import {
+    ActionIcon, Box, Center, Grid, Group, Image, Space, Tabs, Text, Tooltip
+} from '@mantine/core';
+import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from '@tabler/icons-react';
 
 // TODO: Make Action Icon X work
 const ActionsColumn = (props: CustomCellRendererProps<Process>) => {
