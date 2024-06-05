@@ -15,6 +15,7 @@ interface PreferencesState {
     disk: ResourceWidget;
     cpu: ResourceWidget;
     memory: ResourceWidget;
+    swap: ResourceWidget;
   };
 }
 
@@ -51,6 +52,10 @@ const usePreferencesStore = create<PreferencesState>()((set, get) => ({
     disk: {
       state: "used",
       toggle: createToggle(set, get, "disk"),
+    },
+    swap: {
+      state: "used",
+      toggle: createToggle(set, get, "swap"),
     },
   },
 }));

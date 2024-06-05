@@ -8,6 +8,7 @@ const DEFAULT_SWAP: Swap = {
   total: 0,
   used: 0,
   usedPercentage: 0,
+  freePercentage: 0,
   timestamp: 0,
 };
 

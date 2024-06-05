@@ -77,30 +77,43 @@ const MemoryIndicator = () => {
 };
 
 const SwapIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.swap));
   const swap = useSwapSelectors(
     useShallow((state) => {
       return {
+        free: state.latest.free,
         used: state.latest.used,
         usedPercentage: state.latest.usedPercentage,
       };
     })
   );
 
-  const swapUsed = useMemo(() => formatBytes(swap.used), [swap.used]);
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+
+  const label = useMemo(() => (state === "used" ? formatBytes(swap.used) : formatBytes(swap.free)), [swap.used, state]);
   return (
     <>
-      <Text size="xs">Swap: {swapUsed}</Text>
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        SWAP {indicator}: {label}
+      </Text>
       <ProgressContainer value={swap.usedPercentage} />
     </>
   );
 };
 
 const CpuIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.cpu));
   const cpu = useGlobalCpuSelectors.use.latest();
-  const cpuUsage = useMemo(() => cpu.usage.toFixed(2), [cpu.usage]);
+
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+  const label = useMemo(() => {
+    return state === "used" ? `${cpu.usage.toFixed(2)}%` : `${(100 - cpu.usage).toFixed(2)}%`;
+  }, [cpu.usage, state]);
   return (
     <>
-      <Text size="xs">CPU: {cpuUsage}%</Text>
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        CPU {indicator}: {label}%
+      </Text>
       <ProgressContainer value={cpu.usage} />
     </>
   );
