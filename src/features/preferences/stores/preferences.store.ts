@@ -4,70 +4,53 @@ import createSelectors from "@/utils/create-selectors";
 
 type ResourceWidgetState = "used" | "free";
 
+interface ResourceWidget {
+  state: ResourceWidgetState;
+  toggle: () => void;
+}
+
 // TODO: Add theme here?
 interface PreferencesState {
   resourceWidgets: {
-    disk: {
-      state: ResourceWidgetState;
-      toggle: () => void;
-    };
-    cpu: {
-      state: ResourceWidgetState;
-      toggle: () => void;
-    };
-    memory: {
-      state: ResourceWidgetState;
-      toggle: () => void;
-    };
+    disk: ResourceWidget;
+    cpu: ResourceWidget;
+    memory: ResourceWidget;
   };
 }
+
+type Set = (
+  partial:
+    | PreferencesState
+    | Partial<PreferencesState>
+    | ((state: PreferencesState) => PreferencesState | Partial<PreferencesState>)
+) => void;
+
+const createToggle = (set: Set, get: () => PreferencesState, key: keyof PreferencesState["resourceWidgets"]) => () => {
+  const state = get().resourceWidgets[key];
+  set((prevState) => ({
+    resourceWidgets: {
+      ...prevState.resourceWidgets,
+      [key]: {
+        ...state,
+        state: state.state === "used" ? "free" : "used",
+      },
+    },
+  }));
+};
 
 const usePreferencesStore = create<PreferencesState>()((set, get) => ({
   resourceWidgets: {
     cpu: {
       state: "used",
-      toggle: () => {
-        const state = get().resourceWidgets.cpu;
-        set({
-          resourceWidgets: {
-            ...get().resourceWidgets,
-            cpu: {
-              ...state,
-              state: state.state === "used" ? "free" : "used",
-            },
-          },
-        });
-      },
+      toggle: createToggle(set, get, "cpu"),
     },
     memory: {
       state: "used",
-      toggle: () => {
-        const state = get().resourceWidgets.memory;
-        set({
-          resourceWidgets: {
-            ...get().resourceWidgets,
-            memory: {
-              ...state,
-              state: state.state === "used" ? "free" : "used",
-            },
-          },
-        });
-      },
+      toggle: createToggle(set, get, "memory"),
     },
     disk: {
       state: "used",
-      toggle: () => {
-        const state = get().resourceWidgets.disk;
-        set({
-          resourceWidgets: {
-            ...get().resourceWidgets,
-            disk: {
-              ...state,
-              state: state.state === "used" ? "free" : "used",
-            },
-          },
-        });
-      },
+      toggle: createToggle(set, get, "disk"),
     },
   },
 }));
