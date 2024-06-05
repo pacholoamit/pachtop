@@ -2939,7 +2939,7 @@ __metadata:
     highcharts-react-official: ^3.2.1
     immer: ^10.1.1
     non.geist: ^1.0.3
-    posthog-js: ^1.136.4
+    posthog-js: ^1.136.5
     react: ^18.3.1
     react-apexcharts: ^1.4.1
     react-arborist: ^3.4.0
@@ -3025,13 +3025,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"posthog-js@npm:^1.136.4":
-  version: 1.136.4
-  resolution: "posthog-js@npm:1.136.4"
+"posthog-js@npm:^1.136.5":
+  version: 1.136.5
+  resolution: "posthog-js@npm:1.136.5"
   dependencies:
     fflate: ^0.4.8
     preact: ^10.19.3
-  checksum: 8f2c0612ee964ba809925ddef6f1f2374465b6a38b4efcb84648b1e6a6773c3aba0ea6226634d014951231db56a8fccbaab62b48b4ddf4c89bf3381d9d11a02b
+  checksum: 2238a39fb5a035f448d0bbf68f6c151a686a1210e4a21063c7fd5af8c1e45f2a50a8df1d93ca678fb02a0ceed669d1a396110dbf08742327365cdd54983db733
   languageName: node
   linkType: hard
 
