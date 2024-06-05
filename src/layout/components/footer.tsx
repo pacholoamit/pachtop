@@ -8,7 +8,7 @@ import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import usePreferencesSelector from "@/features/preferences/stores/preferences.store";
-import { Box, Footer, Group, Text } from "@mantine/core";
+import { Box, Footer, Group, Indicator, Text } from "@mantine/core";
 
 const ProgressContainer = ({ value }: { value: number }) => {
   return (
@@ -38,28 +38,39 @@ const DiskIndicator = () => {
   const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
   const progress = useMemo(() => (state === "used" ? disk.usedPercentage : disk.freePercentage), [disk.usedPercentage]);
 
-  console.log(disk);
-
   return (
     <>
       <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
-        Disk {disk.name} {indicator} {disk[state]}
+        Disk {disk.name} {indicator}: {disk[state]}
       </Text>
       <MemoizedProgressContainer value={progress} />
     </>
   );
 };
 
+// TODO: May be further optimized for re-renders
 const MemoryIndicator = () => {
   const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.memory));
   const memory = useMemorySelectors(
-    useShallow((state) => ({ used: state.latest.used, usedPercentage: state.latest.usedPercentage }))
+    useShallow((state) => ({
+      free: state.latest.free,
+      used: state.latest.used,
+      usedPercentage: state.latest.usedPercentage,
+      freePercentage: state.latest.freePercentage,
+    }))
   );
 
-  const memoryUsedLabel = useMemo(() => formatBytes(memory.used), [formatBytes(memory.used)]);
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+  const label = useMemo(
+    () => (state === "used" ? formatBytes(memory.used) : formatBytes(memory.free)),
+    [memory.used, state]
+  );
+
   return (
     <>
-      <Text size="xs">RAM: {memoryUsedLabel} </Text>
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        RAM {indicator}: {label}
+      </Text>
       <ProgressContainer value={memory.usedPercentage} />
     </>
   );
