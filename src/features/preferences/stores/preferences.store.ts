@@ -39,6 +39,7 @@ const createToggle = (set: Set, get: () => PreferencesState, key: keyof Preferen
   }));
 };
 
+// TODO : Implement persistence
 const usePreferencesStore = create<PreferencesState>()((set, get) => ({
   resourceWidgets: {
     cpu: {
