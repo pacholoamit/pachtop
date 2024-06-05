@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 import DynamicProgress from "@/components/dynamic-progress";
@@ -7,6 +7,7 @@ import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
 import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
+import usePreferencesSelector from "@/features/preferences/stores/preferences.store";
 import { Box, Footer, Group, Text } from "@mantine/core";
 
 const ProgressContainer = ({ value }: { value: number }) => {
@@ -20,29 +21,37 @@ const ProgressContainer = ({ value }: { value: number }) => {
 const MemoizedProgressContainer = memo(ProgressContainer);
 
 const DiskIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.disk));
+
   const disk = useDisksSelectors(
     useShallow((state) => {
       return {
-        name: state.disks[0].name,
-        used: state.disks[0].used,
-        usedPercentage: state.disks[0].usedPercentage,
+        name: state.formattedDisks[0].name,
+        used: state.formattedDisks[0].used,
+        free: state.formattedDisks[0].free,
+        freePercentage: state.formattedDisks[0].freePercentage,
+        usedPercentage: state.formattedDisks[0].usedPercentage,
       };
     })
   );
 
-  const diskUsed = useMemo(() => formatBytes(disk.used), [formatBytes(disk.used)]);
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+  const progress = useMemo(() => (state === "used" ? disk.usedPercentage : disk.freePercentage), [disk.usedPercentage]);
+
+  console.log(disk);
 
   return (
     <>
-      <Text size="xs">
-        Disk {disk.name} {diskUsed}
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        Disk {disk.name} {indicator} {disk[state]}
       </Text>
-      <MemoizedProgressContainer value={disk.usedPercentage} />
+      <MemoizedProgressContainer value={progress} />
     </>
   );
 };
 
 const MemoryIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.memory));
   const memory = useMemorySelectors(
     useShallow((state) => ({ used: state.latest.used, usedPercentage: state.latest.usedPercentage }))
   );
