@@ -2,7 +2,7 @@ name: "release"
 
 on:
   workflow_dispatch:
-  push: { branches: ["release"] }
+  push: { branches: ["release", "master"] } # TODO: remove master later
 env:
   VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
@@ -44,7 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        platform: [macos-latest,macos-latest-large , ubuntu-20.04, windows-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
