@@ -31,6 +31,16 @@ const theme = (store: Store) => {
   };
 };
 
+const isFirstRun = (store: Store) => {
+  return {
+    get: async () => await store.get<boolean>("isFirstRun"),
+    set: async (value: boolean) => {
+      await store.set("isFirstRun", value);
+      await store.save();
+    },
+  };
+};
+
 const createStore = (path: string) => {
   const store = new Store(path);
 
@@ -38,6 +48,7 @@ const createStore = (path: string) => {
     userId: userId(store),
     windowColor: windowColor(store),
     theme: theme(store),
+    isFirstRun: isFirstRun(store),
   };
 };
 
