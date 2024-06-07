@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { matchRoutes, useLocation, useNavigate } from "react-router-dom";
 
-import useMediaQuery from "@/hooks/useMediaQuery";
 import { ActionIcon, Group, MantineTheme, Portal, Tooltip, UnstyledButton } from "@mantine/core";
 import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
@@ -14,8 +13,6 @@ interface NavbarOptionProps {
 
 export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   const { icon, label, onClick, active } = props;
-  const { isSmallerThanMd } = useMediaQuery();
-  const position = isSmallerThanMd ? "center" : "left";
 
   const sx = (theme: MantineTheme) => ({
     display: "block",
@@ -34,34 +31,55 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   return (
     <Tooltip label={label} position="right" withArrow color={"gray"}>
       <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
-        <Group position={position}>
-          <ActionIcon variant="transparent" size={"sm"}>
-            {icon}
-          </ActionIcon>
-        </Group>
+        {icon}
       </UnstyledButton>
     </Tooltip>
   );
 };
 
+// TODO: create zustand store for active navbar option
 const NavbarOptions = () => {
   const [active, setActive] = useState(0);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Jeezus this is such a hack
+    const diskById = matchRoutes([{ path: "/disks/:id" }], location.pathname);
+    if (diskById && diskById.length > 0) return setActive(1);
+
+    const routeMap: Record<string, number> = {
+      "/": 0,
+      "/disks": 1,
+      "/processes": 2,
+      "/settings": 3,
+    };
+
+    setActive(routeMap[location.pathname] || 0);
+  }, [location.pathname]);
+
   const options: NavbarOptionProps[] = [
     {
       icon: <IconLayoutDashboard size={24} />,
       label: "Dashboard",
-      onClick: () => navigate("/"),
+      onClick: () => {
+        if (location.pathname === "/") return;
+        navigate("/");
+      },
     },
     {
       icon: <IconServer size={24} />,
       label: "Disks",
-      onClick: () => navigate("/disks"),
+      onClick: () => {
+        if (location.pathname === "/disks") return;
+        navigate("/disks");
+      },
     },
     {
       icon: <IconCpu size={24} />,
       label: "Processes",
       onClick: () => {
+        if (location.pathname === "/processes") return;
         navigate("/processes");
       },
     },
@@ -69,6 +87,7 @@ const NavbarOptions = () => {
       icon: <IconSettings size={24} />,
       label: "Settings",
       onClick: () => {
+        if (location.pathname === "/settings") return;
         navigate("/settings");
       },
     },

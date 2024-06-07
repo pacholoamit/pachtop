@@ -1,6 +1,6 @@
 [package]
 name = "app"
-version = "0.9.7"
+version = "0.9.8-1"
 description = "Cross-platform (Linux, WIndows, MacOS) Desktop GUI system monitor"
 authors = ["Pacholo Amit"]
 license = "MIT"
@@ -30,6 +30,7 @@ sysinfo = "0.30.12"
 tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-window-state = "0.1.0"
 log = "^0.4"
 tokio = { version = "1.37.0", features = ["macros", "rt-multi-thread"] }

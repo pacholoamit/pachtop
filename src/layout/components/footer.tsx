@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 import DynamicProgress from "@/components/dynamic-progress";
@@ -7,7 +7,8 @@ import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
 import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { Box, Footer, Group, Text } from "@mantine/core";
+import usePreferencesSelector from "@/features/preferences/stores/preferences.store";
+import { Box, Footer, Group, Indicator, Text } from "@mantine/core";
 
 const ProgressContainer = ({ value }: { value: number }) => {
   return (
@@ -20,67 +21,99 @@ const ProgressContainer = ({ value }: { value: number }) => {
 const MemoizedProgressContainer = memo(ProgressContainer);
 
 const DiskIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.disk));
+
   const disk = useDisksSelectors(
     useShallow((state) => {
       return {
-        name: state.disks[0].name,
-        used: state.disks[0].used,
-        usedPercentage: state.disks[0].usedPercentage,
+        name: state.formattedDisks[0].name,
+        used: state.formattedDisks[0].used,
+        free: state.formattedDisks[0].free,
+        freePercentage: state.formattedDisks[0].freePercentage,
+        usedPercentage: state.formattedDisks[0].usedPercentage,
       };
     })
   );
 
-  const diskUsed = useMemo(() => formatBytes(disk.used), [formatBytes(disk.used)]);
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+  const progress = useMemo(() => (state === "used" ? disk.usedPercentage : disk.freePercentage), [disk.usedPercentage]);
 
   return (
     <>
-      <Text size="xs">
-        Disk {disk.name} {diskUsed}
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        Disk {disk.name} {indicator}: {disk[state]}
       </Text>
-      <MemoizedProgressContainer value={disk.usedPercentage} />
+      <MemoizedProgressContainer value={progress} />
     </>
   );
 };
 
+// TODO: May be further optimized for re-renders
 const MemoryIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.memory));
   const memory = useMemorySelectors(
-    useShallow((state) => ({ used: state.latest.used, usedPercentage: state.latest.usedPercentage }))
+    useShallow((state) => ({
+      free: state.latest.free,
+      used: state.latest.used,
+      usedPercentage: state.latest.usedPercentage,
+      freePercentage: state.latest.freePercentage,
+    }))
   );
 
-  const memoryUsedLabel = useMemo(() => formatBytes(memory.used), [formatBytes(memory.used)]);
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+  const label = useMemo(
+    () => (state === "used" ? formatBytes(memory.used) : formatBytes(memory.free)),
+    [memory.used, state]
+  );
+
   return (
     <>
-      <Text size="xs">RAM: {memoryUsedLabel} </Text>
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        RAM {indicator}: {label}
+      </Text>
       <ProgressContainer value={memory.usedPercentage} />
     </>
   );
 };
 
 const SwapIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.swap));
   const swap = useSwapSelectors(
     useShallow((state) => {
       return {
+        free: state.latest.free,
         used: state.latest.used,
         usedPercentage: state.latest.usedPercentage,
       };
     })
   );
 
-  const swapUsed = useMemo(() => formatBytes(swap.used), [swap.used]);
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+
+  const label = useMemo(() => (state === "used" ? formatBytes(swap.used) : formatBytes(swap.free)), [swap.used, state]);
   return (
     <>
-      <Text size="xs">Swap: {swapUsed}</Text>
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        SWAP {indicator}: {label}
+      </Text>
       <ProgressContainer value={swap.usedPercentage} />
     </>
   );
 };
 
 const CpuIndicator = () => {
+  const { state, toggle } = usePreferencesSelector(useShallow((state) => state.resourceWidgets.cpu));
   const cpu = useGlobalCpuSelectors.use.latest();
-  const cpuUsage = useMemo(() => cpu.usage.toFixed(2), [cpu.usage]);
+
+  const indicator = useMemo(() => (state === "used" ? "USED" : "FREE"), [state]);
+  const label = useMemo(() => {
+    return state === "used" ? `${cpu.usage.toFixed(2)}%` : `${(100 - cpu.usage).toFixed(2)}%`;
+  }, [cpu.usage, state]);
   return (
     <>
-      <Text size="xs">CPU: {cpuUsage}%</Text>
+      <Text size="xs" style={{ cursor: "pointer" }} onClick={() => toggle()}>
+        CPU {indicator}: {label}%
+      </Text>
       <ProgressContainer value={cpu.usage} />
     </>
   );
