@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { matchRoutes, useLocation, useNavigate } from "react-router-dom";
 
-import useMediaQuery from "@/hooks/useMediaQuery";
 import { ActionIcon, Group, MantineTheme, Portal, Tooltip, UnstyledButton } from "@mantine/core";
 import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
@@ -38,12 +37,27 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   );
 };
 
+// TODO: create zustand store for active navbar option
 const NavbarOptions = () => {
   const [active, setActive] = useState(0);
-  const location = useLocation();
+
   const navigate = useNavigate();
 
-  console.log(location);
+  useEffect(() => {
+    // Jeezus this is such a hack
+    const diskById = matchRoutes([{ path: "/disks/:id" }], location.pathname);
+    if (diskById && diskById.length > 0) return setActive(1);
+
+    const routeMap: Record<string, number> = {
+      "/": 0,
+      "/disks": 1,
+      "/processes": 2,
+      "/settings": 3,
+    };
+
+    setActive(routeMap[location.pathname] || 0);
+  }, [location.pathname]);
+
   const options: NavbarOptionProps[] = [
     {
       icon: <IconLayoutDashboard size={24} />,
