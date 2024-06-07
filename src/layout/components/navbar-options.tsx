@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { ActionIcon, Group, MantineTheme, Portal, Tooltip, UnstyledButton } from "@mantine/core";
@@ -14,7 +14,6 @@ interface NavbarOptionProps {
 
 export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   const { icon, label, onClick, active } = props;
-  const { isSmallerThanMd } = useMediaQuery();
 
   const sx = (theme: MantineTheme) => ({
     display: "block",
@@ -41,22 +40,32 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
 
 const NavbarOptions = () => {
   const [active, setActive] = useState(0);
+  const location = useLocation();
   const navigate = useNavigate();
+
+  console.log(location);
   const options: NavbarOptionProps[] = [
     {
       icon: <IconLayoutDashboard size={24} />,
       label: "Dashboard",
-      onClick: () => navigate("/"),
+      onClick: () => {
+        if (location.pathname === "/") return;
+        navigate("/");
+      },
     },
     {
       icon: <IconServer size={24} />,
       label: "Disks",
-      onClick: () => navigate("/disks"),
+      onClick: () => {
+        if (location.pathname === "/disks") return;
+        navigate("/disks");
+      },
     },
     {
       icon: <IconCpu size={24} />,
       label: "Processes",
       onClick: () => {
+        if (location.pathname === "/processes") return;
         navigate("/processes");
       },
     },
@@ -64,6 +73,7 @@ const NavbarOptions = () => {
       icon: <IconSettings size={24} />,
       label: "Settings",
       onClick: () => {
+        if (location.pathname === "/settings") return;
         navigate("/settings");
       },
     },
