@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This projec
 ## 0.9.8
 - Add "Used" vs "Free" indicators for footer widgets
 - Set auto-start enabled on first run
+- Add forward and backward history buttons
 
 ## 0.9.7
 - Performance improvements for UI
