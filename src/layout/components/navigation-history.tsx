@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ActionIcon, Button, Group } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 
+// TODO: Make this so that we don't navigate if the page is the same
 const NavigationHistory = () => {
   const navigate = useNavigate();
   const location = useLocation();
