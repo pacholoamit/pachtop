@@ -116,6 +116,7 @@ impl DisksTrait for Metrics {
                 file_system: disk.file_system().to_str().unwrap_or("Unknown").to_owned(),
 
                 is_removable: disk.is_removable(),
+                free_percentage: get_percentage(&disk.available_space(), &disk.total_space()),
                 used_percentage: get_percentage(
                     &(disk.total_space() - disk.available_space()),
                     &disk.total_space(),
@@ -135,6 +136,7 @@ impl DisksTrait for Metrics {
                 mount_point: "Unknown".to_owned().into(),
                 file_system: "Unknown".to_owned(),
                 is_removable: false,
+                free_percentage: 0.0,
                 used_percentage: 0.0,
                 disk_type: "Unknown".to_owned(),
                 timestamp: current_time(),
@@ -176,6 +178,7 @@ impl DisksTrait for Metrics {
                     total,
                     mount_point,
                     file_system,
+                    free_percentage: get_percentage(&free, &total),
                     is_removable,
                     used_percentage,
                     disk_type,
@@ -210,6 +213,7 @@ impl MemoryTrait for Metrics {
             free: self.sys.free_memory(),
             total: self.sys.total_memory(),
             used: self.sys.used_memory(),
+            free_percentage: get_percentage(&self.sys.free_memory(), &self.sys.total_memory()),
             used_percentage: get_percentage(&self.sys.used_memory(), &self.sys.total_memory()),
             timestamp: current_time(),
         }
@@ -225,6 +229,7 @@ impl SwapTrait for Metrics {
             free: self.sys.free_swap(),
             total: self.sys.total_swap(),
             used: self.sys.used_swap(),
+            free_percentage: get_percentage(&self.sys.free_swap(), &self.sys.total_swap()),
             used_percentage: get_percentage(&self.sys.used_swap(), &self.sys.total_swap()),
             timestamp: current_time(),
         }

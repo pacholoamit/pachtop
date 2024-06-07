@@ -19,6 +19,8 @@ pub struct Memory {
     pub used: u64,
     #[ts(type = "number")]
     pub used_percentage: f64,
+    #[ts(type = "number")]
+    pub free_percentage: f64,
     pub timestamp: Timestamp,
 }
 
@@ -67,6 +69,8 @@ pub struct Swap {
     pub used: u64,
     #[ts(type = "number")]
     pub used_percentage: f64,
+    #[ts(type = "number")]
+    pub free_percentage: f64,
     pub timestamp: Timestamp,
 }
 
@@ -119,6 +123,8 @@ pub struct Disk {
     pub used: u64,
     #[ts(type = "number")]
     pub used_percentage: f64,
+    #[ts(type = "number")]
+    pub free_percentage: f64,
     pub mount_point: PathBuf,
     pub file_system: String,
     pub disk_type: String,

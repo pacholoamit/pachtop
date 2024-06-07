@@ -8,6 +8,7 @@ const DEFAULT_MEMORY: Memory = {
   timestamp: 0,
   total: 0,
   used: 0,
+  freePercentage: 0,
   usedPercentage: 0,
 };
 
