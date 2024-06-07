@@ -15,7 +15,6 @@ interface NavbarOptionProps {
 export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   const { icon, label, onClick, active } = props;
   const { isSmallerThanMd } = useMediaQuery();
-  const position = isSmallerThanMd ? "center" : "left";
 
   const sx = (theme: MantineTheme) => ({
     display: "block",
@@ -34,11 +33,7 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   return (
     <Tooltip label={label} position="right" withArrow color={"gray"}>
       <UnstyledButton sx={sx} onClick={onClick} data-active={active || undefined}>
-        <Group position={position}>
-          <ActionIcon variant="transparent" size={"sm"}>
-            {icon}
-          </ActionIcon>
-        </Group>
+        {icon}
       </UnstyledButton>
     </Tooltip>
   );
