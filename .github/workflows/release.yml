@@ -2,7 +2,7 @@ name: "release"
 
 on:
   workflow_dispatch:
-  push: { branches: ["release", "master"] } # TODO: remove master later
+  push: { branches: ["release"] }
 env:
   VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
