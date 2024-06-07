@@ -11,9 +11,10 @@ const NavigationHistory = () => {
 
   const canGoBackward = useMemo(() => !isLocationKeyDefault, [isLocationKeyDefault]);
 
-  console.log(canGoBackward);
-
-  const canGoForward = useMemo(() => window.history.state.idx < window.history.length - 1, [window.history.length]);
+  const canGoForward = useMemo(
+    () => window.history.state.idx < window.history.length - 1,
+    [window.history.length, window.history.state.idx]
+  );
 
   const goBack = () => navigate(-1);
 
