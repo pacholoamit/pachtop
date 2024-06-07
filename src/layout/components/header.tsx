@@ -4,6 +4,8 @@ import { Badge, Group, Header as MantineHeader, TextInput } from "@mantine/core"
 import { IconSearch } from "@tabler/icons-react";
 import { getVersion } from "@tauri-apps/api/app";
 
+import NavigationHistory from "./navigation-history";
+
 const Header = () => {
   const [version, setVersion] = React.useState<string>("");
 
@@ -13,10 +15,11 @@ const Header = () => {
   return (
     <MantineHeader height={48} style={{ backgroundColor: "transparent", backdropFilter: "blur(15px)" }}>
       <Group position="apart" align="center" pl={8} pr={8} pt={8}>
+        <NavigationHistory />
         <Badge color="teal" variant="dot">
           Pachtop {version && `v${version}`}
         </Badge>
-        <TextInput placeholder="Search..." size="xs" w={300} icon={<IconSearch size={14} />} disabled />
+
         <div />
       </Group>
     </MantineHeader>
