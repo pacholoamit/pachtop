@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
-## 0.9.8
+## 0.9.8-alpha.1
 - Add "Used" vs "Free" indicators for footer widgets
 - Set auto-start enabled on first run
 - Add forward and backward history buttons
