@@ -5,19 +5,15 @@ import DiskAnalyticsPage from "@/features/metrics/pages/disk-analytics.page";
 import DisksPage from "@/features/metrics/pages/disks.page";
 import ProcessesPage from "@/features/processes/pages/processes-revamp.page";
 import SettingsPage from "@/features/settings/pages/settings.page";
+import { routes } from "@/hooks/useRouteHandler";
 import Layout from "@/layout";
 
 const AppRoutes: React.FC = () => {
+  const appRoutes = routes.map(({ path, element }) => <Route key={path} path={path} element={element} />);
   return (
     <Router>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/disks" element={<DisksPage />} />
-          <Route path="/disks/:id" element={<DiskAnalyticsPage />} />
-          <Route path="/processes" element={<ProcessesPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-        </Route>
+        <Route element={<Layout />}>{appRoutes}</Route>
       </Routes>
     </Router>
   );
