@@ -32,7 +32,16 @@ export const usePieChartState = (
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
       },
     },
-
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: "pointer",
+        dataLabels: {
+          enabled: false,
+        },
+        showInLegend: false,
+      },
+    },
     xAxis: {
       type: "datetime",
       gridLineColor: other.charts.area.default.gridLineColor,
@@ -114,3 +123,5 @@ const PieChart: React.FC<HighchartsReact.Props> = (props) => {
     />
   );
 };
+
+export default PieChart;

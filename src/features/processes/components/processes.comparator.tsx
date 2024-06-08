@@ -82,13 +82,6 @@ const ProcessComparator = () => {
         color: "#dce1e8",
       },
     },
-    xAxis: {
-      labels: {
-        formatter: function () {
-          return Highcharts.dateFormat("%H:%M:%S", this.value as number);
-        },
-      },
-    },
   });
 
   const handleAddToComparator = (value: string[]) => setComparatorSelected(value);
