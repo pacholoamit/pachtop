@@ -1,6 +1,6 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-import createSelectors from "@/utils/create-selectors";
+import createSelectors from '@/utils/create-selectors';
 
 interface ComparatorState {
   comparatorOptions: string[];
@@ -30,6 +30,6 @@ const useComparatorStore = create<ComparatorState>()((set, get) => ({
   },
 }));
 
-const useComparatorSelectors = createSelectors(useComparatorStore);
+const useComparatorSelector = createSelectors(useComparatorStore);
 
-export default useComparatorSelectors;
+export default useComparatorSelector;

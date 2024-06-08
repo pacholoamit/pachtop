@@ -134,7 +134,6 @@ const ProcessComparator = () => {
       metricOptions.map((opt) => ({
         value: opt.value,
         label: opt.label,
-        // disabled: opt.value === "cpuUsage" && true,
       })),
     []
   );
