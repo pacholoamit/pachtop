@@ -6,6 +6,7 @@ import formatBytes from '@/features/metrics/utils/format-bytes';
 import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
 import ProcessComparitor from '@/features/processes/components/processes.comparitor';
 import ProcessTable from '@/features/processes/components/processes.table';
+import useKillProcess from '@/features/processes/hooks/useKillProcess';
 import useComparitorSelector from '@/features/processes/stores/processes-comparator.store';
 import { Process } from '@/lib';
 import { ColDef } from '@ag-grid-community/core';
@@ -16,6 +17,9 @@ import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from '@table
 const ActionsColumn = (props: CustomCellRendererProps<Process>) => {
   const addToCompparitorSelected = useComparitorSelector.use.addToComparitorSelected();
   const handleAddToComparitor = () => props.data?.name && addToCompparitorSelected(props.data.name);
+  const kill = useKillProcess({});
+
+  const onKill = () => kill(props.data?.name ?? "");
 
   return (
     <Group position="center">
@@ -23,7 +27,7 @@ const ActionsColumn = (props: CustomCellRendererProps<Process>) => {
         <IconChartAreaLine />
       </ActionIcon>
       <ActionIcon color="red" radius={"xl"} size={"sm"} variant="subtle">
-        <IconCircleX />
+        <IconCircleX onClick={onKill} />
       </ActionIcon>
     </Group>
   );

@@ -1,40 +1,35 @@
-// import { useCallback } from 'react';
+import { useCallback } from 'react';
 
-// import { Command, invoke, KillProcessOpts, Process } from '@/lib';
-// import notification from '@/utils/notification';
+import { Command, commands, invoke, KillProcessOpts, Process } from '@/lib';
+import notification from '@/utils/notification';
 
-// interface UseKillProcessOpts {
-//   onKill?: () => void;
-//   onFailure?: () => void;
-// }
+interface UseKillProcessOpts {
+  onKill?: () => void;
+  onFailure?: () => void;
+}
 
-// const killProcess = async (process: Process, onKill?: () => void, onFailure?: () => void) => {
-//   const cmd = Command.KillProcess;
-//   const isKilled = await invoke<KillProcessOpts, boolean>(cmd, {
-//     pid: process.pid,
-//   });
+const killProcess = async (name: string, onKill?: () => void, onFailure?: () => void) => {
+  const isKilled = await commands.killProcess({ name });
 
-//   if (!isKilled) {
-//     onFailure?.();
-//     notification.error({
-//       title: "Error ❌",
-//       message: `Failed to kill process ${process.pid}`,
-//     });
-//     return;
-//   }
-//   onKill?.();
-//   notification.success({
-//     title: "Process Killed ✅",
-//     message: `Process ${process.name} was killed successfully`,
-//   });
-// };
+  if (!isKilled) {
+    onFailure?.();
+    notification.error({
+      title: "Error ❌",
+      message: `Failed to kill process ${name}`,
+    });
+    return;
+  }
+  onKill?.();
+  notification.success({
+    title: "Process Killed ✅",
+    message: `Process ${name} was killed successfully`,
+  });
+};
 
-// const useKillProcess = (opts: UseKillProcessOpts) => {
-//   const { onKill, onFailure } = opts;
+const useKillProcess = (opts: UseKillProcessOpts) => {
+  const { onKill, onFailure } = opts;
 
-//   const kill = useCallback((process: Process) => killProcess(process, onKill, onFailure), [onKill, onFailure]);
+  return useCallback((name: string) => killProcess(name, onKill, onFailure), [onKill, onFailure]);
+};
 
-//   return [kill] as const;
-// };
-
-// export default useKillProcess;
+export default useKillProcess;

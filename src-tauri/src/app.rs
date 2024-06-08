@@ -87,12 +87,12 @@ impl AppState {
 }
 
 #[tauri::command]
-pub fn kill_process(state: State<'_, AppState>, pid: String) -> bool {
-    let killed = state.0.lock().unwrap().metrics.kill_process(&pid);
+pub fn kill_process(state: State<'_, AppState>, name: String) -> bool {
+    let killed = state.0.lock().unwrap().metrics.kill_process(&name);
 
     info!(
         "Running kill_process command, pid: {}, killed: {}",
-        &pid, killed
+        &name, killed
     );
     killed
 }

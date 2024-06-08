@@ -1,4 +1,4 @@
-import { InvokeArgs } from "@tauri-apps/api/tauri";
+import { InvokeArgs } from '@tauri-apps/api/tauri';
 
 export * from "@/lib/bindings/Cpu";
 export * from "@/lib/bindings/Disk";
@@ -45,7 +45,7 @@ export interface ShowInFolderOpts extends InvokeArgs {
 }
 
 export interface KillProcessOpts extends InvokeArgs {
-  pid: string;
+  name: string;
 }
 
 export interface ScanOpts extends InvokeArgs {
