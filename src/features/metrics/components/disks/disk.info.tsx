@@ -1,30 +1,19 @@
-import drive from "/drive.png";
-import { memo } from "react";
-import { useNavigate } from "react-router-dom";
-import { useShallow } from "zustand/react/shallow";
+import drive from '/drive.png';
+import { memo } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
-import DynamicProgress from "@/components/dynamic-progress";
-import useDisksStore from "@/features/metrics/stores/disk.store";
-import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import useTheme from "@/hooks/useTheme";
-import { commands, Disk } from "@/lib";
-import hasBytesTextChanged from "@/utils/has-text-changed";
+import DynamicProgress from '@/components/dynamic-progress';
+import useDisksStore from '@/features/metrics/stores/disk.store';
+import useSystemStoreSelectors from '@/features/metrics/stores/system.store';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import useRouteHandler from '@/hooks/useRouteHandler';
+import useTheme from '@/hooks/useTheme';
+import { commands, Disk } from '@/lib';
+import hasBytesTextChanged from '@/utils/has-text-changed';
 import {
-  ActionIcon,
-  Badge,
-  Button,
-  Card,
-  Center,
-  createStyles,
-  Group,
-  Image,
-  Popover,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
-import { IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
+    ActionIcon, Badge, Button, Card, Center, createStyles, Group, Image, Popover, Stack, Text, Title
+} from '@mantine/core';
+import { IconFolderOpen, IconInfoCircle } from '@tabler/icons-react';
 
 interface DiskInfoProps {
   disk: Disk;
@@ -121,7 +110,7 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const { classes } = useStyles();
   const { isMidnight } = useTheme();
   const setSelectedDisk = useDisksStore.use.setSelectedDisk();
-  const navigate = useNavigate();
+  const { navigateToDynamic } = useRouteHandler();
   const system = useSystemStoreSelectors(useShallow((state) => state.info));
 
   const showDirectory = async () => {
@@ -134,7 +123,7 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   const onShowDetailsClick = () => {
     const isWindows = system.os.toLowerCase().includes("windows");
     setSelectedDisk(isWindows ? disk.name : disk.mountPoint);
-    navigate(`/disks/${encodeURIComponent(isWindows ? disk.name : disk.mountPoint)}`);
+    navigateToDynamic("/disks/:id", encodeURIComponent(isWindows ? disk.name : disk.mountPoint));
   };
 
   return (
