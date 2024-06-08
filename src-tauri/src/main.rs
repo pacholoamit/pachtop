@@ -43,7 +43,12 @@ fn build_and_run_app(app: AppState) {
     let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
 
     let single_instance_plugin = tauri_plugin_single_instance::init(|app, argv, cwd| {
-        println!("{}, {argv:?}, {cwd}", app.package_info().name);
+        let window = app.get_window("main").unwrap();
+        if window.is_visible().unwrap() {
+            window.set_focus().unwrap();
+        } else {
+            window.show().unwrap();
+        }
     });
 
     let system_tray = SystemTray::new()
