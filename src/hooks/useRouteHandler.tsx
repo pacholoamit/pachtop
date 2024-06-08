@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { matchRoutes, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from "react";
+import { matchRoutes, useLocation, useNavigate } from "react-router-dom";
 
-import DashboardPage from '@/features/metrics/pages/dashboard.page';
-import DiskAnalyticsPage from '@/features/metrics/pages/disk-analytics.page';
-import DisksPage from '@/features/metrics/pages/disks.page';
-import ProcessesPage from '@/features/processes/pages/processes-revamp.page';
-import SettingsPage from '@/features/settings/pages/settings.page';
+import DashboardPage from "@/features/metrics/pages/dashboard.page";
+import DiskAnalyticsPage from "@/features/metrics/pages/disk-analytics.page";
+import DisksPage from "@/features/metrics/pages/disks.page";
+import ProcessesPage from "@/features/processes/pages/processes-revamp.page";
+import SettingsPage from "@/features/settings/pages/settings.page";
 
 type STATIC_ROUTE = "/" | "/disks" | "/processes" | "/settings";
 
@@ -57,6 +57,8 @@ const useRouteHandler = () => {
       "/processes": routes[2].idx,
       "/settings": routes[3].idx,
     };
+
+    console.log("useRouteHandler active: ", active);
 
     setActive(routeMap[location.pathname as STATIC_ROUTE] || 0);
   }, [location.pathname]);

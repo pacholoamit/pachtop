@@ -1,14 +1,14 @@
-import * as Highcharts from 'highcharts';
-import { useEffect, useMemo, useState } from 'react';
+import * as Highcharts from "highcharts";
+import { useEffect, useMemo, useState } from "react";
 
-import Card from '@/components/card';
-import SplineChart, { useSplineChartState } from '@/components/spline-chart';
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
-import useComparitorSelector from '@/features/processes/stores/processes-comparator.store';
-import useProcessesEnumerableSelectors from '@/features/processes/stores/processes-enumerable.store';
-import { Process } from '@/lib';
-import { Group, MultiSelect, SegmentedControl, Space, Stack, Text } from '@mantine/core';
+import Card from "@/components/card";
+import SplineChart, { useSplineChartState } from "@/components/spline-chart";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
+import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
+import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
+import { Process } from "@/lib";
+import { Group, MultiSelect, SegmentedControl, Text } from "@mantine/core";
 
 type ComparitorMetric = keyof Process;
 
@@ -23,7 +23,7 @@ const metricOptions: ComparitorMetricOption[] = [
   {
     label: "MEM",
     value: "memoryUsage",
-    yAxisFormatter: (x) => formatBytes(x as unknown as number),
+    yAxisFormatter: (x) => formatBytes(x.value as unknown as number),
     tooltipFormatter: function () {
       return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
         this.y as number
@@ -33,7 +33,7 @@ const metricOptions: ComparitorMetricOption[] = [
   {
     label: "CPU",
     value: "cpuUsage",
-    yAxisFormatter: (x) => fromNumberToPercentageString(x as unknown as number),
+    yAxisFormatter: (x) => fromNumberToPercentageString(x.value as number),
     tooltipFormatter: function () {
       return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${fromNumberToPercentageString(
         this.y as number
@@ -53,11 +53,7 @@ const ProcessComparitor = () => {
   const [chartOptions, setChartOptions] = useSplineChartState({
     custom: {
       tooltip: {
-        pointFormatter: function () {
-          return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
-            this.y as number
-          )}</b><br/>`;
-        },
+        pointFormatter: comparitorMetric.tooltipFormatter,
       },
       yAxis: {
         labels: {
@@ -88,27 +84,31 @@ const ProcessComparitor = () => {
   const handleSetMetric = (value: string) => setComparitorMetric(metricOptions.find((opt) => opt.value === value)!);
 
   useEffect(() => {
-    if (comparitorSelected.length === 0 && processesEnumerable.length > 0) {
+    setComparitorOptions(processesEnumerable.map((proc) => proc.id));
+
+    const isProcessesOptionsNotEmpty = processesEnumerable.length > 0;
+    const isNoProcessSelectedInComparator = comparitorSelected.length === 0;
+    //* Get the first process in the list if no process is selected
+
+    if (isNoProcessSelectedInComparator && isProcessesOptionsNotEmpty) {
       setComparitorSelected([processesEnumerable[0].id]);
     }
-    setComparitorOptions(processesEnumerable.map((proc) => proc.id));
   }, [processesEnumerable, setComparitorOptions, comparitorSelected, setComparitorSelected]);
 
   useEffect(() => {
     setChartOptions((prev) => ({
-      ...prev,
-      custom: {
-        tooltip: {
-          pointFormatter: comparitorMetric.tooltipFormatter,
-        },
-        yAxis: {
-          labels: {
-            formatter: comparitorMetric.yAxisFormatter,
-          },
+      tooltip: {
+        pointFormatter: comparitorMetric.tooltipFormatter,
+      },
+      yAxis: {
+        labels: {
+          formatter: comparitorMetric.yAxisFormatter,
         },
       },
+
       series: comparitorSelected.map((id) => {
         const process = processesEnumerable.find((proc) => proc.id === id);
+
         return {
           name: id,
           type: "spline",
@@ -123,7 +123,7 @@ const ProcessComparitor = () => {
       metricOptions.map((opt) => ({
         value: opt.value,
         label: opt.label,
-        disabled: opt.value === "cpuUsage" && true,
+        // disabled: opt.value === "cpuUsage" && true,
       })),
     []
   );
