@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Badge, Group, Header as MantineHeader, TextInput } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { Badge, Group, Header as MantineHeader } from "@mantine/core";
 import { getVersion } from "@tauri-apps/api/app";
 
 import NavigationHistory from "./navigation-history";

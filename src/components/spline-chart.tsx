@@ -2,8 +2,7 @@ import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import { Text, useMantineTheme } from "@mantine/core";
+import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
 export interface SplineChartStateProps extends Highcharts.Options {
