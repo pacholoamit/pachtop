@@ -1,10 +1,9 @@
-import React, { memo } from "react";
+import React from "react";
 import { useShallow } from "zustand/react/shallow";
 
 import PageWrapper from "@/components/page-wrapper";
 import DiskInfo from "@/features/metrics/components/disks/disk.info";
 import useDisksStore from "@/features/metrics/stores/disk.store";
-import { Disk } from "@/lib";
 import { Grid } from "@mantine/core";
 
 const DiskInfoSection = () => {

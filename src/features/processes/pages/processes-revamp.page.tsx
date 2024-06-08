@@ -12,7 +12,7 @@ import useComparitorSelector from '@/features/processes/stores/processes-compara
 import { Process } from '@/lib';
 import { ColDef } from '@ag-grid-community/core';
 import {
-    ActionIcon, Box, Center, Grid, Group, Image, Space, Tabs, Text, Tooltip
+    ActionIcon, Box, Grid, Group, Space, Tabs, Text
 } from '@mantine/core';
 import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from '@tabler/icons-react';
 

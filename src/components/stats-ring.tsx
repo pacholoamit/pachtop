@@ -1,6 +1,6 @@
 import { JSX, memo } from "react";
 
-import { Box, Center, DefaultMantineColor, Group, Paper, rem, RingProgress, Text } from "@mantine/core";
+import { Box, Center, DefaultMantineColor, Group, rem, RingProgress, Text } from "@mantine/core";
 import { TablerIconsProps } from "@tabler/icons-react";
 
 import Card from "./card";

@@ -6,7 +6,6 @@ import { AgGridReact } from "ag-grid-react";
 import React, { useCallback } from "react";
 
 import Card from "@/components/card";
-import { THEME_OPTION } from "@/contants";
 import useProcessesSelectors from "@/features/processes/stores/processes.store";
 import useTheme from "@/hooks/useTheme";
 // @ts-ignore

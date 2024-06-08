@@ -7,7 +7,7 @@ import DisksPage from '@/features/metrics/pages/disks.page';
 import ProcessesPage from '@/features/processes/pages/processes-revamp.page';
 import SettingsPage from '@/features/settings/pages/settings.page';
 
-type STATIC_ROUTE = "/" | "/disks" | "/disks/:id" | "/processes" | "/settings";
+type STATIC_ROUTE = "/" | "/disks" | "/processes" | "/settings";
 
 type DYNAMIC_ROUTE = "/disks/:id";
 
@@ -54,7 +54,6 @@ const useRouteHandler = () => {
     const routeMap: Record<STATIC_ROUTE, number> = {
       "/": routes[0].idx,
       "/disks": routes[1].idx,
-      "/disks/:id": routes[1].idx,
       "/processes": routes[2].idx,
       "/settings": routes[3].idx,
     };

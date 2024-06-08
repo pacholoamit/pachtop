@@ -1,8 +1,6 @@
-import { useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import useRouteHandler from '@/hooks/useRouteHandler';
-import { ActionIcon, Button, Group } from '@mantine/core';
+import { ActionIcon, Group } from '@mantine/core';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 
 const NavigationHistory = () => {

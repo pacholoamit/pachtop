@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import Card from "@/components/card";
@@ -7,7 +7,6 @@ import TreemapChart, { useTreemapChartState } from "@/components/treemap-chart";
 import DiskDirectoryTreeView from "@/features/metrics/components/disks/disk.directory-treeview";
 import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/disk.information-analytics";
 import useDisksStore from "@/features/metrics/stores/disk.store";
-import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
 import notification from "@/utils/notification";
