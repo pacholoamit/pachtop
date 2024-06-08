@@ -33,7 +33,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ["react/jsx-runtime"],
   },
-  plugins: [react(), eslint()],
+  plugins: [react()],
   resolve: {
     alias: { "@": path.resolve(__dirname, "src") },
   },

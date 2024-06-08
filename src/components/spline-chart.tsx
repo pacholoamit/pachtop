@@ -1,9 +1,9 @@
-import * as Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import * as Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import { useMantineTheme } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { useMantineTheme } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 
 export interface SplineChartStateProps extends Highcharts.Options {
   custom?: {
@@ -108,7 +108,7 @@ const SplineChart: React.FC<HighchartsReact.Props> = (props) => {
       highcharts={Highcharts}
       options={props.options}
       ref={chartComponentRef}
-      containerProps={{ style: { height: "100%", width: "100%" } }}
+      containerProps={{ style: { height: "92%", width: "100%" } }}
     />
   );
 };

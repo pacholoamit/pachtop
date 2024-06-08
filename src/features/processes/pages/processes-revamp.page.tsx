@@ -1,5 +1,3 @@
-
-
 import { CustomCellRendererProps } from 'ag-grid-react';
 
 import Card from '@/components/card';
@@ -11,9 +9,7 @@ import ProcessTable from '@/features/processes/components/processes.table';
 import useComparitorSelector from '@/features/processes/stores/processes-comparator.store';
 import { Process } from '@/lib';
 import { ColDef } from '@ag-grid-community/core';
-import {
-    ActionIcon, Box, Grid, Group, Space, Tabs, Text
-} from '@mantine/core';
+import { ActionIcon, Box, Grid, Group, Space, Tabs, Text } from '@mantine/core';
 import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from '@tabler/icons-react';
 
 // TODO: Make Action Icon X work
@@ -88,7 +84,7 @@ const diskWriteColumns: ColDef[] = [
     flex: 4,
     headerName: "Writes",
     cellClass: "number",
-    cellRenderer: "a",
+    cellRenderer: "",
     valueFormatter: ({ value }) => formatBytes(value ?? 0),
     sort: "desc",
   },

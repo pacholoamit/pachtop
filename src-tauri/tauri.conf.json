@@ -16,49 +16,7 @@
       "iconAsTemplate": true
     },
     "allowlist": {
-      "all": true,
-      "path": {
-        "all": true
-      },
-      "fs": {
-        "all": true,
-        "readFile": true,
-        "writeFile": true,
-        "readDir": true,
-        "copyFile": true,
-        "createDir": true,
-        "removeDir": true,
-        "removeFile": true,
-        "renameFile": true,
-        "exists": true,
-        "scope": [
-          "$APPCONFIG",
-          "$APPDATA",
-          "$APPLOCALDATA",
-          "$APPCACHE",
-          "$APPLOG",
-          "$AUDIO",
-          "$CACHE",
-          "$CONFIG",
-          "$DATA",
-          "$LOCALDATA",
-          "$DESKTOP",
-          "$DOCUMENT",
-          "$DOWNLOAD",
-          "$EXE",
-          "$FONT",
-          "$HOME",
-          "$PICTURE",
-          "$PUBLIC",
-          "$RUNTIME",
-          "$TEMPLATE",
-          "$VIDEO",
-          "$RESOURCE",
-          "$APP",
-          "$LOG",
-          "$TEMP"
-        ]
-      }
+      "all": true
     },
     "bundle": {
       "active": true,
