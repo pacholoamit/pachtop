@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { commands } from '@/lib';
-import notification from '@/utils/notification';
+import { commands } from "@/lib";
+import notification from "@/utils/notification";
 
 interface UseKillProcessOpts {
   onKill?: () => void;
@@ -14,14 +14,14 @@ const killProcess = async (name: string, onKill?: () => void, onFailure?: () => 
   if (!isKilled) {
     onFailure?.();
     notification.error({
-      title: "Error ❌",
+      title: "Failed to Kill Process",
       message: `Failed to kill process ${name}`,
     });
     return;
   }
   onKill?.();
   notification.success({
-    title: "Process Killed ✅",
+    title: "Process Killed",
     message: `Process ${name} was killed successfully`,
   });
 };

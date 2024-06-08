@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 0.9.8-3
 - Fix issue where some popover components are transparent
+- Fix Kill Process feature
 
 ## 0.9.8-2
 - Focus app if Pachtop already exists
