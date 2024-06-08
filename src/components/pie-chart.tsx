@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
-export interface SplineChartStatePropsInitialState extends Highcharts.Options {
+export interface PieChartStatePropsInitialState extends Highcharts.Options {
   custom?: {
     yAxis?: {
       labels: {
@@ -18,21 +18,30 @@ export interface SplineChartStatePropsInitialState extends Highcharts.Options {
   };
 }
 
-export const useSplineChartState = (
-  props: SplineChartStatePropsInitialState
-): [SplineChartStatePropsInitialState, Dispatch<SetStateAction<SplineChartStatePropsInitialState>>] => {
+export const usePieChartState = (
+  props: PieChartStatePropsInitialState
+): [PieChartStatePropsInitialState, Dispatch<SetStateAction<PieChartStatePropsInitialState>>] => {
   const { other } = useMantineTheme();
 
-  const [chartOptions, setChartOptions] = useState<SplineChartStatePropsInitialState>({
+  const [chartOptions, setChartOptions] = useState<PieChartStatePropsInitialState>({
     ...props,
     chart: {
-      type: "spline",
+      type: "pie",
       backgroundColor: "transparent",
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
       },
     },
-
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: "pointer",
+        dataLabels: {
+          enabled: false,
+        },
+        showInLegend: false,
+      },
+    },
     xAxis: {
       type: "datetime",
       gridLineColor: other.charts.area.default.gridLineColor,
@@ -41,13 +50,12 @@ export const useSplineChartState = (
         // enabled: false,
         step: 2,
         format: "{value:%I:%M:%S %p}",
-        // TODO: Set this to SPline chart color
+
         style: {
           color: other.charts.area.default.labelColor,
         },
       },
     },
-
     legend: {
       backgroundColor: "transparent",
       itemStyle: {
@@ -59,6 +67,7 @@ export const useSplineChartState = (
     time: {
       useUTC: false,
     },
+
     yAxis: {
       title: {
         text: null,
@@ -73,6 +82,7 @@ export const useSplineChartState = (
         },
       },
     },
+
     tooltip: {
       xDateFormat: "%I:%M:%S %p",
       pointFormatter: props?.custom?.tooltip?.pointFormatter,
@@ -81,6 +91,7 @@ export const useSplineChartState = (
       },
       backgroundColor: other.charts.area.default.tooltip.backgroundColor,
     },
+
     credits: {
       enabled: false,
     },
@@ -94,7 +105,7 @@ export const useSplineChartState = (
   return [chartOptions, setChartOptions];
 };
 
-const SplineChart: React.FC<HighchartsReact.Props> = (props) => {
+const PieChart: React.FC<HighchartsReact.Props> = (props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
   const { width } = useViewportSize();
@@ -108,9 +119,9 @@ const SplineChart: React.FC<HighchartsReact.Props> = (props) => {
       highcharts={Highcharts}
       options={props.options}
       ref={chartComponentRef}
-      containerProps={{ style: { height: "92%", width: "100%" } }}
+      containerProps={{ style: { height: "100%", width: "100%" } }}
     />
   );
 };
 
-export default SplineChart;
+export default PieChart;

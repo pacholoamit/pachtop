@@ -305,18 +305,10 @@ impl ProcessesTrait for Metrics {
         process_map.values().cloned().collect()
     }
 
-    fn kill_process(&mut self, pid: &str) -> bool {
-        let pid = match Pid::from_str(pid) {
-            Ok(pid) => pid,
-            Err(_) => return false,
-        };
-
-        let process = match self.sys.process(pid) {
-            Some(process) => process,
-            None => return false,
-        };
-
-        process.kill()
+    fn kill_process(&mut self, name: &str) -> bool {
+        self.sys
+            .processes_by_name(&name)
+            .any(|process| process.kill())
     }
 }
 

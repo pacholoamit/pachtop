@@ -1,6 +1,6 @@
-import useRouteHandler from '@/hooks/useRouteHandler';
-import { MantineTheme, Tooltip, UnstyledButton } from '@mantine/core';
-import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from '@tabler/icons-react';
+import useRouteHandler from "@/hooks/useRouteHandler";
+import { MantineTheme, Tooltip, UnstyledButton } from "@mantine/core";
+import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
 interface NavbarOptionProps {
   icon: React.ReactNode;
@@ -35,6 +35,8 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   );
 };
 
+// TODO: Fix navigation handling
+
 const NavbarOptions = () => {
   const { active, setActive, navigateToStatic } = useRouteHandler();
 
@@ -66,7 +68,7 @@ const NavbarOptions = () => {
     <NavbarOption
       {...option}
       key={option.label}
-      active={index === active}
+      active={active === index}
       onClick={() => {
         setActive(index);
         option.onClick?.();
