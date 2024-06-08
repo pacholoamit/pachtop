@@ -1,14 +1,14 @@
-import * as Highcharts from 'highcharts';
-import { useEffect, useMemo, useState } from 'react';
+import * as Highcharts from "highcharts";
+import { useEffect, useMemo, useState } from "react";
 
-import Card from '@/components/card';
-import SplineChart, { useSplineChartState } from '@/components/spline-chart';
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
-import useComparatorSelector from '@/features/processes/stores/processes-comparator.store';
-import useProcessesEnumerableSelectors from '@/features/processes/stores/processes-enumerable.store';
-import { Process } from '@/lib';
-import { Group, MultiSelect, SegmentedControl, Text } from '@mantine/core';
+import Card from "@/components/card";
+import SplineChart, { useSplineChartState } from "@/components/spline-chart";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
+import useComparatorSelector from "@/features/processes/stores/processes-comparator.store";
+import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
+import { Process } from "@/lib";
+import { Group, MultiSelect, SegmentedControl, Text } from "@mantine/core";
 
 type ComparatorMetric = keyof Process;
 
@@ -40,6 +40,17 @@ const metricOptions: ComparatorMetricOption[] = [
       )}</b><br/>`;
     },
   },
+  // TODO: Flatten Disk to use this
+  // {
+  //   label: "DISK READ",
+  //   value: "diskUsage" as ComparatorMetric,
+  //   yAxisFormatter: (x) => formatBytes(x.value as number),
+  //   tooltipFormatter: function () {
+  //     return `<span style="color:${this.color}">\u25CF</span> ${this.series.name}: <b>${formatBytes(
+  //       this.y as number
+  //     )}</b><br/>`;
+  //   },
+  // },
 ];
 
 const ProcessComparator = () => {
