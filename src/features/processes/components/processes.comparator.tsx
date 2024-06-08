@@ -1,25 +1,25 @@
-import * as Highcharts from "highcharts";
-import { useEffect, useMemo, useState } from "react";
+import * as Highcharts from 'highcharts';
+import { useEffect, useMemo, useState } from 'react';
 
-import Card from "@/components/card";
-import SplineChart, { useSplineChartState } from "@/components/spline-chart";
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
-import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
-import useProcessesEnumerableSelectors from "@/features/processes/stores/processes-enumerable.store";
-import { Process } from "@/lib";
-import { Group, MultiSelect, SegmentedControl, Text } from "@mantine/core";
+import Card from '@/components/card';
+import SplineChart, { useSplineChartState } from '@/components/spline-chart';
+import formatBytes from '@/features/metrics/utils/format-bytes';
+import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
+import useComparatorSelector from '@/features/processes/stores/processes-comparator.store';
+import useProcessesEnumerableSelectors from '@/features/processes/stores/processes-enumerable.store';
+import { Process } from '@/lib';
+import { Group, MultiSelect, SegmentedControl, Text } from '@mantine/core';
 
-type ComparitorMetric = keyof Process;
+type ComparatorMetric = keyof Process;
 
-interface ComparitorMetricOption {
+interface ComparatorMetricOption {
   label: string;
-  value: ComparitorMetric;
+  value: ComparatorMetric;
   yAxisFormatter: Highcharts.AxisLabelsFormatterCallbackFunction;
   tooltipFormatter: Highcharts.FormatterCallbackFunction<Highcharts.Point>;
 }
 
-const metricOptions: ComparitorMetricOption[] = [
+const metricOptions: ComparatorMetricOption[] = [
   {
     label: "MEM",
     value: "memoryUsage",
@@ -42,18 +42,18 @@ const metricOptions: ComparitorMetricOption[] = [
   },
 ];
 
-const ProcessComparitor = () => {
+const ProcessComparator = () => {
   const processesEnumerable = useProcessesEnumerableSelectors.use.enumerables();
-  const comparitorOptions = useComparitorSelector.use.comparitorOptions();
-  const comparitorSelected = useComparitorSelector.use.comparitorSelected();
-  const setComparitorOptions = useComparitorSelector.use.setComparitorOptions();
-  const setComparitorSelected = useComparitorSelector.use.setComparitorSelected();
-  const [comparitorMetric, setComparitorMetric] = useState<ComparitorMetricOption>(metricOptions[0]);
+  const comparatorOptions = useComparatorSelector.use.comparatorOptions();
+  const comparatorSelected = useComparatorSelector.use.comparatorSelected();
+  const setComparatorOptions = useComparatorSelector.use.setComparatorOptions();
+  const setComparatorSelected = useComparatorSelector.use.setComparatorSelected();
+  const [comparatorMetric, setComparatorMetric] = useState<ComparatorMetricOption>(metricOptions[0]);
 
   const [chartOptions, setChartOptions] = useSplineChartState({
     custom: {
       tooltip: {
-        pointFormatter: comparitorMetric.tooltipFormatter,
+        pointFormatter: comparatorMetric.tooltipFormatter,
       },
       yAxis: {
         labels: {
@@ -80,43 +80,43 @@ const ProcessComparitor = () => {
     },
   });
 
-  const handleAddToComparitor = (value: string[]) => setComparitorSelected(value);
-  const handleSetMetric = (value: string) => setComparitorMetric(metricOptions.find((opt) => opt.value === value)!);
+  const handleAddToComparator = (value: string[]) => setComparatorSelected(value);
+  const handleSetMetric = (value: string) => setComparatorMetric(metricOptions.find((opt) => opt.value === value)!);
 
   useEffect(() => {
-    setComparitorOptions(processesEnumerable.map((proc) => proc.id));
+    setComparatorOptions(processesEnumerable.map((proc) => proc.id));
 
     const isProcessesOptionsNotEmpty = processesEnumerable.length > 0;
-    const isNoProcessSelectedInComparator = comparitorSelected.length === 0;
+    const isNoProcessSelectedInComparator = comparatorSelected.length === 0;
     //* Get the first process in the list if no process is selected
 
     if (isNoProcessSelectedInComparator && isProcessesOptionsNotEmpty) {
-      setComparitorSelected([processesEnumerable[0].id]);
+      setComparatorSelected([processesEnumerable[0].id]);
     }
-  }, [processesEnumerable, setComparitorOptions, comparitorSelected, setComparitorSelected]);
+  }, [processesEnumerable, setComparatorOptions, comparatorSelected, setComparatorSelected]);
 
   useEffect(() => {
     setChartOptions((prev) => ({
       tooltip: {
-        pointFormatter: comparitorMetric.tooltipFormatter,
+        pointFormatter: comparatorMetric.tooltipFormatter,
       },
       yAxis: {
         labels: {
-          formatter: comparitorMetric.yAxisFormatter,
+          formatter: comparatorMetric.yAxisFormatter,
         },
       },
 
-      series: comparitorSelected.map((id) => {
+      series: comparatorSelected.map((id) => {
         const process = processesEnumerable.find((proc) => proc.id === id);
 
         return {
           name: id,
           type: "spline",
-          data: process?.data.map((data) => [data.timestamp, data[comparitorMetric.value]]) ?? [],
+          data: process?.data.map((data) => [data.timestamp, data[comparatorMetric.value]]) ?? [],
         };
       }),
     }));
-  }, [comparitorSelected, comparitorMetric, setChartOptions, processesEnumerable]);
+  }, [comparatorSelected, comparatorMetric, setChartOptions, processesEnumerable]);
 
   const memoizedSegmentedControlData = useMemo(
     () =>
@@ -128,23 +128,23 @@ const ProcessComparitor = () => {
     []
   );
 
-  const memoizedMultiSelectData = useMemo(() => comparitorOptions, [comparitorOptions]);
+  const memoizedMultiSelectData = useMemo(() => comparatorOptions, [comparatorOptions]);
 
   return (
     <Card>
       <Group position="apart" align="start">
-        <Text>Metrics Comparitor</Text>
+        <Text>Metrics Comparator</Text>
         <Group>
           <SegmentedControl
-            defaultValue={comparitorMetric.value}
+            defaultValue={comparatorMetric.value}
             data={memoizedSegmentedControlData}
             onChange={handleSetMetric}
             size="xs"
           />
           <MultiSelect
             data={memoizedMultiSelectData}
-            onChange={handleAddToComparitor}
-            value={comparitorSelected}
+            onChange={handleAddToComparator}
+            value={comparatorSelected}
             searchable
             placeholder="Pick processes"
             maxSelectedValues={4}
@@ -156,4 +156,4 @@ const ProcessComparitor = () => {
   );
 };
 
-export default ProcessComparitor;
+export default ProcessComparator;

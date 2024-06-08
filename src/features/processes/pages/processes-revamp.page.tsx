@@ -1,21 +1,21 @@
-import { CustomCellRendererProps } from 'ag-grid-react';
+import { CustomCellRendererProps } from "ag-grid-react";
 
-import Card from '@/components/card';
-import PageWrapper from '@/components/page-wrapper';
-import formatBytes from '@/features/metrics/utils/format-bytes';
-import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
-import ProcessComparitor from '@/features/processes/components/processes.comparitor';
-import ProcessTable from '@/features/processes/components/processes.table';
-import useKillProcess from '@/features/processes/hooks/useKillProcess';
-import useComparitorSelector from '@/features/processes/stores/processes-comparator.store';
-import { Process } from '@/lib';
-import { ColDef } from '@ag-grid-community/core';
-import { ActionIcon, Box, Grid, Group, Space, Tabs, Text } from '@mantine/core';
-import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from '@tabler/icons-react';
+import Card from "@/components/card";
+import PageWrapper from "@/components/page-wrapper";
+import formatBytes from "@/features/metrics/utils/format-bytes";
+import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
+import ProcessComparitor from "@/features/processes/components/processes.comparator";
+import ProcessTable from "@/features/processes/components/processes.table";
+import useKillProcess from "@/features/processes/hooks/useKillProcess";
+import useComparitorSelector from "@/features/processes/stores/processes-comparator.store";
+import { Process } from "@/lib";
+import { ColDef } from "@ag-grid-community/core";
+import { ActionIcon, Box, Grid, Group, Space, Tabs, Text } from "@mantine/core";
+import { IconChartAreaLine, IconCircleX, IconTable, IconTablePlus } from "@tabler/icons-react";
 
 // TODO: Make Action Icon X work
 const ActionsColumn = (props: CustomCellRendererProps<Process>) => {
-  const addToCompparitorSelected = useComparitorSelector.use.addToComparitorSelected();
+  const addToCompparitorSelected = useComparitorSelector.use.addToComparatorSelected();
   const handleAddToComparitor = () => props.data?.name && addToCompparitorSelected(props.data.name);
   const kill = useKillProcess({});
   const onKill = () => kill(props.data?.name ?? "");

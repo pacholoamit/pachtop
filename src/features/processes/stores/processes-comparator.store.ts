@@ -1,35 +1,35 @@
-import create from "zustand";
+import create from 'zustand';
 
-import createSelectors from "@/utils/create-selectors";
+import createSelectors from '@/utils/create-selectors';
 
-interface ComparitorState {
-  comparitorOptions: string[];
-  comparitorSelected: string[];
-  setComparitorOptions: (options: string[]) => void;
-  setComparitorSelected: (selected: string[]) => void;
-  addToComparitorSelected: (selected: string) => void;
+interface ComparatorState {
+  comparatorOptions: string[];
+  comparatorSelected: string[];
+  setComparatorOptions: (options: string[]) => void;
+  setComparatorSelected: (selected: string[]) => void;
+  addToComparatorSelected: (selected: string) => void;
 }
 
 const limit = 4;
-const useComparitorStore = create<ComparitorState>((set, get) => ({
-  comparitorOptions: [],
-  comparitorSelected: [],
-  setComparitorOptions: (options) => set({ comparitorOptions: options }),
-  setComparitorSelected: (selected) => set({ comparitorSelected: selected }),
-  addToComparitorSelected: (selected) => {
+const useComparatorStore = create<ComparatorState>((set, get) => ({
+  comparatorOptions: [],
+  comparatorSelected: [],
+  setComparatorOptions: (options) => set({ comparatorOptions: options }),
+  setComparatorSelected: (selected) => set({ comparatorSelected: selected }),
+  addToComparatorSelected: (selected) => {
     // Don't append if limit is reached
-    if (get().comparitorSelected.length >= limit) {
+    if (get().comparatorSelected.length >= limit) {
       return;
     }
 
     // Don't append if already selected
-    if (get().comparitorSelected.includes(selected)) {
+    if (get().comparatorSelected.includes(selected)) {
       return;
     }
-    set((state) => ({ comparitorSelected: [...state.comparitorSelected, selected] }));
+    set((state) => ({ comparatorSelected: [...state.comparatorSelected, selected] }));
   },
 }));
 
-const useComparitorSelectors = createSelectors(useComparitorStore);
+const useComparatorSelectors = createSelectors(useComparatorStore);
 
-export default useComparitorSelectors;
+export default useComparatorSelectors;
