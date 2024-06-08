@@ -1,4 +1,4 @@
-import { MantineThemeOverride } from "@mantine/core";
+import { MantineThemeOverride } from '@mantine/core';
 
 export const VIEWABLE_ELEMENT_COUNT = 60 * 30; // Viewable elements in the chart (60 seconds * 30 )
 
@@ -27,7 +27,7 @@ export const commonColors = {
   midnight: {
     cardBorder: "#27272a",
     layoutEdge: "#27272a",
-    cardColor: "transparent",
+    cardColor: "#09090b",
     background: "#09090b",
     gridLine: "#27272a",
     label: "white",
