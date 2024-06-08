@@ -307,7 +307,7 @@ impl ProcessesTrait for Metrics {
 
     fn kill_process(&mut self, name: &str) -> bool {
         self.sys
-            .processes_by_exact_name(&name)
+            .processes_by_name(&name)
             .any(|process| process.kill())
     }
 }

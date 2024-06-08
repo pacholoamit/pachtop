@@ -18,15 +18,14 @@ const ActionsColumn = (props: CustomCellRendererProps<Process>) => {
   const addToCompparitorSelected = useComparitorSelector.use.addToComparitorSelected();
   const handleAddToComparitor = () => props.data?.name && addToCompparitorSelected(props.data.name);
   const kill = useKillProcess({});
-
   const onKill = () => kill(props.data?.name ?? "");
 
   return (
-    <Group position="center">
-      <ActionIcon color="blue" radius={"xl"} size={"sm"} variant="subtle" onClick={handleAddToComparitor}>
+    <Group align="center" position="center" pt={10}>
+      <ActionIcon color="blue" size={"sm"} variant="transparent" onClick={handleAddToComparitor}>
         <IconChartAreaLine />
       </ActionIcon>
-      <ActionIcon color="red" radius={"xl"} size={"sm"} variant="subtle">
+      <ActionIcon color="red" size={"sm"} variant="transparent">
         <IconCircleX onClick={onKill} />
       </ActionIcon>
     </Group>

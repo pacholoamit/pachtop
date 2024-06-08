@@ -30,20 +30,20 @@ const notification = {
     showNotification({
       title: opts.title,
       message: opts.message,
-      styles: (theme) => ({
-        root: {
-          backgroundColor: theme.colors.green[6],
-          borderColor: theme.colors.green[6],
-          "&::before": { backgroundColor: theme.white },
-        },
+      // styles: (theme) => ({
+      //   root: {
+      //     backgroundColor: theme.colors.green[6],
+      //     borderColor: theme.colors.green[6],
+      //     "&::before": { backgroundColor: theme.white },
+      //   },
 
-        title: { color: theme.white },
-        description: { color: theme.white },
-        closeButton: {
-          color: theme.white,
-          "&:hover": { backgroundColor: theme.colors.green[7] },
-        },
-      }),
+      //   title: { color: theme.white },
+      //   description: { color: theme.white },
+      //   closeButton: {
+      //     color: theme.white,
+      //     "&:hover": { backgroundColor: theme.colors.green[7] },
+      //   },
+      // }),
     });
   },
   error: (opts: NotificationOpts) => {
