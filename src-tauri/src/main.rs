@@ -18,12 +18,14 @@ mod mac;
 mod win;
 
 mod app;
+pub mod db;
 mod dirstat;
 mod metrics;
 mod models;
 mod utils;
 
 use app::AppState;
+use db::db;
 
 use std::time::Duration;
 use tauri::api::path::cache_dir;
@@ -127,8 +129,11 @@ fn build_and_run_app(app: AppState) {
         .expect("error while running tauri application");
 }
 
-fn main() -> std::io::Result<()> {
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
     let app = AppState::new();
+
+    db::db::init().await?;
 
     build_and_run_app(app);
 
