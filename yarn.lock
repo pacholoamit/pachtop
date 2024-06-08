@@ -4974,6 +4974,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-no-relative-import-paths@npm:^1.5.4":
+  version: 1.5.4
+  resolution: "eslint-plugin-no-relative-import-paths@npm:1.5.4"
+  checksum: 078595c7cf7272ad35c4dae34b0e63878d9de0d622350fe00e3f14d769bc7e4d51f83e0af703770ff6cdda9545354ba8b2fcadb13975f2822b8085588ea63979
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react-hooks@npm:^4.3.0":
   version: 4.6.2
   resolution: "eslint-plugin-react-hooks@npm:4.6.2"
@@ -6730,6 +6737,7 @@ __metadata:
     classnames: ^2.5.1
     eslint: 8.x
     eslint-config-react-app: ^7.0.1
+    eslint-plugin-no-relative-import-paths: ^1.5.4
     eslint-plugin-react: ^7.34.2
     eslint-plugin-unused-imports: ^4.0.0
     globals: ^15.4.0
