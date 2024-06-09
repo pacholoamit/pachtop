@@ -13,30 +13,25 @@ type DYNAMIC_ROUTE = "/disks/:id";
 
 type ROUTE = STATIC_ROUTE | DYNAMIC_ROUTE;
 
-export const routes: { path: ROUTE; idx: number; element: JSX.Element }[] = [
+export const routes: { path: ROUTE; element: JSX.Element }[] = [
   {
     path: "/",
-    idx: 0,
     element: <DashboardPage />,
   },
   {
     path: "/disks",
-    idx: 1,
     element: <DisksPage />,
   },
   {
     path: "/disks/:id",
-    idx: 1,
     element: <DiskAnalyticsPage />,
   },
   {
     path: "/processes",
-    idx: 2,
     element: <ProcessesPage />,
   },
   {
     path: "/settings",
-    idx: 3,
     element: <SettingsPage />,
   },
 ];
@@ -52,10 +47,10 @@ const useRouteHandler = () => {
     if (diskById && diskById.length > 0) return setActive(1);
 
     const routeMap: Record<STATIC_ROUTE, number> = {
-      "/": routes[0].idx,
-      "/disks": routes[1].idx,
-      "/processes": routes[2].idx,
-      "/settings": routes[3].idx,
+      "/": 0,
+      "/disks": 1,
+      "/processes": 2,
+      "/settings": 3,
     };
 
     console.log("useRouteHandler active: ", active);

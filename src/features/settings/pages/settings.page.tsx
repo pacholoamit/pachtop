@@ -9,7 +9,6 @@ import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
-import { checkUpdate, installUpdate } from "@tauri-apps/api/updater";
 
 const GeneralSectionInfo = () => {
   return (
@@ -27,29 +26,6 @@ const GeneralSection = () => {
   const checkAutoStart = async () => setChecked(await autostart.isEnabled());
   const { setTheme, currentTheme } = useTheme();
 
-  const onCheckUpdate = async () => {
-    setIsUpdateLoading(true);
-    const update = await checkUpdate().then((res) => {
-      setIsUpdateLoading(false);
-      return res;
-    });
-
-    if (update.shouldUpdate) {
-      notification.success({
-        title: "🥳 Update available",
-        message: `New Pachtop version available.`,
-      });
-
-      await installUpdate();
-      return;
-    }
-
-    notification.success({
-      title: "🥳 No updates",
-      message: `You are already using the latest version of Pachtop.`,
-    });
-  };
-
   useEffect(() => {
     checkAutoStart();
   }, [checkAutoStart]);
@@ -65,14 +41,6 @@ const GeneralSection = () => {
 
   return (
     <Grid gutter={"xl"}>
-      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
-        <Stack spacing={4} align="flex-start">
-          <Text size="sm">Check for updates</Text>
-          <Button loading={isUpdateLoading} onClick={onCheckUpdate} variant="outline">
-            Update
-          </Button>
-        </Stack>
-      </Grid.Col>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Theme</Text>

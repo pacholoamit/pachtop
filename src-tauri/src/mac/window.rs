@@ -135,7 +135,7 @@ pub fn setup_mac_window(app: &mut App) {
         func(ptr);
     }
 
-    let window = app.get_window("main").unwrap();
+    let window = app.get_webview_window("main").unwrap();
 
     unsafe {
         let ns_win = window.ns_window().unwrap() as id;
@@ -372,13 +372,18 @@ pub fn setup_mac_window(app: &mut App) {
     }))
     }
 
-    app.get_window("main").unwrap().set_transparent_titlebar();
+    //  TODO: Check if this works on macos
+    app.get_webview_window("main")
+        .unwrap()
+        .set_transparent_titlebar();
 
-    let window_handle = app.get_window("main").unwrap();
     update_window_theme(&window_handle, HexColor::rgb(9, 9, 11));
 
+    let window = app.get_webview_window("main").unwrap();
+    let handle = window.app_handle();
+
     // Control window theme based on app update_window
-    app.listen_global("theme_changed", move |ev| {
+    handle.listen_global("theme_changed", move |ev| {
         let payload = serde_json::from_str::<&str>(ev.payload().unwrap())
             .unwrap()
             .trim();

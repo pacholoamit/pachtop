@@ -1,6 +1,5 @@
 use hex_color::HexColor;
-use tauri::App;
-use tauri::Manager;
+use tauri::{App, Manager};
 
 use std::mem::transmute;
 use std::{ffi::c_void, mem::size_of, ptr};
@@ -76,13 +75,13 @@ fn update_bg_color(hwnd: &HWND, bg_color: HexColor) {
 
 #[cfg(target_os = "windows")]
 pub fn setup_win_window(app: &mut App) {
-    let window = app.get_window("main").unwrap();
+    let window = app.get_webview_window("main").unwrap();
+    let handle = window.app_handle();
+
     let win_handle = window.hwnd().unwrap();
 
-    app.listen_global("theme_changed", move |ev| {
-        let payload = serde_json::from_str::<&str>(ev.payload().unwrap())
-            .unwrap()
-            .trim();
+    handle.listen("theme_changed", move |ev| {
+        let payload = serde_json::from_str::<&str>(ev.payload()).unwrap().trim();
 
         let color = HexColor::parse_rgb(payload).unwrap();
 

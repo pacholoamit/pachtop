@@ -1,4 +1,4 @@
-import { InvokeArgs } from '@tauri-apps/api/tauri';
+import { InvokeArgs } from "@tauri-apps/api/core";
 
 export * from "@/lib/bindings/Cpu";
 export * from "@/lib/bindings/Disk";
@@ -40,15 +40,15 @@ export enum DiskType {
   SSD = "SSD",
 }
 
-export interface ShowInFolderOpts extends InvokeArgs {
+export interface ShowInFolderOpts {
   path: string;
 }
 
-export interface KillProcessOpts extends InvokeArgs {
+export interface KillProcessOpts {
   name: string;
 }
 
-export interface ScanOpts extends InvokeArgs {
+export interface ScanOpts {
   path: string;
 }
 

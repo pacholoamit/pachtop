@@ -10,6 +10,7 @@ use tauri::{State, Window};
 use crate::dirstat::{DiskItem, FileInfo};
 use crate::metrics::Metrics;
 use crate::models::*;
+use tauri::Manager;
 
 pub struct AppState(Arc<Mutex<App>>);
 
@@ -45,44 +46,44 @@ impl AppState {
             .analysis
             .insert(name, disk_analysis);
     }
-    pub fn emit_sysinfo(&self, window: &Window) {
+    pub fn emit_sysinfo(&self, app: &tauri::AppHandle) {
         let sys_info = self.0.lock().unwrap().metrics.get_system_information();
-        window.emit("emit_sysinfo", &sys_info).unwrap();
+        app.emit("emit_sysinfo", &sys_info).unwrap();
     }
 
-    pub fn emit_global_cpu(&self, window: &Window) {
+    pub fn emit_global_cpu(&self, app: &tauri::AppHandle) {
         let global_cpu = self.0.lock().unwrap().metrics.get_global_cpu();
-        window.emit("emit_global_cpu", &global_cpu).unwrap();
+        app.emit("emit_global_cpu", &global_cpu).unwrap();
     }
 
-    pub fn emit_cpus(&self, window: &Window) {
+    pub fn emit_cpus(&self, app: &tauri::AppHandle) {
         let cpus = self.0.lock().unwrap().metrics.get_cpus();
-        window.emit("emit_cpus", &cpus).unwrap();
+        app.emit("emit_cpus", &cpus).unwrap();
     }
 
-    pub fn emit_memory(&self, window: &Window) {
+    pub fn emit_memory(&self, app: &tauri::AppHandle) {
         let memory = self.0.lock().unwrap().metrics.get_memory();
-        window.emit("emit_memory", &memory).unwrap();
+        app.emit("emit_memory", &memory).unwrap();
     }
 
-    pub fn emit_swap(&self, window: &Window) {
+    pub fn emit_swap(&self, app: &tauri::AppHandle) {
         let swap = self.0.lock().unwrap().metrics.get_swap();
-        window.emit("emit_swap", &swap).unwrap();
+        app.emit("emit_swap", &swap).unwrap();
     }
 
-    pub fn emit_networks(&self, window: &Window) {
+    pub fn emit_networks(&self, app: &tauri::AppHandle) {
         let networks = self.0.lock().unwrap().metrics.get_networks();
-        window.emit("emit_networks", &networks).unwrap();
+        app.emit("emit_networks", &networks).unwrap();
     }
 
-    pub fn emit_disks(&self, window: &Window) {
+    pub fn emit_disks(&self, app: &tauri::AppHandle) {
         let disks = self.0.lock().unwrap().metrics.get_disks();
-        window.emit("emit_disks", &disks).unwrap();
+        app.emit("emit_disks", &disks).unwrap();
     }
 
-    pub fn emit_processes(&self, window: &Window) {
+    pub fn emit_processes(&self, app: &tauri::AppHandle) {
         let processes = self.0.lock().unwrap().metrics.get_processes();
-        window.emit("emit_processes", &processes).unwrap();
+        app.emit("emit_processes", &processes).unwrap();
     }
 }
 
