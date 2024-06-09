@@ -91,16 +91,19 @@ fn build_and_run_app(app: AppState) {
                 setup_win_window(app);
             }
 
-            // BUILD TRAY
+            // BUILD TRAY - TODO MOVE TO DIFFERENT FILE
 
             let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
             let show = MenuItemBuilder::with_id("show", "Show").build(app)?;
+            let icon = app.default_window_icon().unwrap().clone();
 
             let menu = tauri::menu::MenuBuilder::new(app)
                 .items(&[&show, &quit])
                 .build()?;
 
-            let tray = tauri::tray::TrayIconBuilder::new()
+            let tray = tauri::tray::TrayIconBuilder::with_id("tray")
+                .tooltip("Pachtop")
+                .icon(icon)
                 .menu(&menu)
                 .on_menu_event(move |app, event| match event.id().as_ref() {
                     "quit" => {
