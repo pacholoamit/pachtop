@@ -18,7 +18,7 @@ mod mac;
 mod win;
 
 mod app;
-pub mod db;
+mod db;
 mod dirstat;
 mod metrics;
 mod models;
@@ -132,7 +132,7 @@ fn build_and_run_app(app: AppState) {
 async fn main() -> anyhow::Result<()> {
     let app = AppState::new();
 
-    db::db::init().await?;
+    // db::db::init().await?;
 
     build_and_run_app(app);
 

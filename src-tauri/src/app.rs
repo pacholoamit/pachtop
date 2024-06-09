@@ -91,7 +91,7 @@ pub fn kill_process(state: State<'_, AppState>, name: String) -> bool {
     let killed = state.0.lock().unwrap().metrics.kill_process(&name);
 
     info!(
-        "Running kill_process command, pid: {}, killed: {}",
+        "Running kill_process command, name: {}, killed: {}",
         &name, killed
     );
     killed
