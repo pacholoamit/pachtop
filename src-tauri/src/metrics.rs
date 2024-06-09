@@ -3,8 +3,8 @@ use crate::utils::{current_time, get_percentage};
 use base64::prelude::*;
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::str::{self, FromStr};
-use sysinfo::{MemoryRefreshKind, Pid, System};
+use std::str::{self};
+use sysinfo::{MemoryRefreshKind, System};
 use systemicons;
 pub struct Metrics {
     sys: System,

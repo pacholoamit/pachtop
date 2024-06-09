@@ -18,6 +18,7 @@ mod mac;
 mod win;
 
 mod app;
+mod db;
 mod dirstat;
 mod metrics;
 mod models;
@@ -42,7 +43,7 @@ fn build_and_run_app(app: AppState) {
 
     let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
 
-    let single_instance_plugin = tauri_plugin_single_instance::init(|app, argv, cwd| {
+    let single_instance_plugin = tauri_plugin_single_instance::init(|app, _argv, _cwd| {
         let window = app.get_window("main").unwrap();
         if window.is_visible().unwrap() {
             window.set_focus().unwrap();
@@ -127,8 +128,11 @@ fn build_and_run_app(app: AppState) {
         .expect("error while running tauri application");
 }
 
-fn main() -> std::io::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     let app = AppState::new();
+
+    // db::db::init().await?;
 
     build_and_run_app(app);
 
