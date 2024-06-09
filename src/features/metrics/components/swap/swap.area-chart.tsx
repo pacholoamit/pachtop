@@ -12,7 +12,7 @@ const SwapAreaChart: React.FC = ({}) => {
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
-      text: "Swap Usage",
+      text: "SWAP Usage",
     },
     yAxis: {
       labels: {
