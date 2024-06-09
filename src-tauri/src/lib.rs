@@ -131,6 +131,4 @@ pub fn run() {
     // db::db::init().await?;
 
     build_and_run_app(app);
-
-    Ok(())
 }
