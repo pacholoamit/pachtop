@@ -94,12 +94,10 @@ fn build_and_run_app(app: AppState) {
             // BUILD TRAY - TODO MOVE TO DIFFERENT FILE
 
             let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
-            let show = MenuItemBuilder::with_id("show", "Show").build(app)?;
+
             let icon = app.default_window_icon().unwrap().clone();
 
-            let menu = tauri::menu::MenuBuilder::new(app)
-                .items(&[&show, &quit])
-                .build()?;
+            let menu = tauri::menu::MenuBuilder::new(app).items(&[&quit]).build()?;
 
             let tray = tauri::tray::TrayIconBuilder::with_id("tray")
                 .tooltip("Pachtop")
@@ -108,10 +106,6 @@ fn build_and_run_app(app: AppState) {
                 .on_menu_event(move |app, event| match event.id().as_ref() {
                     "quit" => {
                         app.exit(0);
-                    }
-                    "show" => {
-                        let window = app.get_webview_window("main").unwrap();
-                        window.show().unwrap();
                     }
                     _ => {}
                 })
