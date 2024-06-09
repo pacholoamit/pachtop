@@ -9,7 +9,7 @@ import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
-import { checkUpdate, installUpdate } from "@tauri-apps/api/updater";
+import { checkUpdate, installUpdate } from "@tauri-apps/plugin-updater";
 
 const GeneralSectionInfo = () => {
   return (

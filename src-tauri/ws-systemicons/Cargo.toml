@@ -12,11 +12,11 @@ repository = "https://github.com/uriegel/systemicons"
 readme = "README.md"
 
 [target.'cfg(target_os="linux")'.dependencies]
-gio-sys = "0.15"
-glib = "0.15"
-glib-sys = "0.15"
-gtk-sys = "0.15"
-gtk = "0.15"
+gio-sys = "0.18"
+glib = "0.18"
+glib-sys = "0.18"
+gtk-sys = "0.18"
+gtk = "0.18"
 
 [target.'cfg(target_os="windows")'.dependencies]
 winapi = { version = "0.3", features = ["winuser"] }

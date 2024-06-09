@@ -3080,6 +3080,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tauri-apps/api@npm:2.0.0-beta.13":
+  version: 2.0.0-beta.13
+  resolution: "@tauri-apps/api@npm:2.0.0-beta.13"
+  checksum: 2716878dedbae061740bde23b5ee9f5e8fffc6e4bf26d0b0babb3412a83ff295fe2fe4e22b4505de7ef845a0745d679bf15d7078b3dc26784002bd638abacff0
+  languageName: node
+  linkType: hard
+
 "@tauri-apps/api@npm:^1.2.0":
   version: 1.2.0
   resolution: "@tauri-apps/api@npm:1.2.0"
@@ -3094,90 +3101,90 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-darwin-arm64@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-darwin-arm64@npm:1.5.14"
+"@tauri-apps/cli-darwin-arm64@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-darwin-arm64@npm:2.0.0-beta.20"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-darwin-x64@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-darwin-x64@npm:1.5.14"
+"@tauri-apps/cli-darwin-x64@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-darwin-x64@npm:2.0.0-beta.20"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-arm-gnueabihf@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-linux-arm-gnueabihf@npm:1.5.14"
+"@tauri-apps/cli-linux-arm-gnueabihf@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-linux-arm-gnueabihf@npm:2.0.0-beta.20"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-arm64-gnu@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-linux-arm64-gnu@npm:1.5.14"
+"@tauri-apps/cli-linux-arm64-gnu@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-linux-arm64-gnu@npm:2.0.0-beta.20"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-arm64-musl@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-linux-arm64-musl@npm:1.5.14"
+"@tauri-apps/cli-linux-arm64-musl@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-linux-arm64-musl@npm:2.0.0-beta.20"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-x64-gnu@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-linux-x64-gnu@npm:1.5.14"
+"@tauri-apps/cli-linux-x64-gnu@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-linux-x64-gnu@npm:2.0.0-beta.20"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-linux-x64-musl@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-linux-x64-musl@npm:1.5.14"
+"@tauri-apps/cli-linux-x64-musl@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-linux-x64-musl@npm:2.0.0-beta.20"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-win32-arm64-msvc@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-win32-arm64-msvc@npm:1.5.14"
+"@tauri-apps/cli-win32-arm64-msvc@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-win32-arm64-msvc@npm:2.0.0-beta.20"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-win32-ia32-msvc@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-win32-ia32-msvc@npm:1.5.14"
+"@tauri-apps/cli-win32-ia32-msvc@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-win32-ia32-msvc@npm:2.0.0-beta.20"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli-win32-x64-msvc@npm:1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli-win32-x64-msvc@npm:1.5.14"
+"@tauri-apps/cli-win32-x64-msvc@npm:2.0.0-beta.20":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli-win32-x64-msvc@npm:2.0.0-beta.20"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@tauri-apps/cli@npm:^1.5.14":
-  version: 1.5.14
-  resolution: "@tauri-apps/cli@npm:1.5.14"
+"@tauri-apps/cli@npm:next":
+  version: 2.0.0-beta.20
+  resolution: "@tauri-apps/cli@npm:2.0.0-beta.20"
   dependencies:
-    "@tauri-apps/cli-darwin-arm64": 1.5.14
-    "@tauri-apps/cli-darwin-x64": 1.5.14
-    "@tauri-apps/cli-linux-arm-gnueabihf": 1.5.14
-    "@tauri-apps/cli-linux-arm64-gnu": 1.5.14
-    "@tauri-apps/cli-linux-arm64-musl": 1.5.14
-    "@tauri-apps/cli-linux-x64-gnu": 1.5.14
-    "@tauri-apps/cli-linux-x64-musl": 1.5.14
-    "@tauri-apps/cli-win32-arm64-msvc": 1.5.14
-    "@tauri-apps/cli-win32-ia32-msvc": 1.5.14
-    "@tauri-apps/cli-win32-x64-msvc": 1.5.14
+    "@tauri-apps/cli-darwin-arm64": 2.0.0-beta.20
+    "@tauri-apps/cli-darwin-x64": 2.0.0-beta.20
+    "@tauri-apps/cli-linux-arm-gnueabihf": 2.0.0-beta.20
+    "@tauri-apps/cli-linux-arm64-gnu": 2.0.0-beta.20
+    "@tauri-apps/cli-linux-arm64-musl": 2.0.0-beta.20
+    "@tauri-apps/cli-linux-x64-gnu": 2.0.0-beta.20
+    "@tauri-apps/cli-linux-x64-musl": 2.0.0-beta.20
+    "@tauri-apps/cli-win32-arm64-msvc": 2.0.0-beta.20
+    "@tauri-apps/cli-win32-ia32-msvc": 2.0.0-beta.20
+    "@tauri-apps/cli-win32-x64-msvc": 2.0.0-beta.20
   dependenciesMeta:
     "@tauri-apps/cli-darwin-arm64":
       optional: true
@@ -3201,7 +3208,16 @@ __metadata:
       optional: true
   bin:
     tauri: tauri.js
-  checksum: 635eeb3a5793e46fbf52b9c7572d3efac5180772578b6899905223a1f46759afad842aa09b6ee14c79789756bcbbb0b17f7618f70c9d25237aef17bb46c882e1
+  checksum: 7ad75a62adf12f0176fe02bef38150a64d8faeee2d242ae39d9b61b69c6c83165716f2b5762dbb343fce5bcdd41f10234ecfe2366928cd8fc53f448a3a6c0c31
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/plugin-updater@npm:^2.0.0-beta.5":
+  version: 2.0.0-beta.5
+  resolution: "@tauri-apps/plugin-updater@npm:2.0.0-beta.5"
+  dependencies:
+    "@tauri-apps/api": 2.0.0-beta.13
+  checksum: 59af6953d7eda909b90ceccb6bb1b875fbc6eb93128fa01420ad6a629c94c9e6bd5681bee8c4833594b7b021856d204550bb4bc91d5ff327a30fd45eb2c712bb
   languageName: node
   linkType: hard
 
@@ -6725,7 +6741,8 @@ __metadata:
     "@mantine/notifications": ^6.0.21
     "@tabler/icons-react": ^2.47.0
     "@tauri-apps/api": ^1.5.6
-    "@tauri-apps/cli": ^1.5.14
+    "@tauri-apps/cli": next
+    "@tauri-apps/plugin-updater": ^2.0.0-beta.5
     "@types/lodash.sortby": ^4.7.9
     "@types/node": ^20.14.0
     "@types/react": ^18.3.3

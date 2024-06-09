@@ -1,4 +1,4 @@
-import { InvokeArgs } from '@tauri-apps/api/tauri';
+import { InvokeArgs } from 'core';
 
 export * from "@/lib/bindings/Cpu";
 export * from "@/lib/bindings/Disk";
