@@ -1,6 +1,7 @@
 import { invoke } from "@/lib/helpers";
 import { Command, DiskItem, KillProcessOpts, KillProcessResult, ScanOpts } from "@/lib/types";
 
+// TODO: Fix types
 export const commands = {
   killProcess: (opts: KillProcessOpts): Promise<KillProcessResult> => invoke(Command.KillProcess, opts),
   showInFolder: (path: string): Promise<void> => invoke(Command.ShowInFolder, { path }),

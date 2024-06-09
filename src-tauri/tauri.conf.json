@@ -7,8 +7,9 @@
     "devUrl": "http://localhost:5173"
   },
   "bundle": {
+    "publisher": "pachtop",
     "active": true,
-    "category": "DeveloperTool",
+    "category": "Utility",
     "copyright": "",
     "targets": "all",
     "externalBin": [],
@@ -33,7 +34,7 @@
       "signingIdentity": null
     },
     "resources": [],
-    "shortDescription": "Cross-platform (Linux, WIndows, MacOS) Desktop GUI system monitor, built with Rust & Tauri",
+    "shortDescription": "a more modern system monitor",
     "linux": {
       "deb": {
         "depends": []
