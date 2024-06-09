@@ -29,7 +29,7 @@ Pachtop is a cross-platform desktop application built with Rust that allows you 
 > NOTE: Pachtop is under active development, most of the features are still experimental and subject to change.
 
 <p align="center">
-    <img src="https://github.com/pacholoamit/pachtop/assets/69985528/104bac3d-3778-42a0-b358-8fc111f3a658"/>
+    <img src="https://github.com/pacholoamit/pachtop/blob/master/assets/dashboard.png?raw=true"/>
     <br/>
     <br/>
     <img src="https://rust-reportcard.xuri.me/badge/github.com/pacholoamit/pachtop" />
@@ -50,27 +50,23 @@ The inspiration for Pachtop stems mainly from using [Stacer](https://oguzhaninan
 # 🚀 Showcase
 
 ## Dashboard
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/f746921b-efbb-49fc-b65a-2bb375df4924)
+
+The dashboard shows real-time metrics of your system. Metrics include CPU usage, RAM usage, Swap usage, Disk usage, and Network usage.
+
+![Dashboard](https://github.com/pacholoamit/pachtop/blob/master/assets/dashboard.png)
 
 ## Disks
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/60df5068-dc35-4097-8a0d-515037a2588b)
+
+The Disks feature allows you to perform disk analysis on available disks.
+
+![Disks](https://github.com/pacholoamit/pachtop/blob/master/assets/disk-analysis.png)
 
 ## Processes
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/f4d1ab2d-773a-4851-818d-d5ad58f10e29)
 
-# 📚 Themes
+The Processes feature allows you to monitor and compare resource usage of processes
 
-## Midnight
+![image](https://github.com/pacholoamit/pachtop/blob/master/assets/processes.png?raw=true)
 
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/197bf5ba-7c71-45cb-9b6e-dac92df71eeb)
-
-## Bumblebee
-
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/41db4a6d-511e-498f-8d44-68b48123753a)
-
-## Slate
-
-![image](https://github.com/pacholoamit/pachtop/assets/69985528/f746921b-efbb-49fc-b65a-2bb375df4924)
 
 # 🏗️ Architecture
 
