@@ -94,30 +94,37 @@ fn build_and_run_app(app: AppState) {
             // BUILD TRAY
 
             let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
+            let show = MenuItemBuilder::with_id("show", "Show").build(app)?;
 
-            let menu = tauri::menu::MenuBuilder::new(app).items(&[&quit]).build()?;
+            let menu = tauri::menu::MenuBuilder::new(app)
+                .items(&[&show, &quit])
+                .build()?;
 
-            let tray = tauri::tray::TrayIconBuilder::with_id("pachtop-tray")
+            let tray = tauri::tray::TrayIconBuilder::new()
                 .menu(&menu)
                 .on_menu_event(move |app, event| match event.id().as_ref() {
                     "quit" => {
                         app.exit(0);
                     }
+                    "show" => {
+                        let window = app.get_webview_window("main").unwrap();
+                        window.show().unwrap();
+                    }
                     _ => {}
                 })
-                // .on_tray_icon_event(|tray, event| match event {
-                //     tauri::tray::TrayIconEvent::Click {
-                //         id,
-                //         position,
-                //         rect,
-                //         button,
-                //         button_state,
-                //     } => {
-                //         let window = app.get_webview_window("main").unwrap();
-                //         window.show().unwrap();
-                //     }
-                //     _ => {}
-                // })
+                .on_tray_icon_event(|tray, event| match event {
+                    tauri::tray::TrayIconEvent::Click { id, button, .. } => match button {
+                        tauri::tray::MouseButton::Left => {
+                            let app = tray.app_handle();
+                            if let Some(window) = app.get_webview_window("main") {
+                                let _ = window.show();
+                                let _ = window.set_focus();
+                            }
+                        }
+                        _ => {}
+                    },
+                    _ => {}
+                })
                 .build(app)?;
             Ok(())
         })
