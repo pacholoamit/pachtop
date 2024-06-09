@@ -3080,17 +3080,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/api@npm:2.0.0-beta.13":
+"@tauri-apps/api@npm:2.0.0-beta.13, @tauri-apps/api@npm:^2.0.0-beta.13":
   version: 2.0.0-beta.13
   resolution: "@tauri-apps/api@npm:2.0.0-beta.13"
   checksum: 2716878dedbae061740bde23b5ee9f5e8fffc6e4bf26d0b0babb3412a83ff295fe2fe4e22b4505de7ef845a0745d679bf15d7078b3dc26784002bd638abacff0
-  languageName: node
-  linkType: hard
-
-"@tauri-apps/api@npm:^1.5.6":
-  version: 1.5.6
-  resolution: "@tauri-apps/api@npm:1.5.6"
-  checksum: ad341297aafdad64d62677e4fac152c9a94e9da0f17e291a764d9bfb9fa2961426ce75f6ff363cc586af40f28f695011c962fff889206cf15c5b1b0c724a5ab1
   languageName: node
   linkType: hard
 
@@ -6733,7 +6726,7 @@ __metadata:
     "@mantine/hooks": ^6.0.21
     "@mantine/notifications": ^6.0.21
     "@tabler/icons-react": ^2.47.0
-    "@tauri-apps/api": ^1.5.6
+    "@tauri-apps/api": ^2.0.0-beta.13
     "@tauri-apps/cli": next
     "@tauri-apps/plugin-updater": ^2.0.0-beta.5
     "@types/lodash.sortby": ^4.7.9
