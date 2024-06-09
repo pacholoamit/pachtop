@@ -22,7 +22,11 @@ use app::AppState;
 
 use std::time::Duration;
 // use tauri::api::path::cache_dir;
-use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
+use tauri::{
+    menu::{MenuBuilder, MenuItemBuilder},
+    tray::TrayIconBuilder,
+    Manager,
+};
 use tauri_plugin_autostart::MacosLauncher;
 // use tauri_plugin_log::LogTarget;
 
@@ -47,9 +51,6 @@ fn build_and_run_app(app: AppState) {
         }
     });
 
-    let system_tray = SystemTray::new()
-        .with_menu(SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")));
-
     tauri::Builder::default()
         // .plugin(log_plugin)
         .plugin(store_plugin)
@@ -58,23 +59,24 @@ fn build_and_run_app(app: AppState) {
         .plugin(single_instance_plugin)
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();
-            let handle = app.handle();
+            let handle = app.handle().clone();
             let state = AppState::new();
 
             tauri::async_runtime::spawn(async move {
                 loop {
-                    state.emit_sysinfo(handle);
-                    state.emit_global_cpu(handle);
-                    state.emit_cpus(handle);
-                    state.emit_memory(handle);
-                    state.emit_swap(handle);
-                    state.emit_networks(handle);
-                    state.emit_disks(handle);
-                    state.emit_processes(handle);
+                    state.emit_sysinfo(&handle);
+                    state.emit_global_cpu(&handle);
+                    state.emit_cpus(&handle);
+                    state.emit_memory(&handle);
+                    state.emit_swap(&handle);
+                    state.emit_networks(&handle);
+                    state.emit_disks(&handle);
+                    state.emit_processes(&handle);
                     std::thread::sleep(Duration::from_secs(1))
                 }
             });
 
+            //  CONFIGURE WINDOW
             if cfg!(target_os = "macos") {
                 #[cfg(target_os = "macos")]
                 use mac::window::setup_mac_window;
@@ -89,27 +91,42 @@ fn build_and_run_app(app: AppState) {
                 setup_win_window(app);
             }
 
+            // BUILD TRAY
+
+            let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
+
+            let menu = tauri::menu::MenuBuilder::new(app).items(&[&quit]).build()?;
+
+            let tray = tauri::tray::TrayIconBuilder::with_id("pachtop-tray")
+                .menu(&menu)
+                .on_menu_event(move |app, event| match event.id().as_ref() {
+                    "quit" => {
+                        app.exit(0);
+                    }
+                    _ => {}
+                })
+                // .on_tray_icon_event(|tray, event| match event {
+                //     tauri::tray::TrayIconEvent::Click {
+                //         id,
+                //         position,
+                //         rect,
+                //         button,
+                //         button_state,
+                //     } => {
+                //         let window = app.get_webview_window("main").unwrap();
+                //         window.show().unwrap();
+                //     }
+                //     _ => {}
+                // })
+                .build(app)?;
             Ok(())
         })
-        .system_tray(system_tray)
-        .on_system_tray_event(|app, event| match event {
-            SystemTrayEvent::MenuItemClick { id, .. } => {
-                let window = app.get_window("main").unwrap();
-                if id.as_str() == "quit" {
-                    window.close().unwrap();
-                }
-            }
-            SystemTrayEvent::LeftClick { .. } => {
-                let window = app.get_window("main").unwrap();
-                window.show().unwrap();
-            }
-            _ => {}
-        })
-        .on_window_event(|event| {
-            if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
-                event.window().hide().unwrap();
+        .on_window_event(|window, event| match event {
+            tauri::WindowEvent::CloseRequested { api, .. } => {
+                window.hide().unwrap();
                 api.prevent_close();
             }
+            _ => {}
         })
         .manage(app)
         .invoke_handler(tauri::generate_handler![
