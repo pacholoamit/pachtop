@@ -88,7 +88,7 @@ const CpusBarChart: React.FC = () => {
   ];
 
   return (
-    <Card style={{ height: "350px" }}>
+    <Card style={{ height: "380px" }}>
       <Space h={1} />
       <ReactApexChart options={options} series={series} height={"100%"} type="bar" />
     </Card>

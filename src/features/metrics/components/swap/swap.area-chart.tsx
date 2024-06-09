@@ -32,7 +32,7 @@ const SwapAreaChart: React.FC = ({}) => {
     setChartOptions({
       series: [
         {
-          name: "Swap Usage",
+          name: "SWAP Usage",
           type: "area",
           data: swap.map((swap) => [swap.timestamp, swap.used]),
           color: other.charts.area.swap.color,
@@ -42,7 +42,7 @@ const SwapAreaChart: React.FC = ({}) => {
   }, [swap]);
 
   return (
-    <Card style={{ height: "350px" }}>
+    <Card style={{ height: "380px" }}>
       <AreaChart options={chartOptions} />
     </Card>
   );
