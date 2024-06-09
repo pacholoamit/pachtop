@@ -13,7 +13,6 @@ mod mac;
 mod win;
 
 mod app;
-mod db;
 mod dirstat;
 mod metrics;
 mod models;
@@ -22,24 +21,25 @@ mod utils;
 use app::AppState;
 
 use std::time::Duration;
-use tauri::api::path::cache_dir;
+// use tauri::api::path::cache_dir;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use tauri_plugin_autostart::MacosLauncher;
-use tauri_plugin_log::LogTarget;
+// use tauri_plugin_log::LogTarget;
 
 fn build_and_run_app(app: AppState) {
-    let log_plugin = tauri_plugin_log::Builder::default()
-        .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
-        .build();
+    // let log_plugin = tauri_plugin_log::Builder::default()
+    //     .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
+    //     .build();
 
     let store_plugin = tauri_plugin_store::Builder::default().build();
 
-    let auto_start_plugin = tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec![]));
+    let auto_start_plugin =
+        tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec!["--silently"]));
 
     let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
 
     let single_instance_plugin = tauri_plugin_single_instance::init(|app, _argv, _cwd| {
-        let window = app.get_window("main").unwrap();
+        let window = app.get_webview_window("main").unwrap();
         if window.is_visible().unwrap() {
             window.set_focus().unwrap();
         } else {
@@ -51,25 +51,26 @@ fn build_and_run_app(app: AppState) {
         .with_menu(SystemTrayMenu::new().add_item(CustomMenuItem::new("quit".to_string(), "Quit")));
 
     tauri::Builder::default()
-        .plugin(log_plugin)
+        // .plugin(log_plugin)
         .plugin(store_plugin)
         .plugin(auto_start_plugin)
         .plugin(window_state_plugin)
         .plugin(single_instance_plugin)
         .setup(|app| {
-            let window = app.get_window("main").unwrap();
+            let window = app.get_webview_window("main").unwrap();
+            let handle = app.handle();
             let state = AppState::new();
 
             tauri::async_runtime::spawn(async move {
                 loop {
-                    state.emit_sysinfo(&window);
-                    state.emit_global_cpu(&window);
-                    state.emit_cpus(&window);
-                    state.emit_memory(&window);
-                    state.emit_swap(&window);
-                    state.emit_networks(&window);
-                    state.emit_disks(&window);
-                    state.emit_processes(&window);
+                    state.emit_sysinfo(handle);
+                    state.emit_global_cpu(handle);
+                    state.emit_cpus(handle);
+                    state.emit_memory(handle);
+                    state.emit_swap(handle);
+                    state.emit_networks(handle);
+                    state.emit_disks(handle);
+                    state.emit_processes(handle);
                     std::thread::sleep(Duration::from_secs(1))
                 }
             });
