@@ -3087,13 +3087,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/api@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@tauri-apps/api@npm:1.2.0"
-  checksum: 15b0b805d9a30dce4e722b48330566cb95d79f92d626741f49735dfb7e7a044836a7c45a0537e03fd0acb48965c723ff31a6931289f81c9bcafa4e13c3a2aa2b
-  languageName: node
-  linkType: hard
-
 "@tauri-apps/api@npm:^1.5.6":
   version: 1.5.6
   resolution: "@tauri-apps/api@npm:1.5.6"
@@ -6773,9 +6766,9 @@ __metadata:
     react-router-dom: ^6.23.1
     react-text-gradients: ^1.0.2
     styled-components: ^6.1.11
-    tauri-plugin-autostart-api: "https://github.com/tauri-apps/tauri-plugin-autostart"
-    tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log"
-    tauri-plugin-store: "https://github.com/tauri-apps/tauri-plugin-store"
+    tauri-plugin-autostart-api: "https://github.com/tauri-apps/tauri-plugin-autostart#v2"
+    tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log#v2"
+    tauri-plugin-store: "https://github.com/tauri-apps/tauri-plugin-store#v2"
     typescript: ^5.4.5
     typescript-eslint: ^7.12.0
     vite: ^5.2.12
@@ -7965,30 +7958,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart":
-  version: 0.0.0
-  resolution: "tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart.git#commit=8d2706d05568f71eb81a05c3c891db1291c3ca82"
+"tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart#v2":
+  version: 2.0.0-beta.5
+  resolution: "tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart.git#commit=41d58532b5741ebb0d155dd3a1bd276910cb20d1"
   dependencies:
-    "@tauri-apps/api": ^1.2.0
-  checksum: a37ed161ef97a019c312e4ad7476bfe324812314b349218d7be1172441aca414cc2b06b6e2e61333d74981fa3430d3b6da9dad5d26789cd8f91054882d7ac809
+    "@tauri-apps/api": 2.0.0-beta.13
+  checksum: fc149788844a88c2a70cce8735757a538202f80941b4f9d8f8ab93a06c5df4058d43aeb1487c5a03a8ce712fb9fe26d0ce90f640c863551cf5ba5b0715c70d4f
   languageName: node
   linkType: hard
 
-"tauri-plugin-log-api@https://github.com/tauri-apps/tauri-plugin-log":
-  version: 0.0.0
-  resolution: "tauri-plugin-log-api@https://github.com/tauri-apps/tauri-plugin-log.git#commit=782a97aeb30cf0f54355d04e6026842fa420bd83"
+"tauri-plugin-log-api@https://github.com/tauri-apps/tauri-plugin-log#v2":
+  version: 2.0.0-beta.6
+  resolution: "tauri-plugin-log-api@https://github.com/tauri-apps/tauri-plugin-log.git#commit=ed1570339878d2fc8d36729dc581f3a18f8db3c3"
   dependencies:
-    "@tauri-apps/api": ^1.2.0
-  checksum: d08f1ba16acb989bd079309472dea5c8f8bf6d83d99315b2d6e141f1c8be9b7ab107b5b3ab8a68fdc8a18f0e549df442d9ec783731eef026839f8b21a95993e1
+    "@tauri-apps/api": 2.0.0-beta.13
+  checksum: bd78b4b4474e058e6e1b7b3df4be68446c11fddcfdf416800551918017da164f2b126569321def825f99b420884f9dcb8e6d086cb86b099ba97ef66f02adbe39
   languageName: node
   linkType: hard
 
-"tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store":
-  version: 0.0.0
-  resolution: "tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store.git#commit=0558a1f6c869ae0afdb0181dfa1ea31be8cf4893"
+"tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store#v2":
+  version: 2.0.0-beta.5
+  resolution: "tauri-plugin-store@https://github.com/tauri-apps/tauri-plugin-store.git#commit=8dc06682ab8222d0d22a8e8f5e12bb63e88341bc"
   dependencies:
-    "@tauri-apps/api": ^1.2.0
-  checksum: b60a9f2564c007cc30d041d62307771e42378a386a340bdb8d2bbb4d05e5d94742ceeb46ae5379a0533d8614864e9f2c7ebb9e306aafdd7734bf538a8dfc11a7
+    "@tauri-apps/api": 2.0.0-beta.13
+  checksum: 385aa7d1b6b52d2e52906a637d62a5a68e58b539d3de4f01019326c6336914abb9ba32524d46036f3add2cf928918e0592d95c64d25052367ababe9c345dd2f6
   languageName: node
   linkType: hard
 

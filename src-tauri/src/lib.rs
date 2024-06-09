@@ -1,8 +1,3 @@
-#![cfg_attr(
-    all(not(debug_assertions), target_os = "windows"),
-    windows_subsystem = "windows"
-)]
-
 #[cfg(target_os = "macos")]
 #[macro_use]
 extern crate cocoa;
@@ -128,9 +123,9 @@ fn build_and_run_app(app: AppState) {
         .expect("error while running tauri application");
 }
 
-#[tokio::main]
+// #[tokio::main]
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
-async fn run() -> anyhow::Result<()> {
+pub fn run() {
     let app = AppState::new();
 
     // db::db::init().await?;

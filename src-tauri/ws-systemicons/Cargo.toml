@@ -1,7 +1,7 @@
 [package]
 name = "systemicons"
 version = "0.6.0"
-description = "With this lib you can retrive the system icon which is associated to a certain file extension. The icon will be in the .png format. Windows, macOS and Linux (GTK) are supported."
+description = "With this lib you can retrieve the system icon which is associated to a certain file extension. The icon will be in the .png format. Windows, macOS and Linux (GTK) are supported."
 authors = [
     "Uwe Riegel <uriegel@hotmail.de>",
     "Victor Aremu <victor.olorunbumi@gmail.com>",
@@ -15,8 +15,8 @@ readme = "README.md"
 gio-sys = "0.18"
 glib = "0.18"
 glib-sys = "0.18"
-gtk-sys = "0.18"
-gtk = "0.18"
+gtk-sys = "0.18.0"
+gtk = "0.18.0"
 
 [target.'cfg(target_os="windows")'.dependencies]
 winapi = { version = "0.3", features = ["winuser"] }
