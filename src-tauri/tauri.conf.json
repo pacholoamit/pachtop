@@ -42,7 +42,7 @@
     }
   },
   "productName": "pachtop",
-  "version": "0.9.8-2",
+  "version": "0.9.8-3",
   "identifier": "com.pachtop.dev",
   "plugins": {
     "updater": {
