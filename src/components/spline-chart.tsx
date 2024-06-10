@@ -2,11 +2,10 @@ import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
-import formatBytes from "@/features/metrics/utils/format-bytes";
-import { Text, useMantineTheme } from "@mantine/core";
+import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
-export interface SplineChartStateProps extends Highcharts.Options {
+export interface SplineChartStatePropsInitialState extends Highcharts.Options {
   custom?: {
     yAxis?: {
       labels: {
@@ -20,11 +19,11 @@ export interface SplineChartStateProps extends Highcharts.Options {
 }
 
 export const useSplineChartState = (
-  props: SplineChartStateProps
-): [SplineChartStateProps, Dispatch<SetStateAction<SplineChartStateProps>>] => {
+  props: SplineChartStatePropsInitialState
+): [SplineChartStatePropsInitialState, Dispatch<SetStateAction<SplineChartStatePropsInitialState>>] => {
   const { other } = useMantineTheme();
 
-  const [chartOptions, setChartOptions] = useState<SplineChartStateProps>({
+  const [chartOptions, setChartOptions] = useState<SplineChartStatePropsInitialState>({
     ...props,
     chart: {
       type: "spline",
@@ -109,7 +108,7 @@ const SplineChart: React.FC<HighchartsReact.Props> = (props) => {
       highcharts={Highcharts}
       options={props.options}
       ref={chartComponentRef}
-      containerProps={{ style: { height: "100%", width: "100%" } }}
+      containerProps={{ style: { height: "92%", width: "100%" } }}
     />
   );
 };

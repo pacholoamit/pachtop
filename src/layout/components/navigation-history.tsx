@@ -1,25 +1,10 @@
-import { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
-import { ActionIcon, Button, Group } from "@mantine/core";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import useRouteHandler from '@/hooks/useRouteHandler';
+import { ActionIcon, Group } from '@mantine/core';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 
-// TODO: Make this so that we don't navigate if the page is the same
 const NavigationHistory = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const isLocationKeyDefault = useMemo(() => location.key === "default", [location.key]);
-
-  const canGoBackward = useMemo(() => !isLocationKeyDefault, [isLocationKeyDefault]);
-
-  const canGoForward = useMemo(
-    () => window.history.state.idx < window.history.length - 1,
-    [window.history.length, window.history.state.idx]
-  );
-
-  const goBack = () => navigate(-1);
-
-  const goForward = () => navigate(1);
+  const { canGoBackward, canGoForward, goBack, goForward } = useRouteHandler();
 
   return (
     <Group spacing={"xs"}>

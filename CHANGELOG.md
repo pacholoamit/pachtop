@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+
+## 0.9.8-3
+- Fix issue where some popover components are transparent
+- Fix Kill Process feature
+- Upgrade Application engine
+
 ## 0.9.8-2
 - Focus app if Pachtop already exists
 

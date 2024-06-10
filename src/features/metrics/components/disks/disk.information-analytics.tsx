@@ -16,7 +16,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconAlertCircle, IconFolderOpen, IconInfoCircle } from "@tabler/icons-react";
+import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInformationAnalyticsCardProps {
   startDiskAnalysis: () => Promise<void>;

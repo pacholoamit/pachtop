@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import { matchRoutes, useLocation, useNavigate } from "react-router-dom";
-
-import { ActionIcon, Group, MantineTheme, Portal, Tooltip, UnstyledButton } from "@mantine/core";
+import useRouteHandler from "@/hooks/useRouteHandler";
+import { MantineTheme, Tooltip, UnstyledButton } from "@mantine/core";
 import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
 
 interface NavbarOptionProps {
@@ -37,59 +35,32 @@ export const NavbarOption: React.FC<NavbarOptionProps> = (props) => {
   );
 };
 
-// TODO: create zustand store for active navbar option
+// TODO: Fix navigation handling
+
 const NavbarOptions = () => {
-  const [active, setActive] = useState(0);
+  const { active, setActive, navigateToStatic } = useRouteHandler();
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Jeezus this is such a hack
-    const diskById = matchRoutes([{ path: "/disks/:id" }], location.pathname);
-    if (diskById && diskById.length > 0) return setActive(1);
-
-    const routeMap: Record<string, number> = {
-      "/": 0,
-      "/disks": 1,
-      "/processes": 2,
-      "/settings": 3,
-    };
-
-    setActive(routeMap[location.pathname] || 0);
-  }, [location.pathname]);
-
+  // Must match by index for useRouteHandler hook
   const options: NavbarOptionProps[] = [
     {
       icon: <IconLayoutDashboard size={24} />,
       label: "Dashboard",
-      onClick: () => {
-        if (location.pathname === "/") return;
-        navigate("/");
-      },
+      onClick: () => navigateToStatic("/"),
     },
     {
       icon: <IconServer size={24} />,
       label: "Disks",
-      onClick: () => {
-        if (location.pathname === "/disks") return;
-        navigate("/disks");
-      },
+      onClick: () => navigateToStatic("/disks"),
     },
     {
       icon: <IconCpu size={24} />,
       label: "Processes",
-      onClick: () => {
-        if (location.pathname === "/processes") return;
-        navigate("/processes");
-      },
+      onClick: () => navigateToStatic("/processes"),
     },
     {
       icon: <IconSettings size={24} />,
       label: "Settings",
-      onClick: () => {
-        if (location.pathname === "/settings") return;
-        navigate("/settings");
-      },
+      onClick: () => navigateToStatic("/settings"),
     },
   ];
 
@@ -97,7 +68,7 @@ const NavbarOptions = () => {
     <NavbarOption
       {...option}
       key={option.label}
-      active={index === active}
+      active={active === index}
       onClick={() => {
         setActive(index);
         option.onClick?.();

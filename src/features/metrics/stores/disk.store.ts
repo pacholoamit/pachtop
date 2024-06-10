@@ -1,12 +1,10 @@
 import { create } from "zustand";
 
-import { Disk, ServerEvent, streams } from "@/lib";
+import { Disk, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
-import { listen } from "@tauri-apps/api/event";
 
 import formatBytes from "../utils/format-bytes";
 import formatOverallStats from "../utils/format-overall-stats";
-import fromNumberToPercentageString from "../utils/from-number-to-percentage-string";
 
 const DEFAULT_DISK: Disk = {
   diskType: "unknown",

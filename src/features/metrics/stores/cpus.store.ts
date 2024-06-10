@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { Cpu, streams, SysInfo } from "@/lib";
+import { Cpu, streams } from "@/lib";
 import createSelectors from "@/utils/create-selectors";
 
 const DEFAULT_CPUS: Cpu = {

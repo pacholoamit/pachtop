@@ -27,7 +27,7 @@ export const commonColors = {
   midnight: {
     cardBorder: "#27272a",
     layoutEdge: "#27272a",
-    cardColor: "transparent",
+    cardColor: "#09090b",
     background: "#09090b",
     gridLine: "#27272a",
     label: "white",
@@ -43,8 +43,8 @@ const areaChartThemeOptions = {
     color: {
       linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
       stops: [
-        [0, "rgba(53, 162, 235, 1)"],
-        [1, "rgba(53, 162, 235, 0.45)"],
+        [0, "rgba(53, 162, 235, 0.75)"],
+        [1, "rgba(53, 162, 235, 0)"],
       ],
     },
   },
@@ -52,8 +52,8 @@ const areaChartThemeOptions = {
     color: {
       linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
       stops: [
-        [0, "rgb(236, 18, 120,1)"],
-        [1, "rgb(236, 18, 120, 0.45)"],
+        [0, "rgba(236, 18, 120,0.75)"],
+        [1, "rgba(236, 18, 120, 0)"],
       ],
     },
   },
@@ -61,8 +61,8 @@ const areaChartThemeOptions = {
     color: {
       linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
       stops: [
-        [0, "rgb(252, 169, 46,1)"],
-        [1, "rgb(252, 169, 46, 0.45)"],
+        [0, "rgba(252, 169, 46,0.75)"],
+        [1, "rgba(252, 169 46, 0)"],
       ],
     },
   },
@@ -70,8 +70,8 @@ const areaChartThemeOptions = {
     color: {
       linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
       stops: [
-        [0, "rgb(0, 236, 254, 0.75)"],
-        [1, "rgba(0, 236, 254, 0.35)"],
+        [0, "rgba(0, 236, 254, 0.75)"],
+        [1, "rgba(0, 236, 254, 0)"],
       ],
     },
   },
@@ -79,8 +79,8 @@ const areaChartThemeOptions = {
     color: {
       linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
       stops: [
-        [0, "rgba(255, 99, 132, 1)"],
-        [1, "rgba(255, 99, 132, 0.45)"],
+        [0, "rgba(255, 99, 132, 0.75)"],
+        [1, "rgba(255, 99, 132, 0)"],
       ],
     },
   },

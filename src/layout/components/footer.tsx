@@ -8,7 +8,7 @@ import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import usePreferencesSelector from "@/features/preferences/stores/preferences.store";
-import { Box, Footer, Group, Indicator, Text } from "@mantine/core";
+import { Box, Footer, Group, Text } from "@mantine/core";
 
 const ProgressContainer = ({ value }: { value: number }) => {
   return (
