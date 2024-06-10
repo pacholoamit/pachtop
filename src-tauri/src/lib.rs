@@ -22,11 +22,7 @@ use app::AppState;
 
 use std::time::Duration;
 // use tauri::api::path::cache_dir;
-use tauri::{
-    menu::{MenuBuilder, MenuItemBuilder},
-    tray::TrayIconBuilder,
-    Manager,
-};
+use tauri::{menu::MenuItemBuilder, Manager};
 use tauri_plugin_autostart::MacosLauncher;
 // use tauri_plugin_log::LogTarget;
 
@@ -34,6 +30,8 @@ fn build_and_run_app(app: AppState) {
     // let log_plugin = tauri_plugin_log::Builder::default()
     //     .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
     //     .build();
+
+    let fs_plugin = tauri_plugin_fs::init();
 
     let store_plugin = tauri_plugin_store::Builder::default().build();
 
@@ -57,6 +55,7 @@ fn build_and_run_app(app: AppState) {
         .plugin(auto_start_plugin)
         .plugin(window_state_plugin)
         .plugin(single_instance_plugin)
+        .plugin(fs_plugin)
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();
             let handle = app.handle().clone();
@@ -99,7 +98,7 @@ fn build_and_run_app(app: AppState) {
 
             let menu = tauri::menu::MenuBuilder::new(app).items(&[&quit]).build()?;
 
-            let tray = tauri::tray::TrayIconBuilder::with_id("tray")
+            let _tray = tauri::tray::TrayIconBuilder::with_id("tray")
                 .tooltip("Pachtop")
                 .icon(icon)
                 .menu(&menu)
@@ -110,7 +109,7 @@ fn build_and_run_app(app: AppState) {
                     _ => {}
                 })
                 .on_tray_icon_event(|tray, event| match event {
-                    tauri::tray::TrayIconEvent::Click { id, button, .. } => match button {
+                    tauri::tray::TrayIconEvent::Click { button, .. } => match button {
                         tauri::tray::MouseButton::Left => {
                             let app = tray.app_handle();
                             if let Some(window) = app.get_webview_window("main") {

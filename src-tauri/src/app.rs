@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use std::sync::atomic::AtomicU64;
 use std::sync::{Arc, Mutex};
 
-use tauri::{State, Window};
+use tauri::State;
 
 use crate::dirstat::{DiskItem, FileInfo};
 use crate::metrics::Metrics;
