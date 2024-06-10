@@ -35,6 +35,8 @@ fn build_and_run_app(app: AppState) {
     //     .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
     //     .build();
 
+    let fs_plugin = tauri_plugin_fs::init();
+
     let store_plugin = tauri_plugin_store::Builder::default().build();
 
     let auto_start_plugin =
@@ -57,6 +59,7 @@ fn build_and_run_app(app: AppState) {
         .plugin(auto_start_plugin)
         .plugin(window_state_plugin)
         .plugin(single_instance_plugin)
+        .plugin(fs_plugin)
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();
             let handle = app.handle().clone();
