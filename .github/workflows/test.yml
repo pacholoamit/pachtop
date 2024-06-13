@@ -42,18 +42,18 @@ jobs:
           # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
           targets: ${{ matrix.settings.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
-      - name: Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: './src-tauri -> target'          
+      # - name: Rust cache
+      #   uses: swatinem/rust-cache@v2
+      #   with:
+      #     workspaces: './src-tauri -> target'          
 
 
-      - name: install frontend dependencies
-        uses: ./.github/actions/yarn-nm-install
-        with:
-          enable-corepack: false
-          cache-install-state: true
-          cache-node-modules: true
+      # - name: install frontend dependencies
+      #   uses: ./.github/actions/yarn-nm-install
+      #   with:
+      #     enable-corepack: false
+      #     cache-install-state: true
+      #     cache-node-modules: true
           
       - name: Build tauri
         run: yarn build
@@ -61,5 +61,5 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          # TAURI_SIGNING_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
