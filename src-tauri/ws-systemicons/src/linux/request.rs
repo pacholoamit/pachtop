@@ -1,5 +1,5 @@
 use gio_sys::GThemedIcon;
-use glib::{gobject_ffi::g_object_unref, object::GObject};
+use glib::{gobject_ffi::g_object_unref, gobject_ffi::GObject};
 use glib_sys::g_free;
 use gtk_sys::{
     gtk_icon_info_get_filename, gtk_icon_theme_choose_icon, gtk_icon_theme_get_default,
@@ -20,7 +20,7 @@ pub fn get_icon(ext: &str, size: i32) -> Result<Vec<u8>, Error> {
     let mut f = File::open(&filename)?;
     let metadata = fs::metadata(&filename)?;
     let mut buffer = vec![0; metadata.len() as usize];
-    f.read(&mut buffer)?;
+    f.read_exact(&mut buffer)?;
     Ok(buffer)
 }
 

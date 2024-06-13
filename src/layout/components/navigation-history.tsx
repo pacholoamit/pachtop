@@ -5,6 +5,7 @@ import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 
 const NavigationHistory = () => {
   const { appHeader } = usePlatform();
+
   const { canGoBackward, canGoForward, goBack, goForward } = useRouteHandler();
 
   return (

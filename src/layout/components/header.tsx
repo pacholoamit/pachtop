@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <MantineHeader
       height={48}
-      style={{ backgroundColor: "transparent", backdropFilter: "blur(15px)" }}
+      style={{ backgroundColor: "transparent", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(15px)" }}
       onMouseDown={onClick}
     >
       <Group position="apart" align="center" pl={8} pr={8} pt={8}>

@@ -1,0 +1,149 @@
+name: "release-master"
+
+on:
+  workflow_dispatch:
+  push: { branches: ["master"] }
+env:
+  VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+jobs:
+  create-or-update-release:
+    runs-on: ubuntu-20.04
+    environment: release
+    outputs:
+      release_id: ${{ steps.get-release-id.outputs.result }}
+      
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20
+      - name: get version
+        run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+      - name: get release id
+        id: get-release-id
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: releases } = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+
+            const release = releases.find(r => r.tag_name === "master");
+
+            return release ? release.id : '';
+      - name: create or update release
+        id: create-release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const releaseId = `{{ steps.get-release-id.outputs.result }}`;
+            if (releaseId) {
+              const { data } = await github.rest.repos.updateRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: releaseId,
+                tag_name: "master",
+                name: "master",
+                draft: true,
+                prerelease: true,
+                generate_release_notes: true
+              });
+              return data.id;
+            } else {
+              const { data } = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: "master",
+                name: "master",
+                draft: true,
+                prerelease: true,
+                generate_release_notes: true
+              });
+              return data.id;
+            }
+
+  build-tauri:
+    needs: create-or-update-release
+    environment: release
+    strategy:
+      fail-fast: false
+      matrix:
+        settings:
+          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+            args: '--target aarch64-apple-darwin'
+          - platform: 'macos-latest' # for Intel based macs.
+            args: '--target x86_64-apple-darwin'
+          - platform: 'ubuntu-22.04' # for Tauri v1 you could replace this with ubuntu-20.04.
+            args: ''
+          - platform: 'windows-latest'
+            args: ''
+
+    runs-on: ${{ matrix.settings.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install dependencies (ubuntu only)
+        if: matrix.settings.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+          
+          
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn' # Set this to npm, yarn or pnpm.
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
+          targets: ${{ matrix.settings.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'          
+
+
+      - name: install frontend dependencies
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          enable-corepack: false
+          cache-install-state: true
+          cache-node-modules: true
+          
+      - name: Build tauri
+        run: yarn build
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        with:
+          releaseId: ${{ needs.create-or-update-release.outputs.release_id }}
+
+  publish-release:
+    runs-on: ubuntu-20.04
+    needs: [create-or-update-release, build-tauri]
+
+    steps:
+      - name: publish release
+        id: publish-release
+        uses: actions/github-script@v6
+        env:
+          release_id: ${{ needs.create-or-update-release.outputs.release_id }}
+        with:
+          script: |
+            await github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: process.env.release_id,
+              draft: false,
+              prerelease: true
+            });
