@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     environment: release
     outputs:
-      release_id: ${{ steps.get-release-id.outputs.result }}
+      release_id: ${{ steps.set-release-id.outputs.release_id }}
       
     steps:
       - uses: actions/checkout@v2
@@ -34,12 +34,14 @@ jobs:
             const release = releases.find(r => r.tag_name === "master");
 
             return release ? release.id : '';
+      - name: set release id
+        id: set-release-id
+        run: echo "release_id=${{ steps.get-release-id.outputs.result }}" >> $GITHUB_ENV
       - name: create or update release
-        id: create-release
         uses: actions/github-script@v6
         with:
           script: |
-            const releaseId = `{{ steps.get-release-id.outputs.result }}`;
+            const releaseId = process.env.release_id;
             if (releaseId) {
               const { data } = await github.rest.repos.updateRelease({
                 owner: context.repo.owner,
