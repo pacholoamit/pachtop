@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { Platform, platform as obtainPlatform } from "@tauri-apps/plugin-os";
 import { getCurrent as appWindow } from "@tauri-apps/api/window";
 import useEffectAsync from "@/hooks/useEffectAsync";
+import { streams } from "@/lib";
 
 interface PlatformProviderProps {
   children: React.ReactNode;
@@ -48,6 +49,22 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
           const window = appWindow();
           window.startDragging();
         },
+      });
+
+      streams.window.willEnterFullScreen(() => {
+        setAppHeader((prev) => ({
+          ...prev,
+          paddingLeft: 0,
+          paddingTop: 0,
+        }));
+      });
+
+      streams.window.willExitFullScreen(() => {
+        setAppHeader((prev) => ({
+          ...prev,
+          paddingLeft: 72,
+          paddingTop: 4,
+        }));
       });
     }
   }, []);
