@@ -34,6 +34,7 @@ pub trait MemoryTrait {
 pub struct GlobalCpu {
     pub usage: f32,
     pub brand: String,
+    #[ts(type = "number")]
     pub frequency: u64,
     pub name: String,
     pub vendor: String,

@@ -32,6 +32,8 @@ export enum ServerEvent {
   Disks = "emit_disks",
   Processes = "emit_processes",
   ThemeChanged = "theme_changed",
+  WindowWillEnterFullScreen = "will-enter-fullscreen",
+  WindowWillExitFullScreen = "will-exit-fullscreen",
 }
 
 export enum DiskType {

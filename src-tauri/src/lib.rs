@@ -50,6 +50,7 @@ fn build_and_run_app(app: AppState) {
     });
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_os::init())
         // .plugin(log_plugin)
         .plugin(store_plugin)
         .plugin(auto_start_plugin)
@@ -57,7 +58,6 @@ fn build_and_run_app(app: AppState) {
         .plugin(single_instance_plugin)
         .plugin(fs_plugin)
         .setup(|app| {
-            let window = app.get_webview_window("main").unwrap();
             let handle = app.handle().clone();
             let state = AppState::new();
 

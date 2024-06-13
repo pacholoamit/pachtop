@@ -18,11 +18,11 @@ const EllipsisWrapper = styled.div<EllipsisProps>`
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   right: ${(props) => props.right};
-
   width: -webkit-fill-available;
   max-width: ${(props) => props.width};
   height: ${(props) => props.height};
   filter: ${(props) => `blur(${props.blur})`};
+  -webkit-filter: ${(props) => `blur(${props.blur})`}; 
 `;
 
 const EllipsisItem = styled.div<EllipsisProps>`

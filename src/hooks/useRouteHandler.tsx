@@ -53,8 +53,6 @@ const useRouteHandler = () => {
       "/settings": 3,
     };
 
-    console.log("useRouteHandler active: ", active);
-
     setActive(routeMap[location.pathname as STATIC_ROUTE] || 0);
   }, [location.pathname]);
 

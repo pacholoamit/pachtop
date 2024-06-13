@@ -1,8 +1,15 @@
-use std::{ffi::{CStr, CString, c_void}, fs::{self, File}, io::Read};
 use gio_sys::GThemedIcon;
-use glib::{gobject_ffi::g_object_unref, object::GObject};
+use glib::{gobject_ffi::g_object_unref, gobject_ffi::GObject};
 use glib_sys::g_free;
-use gtk_sys::{GTK_ICON_LOOKUP_NO_SVG, GtkIconTheme, gtk_icon_info_get_filename, gtk_icon_theme_choose_icon, gtk_icon_theme_get_default};
+use gtk_sys::{
+    gtk_icon_info_get_filename, gtk_icon_theme_choose_icon, gtk_icon_theme_get_default,
+    GtkIconTheme, GTK_ICON_LOOKUP_NO_SVG,
+};
+use std::{
+    ffi::{c_void, CStr, CString},
+    fs::{self, File},
+    io::Read,
+};
 
 use crate::{Error, InnerError};
 
@@ -13,7 +20,7 @@ pub fn get_icon(ext: &str, size: i32) -> Result<Vec<u8>, Error> {
     let mut f = File::open(&filename)?;
     let metadata = fs::metadata(&filename)?;
     let mut buffer = vec![0; metadata.len() as usize];
-    f.read(&mut buffer)?;    
+    f.read_exact(&mut buffer)?;
     Ok(buffer)
 }
 
@@ -33,13 +40,22 @@ pub fn get_icon_as_file(ext: &str, size: i32) -> Result<String, Error> {
             let theme = gtk_icon_theme_get_default();
             if theme.is_null() {
                 println!("You have to initialize GTK!");
-                return Err(Error{ message: "You have to initialize GTK!".to_string(), inner_error:  InnerError::GtkInitError})
+                return Err(Error {
+                    message: "You have to initialize GTK!".to_string(),
+                    inner_error: InnerError::GtkInitError,
+                });
             }
             let theme = gtk_icon_theme_get_default();
             DEFAULT_THEME = Some(theme);
         }
-        let icon_names = gio_sys::g_themed_icon_get_names(icon as *mut GThemedIcon) as *mut *const i8;
-        let icon_info = gtk_icon_theme_choose_icon(DEFAULT_THEME.unwrap(), icon_names, size, GTK_ICON_LOOKUP_NO_SVG);
+        let icon_names =
+            gio_sys::g_themed_icon_get_names(icon as *mut GThemedIcon) as *mut *const i8;
+        let icon_info = gtk_icon_theme_choose_icon(
+            DEFAULT_THEME.unwrap(),
+            icon_names,
+            size,
+            GTK_ICON_LOOKUP_NO_SVG,
+        );
         let filename = gtk_icon_info_get_filename(icon_info);
         let res_str = CStr::from_ptr(filename);
         result = res_str.to_str()?.to_string();
@@ -48,5 +64,6 @@ pub fn get_icon_as_file(ext: &str, size: i32) -> Result<String, Error> {
     Ok(result)
 }
 
-pub fn init() { gtk::init().unwrap(); }
-
+pub fn init() {
+    gtk::init().unwrap();
+}
