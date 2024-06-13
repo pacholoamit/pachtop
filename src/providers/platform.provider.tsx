@@ -24,6 +24,11 @@ export const PlatformContext = createContext<PlatformContextType>({
   },
 });
 
+/**
+ *
+ * Mainly used for platform specific stuff
+ *
+ */
 const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
   const [platform, setPlatform] = useState<Platform>("macos");
   const [appHeader, setAppHeader] = useState<AppHeader>({
@@ -32,21 +37,19 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
     onHeaderAreaClick: () => {},
   });
 
-  const onHeaderAreaClick = () => {
-    if (platform === "macos") {
-      const window = appWindow();
-      console.log("dragging");
-      window.startDragging();
-    }
-  };
-
   useEffectAsync(async () => {
     await obtainPlatform().then((p) => setPlatform(p));
 
-    setAppHeader((prev) => ({
-      ...prev,
-      onHeaderAreaClick,
-    }));
+    if (platform === "macos") {
+      setAppHeader({
+        paddingLeft: 72,
+        paddingTop: 4,
+        onHeaderAreaClick: () => {
+          const window = appWindow();
+          window.startDragging();
+        },
+      });
+    }
   }, []);
 
   return (
