@@ -31,7 +31,7 @@ export const PlatformContext = createContext<PlatformContextType>({
  *
  */
 const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
-  const [platform, setPlatform] = useState<Platform>("macos");
+  const [platform, setPlatform] = useState<Platform>("windows");
   const [appHeader, setAppHeader] = useState<AppHeader>({
     paddingLeft: 0,
     paddingTop: 0,
@@ -39,34 +39,36 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
   });
 
   useEffectAsync(async () => {
-    await obtainPlatform().then((p) => setPlatform(p));
+    await obtainPlatform().then((p) => {
+      setPlatform(p);
 
-    if (platform === "macos") {
-      setAppHeader({
-        paddingLeft: 72,
-        paddingTop: 4,
-        onHeaderAreaClick: () => {
-          const window = appWindow();
-          window.startDragging();
-        },
-      });
-
-      streams.window.willEnterFullScreen(() => {
-        setAppHeader((prev) => ({
-          ...prev,
-          paddingLeft: 0,
-          paddingTop: 0,
-        }));
-      });
-
-      streams.window.willExitFullScreen(() => {
-        setAppHeader((prev) => ({
-          ...prev,
+      if (p === "macos") {
+        setAppHeader({
           paddingLeft: 72,
           paddingTop: 4,
-        }));
-      });
-    }
+          onHeaderAreaClick: () => {
+            const window = appWindow();
+            window.startDragging();
+          },
+        });
+
+        streams.window.willEnterFullScreen(() => {
+          setAppHeader((prev) => ({
+            ...prev,
+            paddingLeft: 0,
+            paddingTop: 0,
+          }));
+        });
+
+        streams.window.willExitFullScreen(() => {
+          setAppHeader((prev) => ({
+            ...prev,
+            paddingLeft: 72,
+            paddingTop: 4,
+          }));
+        });
+      }
+    });
   }, []);
 
   return (
