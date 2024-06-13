@@ -1,9 +1,10 @@
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom/client";
 
-import App from '@/App';
+import App from "@/App";
 
-import { enableAutostart } from './lib';
-import store from './lib/store';
+import { enableAutostart } from "./lib";
+import store from "./lib/store";
+
 
 store.isFirstRun.get().then((isFirstRun) => {
   if (isFirstRun === null) {

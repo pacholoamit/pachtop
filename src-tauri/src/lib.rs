@@ -50,6 +50,7 @@ fn build_and_run_app(app: AppState) {
     });
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_os::init())
         // .plugin(log_plugin)
         .plugin(store_plugin)
         .plugin(auto_start_plugin)

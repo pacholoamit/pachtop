@@ -17,7 +17,6 @@ enum NSBitmapImageFileType {
     NSBitmapImageFileTypePNG = 4,
 }
 
-
 pub fn get_icon(ext: &str, size: f64) -> Result<Vec<u8>, Error> {
     let filename = get_icon_as_file(ext, size)?;
     let mut f = File::open(&filename)?;
