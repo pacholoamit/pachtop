@@ -17,12 +17,14 @@ enum NSBitmapImageFileType {
     NSBitmapImageFileTypePNG = 4,
 }
 
+
 pub fn get_icon(ext: &str, size: f64) -> Result<Vec<u8>, Error> {
     let filename = get_icon_as_file(ext, size)?;
     let mut f = File::open(&filename)?;
     let metadata = fs::metadata(&filename)?;
     let mut buffer = vec![0; metadata.len() as usize];
-    f.read(&mut buffer)?;
+
+    f.read_exact(&mut buffer)?;
     Ok(buffer)
 }
 

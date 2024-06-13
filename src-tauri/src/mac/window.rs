@@ -1,5 +1,5 @@
 use hex_color::HexColor;
-use tauri::{App, Manager, Runtime, Window};
+use tauri::{App, Manager, Runtime, WebviewWindow};
 
 // If anything breaks on macOS, this should be the place which is broken
 // We have to override Tauri (Tao) 's built-in NSWindowDelegate implementation with a
@@ -37,7 +37,7 @@ unsafe impl Send for UnsafeWindowHandle {}
 unsafe impl Sync for UnsafeWindowHandle {}
 
 #[cfg(target_os = "macos")]
-fn update_window_theme(window: &tauri::Window, color: HexColor) {
+fn update_window_theme(window: &tauri::WebviewWindow, color: HexColor) {
     use cocoa::appkit::{
         NSAppearance, NSAppearanceNameVibrantDark, NSAppearanceNameVibrantLight, NSWindow,
     };
@@ -100,7 +100,7 @@ fn set_window_controls_pos(window: cocoa::base::id, x: f64, y: f64) {
     }
 }
 
-impl<R: Runtime> WindowExt for Window<R> {
+impl<R: Runtime> WindowExt for WebviewWindow<R> {
     #[cfg(target_os = "macos")]
     fn set_transparent_titlebar(&self) {
         unsafe {
@@ -116,7 +116,7 @@ impl<R: Runtime> WindowExt for Window<R> {
 #[cfg(target_os = "macos")]
 #[derive(Debug)]
 struct PachtopAppstate {
-    window: Window,
+    window: WebviewWindow,
 }
 
 #[cfg(target_os = "macos")]
@@ -377,16 +377,17 @@ pub fn setup_mac_window(app: &mut App) {
         .unwrap()
         .set_transparent_titlebar();
 
+    let window_handle = app.get_webview_window("main").unwrap();
+
     update_window_theme(&window_handle, HexColor::rgb(9, 9, 11));
 
     let window = app.get_webview_window("main").unwrap();
     let handle = window.app_handle();
 
     // Control window theme based on app update_window
-    handle.listen_global("theme_changed", move |ev| {
-        let payload = serde_json::from_str::<&str>(ev.payload().unwrap())
-            .unwrap()
-            .trim();
+
+    handle.listen("theme_changed", move |ev| {
+        let payload = serde_json::from_str::<&str>(ev.payload()).unwrap().trim();
 
         let color = HexColor::parse_rgb(payload).unwrap();
 

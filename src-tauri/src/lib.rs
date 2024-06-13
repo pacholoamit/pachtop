@@ -57,7 +57,6 @@ fn build_and_run_app(app: AppState) {
         .plugin(single_instance_plugin)
         .plugin(fs_plugin)
         .setup(|app| {
-            let window = app.get_webview_window("main").unwrap();
             let handle = app.handle().clone();
             let state = AppState::new();
 
