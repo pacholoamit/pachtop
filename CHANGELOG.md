@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file. This projec
 - Fix issue where some popover components are transparent
 - Fix Kill Process feature
 - Upgrade Application engine
+- Fix MacOS window not being draggable
+- Fix MacOS navigation arrows blocking window buttons
+- Fix MacOS titlebar not showing blur effects* 
+
 
 ## 0.9.8-2
 - Focus app if Pachtop already exists

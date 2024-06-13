@@ -51,4 +51,14 @@ export const streams = {
   diskAnalysisProgress: (callback: (data: DiskAnalysisProgress) => void) => {
     listen<DiskAnalysisProgress>(ServerEvent.DiskAnalysisProgress, ({ payload }) => callback(payload));
   },
+
+  window: {
+    willEnterFullScreen: (callback: () => void) => {
+      listen(ServerEvent.WindowWillEnterFullScreen, () => callback());
+    },
+
+    willExitFullScreen: (callback: () => void) => {
+      listen(ServerEvent.WindowWillExitFullScreen, () => callback());
+    },
+  },
 };

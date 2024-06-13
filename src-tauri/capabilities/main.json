@@ -1,0 +1,18 @@
+{
+    "identifier": "main",
+    "description": "permissions for pachtop",
+    "local": true,
+    "windows": [
+        "main"
+    ],
+    "permissions": [
+        "store:allow-get",
+        "store:allow-set",
+        "store:allow-save",
+        "os:allow-arch",
+        "os:allow-hostname",
+        "os:allow-os-type",
+        "os:allow-platform",
+        "window:allow-start-dragging"
+    ]
+}

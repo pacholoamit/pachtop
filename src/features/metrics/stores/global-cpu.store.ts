@@ -5,7 +5,7 @@ import useMetricsStore from './metrics.store';
 
 const DEFAULT_GLOBAL_CPU: GlobalCpu = {
   brand: "unknown",
-  frequency: BigInt(0),
+  frequency: 0,
   name: "unknown",
   timestamp: 0,
   usage: 0,
