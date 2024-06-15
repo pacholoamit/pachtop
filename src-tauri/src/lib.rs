@@ -126,6 +126,7 @@ fn build_and_run_app(app: AppState) {
         })
         .on_window_event(|window, event| match event {
             tauri::WindowEvent::CloseRequested { api, .. } => {
+
                 window.hide().unwrap();
                 api.prevent_close();
             }
