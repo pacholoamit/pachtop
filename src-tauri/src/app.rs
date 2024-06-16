@@ -190,6 +190,16 @@ pub fn add_pachtop_exclusion() -> Result<(), String> {
 
         Ok(())
     }
+
+    #[cfg(target_os = "macos")]
+    {
+        Ok(())
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        Ok(())
+    }
 }
 
 #[tauri::command]
