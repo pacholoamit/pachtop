@@ -3,6 +3,7 @@
 import { createContext, useEffect, useState } from "react";
 
 import { DEFAULT_TITLEBAR_COLOR, THEME_OPTION, themes } from "@/contants";
+import useEffectAsync from "@/hooks/useEffectAsync";
 import { setWindowColor } from "@/lib";
 import store from "@/lib/store";
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
@@ -28,18 +29,13 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState<THEME_OPTION>(THEME_OPTION.MIDNIGHT);
   const [isMidnight, setIsMidnight] = useState<boolean>(true);
 
-  useEffect(() => {
-    const loadTheme = async () => {
-      const storedTheme = await store.theme.get();
-      if (storedTheme && themes[storedTheme as THEME_OPTION]) {
-        handleSetTheme(storedTheme as THEME_OPTION);
-        return;
-      }
-      handleSetTheme(THEME_OPTION.SLATE);
-    };
-    setIsMidnight(currentTheme === THEME_OPTION.MIDNIGHT);
-    loadTheme();
-  }, []);
+  useEffectAsync(async () => {
+    const storedTheme = await store.theme.get();
+    if (storedTheme && themes[storedTheme as THEME_OPTION]) {
+      return handleSetTheme(storedTheme as THEME_OPTION);
+    }
+    handleSetTheme(currentTheme);
+  }, [currentTheme]);
 
   const handleSetTheme = (theme: THEME_OPTION) => {
     setTheme(themes[theme]);
@@ -47,6 +43,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     setWindowColor(themes[theme]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
     store.theme.set(theme);
     store.windowColor.set(themes[theme]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
+    setIsMidnight(currentTheme === THEME_OPTION.MIDNIGHT);
   };
 
   return (
