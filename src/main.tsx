@@ -5,8 +5,7 @@ import { enableAutostart } from "@/lib";
 
 import store from "./lib/store";
 
-await store.isFirstRun.get().then((isFirstRun) => {
-  console.log("Is first run:", isFirstRun);
+store.isFirstRun.get().then((isFirstRun) => {
   isFirstRun && enableAutostart();
 });
 
