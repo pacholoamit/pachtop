@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.9.10-1
+- Added option for Windows users to enable microsoft defender exclusions for better performance
+- Set midnight to original theme
+- Fix issue where slate shows gradient background
 
 ## 0.9.9
 - Fix issue where some popover components are transparent
