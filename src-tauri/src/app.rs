@@ -182,30 +182,6 @@ pub fn add_pachtop_exclusion() {
     }
 }
 
-// TODO: add separation
-pub fn is_pachtop_excluded() -> Result<bool, String> {
-    #[cfg(target_os = "windows")]
-    {
-        // Run the PowerShell command to get the list of excluded processes
-        let output = std::process::Command::new("powershell")
-            .arg("-Command")
-            .arg("Get-MpPreference | Select-Object -ExpandProperty ExclusionProcess")
-            .output()
-            .map_err(|e| format!("Failed to execute command: {}", e))?;
-
-        if !output.status.success() {
-            return Err(format!("Command failed with status: {}", output.status));
-        }
-
-        // Parse the output to check if "pachtop.exe" is in the list
-        let output_str = String::from_utf8_lossy(&output.stdout);
-        let excluded_processes: Vec<&str> = output_str.lines().collect();
-
-        dbg!(&excluded_processes);
-        Ok(excluded_processes.contains(&"pachtop.exe"))
-    }
-}
-
 #[tauri::command]
 // Slow version
 pub async fn disk_scan(
@@ -278,14 +254,7 @@ pub async fn disk_turbo_scan(
 ) -> Result<DiskItem, String> {
     #[cfg(target_os = "windows")]
     {
-        dbg!("Checking if pachtop.exe is excluded");
-        let is_excluded = is_pachtop_excluded().unwrap_or(false);
-
-        dbg!("Result: ", is_excluded);
-
-        if !is_excluded {
-            add_pachtop_exclusion();
-        }
+        add_pachtop_exclusion();
     }
     dbg!("Turbo Disk analysis on:", &path);
     let bytes_scanned = Arc::new(AtomicU64::new(0));
