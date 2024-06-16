@@ -7,7 +7,7 @@ const useIsFirstRun = () => {
   const [isFirstRun, setIsFirstRun] = useState(false);
 
   useEffectAsync(async () => {
-    const firstRun = await store.isFirstRun.get();
+    const firstRun = await store.then((s) => s.isFirstRun.get());
     setIsFirstRun(firstRun);
   }, []);
 

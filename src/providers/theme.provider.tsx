@@ -30,19 +30,20 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [isMidnight, setIsMidnight] = useState<boolean>(true);
 
   useEffectAsync(async () => {
-    const storedTheme = await store.theme.get();
+    const storedTheme = await store.then((s) => s.theme.get());
     if (storedTheme && themes[storedTheme as THEME_OPTION]) {
       return handleSetTheme(storedTheme as THEME_OPTION);
     }
     handleSetTheme(currentTheme);
   }, [currentTheme]);
 
-  const handleSetTheme = (theme: THEME_OPTION) => {
+  const handleSetTheme = async (theme: THEME_OPTION) => {
+    const appStore = await store;
     setTheme(themes[theme]);
     setCurrentTheme(theme);
     setWindowColor(themes[theme]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
-    store.theme.set(theme);
-    store.windowColor.set(themes[theme]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
+    appStore.theme.set(theme);
+    appStore.windowColor.set(themes[theme]?.other?.titlebar || DEFAULT_TITLEBAR_COLOR);
     setIsMidnight(currentTheme === THEME_OPTION.MIDNIGHT);
   };
 

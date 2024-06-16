@@ -35,8 +35,7 @@ export const PlatformContext = createContext<PlatformContextType>({
  *
  */
 const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
-  const isFirstRun = useIsFirstRun();
-  const [platform, setPlatform] = useState<Platform>("windows");
+  const [_, setPlatform] = useState<Platform>("windows");
   const [appHeader, setAppHeader] = useState<AppHeader>({
     paddingLeft: 0,
     paddingTop: 0,
@@ -46,11 +45,12 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
   const [isShowExclusionModal, setIsShowExclusionModal] = useState(false);
 
   useEffectAsync(async () => {
+    const appStore = await store;
     await obtainPlatform().then((p) => {
       setPlatform(p);
 
       if (p === "windows") {
-        store.isDefenderExclusionEnabled.get().then((isDefenderExclusionEnabled) => {
+        appStore.isDefenderExclusionEnabled.get().then((isDefenderExclusionEnabled) => {
           if (!isDefenderExclusionEnabled) setIsShowExclusionModal(true);
         });
       }

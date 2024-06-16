@@ -82,6 +82,10 @@ const createStore = async (name: string) => {
   };
 };
 
-const store = await createStore(".pachtop.dat");
+const initializeStore = async () => {
+  return await createStore(".pachtop.dat");
+};
+
+const store = initializeStore();
 
 export default store;
