@@ -36,9 +36,28 @@ const theme = (store: Store) => {
 
 const isFirstRun = (store: Store) => {
   return {
-    get: async () => await store.get<boolean>("isFirstRun"),
+    get: async () => {
+      const count = (await store.get<number>("sessions")) || 0;
+      return count === 0;
+    },
+  };
+};
+
+const sessions = (store: Store) => {
+  return {
+    get: async () => await store.get<number>("sessions"),
+    increment: async () => {
+      const currentSessions = (await store.get<number>("sessions")) ?? 0;
+      await store.set("sessions", currentSessions + 1);
+    },
+  };
+};
+
+const isDefenderExclusionEnabled = (store: Store) => {
+  return {
+    get: async () => await store.get<boolean>("isDefenderExclusionEnabled"),
     set: async (value: boolean) => {
-      await store.set("isFirstRun", value);
+      await store.set("isDefenderExclusionEnabled", value);
       await store.save();
     },
   };
@@ -58,6 +77,8 @@ const createStore = async (name: string) => {
     windowColor: windowColor(store),
     theme: theme(store),
     isFirstRun: isFirstRun(store),
+    sessions: sessions(store),
+    isDefenderExclusionEnabled: isDefenderExclusionEnabled(store),
   };
 };
 
