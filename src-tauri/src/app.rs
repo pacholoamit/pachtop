@@ -154,32 +154,42 @@ pub fn delete_folder(path: String) {
 }
 
 #[tauri::command]
-pub fn add_pachtop_exclusion() {
+pub fn add_pachtop_exclusion() -> Result<(), String> {
     #[cfg(target_os = "windows")]
     use std::process::Command;
 
     // Check if the script is running as administrator
     let output = Command::new("powershell")
-            .arg("-Command")
-            .arg("([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)")
-            .output()
-            .expect("Failed to check admin privileges");
+        .arg("-Command")
+        .arg("([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)")
+        .output()
+        .map_err(|e| format!("Failed to check admin privileges: {}", e))?;
 
     if output.status.success() && String::from_utf8_lossy(&output.stdout).trim() == "True" {
         // If running as administrator, run the PowerShell command
-        Command::new("powershell")
+        let status = Command::new("powershell")
             .arg("-Command")
             .arg("Add-MpPreference -ExclusionProcess \"pachtop.exe\"")
-            .spawn()
-            .expect("Failed to add exclusion process");
+            .status()
+            .map_err(|e| format!("Failed to add exclusion process: {}", e))?;
+
+        if !status.success() {
+            return Err("Failed to add exclusion process: Command did not succeed".into());
+        }
     } else {
         // If not running as administrator, run the command with elevated privileges without creating a command prompt window
-        Command::new("powershell")
-                .arg("-Command")
-                .arg("Start-Process powershell -ArgumentList '-Command \"Add-MpPreference -ExclusionProcess \\\"pachtop.exe\\\"\"' -Verb RunAs -WindowStyle Hidden")
-                .spawn()
-                .expect("Failed to run as administrator");
+        let status = Command::new("powershell")
+            .arg("-Command")
+            .arg("Start-Process powershell -ArgumentList '-Command \"Add-MpPreference -ExclusionProcess \\\"pachtop.exe\\\"\"' -Verb RunAs -WindowStyle Hidden")
+            .status()
+            .map_err(|e| format!("Failed to run as administrator: {}", e))?;
+
+        if !status.success() {
+            return Err("Failed to run as administrator: Command did not succeed".into());
+        }
     }
+
+    Ok(())
 }
 
 #[tauri::command]
@@ -252,10 +262,6 @@ pub async fn disk_turbo_scan(
     state: tauri::State<'_, AppState>,
     path: String,
 ) -> Result<DiskItem, String> {
-    #[cfg(target_os = "windows")]
-    {
-        add_pachtop_exclusion();
-    }
     dbg!("Turbo Disk analysis on:", &path);
     let bytes_scanned = Arc::new(AtomicU64::new(0));
     let time = std::time::Instant::now();
