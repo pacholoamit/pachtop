@@ -113,6 +113,7 @@ fn build_and_run_app(app: AppState) {
             app::delete_folder,
             app::disk_turbo_scan,
             app::disk_analysis_flattened,
+            app::add_pachtop_exclusion,
             app::disk_scan,
         ])
         .run(tauri::generate_context!())

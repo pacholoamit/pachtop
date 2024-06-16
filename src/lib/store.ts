@@ -1,5 +1,8 @@
 import { Store } from "tauri-plugin-store";
 
+import { appDataDir } from "@tauri-apps/api/path";
+import { platform } from "@tauri-apps/plugin-os";
+
 // Currently not being used, implement on PostHog maybe?
 const userId = (store: Store) => {
   return {
@@ -41,8 +44,14 @@ const isFirstRun = (store: Store) => {
   };
 };
 
-const createStore = (path: string) => {
-  const store = new Store(path);
+const createStore = async (name: string) => {
+  const currentPlatform = await platform();
+  const path = await appDataDir();
+
+  const storePath = currentPlatform === "windows" ? `${path}\\${name}` : `${path}/${name}`;
+
+  const store = new Store(storePath);
+  console.log("Store path: ", storePath);
 
   return {
     userId: userId(store),
@@ -52,6 +61,6 @@ const createStore = (path: string) => {
   };
 };
 
-const store = createStore(".pachtop.dat");
+const store = await createStore(".pachtop.dat");
 
 export default store;

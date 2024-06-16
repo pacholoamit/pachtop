@@ -153,7 +153,7 @@ pub fn delete_folder(path: String) {
     }
 }
 
-// TODO: add separation
+#[tauri::command]
 pub fn add_pachtop_exclusion() {
     #[cfg(target_os = "windows")]
     use std::process::Command;
