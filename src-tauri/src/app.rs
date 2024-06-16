@@ -154,6 +154,55 @@ pub fn delete_folder(path: String) {
 }
 
 #[tauri::command]
+pub fn add_pachtop_exclusion() -> Result<(), String> {
+    #[cfg(target_os = "windows")]
+    {
+        // Check if the script is running as administrator
+        let output = std::process::Command::new("powershell")
+        .arg("-Command")
+        .arg("([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)")
+        .output()
+        .map_err(|e| format!("Failed to check admin privileges: {}", e))?;
+
+        if output.status.success() && String::from_utf8_lossy(&output.stdout).trim() == "True" {
+            // If running as administrator, run the PowerShell command
+            let status = std::process::Command::new("powershell")
+                .arg("-Command")
+                .arg("Add-MpPreference -ExclusionProcess \"pachtop.exe\"")
+                .status()
+                .map_err(|e| format!("Failed to add exclusion process: {}", e))?;
+
+            if !status.success() {
+                return Err("Failed to add exclusion process: Command did not succeed".into());
+            }
+        } else {
+            // If not running as administrator, run the command with elevated privileges without creating a command prompt window
+            let status = std::process::Command::new("powershell")
+            .arg("-Command")
+            .arg("Start-Process powershell -ArgumentList '-Command \"Add-MpPreference -ExclusionProcess \\\"pachtop.exe\\\"\"' -Verb RunAs -WindowStyle Hidden")
+            .status()
+            .map_err(|e| format!("Failed to run as administrator: {}", e))?;
+
+            if !status.success() {
+                return Err("Failed to run as administrator: Command did not succeed".into());
+            }
+        }
+
+        Ok(())
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        Ok(())
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        Ok(())
+    }
+}
+
+#[tauri::command]
 // Slow version
 pub async fn disk_scan(
     window: tauri::Window,
@@ -280,7 +329,7 @@ pub async fn disk_turbo_scan(
 }
 
 #[tauri::command]
-// Multithreaded fast version, uses high cpu/memory
+// Get data from hashmap
 pub async fn disk_analysis_flattened(
     state: tauri::State<'_, AppState>,
     path: String,

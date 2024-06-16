@@ -19,6 +19,7 @@ export enum Command {
   DiskTurboScan = "disk_turbo_scan",
   DiskScan = "disk_scan",
   DiskAnalysisFlattened = "disk_analysis_flattened",
+  AddPachtopExclusion = "add_pachtop_exclusion",
 }
 
 export enum ServerEvent {

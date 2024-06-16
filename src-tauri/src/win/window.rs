@@ -23,7 +23,7 @@ fn hex_color_to_colorref(color: HexColor) -> COLORREF {
     // TODO: Remove this unsafe, This operation doesn't need to be unsafe!
     unsafe { COLORREF(transmute::<[u8; 4], u32>([color.r, color.g, color.b, 0])) }
 }
-
+#[allow(dead_code)]
 struct WinThemeAttribute {
     flag: u32,
     mask: u32,
