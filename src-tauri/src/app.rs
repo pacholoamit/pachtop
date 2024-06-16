@@ -153,6 +153,59 @@ pub fn delete_folder(path: String) {
     }
 }
 
+// TODO: add separation
+pub fn add_pachtop_exclusion() {
+    #[cfg(target_os = "windows")]
+    use std::process::Command;
+
+    // Check if the script is running as administrator
+    let output = Command::new("powershell")
+            .arg("-Command")
+            .arg("([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)")
+            .output()
+            .expect("Failed to check admin privileges");
+
+    if output.status.success() && String::from_utf8_lossy(&output.stdout).trim() == "True" {
+        // If running as administrator, run the PowerShell command
+        Command::new("powershell")
+            .arg("-Command")
+            .arg("Add-MpPreference -ExclusionProcess \"pachtop.exe\"")
+            .spawn()
+            .expect("Failed to add exclusion process");
+    } else {
+        // If not running as administrator, run the command with elevated privileges without creating a command prompt window
+        Command::new("powershell")
+                .arg("-Command")
+                .arg("Start-Process powershell -ArgumentList '-Command \"Add-MpPreference -ExclusionProcess \\\"pachtop.exe\\\"\"' -Verb RunAs -WindowStyle Hidden")
+                .spawn()
+                .expect("Failed to run as administrator");
+    }
+}
+
+// TODO: add separation
+pub fn is_pachtop_excluded() -> Result<bool, String> {
+    #[cfg(target_os = "windows")]
+    {
+        // Run the PowerShell command to get the list of excluded processes
+        let output = std::process::Command::new("powershell")
+            .arg("-Command")
+            .arg("Get-MpPreference | Select-Object -ExpandProperty ExclusionProcess")
+            .output()
+            .map_err(|e| format!("Failed to execute command: {}", e))?;
+
+        if !output.status.success() {
+            return Err(format!("Command failed with status: {}", output.status));
+        }
+
+        // Parse the output to check if "pachtop.exe" is in the list
+        let output_str = String::from_utf8_lossy(&output.stdout);
+        let excluded_processes: Vec<&str> = output_str.lines().collect();
+
+        dbg!(&excluded_processes);
+        Ok(excluded_processes.contains(&"pachtop.exe"))
+    }
+}
+
 #[tauri::command]
 // Slow version
 pub async fn disk_scan(
@@ -223,6 +276,17 @@ pub async fn disk_turbo_scan(
     state: tauri::State<'_, AppState>,
     path: String,
 ) -> Result<DiskItem, String> {
+    #[cfg(target_os = "windows")]
+    {
+        dbg!("Checking if pachtop.exe is excluded");
+        let is_excluded = is_pachtop_excluded().unwrap_or(false);
+
+        dbg!("Result: ", is_excluded);
+
+        if !is_excluded {
+            add_pachtop_exclusion();
+        }
+    }
     dbg!("Turbo Disk analysis on:", &path);
     let bytes_scanned = Arc::new(AtomicU64::new(0));
     let time = std::time::Instant::now();
@@ -280,7 +344,7 @@ pub async fn disk_turbo_scan(
 }
 
 #[tauri::command]
-// Multithreaded fast version, uses high cpu/memory
+// Get data from hashmap
 pub async fn disk_analysis_flattened(
     state: tauri::State<'_, AppState>,
     path: String,
