@@ -16,13 +16,14 @@ mod app;
 mod dirstat;
 mod metrics;
 mod models;
+mod tray;
 mod utils;
 
 use app::AppState;
 
 use std::time::Duration;
 // use tauri::api::path::cache_dir;
-use tauri::{menu::MenuItemBuilder, Manager};
+use tauri::Manager;
 use tauri_plugin_autostart::MacosLauncher;
 // use tauri_plugin_log::LogTarget;
 
@@ -92,36 +93,8 @@ fn build_and_run_app(app: AppState) {
 
             // BUILD TRAY - TODO MOVE TO DIFFERENT FILE
 
-            let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
+            let _ = tray::create_tray(app);
 
-            let icon = app.default_window_icon().unwrap().clone();
-
-            let menu = tauri::menu::MenuBuilder::new(app).items(&[&quit]).build()?;
-
-            let _tray = tauri::tray::TrayIconBuilder::with_id("tray")
-                .tooltip("Pachtop")
-                .icon(icon)
-                .menu(&menu)
-                .on_menu_event(move |app, event| match event.id().as_ref() {
-                    "quit" => {
-                        app.exit(0);
-                    }
-                    _ => {}
-                })
-                .on_tray_icon_event(|tray, event| match event {
-                    tauri::tray::TrayIconEvent::Click { button, .. } => match button {
-                        tauri::tray::MouseButton::Left => {
-                            let app = tray.app_handle();
-                            if let Some(window) = app.get_webview_window("main") {
-                                let _ = window.show();
-                                let _ = window.set_focus();
-                            }
-                        }
-                        _ => {}
-                    },
-                    _ => {}
-                })
-                .build(app)?;
             Ok(())
         })
         .on_window_event(|window, event| match event {
@@ -129,6 +102,8 @@ fn build_and_run_app(app: AppState) {
                 window.hide().unwrap();
                 api.prevent_close();
             }
+            tauri::WindowEvent::DragDrop { .. } => todo!(),
+
             _ => {}
         })
         .manage(app)

@@ -152,8 +152,7 @@ pub fn get_icon(ext: &str, size: i32) -> Result<Vec<u8>, Error> {
             + mask_bytes_count;
 
         let image_bytes_count = bitmap_bytes_count + mask_bytes_count;
-        let mut bytes = Vec::<u8>::with_capacity(complete_size);
-        bytes.set_len(complete_size);
+        let mut bytes: Vec<u8> = vec![0; complete_size];
 
         let iconheader = ICONHEADER {
             id_count: 1, // number of ICONDIRs
@@ -259,8 +258,7 @@ fn write_icon_data_to_memory(
     bitmap_byte_count: usize,
 ) {
     unsafe {
-        let mut icon_data = Vec::<u8>::with_capacity(bitmap_byte_count);
-        icon_data.set_len(bitmap_byte_count);
+        let mut icon_data: Vec<u8> = vec![0; bitmap_byte_count];
 
         GetBitmapBits(
             h_bitmap,
