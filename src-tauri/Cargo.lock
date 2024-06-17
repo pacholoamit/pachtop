@@ -3075,7 +3075,7 @@ dependencies = [
 
 [[package]]
 name = "pachtop"
-version = "0.9.10-1"
+version = "1.0.0-1"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
