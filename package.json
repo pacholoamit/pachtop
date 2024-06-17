@@ -1,7 +1,7 @@
 {
   "name": "pachtop",
   "private": true,
-  "version": "1.0.0-1",
+  "version": "0.9.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,6 +23,7 @@
     "@tauri-apps/api": "^2.0.0-beta.13",
     "@tauri-apps/plugin-fs": "^2.0.0-beta.5",
     "@tauri-apps/plugin-os": "^2.0.0-beta.5",
+    "@tauri-apps/plugin-process": "^2.0.0-beta.5",
     "@tauri-apps/plugin-updater": "^2.0.0-beta.5",
     "ag-grid-react": "^31.3.2",
     "apexcharts": "^3.49.1",

@@ -12,6 +12,8 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
 
     let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
 
+    let process_plugin = tauri_plugin_process::init();
+
     let os_plugin = tauri_plugin_os::init();
     let single_instance_plugin = tauri_plugin_single_instance::init(|app, _argv, _cwd| {
         let window = app.get_webview_window("main").unwrap();
@@ -33,6 +35,7 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
     handle.plugin(single_instance_plugin)?;
     handle.plugin(os_plugin)?;
     handle.plugin(updater_plugin.build())?;
+    handle.plugin(process_plugin)?;
 
     Ok(())
 }
