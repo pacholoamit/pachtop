@@ -1,6 +1,7 @@
 use anyhow::Ok;
 use tauri::{App, Manager};
 use tauri_plugin_autostart::MacosLauncher;
+use tauri_plugin_log::{Target, TargetKind};
 
 pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
     let fs_plugin = tauri_plugin_fs::init();
@@ -15,6 +16,7 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
     let process_plugin = tauri_plugin_process::init();
 
     let os_plugin = tauri_plugin_os::init();
+
     let single_instance_plugin = tauri_plugin_single_instance::init(|app, _argv, _cwd| {
         let window = app.get_webview_window("main").unwrap();
         if window.is_visible().unwrap() {
@@ -23,6 +25,12 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
             window.show().unwrap();
         }
     });
+
+    let log_plugin = tauri_plugin_log::Builder::default().targets([
+        Target::new(TargetKind::Stdout),
+        Target::new(TargetKind::LogDir { file_name: None }),
+        Target::new(TargetKind::Webview),
+    ]);
 
     let updater_plugin = tauri_plugin_updater::Builder::new();
 
@@ -36,6 +44,7 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
     handle.plugin(os_plugin)?;
     handle.plugin(updater_plugin.build())?;
     handle.plugin(process_plugin)?;
+    handle.plugin(log_plugin.build())?;
 
     Ok(())
 }

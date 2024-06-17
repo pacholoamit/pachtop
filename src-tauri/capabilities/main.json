@@ -16,6 +16,8 @@
         "window:allow-start-dragging",
         "autostart:allow-is-enabled",
         "updater:allow-check",
-        "updater:default"
+        "updater:default",
+        "log:allow-log",
+        "log:default"
     ]
 }
