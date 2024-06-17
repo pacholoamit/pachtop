@@ -46,7 +46,7 @@ const GeneralSection = () => {
       });
     }
 
-    await update?.downloadAndInstall();
+    await update.downloadAndInstall();
     await relaunch();
   };
   const onChange = () => {
