@@ -7,6 +7,7 @@ import PageWrapper from "@/components/page-wrapper";
 import { THEME_OPTION } from "@/contants";
 import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
+import logger from "@/lib/logger";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
 import { IconCloudCheck } from "@tabler/icons-react";
@@ -36,7 +37,7 @@ const GeneralSection = () => {
   const onCheckUpdate = async () => {
     setIsUpdateLoading(true);
     const update = await check();
-    console.log(update);
+    logger.trace("Update: ", update);
 
     if (!update?.available) {
       return notification.success({
