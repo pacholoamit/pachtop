@@ -13,6 +13,7 @@
         "os:allow-hostname",
         "os:allow-os-type",
         "os:allow-platform",
-        "window:allow-start-dragging"
+        "window:allow-start-dragging",
+        "autostart:allow-is-enabled"
     ]
 }

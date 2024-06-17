@@ -1,8 +1,12 @@
 import { createContext, useEffect, useState } from "react";
-import { Platform, platform as obtainPlatform } from "@tauri-apps/plugin-os";
-import { getCurrent as appWindow } from "@tauri-apps/api/window";
+
+import ExclusionModal from "@/components/exclusion-modal";
 import useEffectAsync from "@/hooks/useEffectAsync";
+import useIsFirstRun from "@/hooks/useIsFirstRun";
 import { streams } from "@/lib";
+import store from "@/lib/store";
+import { getCurrent as appWindow } from "@tauri-apps/api/window";
+import { Platform, platform as obtainPlatform } from "@tauri-apps/plugin-os";
 
 interface PlatformProviderProps {
   children: React.ReactNode;
@@ -31,16 +35,25 @@ export const PlatformContext = createContext<PlatformContextType>({
  *
  */
 const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
-  const [platform, setPlatform] = useState<Platform>("windows");
+  const [_, setPlatform] = useState<Platform>("windows");
   const [appHeader, setAppHeader] = useState<AppHeader>({
     paddingLeft: 0,
     paddingTop: 0,
     onHeaderAreaClick: () => {},
   });
 
+  const [isShowExclusionModal, setIsShowExclusionModal] = useState(false);
+
   useEffectAsync(async () => {
+    const appStore = await store;
     await obtainPlatform().then((p) => {
       setPlatform(p);
+
+      if (p === "windows") {
+        appStore.isDefenderExclusionEnabled.get().then((isDefenderExclusionEnabled) => {
+          if (!isDefenderExclusionEnabled) setIsShowExclusionModal(true);
+        });
+      }
 
       if (p === "macos") {
         setAppHeader({
@@ -77,6 +90,7 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
         appHeader,
       }}
     >
+      {isShowExclusionModal && <ExclusionModal />}
       {children}
     </PlatformContext.Provider>
   );
