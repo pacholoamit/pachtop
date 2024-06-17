@@ -3207,12 +3207,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tauri-apps/plugin-log@npm:^2.0.0-beta.6":
+  version: 2.0.0-beta.6
+  resolution: "@tauri-apps/plugin-log@npm:2.0.0-beta.6"
+  dependencies:
+    "@tauri-apps/api": 2.0.0-beta.13
+  checksum: 49d9fd73e8e0ceae0ca4a596990404b8d8d821a201322abb02cc02fb322789a566957cdfc5a97d246a30c2c6f122d12569c131c600cd64bd11ae5609dc2c0986
+  languageName: node
+  linkType: hard
+
 "@tauri-apps/plugin-os@npm:^2.0.0-beta.5":
   version: 2.0.0-beta.5
   resolution: "@tauri-apps/plugin-os@npm:2.0.0-beta.5"
   dependencies:
     "@tauri-apps/api": 2.0.0-beta.13
   checksum: e1eaaf69fa74788e03dba66af5bc73840af0d4039e8ab99b890e565f9f1ca5e824956c07ae84ebf122dcd3c9eedcdab3addd307de643c35f1291df1fc283c50d
+  languageName: node
+  linkType: hard
+
+"@tauri-apps/plugin-process@npm:^2.0.0-beta.5":
+  version: 2.0.0-beta.5
+  resolution: "@tauri-apps/plugin-process@npm:2.0.0-beta.5"
+  dependencies:
+    "@tauri-apps/api": 2.0.0-beta.13
+  checksum: 68d11ce564984265814db16c7efff36a1f44e816450f0f34413d39b8d68a765b24faa1f437f55a9182f402d7a8257530ab1bdd168d8684ffb80974a6a9281739
   languageName: node
   linkType: hard
 
@@ -6747,7 +6765,9 @@ __metadata:
     "@tauri-apps/api": ^2.0.0-beta.13
     "@tauri-apps/cli": next
     "@tauri-apps/plugin-fs": ^2.0.0-beta.5
+    "@tauri-apps/plugin-log": ^2.0.0-beta.6
     "@tauri-apps/plugin-os": ^2.0.0-beta.5
+    "@tauri-apps/plugin-process": ^2.0.0-beta.5
     "@tauri-apps/plugin-updater": ^2.0.0-beta.5
     "@types/lodash.sortby": ^4.7.9
     "@types/node": ^20.14.0

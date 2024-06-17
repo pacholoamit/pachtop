@@ -26,6 +26,7 @@ use std::time::Duration;
 
 fn build_and_run_app(app: AppState) {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(|app| {
             let handle = app.handle().clone();
             let state = AppState::new();

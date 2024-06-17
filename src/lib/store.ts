@@ -1,5 +1,6 @@
 import { Store } from "tauri-plugin-store";
 
+import logger from "@/lib/logger";
 import { appDataDir } from "@tauri-apps/api/path";
 import { platform } from "@tauri-apps/plugin-os";
 
@@ -70,7 +71,7 @@ const createStore = async (name: string) => {
   const storePath = currentPlatform === "windows" ? `${path}\\${name}` : `${path}/${name}`;
 
   const store = new Store(storePath);
-  console.log("Store path: ", storePath);
+  logger.info("Store path: ", storePath);
 
   return {
     userId: userId(store),

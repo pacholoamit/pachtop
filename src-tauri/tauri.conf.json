@@ -42,12 +42,13 @@
     }
   },
   "productName": "pachtop",
-  "version": "1.0.0-1",
+  "version": "0.9.5",
   "identifier": "com.pachtop.dev",
   "plugins": {
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM0NkIyODA1NThCM0I0MUEKUldRYXRMTllCU2hyeE9mSUx0MElJN2N5VFo5TytFV1RwaUtoaytDNVdmajNQMmlseVlYMGYzeUkK",
       "endpoints": [
+        "https: //github.com/pacholoamit/pachtop/releases/latest/download/latest.json",
         "https://update.pachtop.com/releases/pachtop/{{target}}/{{current_version}}"
       ]
     }
