@@ -48,8 +48,7 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM0NkIyODA1NThCM0I0MUEKUldRYXRMTllCU2hyeE9mSUx0MElJN2N5VFo5TytFV1RwaUtoaytDNVdmajNQMmlseVlYMGYzeUkK",
       "endpoints": [
-        "https: //github.com/pacholoamit/pachtop/releases/latest/download/latest.json",
-        "https://update.pachtop.com/releases/pachtop/{{target}}/{{current_version}}"
+        "https://github.com/pacholoamit/pachtop/releases/latest/download/latest.json"
       ]
     }
   },

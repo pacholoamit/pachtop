@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. This projec
 - Fix issue where slate shows gradient background
 - Re-added back manual update button in the Settings page
 - Implement logger for better debugging
+- Implement better product analytics
 
 ## 0.9.9
 - Fix issue where some popover components are transparent
