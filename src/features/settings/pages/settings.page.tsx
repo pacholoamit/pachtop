@@ -9,6 +9,7 @@ import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
+import { check } from "@tauri-apps/plugin-updater";
 
 const GeneralSectionInfo = () => {
   return (
@@ -30,6 +31,11 @@ const GeneralSection = () => {
     checkAutoStart();
   }, [checkAutoStart]);
 
+  const onCheckUpdate = async () => {
+    const update = await check();
+
+    console.log(update);
+  };
   const onChange = () => {
     if (!checked) {
       autostart.enable();
@@ -41,6 +47,9 @@ const GeneralSection = () => {
 
   return (
     <Grid gutter={"xl"}>
+      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+        <Button onClick={onCheckUpdate}> Check for updates</Button>
+      </Grid.Col>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Theme</Text>

@@ -14,6 +14,8 @@
         "os:allow-os-type",
         "os:allow-platform",
         "window:allow-start-dragging",
-        "autostart:allow-is-enabled"
+        "autostart:allow-is-enabled",
+        "updater:allow-check",
+        "updater:default"
     ]
 }
