@@ -81,8 +81,8 @@ jobs:
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-        with:
-          workspaces: './src-tauri -> target'          
+        # with:
+        #   workspaces: './src-tauri -> target'          
 
 
       - name: install frontend dependencies
@@ -102,6 +102,7 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           releaseId: ${{ needs.create-release.outputs.release_id }}
+          args: ${{ matrix.settings.args }}
 
   publish-release:
     runs-on: ubuntu-20.04
