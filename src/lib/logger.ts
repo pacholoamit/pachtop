@@ -1,4 +1,4 @@
-import { attachConsole, error, info, trace } from "@tauri-apps/plugin-log";
+import { error, info, trace } from "@tauri-apps/plugin-log";
 
 const parseMsgToString = (message: unknown | unknown[]): string => {
   if (typeof message === "string" || typeof message === "number") {

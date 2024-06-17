@@ -28,7 +28,7 @@ export const useAreaChartState = (
   const { other } = useMantineTheme();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     accessibility: {
-      enabled: true,
+      enabled: false,
     },
     title: {
       text: opts.title.text,
@@ -133,7 +133,7 @@ export const useAreaChartState = (
       },
       buttonTheme: {
         fill: "none",
-        display: "none",
+
         r: 8,
         style: {
           background: "none",
