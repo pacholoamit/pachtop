@@ -1,6 +1,6 @@
 [package]
 name = "pachtop"
-version = "0.9.8"
+version = "1.0.0-1"
 description = "a more modern system monitor"
 authors = ["Pacholo Amit"]
 license = "MIT"
