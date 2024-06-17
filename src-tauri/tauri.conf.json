@@ -7,7 +7,6 @@
     "devUrl": "http://localhost:5173"
   },
   "bundle": {
-    "createUpdaterArtifacts": true,
     "publisher": "pachtop",
     "active": true,
     "category": "Utility",
