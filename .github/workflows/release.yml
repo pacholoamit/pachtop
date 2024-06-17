@@ -81,8 +81,8 @@ jobs:
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-        # with:
-        #   workspaces: './src-tauri -> target'          
+        with:
+          workspaces: './src-tauri -> target'          
 
 
       - name: install frontend dependencies
@@ -103,6 +103,8 @@ jobs:
         with:
           releaseId: ${{ needs.create-release.outputs.release_id }}
           args: ${{ matrix.settings.args }}
+          updaterJsonPreferNsis: true
+          updaterJsonKeepUniversal: true
 
   publish-release:
     runs-on: ubuntu-20.04
