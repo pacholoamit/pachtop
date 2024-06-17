@@ -16,51 +16,22 @@ mod app;
 mod dirstat;
 mod metrics;
 mod models;
+mod plugins;
 mod tray;
 mod utils;
 
 use app::AppState;
 
 use std::time::Duration;
-// use tauri::api::path::cache_dir;
-use tauri::Manager;
-use tauri_plugin_autostart::MacosLauncher;
-// use tauri_plugin_log::LogTarget;
 
 fn build_and_run_app(app: AppState) {
-    // let log_plugin = tauri_plugin_log::Builder::default()
-    //     .targets([LogTarget::Folder(cache_dir().unwrap()), LogTarget::Stdout])
-    //     .build();
-
-    let fs_plugin = tauri_plugin_fs::init();
-
-    let store_plugin = tauri_plugin_store::Builder::default().build();
-
-    let auto_start_plugin =
-        tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec!["--silently"]));
-
-    let window_state_plugin = tauri_plugin_window_state::Builder::default().build();
-
-    let single_instance_plugin = tauri_plugin_single_instance::init(|app, _argv, _cwd| {
-        let window = app.get_webview_window("main").unwrap();
-        if window.is_visible().unwrap() {
-            window.set_focus().unwrap();
-        } else {
-            window.show().unwrap();
-        }
-    });
-
     tauri::Builder::default()
-        .plugin(tauri_plugin_os::init())
-        // .plugin(log_plugin)
-        .plugin(store_plugin)
-        .plugin(auto_start_plugin)
-        .plugin(window_state_plugin)
-        .plugin(single_instance_plugin)
-        .plugin(fs_plugin)
         .setup(|app| {
             let handle = app.handle().clone();
             let state = AppState::new();
+
+            #[cfg(desktop)]
+            let _ = plugins::setup_plugins(app);
 
             tauri::async_runtime::spawn(async move {
                 loop {
