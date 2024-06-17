@@ -22,14 +22,17 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
         }
     });
 
+    let updater_plugin = tauri_plugin_updater::Builder::new();
+
     let handle = app.handle();
 
-    let _ = handle.plugin(fs_plugin);
-    let _ = handle.plugin(store_plugin);
-    let _ = handle.plugin(auto_start_plugin);
-    let _ = handle.plugin(window_state_plugin);
-    let _ = handle.plugin(single_instance_plugin);
-    let _ = handle.plugin(os_plugin);
+    handle.plugin(fs_plugin)?;
+    handle.plugin(store_plugin)?;
+    handle.plugin(auto_start_plugin)?;
+    handle.plugin(window_state_plugin)?;
+    handle.plugin(single_instance_plugin)?;
+    handle.plugin(os_plugin)?;
+    handle.plugin(updater_plugin.build())?;
 
     Ok(())
 }
