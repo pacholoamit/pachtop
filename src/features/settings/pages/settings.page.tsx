@@ -37,7 +37,7 @@ const GeneralSection = () => {
   const onCheckUpdate = async () => {
     setIsUpdateLoading(true);
     const update = await check();
-    logger.trace("Update: ", update);
+    logger.trace("Check update response: ", update);
 
     if (!update?.available) {
       return notification.success({
