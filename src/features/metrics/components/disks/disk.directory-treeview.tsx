@@ -3,9 +3,10 @@ import "@/features/metrics/styles/disk-treeview.css";
 import { memo, useEffect, useState } from "react";
 import { NodeRendererProps, Tree } from "react-arborist";
 
+import DynamicProgress from "@/components/dynamic-progress";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { DiskItem } from "@/lib";
-import { Group, Text, useMantineTheme } from "@mantine/core";
+import { Box, Group, Text, useMantineTheme } from "@mantine/core";
 import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
 
 const iconStyle = { paddingRight: "5px", verticalAlign: "middle" };
@@ -42,9 +43,16 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
           {node.data.name}
         </div>
 
-        <Text size="xs" color="dimmed">
-          {formatBytes(node.data.size as number)}
-        </Text>
+        <Group>
+          <Box w={50}>
+            <DynamicProgress size={"xs"} value={node.data.size} />
+          </Box>
+          <Box w={70}>
+            <Text size="xs" color="dimmed">
+              {formatBytes(node.data.size as number)}
+            </Text>
+          </Box>
+        </Group>
       </Group>
     </div>
   );
