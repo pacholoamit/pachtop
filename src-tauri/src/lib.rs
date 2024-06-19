@@ -22,6 +22,7 @@ mod tray;
 mod utils;
 
 use app::AppState;
+use tauri::menu::Menu;
 
 use std::time::Duration;
 
