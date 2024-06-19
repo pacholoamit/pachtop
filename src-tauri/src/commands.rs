@@ -167,6 +167,14 @@ pub async fn disk_scan(
     Ok(analysed)
 }
 
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/lib/bindings/")]
+pub struct DiskTurboScanInput {
+    pub path: String,
+    pub is_turbo: bool
+}
+
 #[tauri::command]
 // Multithreaded fast version, uses high cpu/memory
 pub async fn disk_turbo_scan(
