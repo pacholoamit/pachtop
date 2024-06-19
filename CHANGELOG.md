@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file. This projec
 - Implement logger for better debugging
 - Implement better product analytics
 - Implement better icons for the app
+- Cleanup of Disk analysis code
+- Improved UI of disk analysis page
 
 ## 0.9.9
 - Fix issue where some popover components are transparent

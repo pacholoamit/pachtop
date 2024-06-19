@@ -1,5 +1,6 @@
 import "@/features/metrics/styles/disk-treeview.css";
 
+import { memo } from "react";
 import { NodeRendererProps, Tree } from "react-arborist";
 
 import formatBytes from "@/features/metrics/utils/format-bytes";
@@ -50,7 +51,7 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
       data={data}
       openByDefault={false}
       width={"100%"}
-      height={290}
+      height={350}
       indent={24}
       rowHeight={36}
       overscanCount={1}
@@ -63,4 +64,4 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
   );
 };
 
-export default DiskDirectoryTreeView;
+export default memo(DiskDirectoryTreeView);

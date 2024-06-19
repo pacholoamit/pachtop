@@ -2,7 +2,7 @@ import Highcharts, { Point } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsTreemap from "highcharts/modules/treemap";
 import DarkUnica from "highcharts/themes/dark-unica";
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import React, { Dispatch, memo, SetStateAction, useEffect, useRef, useState } from "react";
 
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { useMantineTheme } from "@mantine/core";
@@ -100,4 +100,4 @@ const TreemapChart: React.FC<HighchartsReact.Props> = (props) => {
   );
 };
 
-export default TreemapChart;
+export default memo(TreemapChart);

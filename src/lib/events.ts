@@ -48,10 +48,6 @@ export const streams = {
     listen<Network[]>(ServerEvent.Networks, ({ payload }) => callback(payload));
   },
 
-  diskAnalysisProgress: (callback: (data: DiskAnalysisProgress) => void) => {
-    listen<DiskAnalysisProgress>(ServerEvent.DiskAnalysisProgress, ({ payload }) => callback(payload));
-  },
-
   window: {
     willEnterFullScreen: (callback: () => void) => {
       listen(ServerEvent.WindowWillEnterFullScreen, () => callback());
