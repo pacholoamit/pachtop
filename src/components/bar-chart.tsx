@@ -1,10 +1,10 @@
-import * as Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import * as Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import useSettings from "@/hooks/useSettings";
-import { useMantineTheme } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import useSettings from '@/hooks/useSettings';
+import { useMantineTheme } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 
 export interface BarChartStatePropsInitialState extends Highcharts.Options {
   custom?: {
@@ -22,6 +22,7 @@ export const useBarChartState = (
   const { isPerformanceModeEnabled } = useSettings();
   const [chartOptions, setChartOptions] = useState<BarChartStatePropsInitialState>({
     ...props,
+    
     chart: {
       type: "column",
       animation: isPerformanceModeEnabled ? false : true,

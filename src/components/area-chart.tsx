@@ -56,6 +56,9 @@ export const useAreaChartState = (
         marker: {
           enabled: false,
         },
+        animation: {
+          duration: 0,
+        },
       },
 
       area: {
