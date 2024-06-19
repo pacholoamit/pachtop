@@ -1,13 +1,17 @@
-use std::path::PathBuf;
-use std::sync::atomic::AtomicU64;
-use std::sync::{Arc, Mutex};
+use std::{
+    path::PathBuf,
+    sync::{atomic::AtomicU64, Arc, Mutex},
+};
 
-use crate::app::AppState;
-use crate::dirstat::{DiskItem, FileInfo};
+use crate::dirstat::DiskItem;
 use crate::models::*;
+use crate::{app::AppState, dirstat::FileInfo};
+use serde::{Deserialize, Serialize};
 use tauri::{Manager, State};
 
-use log::info;
+use log::{info, trace, warn};
+use tauri_plugin_shell::ShellExt;
+use ts_rs::TS;
 
 #[tauri::command]
 pub fn kill_process(state: State<'_, AppState>, name: String) -> bool {
@@ -76,18 +80,16 @@ pub fn delete_folder(path: String) {
 }
 
 #[tauri::command]
-pub fn add_pachtop_exclusion() -> Result<(), String> {
+pub fn add_pachtop_exclusion(window: tauri::Window) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
-        // If not running as administrator, run the command with elevated privileges without creating a command prompt window
-        let status = std::process::Command::new("powershell")
-            .arg("-Command")
-            .arg("Start-Process powershell -ArgumentList '-Command \"Add-MpPreference -ExclusionProcess \\\"pachtop.exe\\\"\"' -Verb RunAs -WindowStyle Hidden")
-            .status()
-            .map_err(|e| format!("Failed to run as administrator: {}", e))?;
+        let shell = window.app_handle().shell();
 
-        if !status.success() {
-            return Err("Failed to run as administrator: Command did not succeed".into());
+        let output = tauri::async_runtime::block_on(async move {
+            shell.command("powershell").arg("-Command").args(["Start-Process powershell -ArgumentList '-Command \"Add-MpPreference -ExclusionProcess \\\"pachtop.exe\\\"\"' -Verb RunAs -WindowStyle Hidden"]).output().await.unwrap()
+        });
+        if !output.status.success() {
+            return Err("Failed to add Pachtop to Exclusion list".into());
         }
 
         Ok(())
@@ -104,85 +106,32 @@ pub fn add_pachtop_exclusion() -> Result<(), String> {
     }
 }
 
-#[tauri::command]
-// Slow version
-pub async fn disk_scan(
-    window: tauri::Window,
-    state: tauri::State<'_, AppState>,
-    path: String,
-) -> Result<DiskItem, String> {
-    dbg!("Disk analysis on:", &path);
-    let bytes_scanned = Arc::new(AtomicU64::new(0));
-    let time = std::time::Instant::now();
-
-    let path_buf = PathBuf::from(&path);
-    let total_bytes = state.0.lock().unwrap().metrics.find_disk(&path).total;
-    let file_info = FileInfo::from_path(&path_buf, true).map_err(|e| e.to_string())?;
-    let last_emit_time = Arc::new(Mutex::new(std::time::Instant::now()));
-
-    let emitter = window.clone();
-    let callback = move |scanned: u64, total: u64| {
-        let mut last_emit = last_emit_time.lock().unwrap();
-        // Emit progress every 200ms to not overwhelm the UI
-        if last_emit.elapsed() >= std::time::Duration::from_millis(100) {
-            let progress = DiskAnalysisProgress { scanned, total };
-            match emitter.emit("disk_analysis_progress", &progress) {
-                Ok(_) => {}
-                Err(e) => {
-                    dbg!("Error emitting disk_analysis_progress", e);
-                }
-            }
-            *last_emit = std::time::Instant::now();
-        }
-    };
-
-    let analysed = match file_info {
-        FileInfo::Directory { volume_id } => DiskItem::scan(
-            &path_buf,
-            true,
-            volume_id,
-            &callback,
-            total_bytes,
-            Arc::clone(&bytes_scanned),
-        )
-        .map_err(|e| e.to_string())?,
-        _ => return Err("Not a directory".into()),
-    };
-
-    let complete = DiskAnalysisProgress {
-        scanned: total_bytes,
-        total: total_bytes,
-    };
-
-    // Emit final progress to close the progress
-    window
-        .emit("disk_analysis_progress", complete)
-        .map_err(|e| e.to_string())?;
-
-    state.set_disk_analysis(path, analysed.clone());
-
-    dbg!("Total bytes:", total_bytes);
-    dbg!("Scanning complete:", time.elapsed().as_secs_f32());
-
-    Ok(analysed)
-}
-
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[serde(rename_all = "camelCase")]
+#[derive(Debug, Serialize, Deserialize, TS, Clone)]
+// #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
-pub struct DiskTurboScanInput {
+pub struct DiskScanInput {
     pub path: String,
-    pub is_turbo: bool
+    pub is_turbo: bool,
+    pub disk_name: String,
 }
 
 #[tauri::command]
-// Multithreaded fast version, uses high cpu/memory
-pub async fn disk_turbo_scan(
+pub async fn disk_scan(
+    input: DiskScanInput,
     window: tauri::Window,
     state: tauri::State<'_, AppState>,
-    path: String,
 ) -> Result<DiskItem, String> {
-    dbg!("Turbo Disk analysis on:", &path);
+    let DiskScanInput {
+        disk_name,
+        is_turbo,
+        path,
+    } = input;
+
+    info!(
+        "Disk analysis started on {}: path = {}, turbo = {}",
+        disk_name, path, is_turbo
+    );
+
     let bytes_scanned = Arc::new(AtomicU64::new(0));
     let time = std::time::Instant::now();
 
@@ -208,7 +157,8 @@ pub async fn disk_turbo_scan(
     };
 
     let analysed = match file_info {
-        FileInfo::Directory { volume_id } => DiskItem::turbo_scan(
+        FileInfo::Directory { volume_id } => DiskItem::scan(
+            &is_turbo,
             &path_buf,
             true,
             volume_id,
@@ -232,8 +182,12 @@ pub async fn disk_turbo_scan(
 
     state.set_disk_analysis(path, analysed.clone());
 
-    dbg!("Total bytes:", total_bytes);
-    dbg!("Scanning complete:", time.elapsed().as_secs_f32());
+    info!(
+        "Scanning completed in {} for {} , turbo: {}",
+        time.elapsed().as_secs_f32(),
+        &disk_name,
+        is_turbo
+    );
 
     Ok(analysed)
 }

@@ -33,7 +33,7 @@ fn build_and_run_app(app: AppState) {
             let state = AppState::new();
 
             #[cfg(desktop)]
-            let _ = plugins::setup_plugins(app);
+            plugins::setup_plugins(app)?;
 
             tauri::async_runtime::spawn(async move {
                 loop {
@@ -84,7 +84,6 @@ fn build_and_run_app(app: AppState) {
             commands::kill_process,
             commands::show_folder,
             commands::delete_folder,
-            commands::disk_turbo_scan,
             commands::disk_analysis_flattened,
             commands::add_pachtop_exclusion,
             commands::disk_scan,

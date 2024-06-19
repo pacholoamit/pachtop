@@ -116,6 +116,7 @@ impl DiskItem {
     }
 
     pub fn scan(
+        is_turbo: &bool,
         path: &Path,
         apparent: bool,
         root_dev: u64,
@@ -142,87 +143,42 @@ impl DiskItem {
                     .filter_map(Result::ok)
                     .collect::<Vec<_>>();
 
-                let sub_items: Vec<DiskItem> = sub_entries
-                    .into_iter()
-                    .filter_map(|entry| {
-                        let result = DiskItem::scan(
-                            &entry.path(),
-                            apparent,
-                            root_dev,
-                            callback,
-                            total_bytes,
-                            Arc::clone(&bytes_scanned),
-                        );
+                let sub_items: Vec<DiskItem> = match is_turbo {
+                    // Use rayon parallel iterator if turbo
+                    true => sub_entries
+                        .into_par_iter()
+                        .filter_map(|entry| {
+                            let result = DiskItem::scan(
+                                is_turbo,
+                                &entry.path(),
+                                apparent,
+                                root_dev,
+                                callback,
+                                total_bytes,
+                                Arc::clone(&bytes_scanned),
+                            );
 
-                        result.ok()
-                    })
-                    .collect();
+                            result.ok()
+                        })
+                        .collect(),
+                    // Use normal iter
+                    false => sub_entries
+                        .into_iter()
+                        .filter_map(|entry| {
+                            let result = DiskItem::scan(
+                                is_turbo,
+                                &entry.path(),
+                                apparent,
+                                root_dev,
+                                callback,
+                                total_bytes,
+                                Arc::clone(&bytes_scanned),
+                            );
 
-                let mut sorted_sub_items = sub_items;
-                sorted_sub_items.sort_unstable_by(|a, b| a.size.cmp(&b.size).reverse());
-
-                Ok(DiskItem {
-                    id,
-                    name,
-                    size: sorted_sub_items.iter().map(|item| item.size).sum(),
-                    children: Some(sorted_sub_items),
-                })
-            }
-            FileInfo::File { size, .. } => {
-                bytes_scanned.fetch_add(size, Ordering::SeqCst);
-                callback(bytes_scanned.load(Ordering::SeqCst), total_bytes);
-                Ok(DiskItem {
-                    id,
-                    name,
-                    size,
-                    children: None,
-                })
-            }
-        }
-    }
-
-    pub fn turbo_scan(
-        path: &Path,
-        apparent: bool,
-        root_dev: u64,
-        callback: &ProgressCallback,
-        total_bytes: u64,
-        bytes_scanned: Arc<AtomicU64>,
-    ) -> Result<Self, Box<dyn Error>> {
-        let id = get_next_id();
-        let name = path
-            .file_name()
-            .unwrap_or(OsStr::new("."))
-            .to_string_lossy()
-            .to_string();
-
-        let file_info = FileInfo::from_path(path, apparent)?;
-
-        match file_info {
-            FileInfo::Directory { volume_id } => {
-                if volume_id != root_dev {
-                    return Err("Filesystem boundary crossed".into());
-                }
-
-                let sub_entries = fs::read_dir(path)?
-                    .filter_map(Result::ok)
-                    .collect::<Vec<_>>();
-
-                let sub_items: Vec<DiskItem> = sub_entries
-                    .into_par_iter()
-                    .filter_map(|entry| {
-                        let result = DiskItem::turbo_scan(
-                            &entry.path(),
-                            apparent,
-                            root_dev,
-                            callback,
-                            total_bytes,
-                            Arc::clone(&bytes_scanned),
-                        );
-
-                        result.ok()
-                    })
-                    .collect();
+                            result.ok()
+                        })
+                        .collect(),
+                };
 
                 let mut sorted_sub_items = sub_items;
                 sorted_sub_items.sort_unstable_by(|a, b| a.size.cmp(&b.size).reverse());

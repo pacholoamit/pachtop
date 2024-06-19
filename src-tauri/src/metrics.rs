@@ -5,7 +5,7 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::str::{self};
 use sysinfo::{MemoryRefreshKind, System};
-use systemicons;
+
 pub struct Metrics {
     sys: System,
     disks: sysinfo::Disks,
@@ -307,7 +307,7 @@ impl ProcessesTrait for Metrics {
 
     fn kill_process(&mut self, name: &str) -> bool {
         self.sys
-            .processes_by_name(&name)
+            .processes_by_name(name)
             .any(|process| process.kill())
     }
 }
