@@ -83,10 +83,11 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
 
       const fs = await commands.scan((stream) => setProgress(stream), {
         path: disk.mountPoint,
-        disk_name: disk.name,
-        is_turbo: true,
+        diskName: disk.name,
+        isTurbo: true,
       });
 
+      logger.trace("Disk analysis sample:", fs.children);
       setDiskAnalysis(fs.children as DiskItem[]);
 
       await populateTreemap();

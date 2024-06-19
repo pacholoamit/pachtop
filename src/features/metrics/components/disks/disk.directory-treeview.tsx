@@ -45,7 +45,7 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
 
         <Group position="right">
           <Box w={60}>
-            <DynamicProgress size={"xs"} value={node.data.size} />
+            <DynamicProgress size={"xs"} value={node.data.percentageOfDisk} />
           </Box>
           <Box w={60}>
             <Group position="right">

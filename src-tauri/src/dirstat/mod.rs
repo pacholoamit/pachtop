@@ -13,6 +13,8 @@ use ts_rs::TS;
 #[cfg(target_os = "windows")]
 use winapi_util::{file, Handle};
 
+use crate::utils::get_percentage;
+
 static INIT: Once = Once::new();
 static mut COUNTER: Option<AtomicU64> = None;
 
@@ -38,6 +40,8 @@ pub struct DiskItem {
     pub children: Option<Vec<DiskItem>>,
     #[ts(type = "number")]
     pub size: u64,
+    #[ts(type = "number")]
+    pub percentage_of_disk: f64,
 }
 
 // Define a type alias for the callback
@@ -183,10 +187,13 @@ impl DiskItem {
                 let mut sorted_sub_items = sub_items;
                 sorted_sub_items.sort_unstable_by(|a, b| a.size.cmp(&b.size).reverse());
 
+                let size = sorted_sub_items.iter().map(|item| item.size).sum();
+
                 Ok(DiskItem {
                     id,
                     name,
-                    size: sorted_sub_items.iter().map(|item| item.size).sum(),
+                    size,
+                    percentage_of_disk: get_percentage(&size, &total_bytes),
                     children: Some(sorted_sub_items),
                 })
             }
@@ -198,6 +205,7 @@ impl DiskItem {
                     name,
                     size,
                     children: None,
+                    percentage_of_disk: get_percentage(&size, &total_bytes),
                 })
             }
         }

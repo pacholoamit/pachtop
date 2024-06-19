@@ -143,6 +143,7 @@ impl DisksTrait for Metrics {
             },
         }
     }
+
     fn get_disks(&mut self) -> Vec<Disk> {
         self.disks.refresh_list();
         self.disks.refresh();

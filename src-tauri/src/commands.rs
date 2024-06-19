@@ -107,7 +107,7 @@ pub fn add_pachtop_exclusion(window: tauri::Window) -> Result<(), String> {
 }
 
 #[derive(Debug, Serialize, Deserialize, TS, Clone)]
-// #[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/lib/bindings/")]
 pub struct DiskScanInput {
     pub path: String,
@@ -143,8 +143,8 @@ pub async fn disk_scan(
     let emitter = window.clone();
     let callback = move |scanned: u64, total: u64| {
         let mut last_emit = last_emit_time.lock().unwrap();
-        // Emit progress every 200ms to not overwhelm the UI
-        if last_emit.elapsed() >= std::time::Duration::from_millis(200) {
+        // Emit progress every 100ms to not overwhelm the UI
+        if last_emit.elapsed() >= std::time::Duration::from_millis(100) {
             let progress = DiskAnalysisProgress { scanned, total };
             match emitter.emit("disk_analysis_progress", &progress) {
                 Ok(_) => {}
@@ -214,7 +214,7 @@ pub async fn disk_analysis_flattened(
         Some(analysis) => {
             dbg!("Analysis found");
             dbg!("Time taken:", time.elapsed().as_secs_f32());
-            Ok(analysis.flatten(5000))
+            Ok(analysis.flatten(500))
         }
         None => {
             dbg!("Analysis not found");
