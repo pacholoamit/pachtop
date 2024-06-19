@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file. This projec
 - Improved UI of disk analysis page
 - Added progress bar for File explorer
 - Removed Apexchart in favor of Highcharts
+- Add Performance mode to settings
 
 ## 0.9.9
 - Fix issue where some popover components are transparent

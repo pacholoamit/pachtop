@@ -6,6 +6,7 @@ import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import { THEME_OPTION } from "@/contants";
 import useEffectAsync from "@/hooks/useEffectAsync";
+import useSettings from "@/hooks/useSettings";
 import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import logger from "@/lib/logger";
@@ -29,20 +30,11 @@ const GeneralSectionInfo = () => {
 const GeneralSection = () => {
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [isPerformanceModeEnabled, setIsPerformanceModeEnabled] = useState(false);
-
+  const { isPerformanceModeEnabled, togglePerformanceMode } = useSettings();
   const { setTheme, currentTheme } = useTheme();
-
-  const togglePerformanceMode = async () => {
-    const currentStore = await store;
-    const isEnabled = await currentStore.isPerformanceModeEnabled.get();
-    await currentStore.isPerformanceModeEnabled.set(!isEnabled);
-    setIsPerformanceModeEnabled(!isEnabled);
-  };
 
   useEffectAsync(async () => {
     const currentStore = await store;
-    currentStore.isPerformanceModeEnabled.get().then(setIsPerformanceModeEnabled);
 
     setChecked(await autostart.isEnabled());
   }, []);
