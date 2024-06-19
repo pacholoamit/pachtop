@@ -18,6 +18,7 @@
         "updater:allow-check",
         "updater:default",
         "log:allow-log",
-        "log:default"
+        "log:default",
+        "shell:allow-spawn"
     ]
 }

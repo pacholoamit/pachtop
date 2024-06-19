@@ -1,10 +1,12 @@
 import { useState } from "react";
 
 import { commands } from "@/lib";
+import logger from "@/lib/logger";
 import store from "@/lib/store";
 import notification from "@/utils/notification";
-import { Button, Code, Modal, Space, Stack, Text, Title } from "@mantine/core";
+import { Button, Modal, Space, Stack, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { Command } from "@tauri-apps/plugin-shell";
 
 const ExclusionModal = () => {
   const [opened, { open, close }] = useDisclosure(true);
@@ -21,6 +23,7 @@ const ExclusionModal = () => {
       });
       await store.then((s) => s.isDefenderExclusionEnabled.set(true));
     } catch (err) {
+      logger.error(err);
       notification.error({
         title: "Failed to add Pachtop to exclusion list",
         message: "Please try again or add Pachtop to the exclusion list manually by re-opening the app",

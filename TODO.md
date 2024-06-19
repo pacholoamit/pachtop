@@ -1,9 +1,8 @@
 # Things to do before v1.0.0
 
-- Add developer settings
-- Add better logging
-- Identify version uses in posthog
-- Use Zustand stores for most state - IN PROGRESS
+
+- Make requesting of Powershell permissions, by Pachtop
+- Improve Disk Analysis code duplication
+- Improve icons???
 - Add Persistence of metrics & clearing of persisted metrics
-- Improve Theming via manifests
 - Make Disks icon dynamic
