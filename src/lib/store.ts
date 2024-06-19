@@ -64,6 +64,16 @@ const isDefenderExclusionEnabled = (store: Store) => {
   };
 };
 
+const isPerformanceModeEnabled = (store: Store) => {
+  return {
+    get: async () => (await store.get<boolean>("isPerformanceModeEnabled")) || false,
+    set: async (value: boolean) => {
+      await store.set("isPerformanceModeEnabled", value);
+      await store.save();
+    },
+  };
+};
+
 const createStore = async (name: string) => {
   const currentPlatform = await platform();
   const path = await appDataDir();
@@ -80,6 +90,7 @@ const createStore = async (name: string) => {
     isFirstRun: isFirstRun(store),
     sessions: sessions(store),
     isDefenderExclusionEnabled: isDefenderExclusionEnabled(store),
+    isPerformanceModeEnabled: isPerformanceModeEnabled(store),
   };
 };
 

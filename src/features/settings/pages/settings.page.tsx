@@ -5,9 +5,11 @@ import { LinearGradient } from "react-text-gradients";
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import { THEME_OPTION } from "@/contants";
+import useEffectAsync from "@/hooks/useEffectAsync";
 import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
 import logger from "@/lib/logger";
+import store from "@/lib/store";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
 import { IconCloudCheck } from "@tabler/icons-react";
@@ -27,12 +29,23 @@ const GeneralSectionInfo = () => {
 const GeneralSection = () => {
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [checked, setChecked] = useState(false);
-  const checkAutoStart = async () => setChecked(await autostart.isEnabled());
+  const [isPerformanceModeEnabled, setIsPerformanceModeEnabled] = useState(false);
+
   const { setTheme, currentTheme } = useTheme();
 
-  useEffect(() => {
-    checkAutoStart();
-  }, [checkAutoStart]);
+  const togglePerformanceMode = async () => {
+    const currentStore = await store;
+    const isEnabled = await currentStore.isPerformanceModeEnabled.get();
+    await currentStore.isPerformanceModeEnabled.set(!isEnabled);
+    setIsPerformanceModeEnabled(!isEnabled);
+  };
+
+  useEffectAsync(async () => {
+    const currentStore = await store;
+    currentStore.isPerformanceModeEnabled.get().then(setIsPerformanceModeEnabled);
+
+    setChecked(await autostart.isEnabled());
+  }, []);
 
   const onCheckUpdate = async () => {
     setIsUpdateLoading(true);
@@ -78,6 +91,15 @@ const GeneralSection = () => {
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Start on system startup</Text>
           <Switch checked={checked} onChange={onChange} />
+        </Stack>
+      </Grid.Col>
+      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+        <Stack spacing={4} align="flex-start">
+          <Text size={"sm"}>Performance mode</Text>
+          <Text size={"xs"} c="dimmed">
+            Turning on Performance mode disables animations
+          </Text>
+          <Switch checked={isPerformanceModeEnabled} onChange={() => togglePerformanceMode()} />
         </Stack>
       </Grid.Col>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
