@@ -45,6 +45,7 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
     handle.plugin(updater_plugin.build())?;
     handle.plugin(process_plugin)?;
     handle.plugin(log_plugin.build())?;
+    handle.plugin(tauri_plugin_shell::init())?;
 
     Ok(())
 }

@@ -1,6 +1,6 @@
-import useRouteHandler from "@/hooks/useRouteHandler";
-import { MantineTheme, Tooltip, UnstyledButton } from "@mantine/core";
-import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from "@tabler/icons-react";
+import useRouteHandler from '@/hooks/useRouteHandler';
+import { MantineTheme, Tooltip, UnstyledButton } from '@mantine/core';
+import { IconCpu, IconLayoutDashboard, IconServer, IconSettings } from '@tabler/icons-react';
 
 interface NavbarOptionProps {
   icon: React.ReactNode;

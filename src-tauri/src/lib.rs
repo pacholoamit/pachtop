@@ -13,6 +13,7 @@ mod mac;
 mod win;
 
 mod app;
+mod commands;
 mod dirstat;
 mod metrics;
 mod models;
@@ -32,7 +33,7 @@ fn build_and_run_app(app: AppState) {
             let state = AppState::new();
 
             #[cfg(desktop)]
-            let _ = plugins::setup_plugins(app);
+            plugins::setup_plugins(app)?;
 
             tauri::async_runtime::spawn(async move {
                 loop {
@@ -80,13 +81,12 @@ fn build_and_run_app(app: AppState) {
         })
         .manage(app)
         .invoke_handler(tauri::generate_handler![
-            app::kill_process,
-            app::show_folder,
-            app::delete_folder,
-            app::disk_turbo_scan,
-            app::disk_analysis_flattened,
-            app::add_pachtop_exclusion,
-            app::disk_scan,
+            commands::kill_process,
+            commands::show_folder,
+            commands::delete_folder,
+            commands::disk_analysis_flattened,
+            commands::add_pachtop_exclusion,
+            commands::disk_scan,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

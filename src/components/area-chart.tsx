@@ -2,6 +2,7 @@ import HighchartsReact from "highcharts-react-official";
 import * as Highcharts from "highcharts/highstock";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
+import useSettings from "@/hooks/useSettings";
 import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
@@ -26,6 +27,7 @@ export const useAreaChartState = (
   opts: InitialAreaChartStateInput
 ): [Highcharts.Options, Dispatch<SetStateAction<Highcharts.Options>>] => {
   const { other } = useMantineTheme();
+  const { isPerformanceModeEnabled } = useSettings();
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     accessibility: {
       enabled: false,
@@ -53,6 +55,9 @@ export const useAreaChartState = (
       series: {
         marker: {
           enabled: false,
+        },
+        animation: {
+          duration: isPerformanceModeEnabled ? 0 : 1000,
         },
       },
 
@@ -175,6 +180,7 @@ export const useAreaChartState = (
       ignoreHiddenSeries: true,
       alignTicks: false,
       backgroundColor: "transparent",
+      animation: isPerformanceModeEnabled ? false : true,
     },
   });
 

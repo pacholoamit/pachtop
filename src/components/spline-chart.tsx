@@ -2,6 +2,7 @@ import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
+import useSettings from "@/hooks/useSettings";
 import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
@@ -22,12 +23,13 @@ export const useSplineChartState = (
   props: SplineChartStatePropsInitialState
 ): [SplineChartStatePropsInitialState, Dispatch<SetStateAction<SplineChartStatePropsInitialState>>] => {
   const { other } = useMantineTheme();
-
+  const { isPerformanceModeEnabled } = useSettings();
   const [chartOptions, setChartOptions] = useState<SplineChartStatePropsInitialState>({
     ...props,
     chart: {
       type: "spline",
       backgroundColor: "transparent",
+      animation: isPerformanceModeEnabled ? false : true,
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
       },
@@ -44,6 +46,13 @@ export const useSplineChartState = (
         // TODO: Set this to SPline chart color
         style: {
           color: other.charts.area.default.labelColor,
+        },
+      },
+    },
+    plotOptions: {
+      series: {
+        animation: {
+          duration: isPerformanceModeEnabled ? 0 : 1000,
         },
       },
     },

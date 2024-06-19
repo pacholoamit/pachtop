@@ -20,11 +20,10 @@ import { IconAlertCircle, IconFolderOpen } from "@tabler/icons-react";
 
 interface DiskInformationAnalyticsCardProps {
   startDiskAnalysis: () => Promise<void>;
-  startDiskAnalysisTurbo: () => Promise<void>;
 }
 
 const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) => {
-  const { startDiskAnalysis, startDiskAnalysisTurbo } = props;
+  const { startDiskAnalysis } = props;
   const [opened, { close, open }] = useDisclosure(false);
   const disk = useDisksStore.use.selectedDisk();
 
@@ -78,17 +77,17 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
 
   return (
     <Popover width={200} position="top" withArrow shadow="md" opened={opened}>
-      <Card height="350px">
+      <Card height="400px">
         <Group position="apart">
           <Title order={4}>Disk Information</Title>
           <ActionIcon size={"sm"} variant="light" onClick={showDirectory}>
             <IconFolderOpen stroke={1.5} />
           </ActionIcon>
         </Group>
-        <Space h={8} />
+        <Space h={16} />
 
         <Stack spacing={"lg"}>
-          <Stack spacing={3}>
+          <Stack spacing={4}>
             {data.map((d, i) => (
               <Group key={i} position="apart">
                 <Text c="dimmed" size={"sm"}>
@@ -100,6 +99,7 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
               </Group>
             ))}
           </Stack>
+          <Space h={12} />
           <DynamicProgress size={36} sections={sections} />
           <Group>
             <Button radius="md" variant="gradient" style={{ flex: 1 }} onClick={startDiskAnalysis}>
@@ -111,7 +111,7 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
                 style={{ flex: 1 }}
                 variant="gradient"
                 gradient={{ from: "orange", to: "red" }}
-                onClick={startDiskAnalysisTurbo}
+                onClick={startDiskAnalysis}
                 leftIcon={<IconAlertCircle />}
                 onMouseEnter={open}
                 onMouseLeave={close}

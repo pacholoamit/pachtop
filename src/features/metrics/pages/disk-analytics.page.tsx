@@ -9,8 +9,9 @@ import DiskInformationAnalyticsCard from "@/features/metrics/components/disks/di
 import useDisksStore from "@/features/metrics/stores/disk.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
+import logger from "@/lib/logger";
 import notification from "@/utils/notification";
-import { Box, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Box, Center, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 
 interface AnalysisProgressIndicatorProps {
   enableStatus?: boolean;
@@ -30,7 +31,7 @@ const AnalysisIndicator: React.FC<AnalysisProgressIndicatorProps> = (props) => {
       <Stack align="center" justify="center" spacing="xs" pt={props.pt}>
         <Title order={3}>{isScanningCompleted ? serializingProgress : scanningProgress}</Title>
         <Box style={{ width: "300px" }}>
-          <Progress value={percentage} size={"lg"} />
+          <Progress value={percentage} size={"lg"} color="cyan" />
         </Box>
       </Stack>
     );
@@ -56,11 +57,6 @@ const AnalysisIndicator: React.FC<AnalysisProgressIndicatorProps> = (props) => {
 
 interface DiskAnalyticsPageProps {}
 
-const MemoTreemapChart = React.memo(TreemapChart);
-
-const MemoDiskDirectoryTreeView = React.memo(DiskDirectoryTreeView);
-
-// TODO: Desperately needs refactoring
 const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
   const disk = useDisksStore.use.selectedDisk();
@@ -81,29 +77,31 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     },
   });
 
-  const setProgressAndFetchData = useCallback(
-    async (fetchData: () => Promise<DiskItem>) => {
-      if (!disk.mountPoint)
-        return notification.error({
-          title: "Oh no! An error",
-          message: "Error in retrieveing disk data",
-        });
-      streams.diskAnalysisProgress((stream) => setProgress(stream));
-      const rootFsTree = await fetchData();
-      setDiskAnalysis(rootFsTree.children as DiskItem[]);
-    },
-    [disk.mountPoint]
-  );
+  const startDiskAnalysis = useCallback(async () => {
+    try {
+      setIsLoading(true);
 
-  const populateFileExplorerTurbo = useCallback(
-    () => setProgressAndFetchData(() => commands.turboScan({ path: disk.mountPoint })),
-    [setProgressAndFetchData, disk.mountPoint]
-  );
+      const fs = await commands.scan((stream) => setProgress(stream), {
+        path: disk.mountPoint,
+        diskName: disk.name,
+        isTurbo: true,
+      });
 
-  const populateFileExplorer = useCallback(
-    () => setProgressAndFetchData(() => commands.scan({ path: disk.mountPoint })),
-    [setProgressAndFetchData, disk.mountPoint]
-  );
+      logger.trace("Disk analysis sample:", fs.children);
+      setDiskAnalysis(fs.children as DiskItem[]);
+
+      await populateTreemap();
+    } catch (err) {
+      logger.error(err);
+
+      notification.error({
+        title: "Failed to start disk analysis",
+        message: "Please try again or restart the app",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const populateTreemap = useCallback(async () => {
     if (disk.mountPoint) {
@@ -115,9 +113,12 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         value: item.size,
       }));
 
+      logger.trace("Tree map sample:", flattenedTreemapData.slice(0, 10));
+
       setChartOptions((prev) => ({
         series: [
           {
+            turboThreshold: 0,
             type: "treemap",
             layoutAlgorithm: "squarified",
             animationLimit: 1000,
@@ -144,8 +145,8 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
                 },
                 borderWidth: 0.5,
                 layoutAlgorithm: "squarified",
-                color: colors.dark[6], // TODO: Create own color for this
-                borderColor: colors.dark[3], // TODO: Create own color for this
+                // color: colors.dark[6], // TODO: Create own color for this
+                // borderColor: colors.dark[3], // TODO: Create own color for this
               },
             ],
             data: flattenedTreemapData, //TODO: Crutch fix this later
@@ -155,52 +156,31 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     }
   }, [disk.mountPoint, colors.dark, setChartOptions]);
 
-  const startDiskAnalysisCommon = useCallback(
-    async (populateFn: () => Promise<void>) => {
-      setIsLoading(true);
-      await populateFn();
-      setIsLoading(false);
-      await populateTreemap();
-    },
-    [populateTreemap]
-  );
-
-  const startDiskAnalysisTurbo = useCallback(
-    () => startDiskAnalysisCommon(populateFileExplorerTurbo),
-    [startDiskAnalysisCommon, populateFileExplorerTurbo]
-  );
-
-  const startDiskAnalysis = useCallback(
-    () => startDiskAnalysisCommon(populateFileExplorer),
-    [startDiskAnalysisCommon, populateFileExplorer]
-  );
-
   return (
     <PageWrapper name={id}>
       <Grid>
         <Grid.Col md={12} lg={4} xl={3}>
-          <DiskInformationAnalyticsCard
-            startDiskAnalysis={startDiskAnalysis}
-            startDiskAnalysisTurbo={startDiskAnalysisTurbo}
-          />
+          <DiskInformationAnalyticsCard startDiskAnalysis={startDiskAnalysis} />
         </Grid.Col>
         <Grid.Col md={12} lg={8} xl={9}>
-          <Card height="350px">
+          <Card height="400px">
             <Title order={4}>File Explorer</Title>
             {isDiskScanEmpty ? (
               <AnalysisIndicator progress={progress} enableStatus={true} pt="86px" />
             ) : (
-              <MemoDiskDirectoryTreeView data={diskAnalysis} />
+              <DiskDirectoryTreeView data={diskAnalysis} />
             )}
           </Card>
         </Grid.Col>
         <Grid.Col xl={12}>
-          <Card height="560px">
-            <LoadingOverlay visible={isLoading} overlayBlur={3} />
+          <Card height="540px">
+            <Center>
+              <Title order={4}>Disk Usage</Title>
+            </Center>
             {isDiskScanEmpty ? (
               <AnalysisIndicator progress={progress} pt="188px" />
             ) : (
-              <MemoTreemapChart options={chartOptions} />
+              <TreemapChart options={chartOptions} />
             )}
           </Card>
         </Grid.Col>

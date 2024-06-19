@@ -18,6 +18,17 @@
         "updater:allow-check",
         "updater:default",
         "log:allow-log",
-        "log:default"
+        "log:default",
+        "shell:allow-spawn",
+        {
+            "identifier": "shell:allow-execute",
+            "allow": [
+                {
+                    "name": "powershell",
+                    "cmd": "powershell",
+                    "args": true
+                }
+            ]
+        }
     ]
 }
