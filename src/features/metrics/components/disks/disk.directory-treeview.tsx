@@ -1,10 +1,12 @@
 import "@/features/metrics/styles/disk-treeview.css";
 
+import { memo, useEffect, useState } from "react";
 import { NodeRendererProps, Tree } from "react-arborist";
 
+import DynamicProgress from "@/components/dynamic-progress";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { DiskItem } from "@/lib";
-import { Group, Text } from "@mantine/core";
+import { Box, Group, Text, useMantineTheme } from "@mantine/core";
 import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
 
 const iconStyle = { paddingRight: "5px", verticalAlign: "middle" };
@@ -23,17 +25,36 @@ const FileIcon = ({ fileName }: { fileName: string }) => {
 };
 
 const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<DiskItem>) => {
+  const { colors } = useMantineTheme();
+  const [internalStyles, setInternalStyles] = useState(style);
+
+  useEffect(() => {
+    setInternalStyles((prev) => ({
+      ...prev,
+      backgroundColor: node.isSelected ? colors.gray[8] : "transparent",
+    }));
+  }, [node.isSelected]);
+
   return (
-    <div style={style} className="node" ref={dragHandle} onClick={() => node.isInternal && node.toggle()}>
+    <div style={internalStyles} className="node" ref={dragHandle} onClick={() => node.isInternal && node.toggle()}>
       <Group position="apart" noWrap>
         <div>
           {node.isLeaf ? <FileIcon fileName={node.data.name} /> : <FolderIcon isOpen={node.isOpen} />}
           {node.data.name}
         </div>
 
-        <Text size="xs" color="dimmed">
-          {formatBytes(node.data.size as number)}
-        </Text>
+        <Group position="right">
+          <Box w={60}>
+            <DynamicProgress size={"xs"} value={node.data.percentageOfDisk} />
+          </Box>
+          <Box w={60}>
+            <Group position="right">
+              <Text size="xs" color="dimmed">
+                {formatBytes(node.data.size as number)}
+              </Text>
+            </Group>
+          </Box>
+        </Group>
       </Group>
     </div>
   );
@@ -50,7 +71,7 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
       data={data}
       openByDefault={false}
       width={"100%"}
-      height={290}
+      height={350}
       indent={24}
       rowHeight={36}
       overscanCount={1}
@@ -63,4 +84,4 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
   );
 };
 
-export default DiskDirectoryTreeView;
+export default memo(DiskDirectoryTreeView);

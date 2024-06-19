@@ -135,6 +135,7 @@ pub struct Disk {
 
 pub trait DisksTrait {
     fn get_disks(&mut self) -> Vec<Disk>;
+
     fn find_disk(&mut self, path: &str) -> Disk;
 }
 

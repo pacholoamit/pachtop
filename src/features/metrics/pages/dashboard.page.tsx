@@ -1,3 +1,5 @@
+import { useShallow } from "zustand/react/shallow";
+
 import PageWrapper from "@/components/page-wrapper";
 import SystemInformationWidget from "@/components/system-information-widget";
 import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-charts";
@@ -10,6 +12,8 @@ import NetworksReceivedAreaChart from "@/features/metrics/components/networks/ne
 import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
+import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
+import useRandomGreeting from "@/hooks/useRandomGreeting";
 import { Grid } from "@mantine/core";
 
 const StatsRings = () => {
@@ -71,8 +75,10 @@ const DisksSection = () => {
 };
 
 const DashboardPage = () => {
+  const hostname = useSystemStoreSelectors(useShallow((state) => state.info.hostname));
+  const greeting = useRandomGreeting(hostname);
   return (
-    <PageWrapper name="Dashboard" widget={<SystemInformationWidget />}>
+    <PageWrapper name={greeting} widget={<SystemInformationWidget />}>
       <Grid gutter="sm">
         <StatsRings />
         <CpuSection />
