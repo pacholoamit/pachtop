@@ -2536,12 +2536,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/hooks@npm:^6.0.21":
-  version: 6.0.21
-  resolution: "@mantine/hooks@npm:6.0.21"
+"@mantine/hooks@npm:^7.10.2":
+  version: 7.10.2
+  resolution: "@mantine/hooks@npm:7.10.2"
   peerDependencies:
-    react: ">=16.8.0"
-  checksum: bf912b812a9ec2635791075b2240c2e34b5541ecaa17b0ae0ece510880f4ce76913ce108fb576dbfc31ab29872b9484375382ae57b789c0932d05d8cf1038316
+    react: ^18.2.0
+  checksum: 671863235ad95117792ed07ef5d6a2f6d7c2146e322fbddf71e8e660b7f902bf8972229cab948aa55269bb98c0f5b262c7f66791c6b01ce96f58f31762401005
   languageName: node
   linkType: hard
 
@@ -6774,7 +6774,7 @@ __metadata:
     "@eslint/js": ^9.5.0
     "@mantine/core": ^6.0.21
     "@mantine/form": ^6.0.21
-    "@mantine/hooks": ^6.0.21
+    "@mantine/hooks": ^7.10.2
     "@mantine/notifications": ^6.0.21
     "@tabler/icons-react": ^2.47.0
     "@tauri-apps/api": ^2.0.0-beta.13
