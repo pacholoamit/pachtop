@@ -3,8 +3,6 @@ name: "release"
 on:
   workflow_dispatch:
   push: { branches: ["release"] }
-env:
-  VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
 jobs:
   create-release:
@@ -81,8 +79,8 @@ jobs:
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-        # with:
-        #   workspaces: './src-tauri -> target'          
+        with:
+          workspaces: './src-tauri -> target'          
 
 
       - name: install frontend dependencies
@@ -123,5 +121,5 @@ jobs:
               repo: context.repo.repo,
               release_id: process.env.release_id,
               draft: false,
-              prerelease: false
+              prerelease: true
             })

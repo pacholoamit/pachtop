@@ -7,8 +7,11 @@ import PageWrapper from "@/components/page-wrapper";
 import { THEME_OPTION } from "@/contants";
 import useTheme from "@/hooks/useTheme";
 import { autostart } from "@/lib";
+import logger from "@/lib/logger";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
+import { IconCloudCheck } from "@tabler/icons-react";
+import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 
 const GeneralSectionInfo = () => {
@@ -32,9 +35,19 @@ const GeneralSection = () => {
   }, [checkAutoStart]);
 
   const onCheckUpdate = async () => {
+    setIsUpdateLoading(true);
     const update = await check();
+    logger.trace("Check update response: ", update);
 
-    console.log(update);
+    if (!update?.available) {
+      return notification.success({
+        title: "No updates available",
+        message: "You are already using the latest version.",
+      });
+    }
+
+    await update.downloadAndInstall();
+    await relaunch();
   };
   const onChange = () => {
     if (!checked) {
@@ -47,9 +60,6 @@ const GeneralSection = () => {
 
   return (
     <Grid gutter={"xl"}>
-      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
-        <Button onClick={onCheckUpdate}> Check for updates</Button>
-      </Grid.Col>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Theme</Text>
@@ -68,6 +78,19 @@ const GeneralSection = () => {
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Start on system startup</Text>
           <Switch checked={checked} onChange={onChange} />
+        </Stack>
+      </Grid.Col>
+      <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
+        <Stack spacing={4} align="flex-start">
+          <Text size={"sm"}>Check for updates</Text>
+          <Button
+            onClick={onCheckUpdate}
+            loading={isUpdateLoading}
+            variant="white"
+            leftIcon={<IconCloudCheck size={16} />}
+          >
+            Update
+          </Button>
         </Stack>
       </Grid.Col>
     </Grid>

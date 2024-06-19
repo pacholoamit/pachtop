@@ -20,7 +20,7 @@ const Layout: React.FC = () => {
 
   return (
     <AppShell styles={styles} navbar={<Navbar />} footer={<AppFooter />} header={<Header />} padding={"xl"}>
-      {isMidnight && <Ellipsis right="0px" width="75%" blur="150px" top="100" />}
+      {isMidnight && <Ellipsis $right="0px" width="75%" $blur="150px" $top="100" />}
       <Outlet />
     </AppShell>
   );
