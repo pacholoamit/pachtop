@@ -214,7 +214,7 @@ pub async fn disk_analysis_flattened(
         Some(analysis) => {
             dbg!("Analysis found");
             dbg!("Time taken:", time.elapsed().as_secs_f32());
-            Ok(analysis.flatten(500))
+            Ok(analysis.flatten(5000))
         }
         None => {
             dbg!("Analysis not found");

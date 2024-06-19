@@ -65,6 +65,7 @@ export const useTreemapChartState = (
     },
     title: {
       text: opts.custom?.title.text || "",
+
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
         fontWeight: "700",

@@ -112,9 +112,12 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         value: item.size,
       }));
 
+      logger.trace("Tree map sample:", flattenedTreemapData.slice(0, 10));
+
       setChartOptions((prev) => ({
         series: [
           {
+            turboThreshold: 0,
             type: "treemap",
             layoutAlgorithm: "squarified",
             animationLimit: 1000,
@@ -141,8 +144,8 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
                 },
                 borderWidth: 0.5,
                 layoutAlgorithm: "squarified",
-                color: colors.dark[6], // TODO: Create own color for this
-                borderColor: colors.dark[3], // TODO: Create own color for this
+                // color: colors.dark[6], // TODO: Create own color for this
+                // borderColor: colors.dark[3], // TODO: Create own color for this
               },
             ],
             data: flattenedTreemapData, //TODO: Crutch fix this later
