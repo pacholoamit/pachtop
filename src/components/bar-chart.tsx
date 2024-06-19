@@ -1,10 +1,10 @@
-import * as Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import * as Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
-import useSettings from '@/hooks/useSettings';
-import { useMantineTheme } from '@mantine/core';
-import { useViewportSize } from '@mantine/hooks';
+import useSettings from "@/hooks/useSettings";
+import { useMantineTheme } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 
 export interface BarChartStatePropsInitialState extends Highcharts.Options {
   custom?: {
@@ -12,6 +12,7 @@ export interface BarChartStatePropsInitialState extends Highcharts.Options {
     yAxisMax: number;
     yaAxisFormatter: Highcharts.AxisLabelsFormatterCallbackFunction | undefined;
     tooltipPointFomatter: Highcharts.FormatterCallbackFunction<Highcharts.Point> | undefined;
+    plotOptionsColumn: Highcharts.PlotColumnOptions;
   };
 }
 
@@ -22,13 +23,25 @@ export const useBarChartState = (
   const { isPerformanceModeEnabled } = useSettings();
   const [chartOptions, setChartOptions] = useState<BarChartStatePropsInitialState>({
     ...props,
-    
+
     chart: {
       type: "column",
       animation: isPerformanceModeEnabled ? false : true,
       backgroundColor: "transparent",
+      borderColor: "transparent",
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
+      },
+    },
+
+    plotOptions: {
+      series: {
+        animation: {
+          duration: isPerformanceModeEnabled ? 0 : 1000,
+        },
+      },
+      column: {
+        ...props.custom?.plotOptionsColumn,
       },
     },
 

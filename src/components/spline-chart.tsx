@@ -49,6 +49,13 @@ export const useSplineChartState = (
         },
       },
     },
+    plotOptions: {
+      series: {
+        animation: {
+          duration: isPerformanceModeEnabled ? 0 : 1000,
+        },
+      },
+    },
 
     legend: {
       backgroundColor: "transparent",

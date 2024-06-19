@@ -110,11 +110,7 @@ const CpusBarChart: React.FC = () => {
           this.y || 0
         )}</b><br/>`;
       },
-    },
-
-    plotOptions: {
-      column: {
-        borderColor: "transparent",
+      plotOptionsColumn: {
         color: {
           stops: [
             [0, "rgba(236, 18, 120,0.75)"],
@@ -124,6 +120,7 @@ const CpusBarChart: React.FC = () => {
         },
       },
     },
+
     xAxis: {
       crosshair: true,
     },

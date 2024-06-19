@@ -57,7 +57,7 @@ export const useAreaChartState = (
           enabled: false,
         },
         animation: {
-          duration: 0,
+          duration: isPerformanceModeEnabled ? 0 : 1000,
         },
       },
 
