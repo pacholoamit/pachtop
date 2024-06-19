@@ -111,6 +111,7 @@ const CpusBarChart: React.FC = () => {
         )}</b><br/>`;
       },
       plotOptionsColumn: {
+        borderColor: "transparent",
         color: {
           stops: [
             [0, "rgba(236, 18, 120,0.75)"],
