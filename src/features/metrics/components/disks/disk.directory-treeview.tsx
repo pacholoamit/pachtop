@@ -43,14 +43,16 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
           {node.data.name}
         </div>
 
-        <Group>
-          <Box w={50}>
+        <Group position="right">
+          <Box w={60}>
             <DynamicProgress size={"xs"} value={node.data.size} />
           </Box>
-          <Box w={70}>
-            <Text size="xs" color="dimmed">
-              {formatBytes(node.data.size as number)}
-            </Text>
+          <Box w={60}>
+            <Group position="right">
+              <Text size="xs" color="dimmed">
+                {formatBytes(node.data.size as number)}
+              </Text>
+            </Group>
           </Box>
         </Group>
       </Group>
