@@ -44,6 +44,7 @@ export const useAreaChartState = (
     // This is the rectangle box that u can use to navigate
     navigator: {
       adaptToUpdatedData: true,
+
       maskFill: other.charts.area.default.navigator.maskFill,
       handles: {
         backgroundColor: other.charts.area.default.navigator.handles.backgroundColor,
@@ -53,6 +54,29 @@ export const useAreaChartState = (
 
     plotOptions: {
       series: {
+        boostThreshold: 1,
+        turboThreshold: 1,
+        showInNavigator: true,
+
+        // dataGrouping: {
+        //   enabled: true,
+        //   anchor: "start",
+        //   forced: true,
+        //   groupAll: true,
+        //   units: [
+        //     [
+        //       "millisecond", // unit name
+        //       [1, 2, 5, 10, 20, 25, 50, 100, 200, 500], // allowed multiples
+        //     ],
+        //     ["second", [1, 2, 5, 10, 15, 30]],
+        //     ["minute", [1, 2, 5, 10, 15, 30]],
+        //     ["hour", [1, 2, 3, 4, 6, 8, 12]],
+        //     ["day", [1]],
+        //     ["week", [1]],
+        //     ["month", [1, 3, 6]],
+        //     ["year", null],
+        //   ],
+        // },
         marker: {
           enabled: false,
         },
@@ -173,7 +197,9 @@ export const useAreaChartState = (
     },
     boost: {
       enabled: true,
-      useGPUTranslations: false,
+
+      usePreallocated: true,
+      useGPUTranslations: true,
       allowForce: true,
     },
     chart: {
