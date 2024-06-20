@@ -23,6 +23,7 @@ mod utils;
 
 use app::AppState;
 use tauri::menu::Menu;
+use tokio::time;
 
 use std::time::Duration;
 
@@ -38,14 +39,21 @@ fn build_and_run_app(app: AppState) {
 
             tauri::async_runtime::spawn(async move {
                 loop {
-                    state.emit_sysinfo(&handle);
-                    state.emit_global_cpu(&handle);
-                    state.emit_cpus(&handle);
-                    state.emit_memory(&handle);
-                    state.emit_swap(&handle);
-                    state.emit_networks(&handle);
-                    state.emit_disks(&handle);
-                    state.emit_processes(&handle);
+                    state.emit_sysinfo(&handle).await;
+                    std::thread::sleep(Duration::from_millis(100));
+                    state.emit_global_cpu(&handle).await;
+                    std::thread::sleep(Duration::from_millis(100));
+                    state.emit_cpus(&handle).await;
+                    std::thread::sleep(Duration::from_millis(100));
+                    state.emit_memory(&handle).await;
+                    std::thread::sleep(Duration::from_millis(100));
+                    state.emit_swap(&handle).await;
+                    std::thread::sleep(Duration::from_millis(100));
+                    state.emit_networks(&handle).await;
+                    std::thread::sleep(Duration::from_millis(100));
+                    state.emit_disks(&handle).await;
+                    std::thread::sleep(Duration::from_millis(100));
+                    state.emit_processes(&handle).await;
                     std::thread::sleep(Duration::from_secs(1))
                 }
             });
