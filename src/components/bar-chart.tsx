@@ -1,11 +1,13 @@
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HighchartsBoost from "highcharts/modules/boost";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 import useSettings from "@/hooks/useSettings";
 import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
+HighchartsBoost(Highcharts);
 export interface BarChartStatePropsInitialState extends Highcharts.Options {
   custom?: {
     title: string;
