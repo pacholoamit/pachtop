@@ -5,12 +5,9 @@ import { LinearGradient } from "react-text-gradients";
 import Card from "@/components/card";
 import PageWrapper from "@/components/page-wrapper";
 import { THEME_OPTION } from "@/contants";
-import useEffectAsync from "@/hooks/useEffectAsync";
 import useSettings from "@/hooks/useSettings";
 import useTheme from "@/hooks/useTheme";
-import { autostart } from "@/lib";
 import logger from "@/lib/logger";
-import store from "@/lib/store";
 import notification from "@/utils/notification";
 import { Button, Grid, Group, SegmentedControl, Space, Stack, Switch, Text, Title } from "@mantine/core";
 import { IconCloudCheck } from "@tabler/icons-react";
@@ -29,15 +26,8 @@ const GeneralSectionInfo = () => {
 };
 const GeneralSection = () => {
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const { isPerformanceModeEnabled, togglePerformanceMode } = useSettings();
-  const { setTheme, currentTheme } = useTheme();
-
-  useEffectAsync(async () => {
-    const currentStore = await store;
-
-    setChecked(await autostart.isEnabled());
-  }, []);
+  const { settings, togglePerformanceMode, toggleAutoStart } = useSettings();
+  const { setTheme } = useTheme();
 
   const onCheckUpdate = async () => {
     setIsUpdateLoading(true);
@@ -45,6 +35,7 @@ const GeneralSection = () => {
     logger.trace("Check update response: ", update);
 
     if (!update?.available) {
+      setIsUpdateLoading(false);
       return notification.success({
         title: "No updates available",
         message: "You are already using the latest version.",
@@ -54,14 +45,6 @@ const GeneralSection = () => {
     await update.downloadAndInstall();
     await relaunch();
   };
-  const onChange = () => {
-    if (!checked) {
-      autostart.enable();
-    } else {
-      autostart.disable();
-    }
-    setChecked(!checked);
-  };
 
   return (
     <Grid gutter={"xl"}>
@@ -69,7 +52,8 @@ const GeneralSection = () => {
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Theme</Text>
           <SegmentedControl
-            defaultValue={currentTheme}
+            defaultValue={settings.theme}
+            value={settings.theme}
             size="xs"
             onChange={(value) => setTheme(value as THEME_OPTION)}
             data={[
@@ -82,7 +66,7 @@ const GeneralSection = () => {
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Start on system startup</Text>
-          <Switch checked={checked} onChange={onChange} />
+          <Switch checked={settings.isAutoStartEnabled} onChange={async () => await toggleAutoStart()} />
         </Stack>
       </Grid.Col>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>
@@ -91,7 +75,7 @@ const GeneralSection = () => {
           <Text size={"xs"} c="dimmed">
             Turning on Performance mode disables animations
           </Text>
-          <Switch checked={isPerformanceModeEnabled} onChange={() => togglePerformanceMode()} />
+          <Switch checked={settings.isPerformanceModeEnabled} onChange={() => togglePerformanceMode()} />
         </Stack>
       </Grid.Col>
       <Grid.Col span={12} style={{ fontSize: "1.2rem" }}>

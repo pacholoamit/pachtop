@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file. This projec
 - Added progress bar for File explorer
 - Removed Apexchart in favor of Highcharts
 - Add Performance mode to settings
+- Migrate to use Settings context for managing settings state
 
 ## 0.9.9
 - Fix issue where some popover components are transparent
