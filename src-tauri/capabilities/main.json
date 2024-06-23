@@ -15,6 +15,7 @@
         "os:allow-platform",
         "window:allow-start-dragging",
         "autostart:allow-is-enabled",
+        "autostart:allow-disable",
         "updater:allow-check",
         "updater:default",
         "log:allow-log",

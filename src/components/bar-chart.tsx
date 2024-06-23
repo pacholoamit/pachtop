@@ -22,13 +22,13 @@ export const useBarChartState = (
   props: BarChartStatePropsInitialState
 ): [BarChartStatePropsInitialState, Dispatch<SetStateAction<BarChartStatePropsInitialState>>] => {
   const { other } = useMantineTheme();
-  const { isPerformanceModeEnabled } = useSettings();
+  const { settings } = useSettings();
   const [chartOptions, setChartOptions] = useState<BarChartStatePropsInitialState>({
     ...props,
 
     chart: {
       type: "column",
-      animation: isPerformanceModeEnabled ? false : true,
+      animation: settings.isPerformanceModeEnabled ? false : true,
       backgroundColor: "transparent",
       borderColor: "transparent",
       style: {
@@ -39,7 +39,7 @@ export const useBarChartState = (
     plotOptions: {
       series: {
         animation: {
-          duration: isPerformanceModeEnabled ? 0 : 1000,
+          duration: settings.isPerformanceModeEnabled ? 0 : 1000,
         },
       },
       column: {

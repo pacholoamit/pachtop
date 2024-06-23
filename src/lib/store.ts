@@ -46,6 +46,7 @@ const createStore = async (name: string) => {
   return {
     windowColor: createStoreItem<string>(store, "windowColor", ""), // TODO: Improve this
     theme: createStoreItem<string>(store, "theme", ""), // TODO: Improve this
+    isAutoStartEnabled: createStoreItem<boolean>(store, "isAutoStartEnabled", true),
     isFirstRun: isFirstRun(store),
     sessions: sessions(store),
     isDefenderExclusionEnabled: createStoreItem<boolean>(store, "isDefenderExclusionEnabled", false),
