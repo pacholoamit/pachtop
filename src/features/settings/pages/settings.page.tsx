@@ -35,6 +35,7 @@ const GeneralSection = () => {
     logger.trace("Check update response: ", update);
 
     if (!update?.available) {
+      setIsUpdateLoading(false);
       return notification.success({
         title: "No updates available",
         message: "You are already using the latest version.",
