@@ -79,7 +79,7 @@ fn build_and_run_app(app: AppState) {
         .manage(app)
         .invoke_handler(tauri::generate_handler![
             commands::kill_process,
-            commands::show_folder,
+            commands::open,
             commands::delete_file,
             commands::delete_folder,
             commands::disk_analysis_flattened,

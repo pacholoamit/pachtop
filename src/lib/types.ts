@@ -16,10 +16,13 @@ export * from "@/lib/bindings/DiskScanInput";
 
 export enum Command {
   KillProcess = "kill_process",
-  ShowInFolder = "show_folder",
+  Open = "open",
   DiskScan = "disk_scan",
   DiskAnalysisFlattened = "disk_analysis_flattened",
   AddPachtopExclusion = "add_pachtop_exclusion",
+  ShowInTerminal = "show_in_terminal",
+  DeleteFile = "delete_file",
+  DeleteFolder = "delete_folder",
 }
 
 export enum ServerEvent {

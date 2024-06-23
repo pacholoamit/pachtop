@@ -25,59 +25,79 @@ pub fn kill_process(state: State<'_, AppState>, name: String) -> bool {
 }
 
 #[tauri::command]
-pub fn show_folder(path: String) {
+pub fn open(path: String) -> Result<(), String> {
     #[cfg(target_os = "macos")]
     {
-        std::process::Command::new("open")
+        let child = std::process::Command::new("open")
             .arg(path)
             .arg("-R")
-            .spawn()
-            .unwrap();
+            .spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
     #[cfg(target_os = "linux")]
     {
-        std::process::Command::new("xdg-open")
-            .arg(path)
-            .spawn()
-            .unwrap();
+        let child = std::process::Command::new("xdg-open").arg(path).spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
     #[cfg(target_os = "windows")]
     {
-        std::process::Command::new("explorer")
-            .arg(path)
-            .spawn()
-            .unwrap();
+        let child = std::process::Command::new("explorer").arg(path).spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
 }
 
 #[tauri::command]
-pub fn show_in_terminal(path: String) {
+pub fn show_in_terminal(path: String) -> Result<(), String> {
     #[cfg(target_os = "macos")]
     {
-        std::process::Command::new("open")
+        let child = std::process::Command::new("open")
             .arg("-a")
             .arg("Terminal")
             .arg(path)
-            .spawn()
-            .unwrap();
+            .spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
     #[cfg(target_os = "linux")]
     {
-        std::process::Command::new("gnome-terminal")
+        let child = std::process::Command::new("gnome-terminal")
             .arg("--")
             .arg("bash")
             .arg("-c")
             .arg(format!("cd {}; exec bash", path))
-            .spawn()
-            .unwrap();
+            .spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
     #[cfg(target_os = "windows")]
     {
-        std::process::Command::new("cmd")
+        let child = std::process::Command::new("cmd")
             .arg("/c")
             .arg(format!("start cmd /k cd /d {}", path))
-            .spawn()
-            .unwrap();
+            .spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
 }
 
@@ -124,11 +144,21 @@ pub fn delete_folder(path: String) -> Result<(), String> {
 pub fn delete_file(path: String) -> Result<(), String> {
     #[cfg(target_os = "macos")]
     {
-        std::process::Command::new("rm").arg(&path).spawn().unwrap();
+        let child = std::process::Command::new("rm").arg(&path).spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
     #[cfg(target_os = "linux")]
     {
-        std::process::Command::new("rm").arg(&path).spawn().unwrap();
+        let child = std::process::Command::new("rm").arg(&path).spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
     #[cfg(target_os = "windows")]
     {

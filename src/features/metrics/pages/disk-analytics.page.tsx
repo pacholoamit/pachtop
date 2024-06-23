@@ -87,7 +87,6 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         isTurbo: true,
       });
 
-      logger.trace("Disk analysis sample:", fs.children);
       setDiskAnalysis(fs.children as DiskItem[]);
 
       await populateTreemap();
@@ -113,7 +112,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         value: item.size,
       }));
 
-      logger.trace("Tree map sample:", flattenedTreemapData.slice(0, 10));
+      logger.trace("Tree map sample:", flattenedTreemapData.slice(0, 3));
 
       setChartOptions((prev) => ({
         series: [

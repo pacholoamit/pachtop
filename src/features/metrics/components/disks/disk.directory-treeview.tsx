@@ -7,6 +7,7 @@ import DynamicProgress from "@/components/dynamic-progress";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, DiskItem } from "@/lib";
 import logger from "@/lib/logger";
+import notification from "@/utils/notification";
 import { Box, Group, Text, useMantineTheme } from "@mantine/core";
 import { IconFile, IconFolderCancel, IconFolderOpen } from "@tabler/icons-react";
 import { Menu, MenuItem } from "@tauri-apps/api/menu";
@@ -26,25 +27,88 @@ const FileIcon = ({ fileName }: { fileName: string }) => {
   }
 };
 
+interface NodeContextMenuProps extends Omit<DiskItem, "children"> {}
+
 const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<DiskItem>) => {
   const { colors } = useMantineTheme();
   const [internalStyles, setInternalStyles] = useState(style);
 
-  const showContextMenu = useCallback(async (e: React.MouseEvent, diskItem: DiskItem) => {
-    logger.trace("Showing context menu for node: ", diskItem.name);
+  const contextMenuOpenAction = useCallback(async (diskItem: NodeContextMenuProps) => {
+    logger.trace("Open action trigger for node: ", diskItem.name);
+
+    commands.open(diskItem.path).catch((err) => {
+      notification.error({
+        title: `Error opening file ${diskItem.name}`,
+        message: "An error occurred while trying to open the file.",
+      });
+      logger.error("Error opening file: ", err);
+    });
+  }, []);
+
+  const contextMenuOpenInExplorerAction = useCallback(async (diskItem: NodeContextMenuProps) => {
+    logger.trace("Open in Explorer action trigger for node: ", diskItem.name);
+
+    commands.open(diskItem.path).catch((err) => {
+      notification.error({
+        title: "Error opening in explorer",
+        message: "An error occurred while trying to open the folder in explorer.",
+      });
+      logger.error("Error opening in explorer: ", err);
+    });
+  }, []);
+
+  const contextMenuShowInTerminalAction = useCallback(async (diskItem: NodeContextMenuProps) => {
+    logger.trace("Copy Path action trigger for node: ", diskItem.name);
+    commands.showInTerminal(diskItem.path).catch((err) => {
+      notification.error({
+        title: "Error opening in terminal",
+        message: "An error occurred while trying to open the folder in terminal.",
+      });
+      logger.error("Error opening in terminal: ", err);
+    });
+  }, []);
+
+  const contextMenuShowDeleteAction = useCallback(async (diskItem: NodeContextMenuProps) => {
+    logger.trace("Delete action trigger for node: ", diskItem.name);
+
+    if (node.isLeaf) {
+      return commands.deleteFile(diskItem.path).catch((err) => {
+        notification.error({
+          title: `Error deleting file ${diskItem.name}`,
+          message: "An error occurred while trying to delete the file.",
+        });
+        logger.error("Error deleting file: ", err);
+      });
+    }
+
+    commands.deleteFolder(diskItem.path).catch((err) => {
+      notification.error({
+        title: `Error deleting folder ${diskItem.name}`,
+        message: "An error occurred while trying to delete the folder.",
+      });
+      logger.error("Error deleting folder: ", err);
+    });
+  }, []);
+
+  const showContextMenu = useCallback(async (e: React.MouseEvent, diskItem: NodeContextMenuProps) => {
+    logger.trace("Showing context menu for disk item - ", diskItem.name);
 
     const menuItems = await Promise.all([
       MenuItem.new({
-        text: "Open in Explorer",
-        action: () => {
-          logger.trace("Open in Explorer action trigger for node: ", diskItem.name);
-        },
+        text: "Open",
+        enabled: node.isLeaf,
+        action: () => contextMenuOpenAction(diskItem),
       }),
       MenuItem.new({
+        text: "Open in Explorer",
+        enabled: !node.isLeaf, // Disable for files
+        action: () => contextMenuOpenInExplorerAction(diskItem),
+      }),
+
+      MenuItem.new({
         text: "Open in Terminal",
-        action: () => {
-          logger.trace("Copy Path action trigger for node: ", diskItem.name);
-        },
+        enabled: !node.isLeaf, // Disable for files
+        action: () => contextMenuShowInTerminalAction(diskItem),
       }),
       MenuItem.new({
         text: "Rename",
@@ -61,9 +125,7 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
 
       MenuItem.new({
         text: "Delete",
-        action: () => {
-          logger.trace("Delete action trigger for node: ", diskItem.name);
-        },
+        action: () => contextMenuShowDeleteAction(diskItem),
       }),
     ]);
 
@@ -86,8 +148,9 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
       ref={dragHandle}
       onClick={() => node.isInternal && node.toggle()}
       onContextMenu={(e) => {
+        const { children, ...prop } = node.data;
         node.select();
-        // showContextMenu(e, node.data);
+        showContextMenu(e, prop);
       }}
     >
       <Group position="apart" noWrap>
