@@ -106,11 +106,13 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     if (disk.mountPoint) {
       const flattened = await commands.disk_analysis_flattened({ path: disk.mountPoint });
 
-      const flattenedTreemapData = flattened.map((item) => ({
-        id: item.id,
-        name: item.name,
-        value: item.size,
-      }));
+      const flattenedTreemapData = flattened
+        .map((item) => ({
+          id: item.id,
+          name: item.name,
+          value: item.size,
+        }))
+        .splice(0, 500); // Limit to 500 items temporarily
 
       logger.trace("Tree map sample:", flattenedTreemapData.slice(0, 3));
 
