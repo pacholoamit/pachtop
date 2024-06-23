@@ -9,7 +9,7 @@ use crate::{app::AppState, dirstat::FileInfo};
 use serde::{Deserialize, Serialize};
 use tauri::{Manager, State};
 
-use log::{info, trace, warn};
+use log::info;
 use tauri_plugin_shell::ShellExt;
 use ts_rs::TS;
 
@@ -51,31 +51,97 @@ pub fn show_folder(path: String) {
 }
 
 #[tauri::command]
-pub fn delete_folder(path: String) {
+pub fn show_in_terminal(path: String) {
     #[cfg(target_os = "macos")]
     {
-        std::process::Command::new("rm")
-            .arg("-rf")
+        std::process::Command::new("open")
+            .arg("-a")
+            .arg("Terminal")
             .arg(path)
             .spawn()
             .unwrap();
     }
     #[cfg(target_os = "linux")]
     {
-        std::process::Command::new("rm")
-            .arg("-rf")
-            .arg(path)
+        std::process::Command::new("gnome-terminal")
+            .arg("--")
+            .arg("bash")
+            .arg("-c")
+            .arg(format!("cd {}; exec bash", path))
             .spawn()
             .unwrap();
     }
     #[cfg(target_os = "windows")]
     {
-        std::process::Command::new("del")
-            .arg("/f")
-            .arg("/q")
-            .arg(path)
+        std::process::Command::new("cmd")
+            .arg("/c")
+            .arg(format!("start cmd /k cd /d {}", path))
             .spawn()
             .unwrap();
+    }
+}
+
+#[tauri::command]
+pub fn delete_folder(path: String) -> Result<(), String> {
+    #[cfg(target_os = "macos")]
+    {
+        let child = std::process::Command::new("rm")
+            .arg("-rf")
+            .arg(&path)
+            .spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
+    }
+    #[cfg(target_os = "linux")]
+    {
+        let child = std::process::Command::new("rm")
+            .arg("-rf")
+            .arg(&path)
+            .spawn()
+            .unwrap();
+    }
+    #[cfg(target_os = "windows")]
+    {
+        let child = std::process::Command::new("cmd")
+            .arg("/C")
+            .arg("rmdir")
+            .arg("/S")
+            .arg("/Q")
+            .arg(&path)
+            .spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
+    }
+}
+
+#[tauri::command]
+pub fn delete_file(path: String) -> Result<(), String> {
+    #[cfg(target_os = "macos")]
+    {
+        std::process::Command::new("rm").arg(&path).spawn().unwrap();
+    }
+    #[cfg(target_os = "linux")]
+    {
+        std::process::Command::new("rm").arg(&path).spawn().unwrap();
+    }
+    #[cfg(target_os = "windows")]
+    {
+        let child = std::process::Command::new("cmd")
+            .arg("/C")
+            .arg("del")
+            .arg(&path)
+            .spawn();
+
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
 }
 

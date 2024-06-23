@@ -42,6 +42,7 @@ pub struct DiskItem {
     pub size: u64,
     #[ts(type = "number")]
     pub percentage_of_disk: f64,
+    pub path: String,
 }
 
 // Define a type alias for the callback
@@ -195,6 +196,7 @@ impl DiskItem {
                     size,
                     percentage_of_disk: get_percentage(&size, &total_bytes),
                     children: Some(sorted_sub_items),
+                    path: path.to_string_lossy().to_string(),
                 })
             }
             FileInfo::File { size, .. } => {
@@ -206,6 +208,7 @@ impl DiskItem {
                     size,
                     children: None,
                     percentage_of_disk: get_percentage(&size, &total_bytes),
+                    path: path.to_string_lossy().to_string(),
                 })
             }
         }

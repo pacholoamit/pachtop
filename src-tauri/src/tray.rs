@@ -20,7 +20,6 @@ pub fn create_tray(app: &mut App) -> anyhow::Result<()> {
             "quit" => {
                 app.exit(0);
             }
-            "example" => todo!(),
             _ => {}
         })
         .on_tray_icon_event(|tray, event| {
