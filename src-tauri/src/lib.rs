@@ -71,14 +71,11 @@ fn build_and_run_app(app: AppState) {
 
             Ok(())
         })
-        .on_window_event(|window, event| match event {
-            tauri::WindowEvent::CloseRequested { api, .. } => {
+        .on_window_event(|window, event| {
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                 window.hide().unwrap();
                 api.prevent_close();
             }
-            tauri::WindowEvent::DragDrop { .. } => todo!(),
-
-            _ => {}
         })
         .manage(app)
         .invoke_handler(tauri::generate_handler![

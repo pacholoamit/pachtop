@@ -21,6 +21,8 @@
         "log:allow-log",
         "log:default",
         "shell:allow-spawn",
+        "menu:allow-new",
+        "menu:allow-popup",
         {
             "identifier": "shell:allow-execute",
             "allow": [
