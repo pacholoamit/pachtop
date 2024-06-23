@@ -1,5 +1,6 @@
 import Highcharts, { Point } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HighChartsBoost from "highcharts/modules/boost";
 import HighchartsTreemap from "highcharts/modules/treemap";
 import DarkUnica from "highcharts/themes/dark-unica";
 import React, { Dispatch, memo, SetStateAction, useEffect, useRef, useState } from "react";
@@ -8,6 +9,7 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import { useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
+HighChartsBoost(Highcharts);
 HighchartsTreemap(Highcharts);
 DarkUnica(Highcharts);
 
