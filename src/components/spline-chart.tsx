@@ -23,13 +23,13 @@ export const useSplineChartState = (
   props: SplineChartStatePropsInitialState
 ): [SplineChartStatePropsInitialState, Dispatch<SetStateAction<SplineChartStatePropsInitialState>>] => {
   const { other } = useMantineTheme();
-  const { isPerformanceModeEnabled } = useSettings();
+  const { settings } = useSettings();
   const [chartOptions, setChartOptions] = useState<SplineChartStatePropsInitialState>({
     ...props,
     chart: {
       type: "spline",
       backgroundColor: "transparent",
-      animation: isPerformanceModeEnabled ? false : true,
+      animation: settings.isPerformanceModeEnabled ? false : true,
       style: {
         fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
       },
@@ -52,7 +52,7 @@ export const useSplineChartState = (
     plotOptions: {
       series: {
         animation: {
-          duration: isPerformanceModeEnabled ? 0 : 1000,
+          duration: settings.isPerformanceModeEnabled ? 0 : 1000,
         },
       },
     },

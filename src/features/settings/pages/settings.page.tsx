@@ -27,7 +27,7 @@ const GeneralSectionInfo = () => {
 const GeneralSection = () => {
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const { settings, togglePerformanceMode, toggleAutoStart } = useSettings();
-  const { setTheme, currentTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   const onCheckUpdate = async () => {
     setIsUpdateLoading(true);
@@ -52,7 +52,8 @@ const GeneralSection = () => {
         <Stack spacing={4} align="flex-start">
           <Text size={"sm"}>Theme</Text>
           <SegmentedControl
-            defaultValue={currentTheme}
+            defaultValue={settings.theme}
+            value={settings.theme}
             size="xs"
             onChange={(value) => setTheme(value as THEME_OPTION)}
             data={[
