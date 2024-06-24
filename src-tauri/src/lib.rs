@@ -85,7 +85,7 @@ fn build_and_run_app(app: AppState) {
             commands::disk_analysis_flattened,
             commands::add_pachtop_exclusion,
             commands::disk_scan,
-            commands::show_in_terminal
+            commands::show_in_terminal,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

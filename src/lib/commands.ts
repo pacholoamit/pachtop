@@ -23,5 +23,6 @@ export const commands = {
     return invoke(Command.DiskScan, { input });
   },
   disk_analysis_flattened: (path: ScanOpts): Promise<DiskItem[]> => invoke(Command.DiskAnalysisFlattened, path as any),
+
   add_pachtop_exclusion: (): Promise<void> => invoke(Command.AddPachtopExclusion, {}),
 };
