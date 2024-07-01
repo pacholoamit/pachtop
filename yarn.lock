@@ -2524,15 +2524,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/form@npm:^6.0.21":
-  version: 6.0.21
-  resolution: "@mantine/form@npm:6.0.21"
+"@mantine/form@npm:^7.11.0":
+  version: 7.11.0
+  resolution: "@mantine/form@npm:7.11.0"
   dependencies:
     fast-deep-equal: ^3.1.3
-    klona: ^2.0.5
+    klona: ^2.0.6
   peerDependencies:
-    react: ">=16.8.0"
-  checksum: 9e4a26b318997b59efe256dddcdb9503e385a6d2dabdad1f1cf499cb63273e5e5eb15265f56af8fd693aa9f242ab82a25904edbb39a3b8b69bb3c951c12d3dff
+    react: ^18.2.0
+  checksum: 4db2d1b3cc30f37d5a673cc30c004aa623fbfd44650e2ffffd61cbcc39ced4ebe7a4de45984a67887cbfdb83625e3917a6f90848b15cdcfdecc354a986efcf3d
   languageName: node
   linkType: hard
 
@@ -6250,7 +6250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"klona@npm:^2.0.5":
+"klona@npm:^2.0.6":
   version: 2.0.6
   resolution: "klona@npm:2.0.6"
   checksum: ac9ee3732e42b96feb67faae4d27cf49494e8a3bf3fa7115ce242fe04786788e0aff4741a07a45a2462e2079aa983d73d38519c85d65b70ef11447bbc3c58ce7
@@ -6773,7 +6773,7 @@ __metadata:
     "@emotion/react": ^11.11.4
     "@eslint/js": ^9.5.0
     "@mantine/core": ^6.0.21
-    "@mantine/form": ^6.0.21
+    "@mantine/form": ^7.11.0
     "@mantine/hooks": ^6.0.21
     "@mantine/notifications": ^6.0.21
     "@tabler/icons-react": ^2.47.0
