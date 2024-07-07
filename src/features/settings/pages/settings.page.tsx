@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GitHubButton from "react-github-btn";
 import { LinearGradient } from "react-text-gradients";
 

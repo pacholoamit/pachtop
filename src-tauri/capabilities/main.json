@@ -14,13 +14,16 @@
         "os:allow-os-type",
         "os:allow-platform",
         "window:allow-start-dragging",
-        "autostart:allow-is-enabled",
+        "autostart:allow-enable",
         "autostart:allow-disable",
+        "autostart:allow-is-enabled",
         "updater:allow-check",
         "updater:default",
         "log:allow-log",
         "log:default",
         "shell:allow-spawn",
+        "menu:allow-new",
+        "menu:allow-popup",
         {
             "identifier": "shell:allow-execute",
             "allow": [
@@ -30,6 +33,9 @@
                     "args": true
                 }
             ]
-        }
+        },
+        "fs:read-all",
+        "fs:read-files",
+        "fs:read-meta"
     ]
 }
