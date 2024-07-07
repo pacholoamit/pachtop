@@ -3,6 +3,8 @@ import DynamicProgress, { DEFAULT_RANGE } from "@/components/dynamic-progress";
 import useDisksStore from "@/features/metrics/stores/disk.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands } from "@/lib";
+import logger from "@/lib/logger";
+import notification from "@/utils/notification";
 import {
   ActionIcon,
   Badge,
@@ -72,7 +74,13 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
     },
   ];
   const showDirectory = async () => {
-    await commands.showInFolder(disk.mountPoint);
+    await commands.open(disk.mountPoint).catch((err) => {
+      notification.error({
+        title: "Error opening directory",
+        message: "An error occurred while trying to open the directory.",
+      });
+      logger.error("Error opening directory: ", err);
+    });
   };
 
   return (

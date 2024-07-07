@@ -1,5 +1,9 @@
 use anyhow::Ok;
-use tauri::{menu::MenuItemBuilder, App, Manager};
+use tauri::{
+    menu::MenuItemBuilder,
+    tray::{MouseButton, TrayIconEvent},
+    App, Manager,
+};
 
 pub fn create_tray(app: &mut App) -> anyhow::Result<()> {
     let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
@@ -16,23 +20,20 @@ pub fn create_tray(app: &mut App) -> anyhow::Result<()> {
             "quit" => {
                 app.exit(0);
             }
-            "example" => todo!(),
             _ => {}
         })
-        .on_tray_icon_event(|tray, event| match event {
-            tauri::tray::TrayIconEvent::Click { button, .. } => match button {
-                tauri::tray::MouseButton::Left => {
-                    let app = tray.app_handle();
-                    if let Some(window) = app.get_webview_window("main") {
-                        let _ = window.show();
-                        let _ = window.set_focus();
-                    }
+        .on_tray_icon_event(|tray, event| {
+            if let TrayIconEvent::Click {
+                button: MouseButton::Left,
+                ..
+            } = event
+            {
+                let app = tray.app_handle();
+                if let Some(window) = app.get_webview_window("main") {
+                    window.show().unwrap();
+                    window.set_focus().unwrap();
                 }
-                tauri::tray::MouseButton::Middle => todo!(),
-                _ => {}
-            },
-            tauri::tray::TrayIconEvent::Leave { .. } => todo!(),
-            _ => {}
+            }
         })
         .build(app)?;
     Ok(())

@@ -126,11 +126,11 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
 
   const showDirectory = async () => {
     if (!disk.mountPoint) return;
-    await commands.showInFolder(disk.mountPoint);
+    await commands.open(disk.mountPoint);
   };
 
   // Encode this id to avoid any issues with special characters. (Disk.name for windows works)
-  // TODO: Make this more ergonomic
+  // TODO: Make this more ergonomic, move this to usePlatform
   const onShowDetailsClick = () => {
     const isWindows = system.os.toLowerCase().includes("windows");
     setSelectedDisk(isWindows ? disk.name : disk.mountPoint);
