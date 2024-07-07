@@ -122,7 +122,11 @@ pub fn delete_folder(path: String) -> Result<(), String> {
             .arg("-rf")
             .arg(&path)
             .spawn()
-            .unwrap();
+            
+        match child {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string()),
+        }
     }
     #[cfg(target_os = "windows")]
     {
