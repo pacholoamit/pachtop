@@ -61,10 +61,10 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
   const { id = "" } = useParams();
   const disk = useDisksStore.use.selectedDisk();
   const { colors } = useMantineTheme();
-  const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem[]>([]);
+  const [diskAnalysis, setDiskAnalysis] = React.useState<DiskItem>();
   const [progress, setProgress] = React.useState<DiskAnalysisProgress>({ scanned: 0, total: 0 });
   const [isLoading, setIsLoading] = React.useState(false);
-  const isDiskScanEmpty = diskAnalysis.length === 0;
+  const isDiskScanEmpty = !diskAnalysis || !diskAnalysis.children || diskAnalysis.children.length === 0;
 
   const [chartOptions, setChartOptions] = useTreemapChartState({
     title: {
@@ -87,7 +87,7 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         isTurbo: true,
       });
 
-      setDiskAnalysis(fs.children as DiskItem[]);
+      setDiskAnalysis(fs);
 
       await populateTreemap();
     } catch (err) {

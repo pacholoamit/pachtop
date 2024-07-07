@@ -58,7 +58,7 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
   }, []);
 
   const contextMenuShowInTerminalAction = useCallback(async (diskItem: NodeContextMenuProps) => {
-    logger.trace("Copy Path action trigger for node: ", diskItem.name);
+    logger.trace("Show in terminal action trigger for node: ", diskItem.name);
     commands.showInTerminal(diskItem.path).catch((err) => {
       notification.error({
         title: "Error opening in terminal",
@@ -111,13 +111,13 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
         action: () => contextMenuShowInTerminalAction(diskItem),
       }),
       MenuItem.new({
-        text: "Rename",
+        text: "Rename (WIP)",
         action: () => {
           logger.trace("Rename action trigger for node: ", diskItem.name);
         },
       }),
       MenuItem.new({
-        text: "Copy",
+        text: "Copy (WIP)",
         action: () => {
           logger.trace("Copy action trigger for node: ", diskItem.name);
         },
@@ -177,14 +177,53 @@ const Node = ({ node, style, dragHandle, tree, preview }: NodeRendererProps<Disk
 };
 
 interface DiskDirectoryTreeViewProps {
-  data: any;
+  data: DiskItem; // TODO: Fix this type
 }
 const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
   const { data } = props;
 
+  const contextMenuOpenInExplorerAction = useCallback(async (path: string) => {
+    await commands.open(path).catch((err) => {
+      notification.error({
+        title: "Error opening directory",
+        message: "An error occurred while trying to open the directory.",
+      });
+      logger.error("Error opening directory: ", err);
+    });
+  }, []);
+
+  const contextMenuShowInTerminalAction = useCallback(async (path: string) => {
+    commands.showInTerminal(path).catch((err) => {
+      notification.error({
+        title: "Error opening in terminal",
+        message: "An error occurred while trying to open the folder in terminal.",
+      });
+      logger.error("Error opening in terminal: ", err);
+    });
+  }, []);
+  const showContextMenu = useCallback(async (e: React.MouseEvent, path: string) => {
+    const menuItems = await Promise.all([
+      MenuItem.new({
+        text: "Open in Terminal",
+        action: () => contextMenuShowInTerminalAction(path),
+      }),
+      MenuItem.new({
+        text: "Open in Explorer",
+        action: () => contextMenuOpenInExplorerAction(path),
+      }),
+    ]);
+
+    const menu = await Menu.new({ items: menuItems });
+
+    await menu.popup().catch((err) => logger.error("Error showing context menu: ", err));
+  }, []);
   return (
     <Tree
-      data={data}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        showContextMenu(e, data.path);
+      }}
+      data={data.children as DiskItem[]}
       openByDefault={false}
       width={"100%"}
       height={350}

@@ -121,8 +121,8 @@ pub fn delete_folder(path: String) -> Result<(), String> {
         let child = std::process::Command::new("rm")
             .arg("-rf")
             .arg(&path)
-            .spawn()
-            
+            .spawn();
+
         match child {
             Ok(_) => Ok(()),
             Err(e) => Err(e.to_string()),

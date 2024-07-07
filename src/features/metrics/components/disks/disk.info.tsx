@@ -130,7 +130,7 @@ const DiskActionGroup: React.FC<{ disk: Disk }> = ({ disk }) => {
   };
 
   // Encode this id to avoid any issues with special characters. (Disk.name for windows works)
-  // TODO: Make this more ergonomic
+  // TODO: Make this more ergonomic, move this to usePlatform
   const onShowDetailsClick = () => {
     const isWindows = system.os.toLowerCase().includes("windows");
     setSelectedDisk(isWindows ? disk.name : disk.mountPoint);
