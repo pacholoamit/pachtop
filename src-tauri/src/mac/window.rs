@@ -1,5 +1,5 @@
 use hex_color::HexColor;
-use tauri::{App, Manager, Runtime, WebviewWindow};
+use tauri::{App, Emitter, Listener, Manager, Runtime, WebviewWindow};
 
 // If anything breaks on macOS, this should be the place which is broken
 // We have to override Tauri (Tao) 's built-in NSWindowDelegate implementation with a
