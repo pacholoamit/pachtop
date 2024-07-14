@@ -73,25 +73,12 @@ const DiskInformationAnalyticsCard = (props: DiskInformationAnalyticsCardProps) 
       label: disk.usedPercentage + "%",
     },
   ];
-  const showDirectory = async () => {
-    await commands.open(disk.mountPoint).catch((err) => {
-      notification.error({
-        title: "Error opening directory",
-        message: "An error occurred while trying to open the directory.",
-      });
-      logger.error("Error opening directory: ", err);
-    });
-  };
 
   return (
     <Popover width={200} position="top" withArrow shadow="md" opened={opened}>
       <Card height="400px">
-        <Group position="apart">
-          <Title order={4}>Disk Information</Title>
-          <ActionIcon size={"sm"} variant="light" onClick={showDirectory}>
-            <IconFolderOpen stroke={1.5} />
-          </ActionIcon>
-        </Group>
+        <Title order={4}>Disk Information</Title>
+
         <Space h={16} />
 
         <Stack spacing={"lg"}>

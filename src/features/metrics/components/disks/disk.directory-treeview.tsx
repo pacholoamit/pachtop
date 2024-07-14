@@ -219,10 +219,6 @@ const DiskDirectoryTreeView: React.FC<DiskDirectoryTreeViewProps> = (props) => {
   }, []);
   return (
     <Tree
-      onContextMenu={(e) => {
-        e.preventDefault();
-        showContextMenu(e, data.path);
-      }}
       data={data.children as DiskItem[]}
       openByDefault={false}
       width={"100%"}
