@@ -5,7 +5,7 @@ import useEffectAsync from "@/hooks/useEffectAsync";
 import useIsFirstRun from "@/hooks/useIsFirstRun";
 import { streams } from "@/lib";
 import store from "@/lib/store";
-import { getCurrent as appWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow as appWindow } from "@tauri-apps/api/window";
 import { Platform, platform as obtainPlatform } from "@tauri-apps/plugin-os";
 
 interface PlatformProviderProps {
@@ -46,42 +46,41 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
 
   useEffectAsync(async () => {
     const appStore = await store;
-    await obtainPlatform().then((p) => {
-      setPlatform(p);
+    const p = obtainPlatform();
+    setPlatform(p);
 
-      if (p === "windows") {
-        appStore.isDefenderExclusionEnabled.get().then((isDefenderExclusionEnabled) => {
-          if (!isDefenderExclusionEnabled) setIsShowExclusionModal(true);
-        });
-      }
+    if (p === "windows") {
+      appStore.isDefenderExclusionEnabled.get().then((isDefenderExclusionEnabled) => {
+        if (!isDefenderExclusionEnabled) setIsShowExclusionModal(true);
+      });
+    }
 
-      if (p === "macos") {
-        setAppHeader({
+    if (p === "macos") {
+      setAppHeader({
+        paddingLeft: 72,
+        paddingTop: 4,
+        onHeaderAreaClick: () => {
+          const window = appWindow();
+          window.startDragging();
+        },
+      });
+
+      streams.window.willEnterFullScreen(() => {
+        setAppHeader((prev) => ({
+          ...prev,
+          paddingLeft: 0,
+          paddingTop: 0,
+        }));
+      });
+
+      streams.window.willExitFullScreen(() => {
+        setAppHeader((prev) => ({
+          ...prev,
           paddingLeft: 72,
           paddingTop: 4,
-          onHeaderAreaClick: () => {
-            const window = appWindow();
-            window.startDragging();
-          },
-        });
-
-        streams.window.willEnterFullScreen(() => {
-          setAppHeader((prev) => ({
-            ...prev,
-            paddingLeft: 0,
-            paddingTop: 0,
-          }));
-        });
-
-        streams.window.willExitFullScreen(() => {
-          setAppHeader((prev) => ({
-            ...prev,
-            paddingLeft: 72,
-            paddingTop: 4,
-          }));
-        });
-      }
-    });
+        }));
+      });
+    }
   }, []);
 
   return (

@@ -3,7 +3,7 @@ use tauri::{App, Manager};
 
 use std::mem::transmute;
 use std::{ffi::c_void, mem::size_of, ptr};
-
+use tauri::Listener;
 use windows::Win32::UI::Controls::{
     WTA_NONCLIENT, WTNCA_NODRAWICON, WTNCA_NOMIRRORHELP, WTNCA_NOSYSMENU,
 };
