@@ -15,7 +15,7 @@
     "@ag-grid-community/client-side-row-model": "^32.0.2",
     "@ag-grid-community/core": "^32.0.2",
     "@emotion/react": "^11.11.4",
-    "@mantine/core": "^6.0.22",
+    "@mantine/core": "^7.12.0",
     "@mantine/form": "^6.0.22",
     "@mantine/hooks": "^6.0.22",
     "@mantine/notifications": "^6.0.22",
