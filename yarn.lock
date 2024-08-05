@@ -2553,18 +2553,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/notifications@npm:^6.0.22":
-  version: 6.0.22
-  resolution: "@mantine/notifications@npm:6.0.22"
+"@mantine/notifications@npm:^7.12.0":
+  version: 7.12.0
+  resolution: "@mantine/notifications@npm:7.12.0"
   dependencies:
-    "@mantine/utils": 6.0.22
-    react-transition-group: 4.4.2
+    "@mantine/store": 7.12.0
+    react-transition-group: 4.4.5
   peerDependencies:
-    "@mantine/core": 6.0.22
-    "@mantine/hooks": 6.0.22
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: d678be344a95e59d0c83c988547bf92f83acdbbed29289961b96956a8ae68fd338581fe9c05742dcf26ffc5dafb7f1f765f04a1ca17b082014437ba05bcf0d62
+    "@mantine/core": 7.12.0
+    "@mantine/hooks": 7.12.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 82ccb0c5ccfad4fa8e56995adc665652c5d2cc9a291b8bbd7ea835c10e6aff2b61aead425392d71b942bda9b299b0f6499395bf33a6e0a44bb2cd230750d178d
+  languageName: node
+  linkType: hard
+
+"@mantine/store@npm:7.12.0":
+  version: 7.12.0
+  resolution: "@mantine/store@npm:7.12.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 327b7f7a7350b56089b57692eb0a1c710fc819ff6b7e1eaaa8b5a5820ea702079413127162a79720c52440cb036ece52c470bbf029eb2c7ee32ad730fbdabbf4
   languageName: node
   linkType: hard
 
@@ -6784,7 +6793,7 @@ __metadata:
     "@mantine/core": ^6.0.22
     "@mantine/form": ^6.0.22
     "@mantine/hooks": ^6.0.22
-    "@mantine/notifications": ^6.0.22
+    "@mantine/notifications": ^7.12.0
     "@tabler/icons-react": ^2.47.0
     "@tauri-apps/api": ^2.0.0-beta.15
     "@tauri-apps/cli": next
@@ -7207,9 +7216,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-transition-group@npm:4.4.2":
-  version: 4.4.2
-  resolution: "react-transition-group@npm:4.4.2"
+"react-transition-group@npm:4.4.5":
+  version: 4.4.5
+  resolution: "react-transition-group@npm:4.4.5"
   dependencies:
     "@babel/runtime": ^7.5.5
     dom-helpers: ^5.0.1
@@ -7218,7 +7227,7 @@ __metadata:
   peerDependencies:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
-  checksum: b67bf5b3e86dbab72d658b9a52a3589e5960583ab28c7c66272427d8fe30d4c7de422d5046ae96bd2683cdf80cc3264b2516f5ce80cae1dbe6cf3ca6dda392c5
+  checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
   languageName: node
   linkType: hard
 
