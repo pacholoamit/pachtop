@@ -3069,22 +3069,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons-react@npm:^2.47.0":
-  version: 2.47.0
-  resolution: "@tabler/icons-react@npm:2.47.0"
+"@tabler/icons-react@npm:^3.13.0":
+  version: 3.13.0
+  resolution: "@tabler/icons-react@npm:3.13.0"
   dependencies:
-    "@tabler/icons": 2.47.0
-    prop-types: ^15.7.2
+    "@tabler/icons": 3.13.0
   peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: f896a1fc146272d289a2a101e36027c08a6618cf930647e1b7b7dafd684aed6a4e63cc90b54b5b6742570125556c51162be4f1119d2881291c3e3a0f9427bc25
+    react: ">= 16"
+  checksum: c8406e68cf47b97a42d667141a2601ea0a3928f0931a24253b26b008d475c74bb4a334245fe3f2ce189d6e16091a4dc5000857291ce25f22006b3f367ac2bd1d
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:2.47.0":
-  version: 2.47.0
-  resolution: "@tabler/icons@npm:2.47.0"
-  checksum: 610582883f22510a3528fd7b5d0613faf815d6b0f48d42514ed080ac083bdbcbc3a7e49c62819c5c479d2d9d30dbb3e1cfc9978c0160f3900724890ec57caaab
+"@tabler/icons@npm:3.13.0":
+  version: 3.13.0
+  resolution: "@tabler/icons@npm:3.13.0"
+  checksum: b992a886939d582457fdec8f22e5594ed1ab5ccb57a1bfc4f191caea7b281b0d33630fa61e79435795fcdf7b51d8e357fcb3339520141b074db6455f5db537b0
   languageName: node
   linkType: hard
 
@@ -6785,7 +6784,7 @@ __metadata:
     "@mantine/form": ^6.0.22
     "@mantine/hooks": ^6.0.22
     "@mantine/notifications": ^6.0.22
-    "@tabler/icons-react": ^2.47.0
+    "@tabler/icons-react": ^3.13.0
     "@tauri-apps/api": ^2.0.0-beta.15
     "@tauri-apps/cli": next
     "@tauri-apps/plugin-fs": ^2.0.0-beta.7
@@ -6988,7 +6987,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
