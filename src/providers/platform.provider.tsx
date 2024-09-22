@@ -5,7 +5,7 @@ import useEffectAsync from "@/hooks/useEffectAsync";
 import useIsFirstRun from "@/hooks/useIsFirstRun";
 import { streams } from "@/lib";
 import store from "@/lib/store";
-import { getCurrentWindow as appWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow as appWindow } from "webviewWindow";
 import { Platform, platform as obtainPlatform } from "@tauri-apps/plugin-os";
 
 interface PlatformProviderProps {

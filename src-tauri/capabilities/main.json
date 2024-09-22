@@ -13,7 +13,7 @@
         "os:allow-hostname",
         "os:allow-os-type",
         "os:allow-platform",
-        "window:allow-start-dragging",
+        "core:window:allow-start-dragging",
         "autostart:allow-enable",
         "autostart:allow-disable",
         "autostart:allow-is-enabled",
@@ -22,8 +22,8 @@
         "log:allow-log",
         "log:default",
         "shell:allow-spawn",
-        "menu:allow-new",
-        "menu:allow-popup",
+        "core:menu:allow-new",
+        "core:menu:allow-popup",
         {
             "identifier": "shell:allow-execute",
             "allow": [
