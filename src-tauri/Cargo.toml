@@ -67,8 +67,10 @@ version = "0.3.7"
 features = ["winerror"]
 
 [lib]
-name = "app_lib"
+name = "app"
 crate-type = ["staticlib", "cdylib", "rlib", "lib"]
+
+
 
 [features]
 default = [ "custom-protocol" ]
