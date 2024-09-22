@@ -1,12 +1,12 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from 'react';
 
-import ExclusionModal from "@/components/exclusion-modal";
-import useEffectAsync from "@/hooks/useEffectAsync";
-import useIsFirstRun from "@/hooks/useIsFirstRun";
-import { streams } from "@/lib";
-import store from "@/lib/store";
-import { getCurrentWindow as appWindow } from "@tauri-apps/api/window";
-import { Platform, platform as obtainPlatform } from "@tauri-apps/plugin-os";
+import ExclusionModal from '@/components/exclusion-modal';
+import useEffectAsync from '@/hooks/useEffectAsync';
+import useIsFirstRun from '@/hooks/useIsFirstRun';
+import { streams } from '@/lib';
+import store from '@/lib/store';
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+import { Platform, platform as obtainPlatform } from '@tauri-apps/plugin-os';
 
 interface PlatformProviderProps {
   children: React.ReactNode;
@@ -60,7 +60,7 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
         paddingLeft: 72,
         paddingTop: 4,
         onHeaderAreaClick: () => {
-          const window = appWindow();
+          const window = getCurrentWebviewWindow();
           window.startDragging();
         },
       });
