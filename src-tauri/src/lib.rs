@@ -6,12 +6,6 @@ extern crate cocoa;
 #[macro_use]
 extern crate objc;
 
-#[cfg(target_os = "macos")]
-mod mac;
-
-#[cfg(target_os = "windows")]
-mod win;
-
 mod app;
 mod commands;
 mod dirstat;
@@ -74,17 +68,7 @@ fn build_and_run_app(app: AppState) {
 
             // Some macOS-specific helpers
             #[cfg(target_os = "macos")]
-            {
-                // Set a custom inset to the traffic lights
-                main_window.set_traffic_lights_inset(12.0, 16.0).unwrap();
-
-                // Make window transparent without privateApi
-                main_window.make_transparent().unwrap();
-
-                // Set window level
-                // NSWindowLevel: https://developer.apple.com/documentation/appkit/nswindowlevel
-                main_window.set_window_level(25).unwrap()
-            }
+            main_window.set_traffic_lights_inset(12.0, 16.0).unwrap();
 
             // BUILD TRAY - TODO MOVE TO DIFFERENT FILE
 
