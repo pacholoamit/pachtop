@@ -145,32 +145,32 @@
                         "const": "fs:default"
                       },
                       {
-                        "description": "This allows non-recursive read access to metadata of the `$APP` folder, including file listing and statistics.",
+                        "description": "This allows non-recursive read access to metadata of the application folders, including file listing and statistics.",
                         "type": "string",
                         "const": "fs:allow-app-meta"
                       },
                       {
-                        "description": "This allows full recursive read access to metadata of the `$APP` folder, including file listing and statistics.",
+                        "description": "This allows full recursive read access to metadata of the application folders, including file listing and statistics.",
                         "type": "string",
                         "const": "fs:allow-app-meta-recursive"
                       },
                       {
-                        "description": "This allows non-recursive read access to the `$APP` folder.",
+                        "description": "This allows non-recursive read access to the application folders.",
                         "type": "string",
                         "const": "fs:allow-app-read"
                       },
                       {
-                        "description": "This allows full recursive read access to the complete `$APP` folder, files and subdirectories.",
+                        "description": "This allows full recursive read access to the complete application folders, files and subdirectories.",
                         "type": "string",
                         "const": "fs:allow-app-read-recursive"
                       },
                       {
-                        "description": "This allows non-recursive write access to the `$APP` folder.",
+                        "description": "This allows non-recursive write access to the application folders.",
                         "type": "string",
                         "const": "fs:allow-app-write"
                       },
                       {
-                        "description": "This allows full recursive write access to the complete `$APP` folder, files and subdirectories.",
+                        "description": "This allows full recursive write access to the complete application folders, files and subdirectories.",
                         "type": "string",
                         "const": "fs:allow-app-write-recursive"
                       },
@@ -1185,22 +1185,22 @@
                         "const": "fs:scope"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$APP`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the application folders.",
                         "type": "string",
                         "const": "fs:scope-app"
                       },
                       {
-                        "description": "This scope permits to list all files and folders in the `$APP`folder.",
+                        "description": "This scope permits to list all files and folders in the application directories.",
                         "type": "string",
                         "const": "fs:scope-app-index"
                       },
                       {
-                        "description": "This scope permits recursive access to the complete `$APP` folder, including sub directories and files.",
+                        "description": "This scope permits recursive access to the complete application folders, including sub directories and files.",
                         "type": "string",
                         "const": "fs:scope-app-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$APPCACHE`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$APPCACHE` folder.",
                         "type": "string",
                         "const": "fs:scope-appcache"
                       },
@@ -1215,7 +1215,7 @@
                         "const": "fs:scope-appcache-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$APPCONFIG`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$APPCONFIG` folder.",
                         "type": "string",
                         "const": "fs:scope-appconfig"
                       },
@@ -1230,7 +1230,7 @@
                         "const": "fs:scope-appconfig-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$APPDATA`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$APPDATA` folder.",
                         "type": "string",
                         "const": "fs:scope-appdata"
                       },
@@ -1245,7 +1245,7 @@
                         "const": "fs:scope-appdata-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$APPLOCALDATA`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$APPLOCALDATA` folder.",
                         "type": "string",
                         "const": "fs:scope-applocaldata"
                       },
@@ -1260,7 +1260,7 @@
                         "const": "fs:scope-applocaldata-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$APPLOG`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$APPLOG` folder.",
                         "type": "string",
                         "const": "fs:scope-applog"
                       },
@@ -1275,7 +1275,7 @@
                         "const": "fs:scope-applog-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$AUDIO`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$AUDIO` folder.",
                         "type": "string",
                         "const": "fs:scope-audio"
                       },
@@ -1290,7 +1290,7 @@
                         "const": "fs:scope-audio-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$CACHE`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$CACHE` folder.",
                         "type": "string",
                         "const": "fs:scope-cache"
                       },
@@ -1305,7 +1305,7 @@
                         "const": "fs:scope-cache-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$CONFIG`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$CONFIG` folder.",
                         "type": "string",
                         "const": "fs:scope-config"
                       },
@@ -1320,7 +1320,7 @@
                         "const": "fs:scope-config-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$DATA`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$DATA` folder.",
                         "type": "string",
                         "const": "fs:scope-data"
                       },
@@ -1335,7 +1335,7 @@
                         "const": "fs:scope-data-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$DESKTOP`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$DESKTOP` folder.",
                         "type": "string",
                         "const": "fs:scope-desktop"
                       },
@@ -1350,7 +1350,7 @@
                         "const": "fs:scope-desktop-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$DOCUMENT`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$DOCUMENT` folder.",
                         "type": "string",
                         "const": "fs:scope-document"
                       },
@@ -1365,7 +1365,7 @@
                         "const": "fs:scope-document-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$DOWNLOAD`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$DOWNLOAD` folder.",
                         "type": "string",
                         "const": "fs:scope-download"
                       },
@@ -1380,7 +1380,7 @@
                         "const": "fs:scope-download-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$EXE`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$EXE` folder.",
                         "type": "string",
                         "const": "fs:scope-exe"
                       },
@@ -1395,7 +1395,7 @@
                         "const": "fs:scope-exe-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$FONT`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$FONT` folder.",
                         "type": "string",
                         "const": "fs:scope-font"
                       },
@@ -1410,7 +1410,7 @@
                         "const": "fs:scope-font-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$HOME`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$HOME` folder.",
                         "type": "string",
                         "const": "fs:scope-home"
                       },
@@ -1425,7 +1425,7 @@
                         "const": "fs:scope-home-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$LOCALDATA`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$LOCALDATA` folder.",
                         "type": "string",
                         "const": "fs:scope-localdata"
                       },
@@ -1440,7 +1440,7 @@
                         "const": "fs:scope-localdata-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$LOG`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$LOG` folder.",
                         "type": "string",
                         "const": "fs:scope-log"
                       },
@@ -1455,7 +1455,7 @@
                         "const": "fs:scope-log-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$PICTURE`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$PICTURE` folder.",
                         "type": "string",
                         "const": "fs:scope-picture"
                       },
@@ -1470,7 +1470,7 @@
                         "const": "fs:scope-picture-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$PUBLIC`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$PUBLIC` folder.",
                         "type": "string",
                         "const": "fs:scope-public"
                       },
@@ -1485,7 +1485,7 @@
                         "const": "fs:scope-public-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$RESOURCE`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$RESOURCE` folder.",
                         "type": "string",
                         "const": "fs:scope-resource"
                       },
@@ -1500,7 +1500,7 @@
                         "const": "fs:scope-resource-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$RUNTIME`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$RUNTIME` folder.",
                         "type": "string",
                         "const": "fs:scope-runtime"
                       },
@@ -1515,7 +1515,7 @@
                         "const": "fs:scope-runtime-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$TEMP`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$TEMP` folder.",
                         "type": "string",
                         "const": "fs:scope-temp"
                       },
@@ -1530,7 +1530,7 @@
                         "const": "fs:scope-temp-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$TEMPLATE`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$TEMPLATE` folder.",
                         "type": "string",
                         "const": "fs:scope-template"
                       },
@@ -1545,7 +1545,7 @@
                         "const": "fs:scope-template-recursive"
                       },
                       {
-                        "description": "This scope permits access to all files and list content of top level directories in the `$VIDEO`folder.",
+                        "description": "This scope permits access to all files and list content of top level directories in the `$VIDEO` folder.",
                         "type": "string",
                         "const": "fs:scope-video"
                       },
@@ -1704,72 +1704,122 @@
                 "properties": {
                   "allow": {
                     "items": {
-                      "title": "Entry",
-                      "description": "A command allowed to be executed by the webview API.",
-                      "type": "object",
-                      "required": [
-                        "args",
-                        "cmd",
-                        "name",
-                        "sidecar"
-                      ],
-                      "properties": {
-                        "args": {
-                          "description": "The allowed arguments for the command execution.",
-                          "allOf": [
-                            {
-                              "$ref": "#/definitions/ShellAllowedArgs"
+                      "title": "ShellScopeEntry",
+                      "description": "Shell scope entry.",
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "cmd",
+                            "name"
+                          ],
+                          "properties": {
+                            "args": {
+                              "description": "The allowed arguments for the command execution.",
+                              "allOf": [
+                                {
+                                  "$ref": "#/definitions/ShellScopeEntryAllowedArgs"
+                                }
+                              ]
+                            },
+                            "cmd": {
+                              "description": "The command name. It can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "type": "string"
                             }
-                          ]
+                          },
+                          "additionalProperties": false
                         },
-                        "cmd": {
-                          "description": "The command name. It can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$APP`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
-                          "type": "string"
-                        },
-                        "name": {
-                          "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
-                          "type": "string"
-                        },
-                        "sidecar": {
-                          "description": "If this command is a sidecar command.",
-                          "type": "boolean"
+                        {
+                          "type": "object",
+                          "required": [
+                            "name",
+                            "sidecar"
+                          ],
+                          "properties": {
+                            "args": {
+                              "description": "The allowed arguments for the command execution.",
+                              "allOf": [
+                                {
+                                  "$ref": "#/definitions/ShellScopeEntryAllowedArgs"
+                                }
+                              ]
+                            },
+                            "name": {
+                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "type": "string"
+                            },
+                            "sidecar": {
+                              "description": "If this command is a sidecar command.",
+                              "type": "boolean"
+                            }
+                          },
+                          "additionalProperties": false
                         }
-                      }
+                      ]
                     }
                   },
                   "deny": {
                     "items": {
-                      "title": "Entry",
-                      "description": "A command allowed to be executed by the webview API.",
-                      "type": "object",
-                      "required": [
-                        "args",
-                        "cmd",
-                        "name",
-                        "sidecar"
-                      ],
-                      "properties": {
-                        "args": {
-                          "description": "The allowed arguments for the command execution.",
-                          "allOf": [
-                            {
-                              "$ref": "#/definitions/ShellAllowedArgs"
+                      "title": "ShellScopeEntry",
+                      "description": "Shell scope entry.",
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "cmd",
+                            "name"
+                          ],
+                          "properties": {
+                            "args": {
+                              "description": "The allowed arguments for the command execution.",
+                              "allOf": [
+                                {
+                                  "$ref": "#/definitions/ShellScopeEntryAllowedArgs"
+                                }
+                              ]
+                            },
+                            "cmd": {
+                              "description": "The command name. It can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "type": "string"
                             }
-                          ]
+                          },
+                          "additionalProperties": false
                         },
-                        "cmd": {
-                          "description": "The command name. It can start with a variable that resolves to a system base directory. The variables are: `$AUDIO`, `$CACHE`, `$CONFIG`, `$DATA`, `$LOCALDATA`, `$DESKTOP`, `$DOCUMENT`, `$DOWNLOAD`, `$EXE`, `$FONT`, `$HOME`, `$PICTURE`, `$PUBLIC`, `$RUNTIME`, `$TEMPLATE`, `$VIDEO`, `$RESOURCE`, `$APP`, `$LOG`, `$TEMP`, `$APPCONFIG`, `$APPDATA`, `$APPLOCALDATA`, `$APPCACHE`, `$APPLOG`.",
-                          "type": "string"
-                        },
-                        "name": {
-                          "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
-                          "type": "string"
-                        },
-                        "sidecar": {
-                          "description": "If this command is a sidecar command.",
-                          "type": "boolean"
+                        {
+                          "type": "object",
+                          "required": [
+                            "name",
+                            "sidecar"
+                          ],
+                          "properties": {
+                            "args": {
+                              "description": "The allowed arguments for the command execution.",
+                              "allOf": [
+                                {
+                                  "$ref": "#/definitions/ShellScopeEntryAllowedArgs"
+                                }
+                              ]
+                            },
+                            "name": {
+                              "description": "The name for this allowed shell command configuration.\n\nThis name will be used inside of the webview API to call this command along with any specified arguments.",
+                              "type": "string"
+                            },
+                            "sidecar": {
+                              "description": "If this command is a sidecar command.",
+                              "type": "boolean"
+                            }
+                          },
+                          "additionalProperties": false
                         }
-                      }
+                      ]
                     }
                   }
                 }
@@ -3348,32 +3398,32 @@
           "const": "fs:default"
         },
         {
-          "description": "This allows non-recursive read access to metadata of the `$APP` folder, including file listing and statistics.",
+          "description": "This allows non-recursive read access to metadata of the application folders, including file listing and statistics.",
           "type": "string",
           "const": "fs:allow-app-meta"
         },
         {
-          "description": "This allows full recursive read access to metadata of the `$APP` folder, including file listing and statistics.",
+          "description": "This allows full recursive read access to metadata of the application folders, including file listing and statistics.",
           "type": "string",
           "const": "fs:allow-app-meta-recursive"
         },
         {
-          "description": "This allows non-recursive read access to the `$APP` folder.",
+          "description": "This allows non-recursive read access to the application folders.",
           "type": "string",
           "const": "fs:allow-app-read"
         },
         {
-          "description": "This allows full recursive read access to the complete `$APP` folder, files and subdirectories.",
+          "description": "This allows full recursive read access to the complete application folders, files and subdirectories.",
           "type": "string",
           "const": "fs:allow-app-read-recursive"
         },
         {
-          "description": "This allows non-recursive write access to the `$APP` folder.",
+          "description": "This allows non-recursive write access to the application folders.",
           "type": "string",
           "const": "fs:allow-app-write"
         },
         {
-          "description": "This allows full recursive write access to the complete `$APP` folder, files and subdirectories.",
+          "description": "This allows full recursive write access to the complete application folders, files and subdirectories.",
           "type": "string",
           "const": "fs:allow-app-write-recursive"
         },
@@ -4388,22 +4438,22 @@
           "const": "fs:scope"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$APP`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the application folders.",
           "type": "string",
           "const": "fs:scope-app"
         },
         {
-          "description": "This scope permits to list all files and folders in the `$APP`folder.",
+          "description": "This scope permits to list all files and folders in the application directories.",
           "type": "string",
           "const": "fs:scope-app-index"
         },
         {
-          "description": "This scope permits recursive access to the complete `$APP` folder, including sub directories and files.",
+          "description": "This scope permits recursive access to the complete application folders, including sub directories and files.",
           "type": "string",
           "const": "fs:scope-app-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$APPCACHE`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$APPCACHE` folder.",
           "type": "string",
           "const": "fs:scope-appcache"
         },
@@ -4418,7 +4468,7 @@
           "const": "fs:scope-appcache-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$APPCONFIG`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$APPCONFIG` folder.",
           "type": "string",
           "const": "fs:scope-appconfig"
         },
@@ -4433,7 +4483,7 @@
           "const": "fs:scope-appconfig-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$APPDATA`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$APPDATA` folder.",
           "type": "string",
           "const": "fs:scope-appdata"
         },
@@ -4448,7 +4498,7 @@
           "const": "fs:scope-appdata-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$APPLOCALDATA`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$APPLOCALDATA` folder.",
           "type": "string",
           "const": "fs:scope-applocaldata"
         },
@@ -4463,7 +4513,7 @@
           "const": "fs:scope-applocaldata-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$APPLOG`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$APPLOG` folder.",
           "type": "string",
           "const": "fs:scope-applog"
         },
@@ -4478,7 +4528,7 @@
           "const": "fs:scope-applog-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$AUDIO`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$AUDIO` folder.",
           "type": "string",
           "const": "fs:scope-audio"
         },
@@ -4493,7 +4543,7 @@
           "const": "fs:scope-audio-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$CACHE`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$CACHE` folder.",
           "type": "string",
           "const": "fs:scope-cache"
         },
@@ -4508,7 +4558,7 @@
           "const": "fs:scope-cache-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$CONFIG`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$CONFIG` folder.",
           "type": "string",
           "const": "fs:scope-config"
         },
@@ -4523,7 +4573,7 @@
           "const": "fs:scope-config-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$DATA`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$DATA` folder.",
           "type": "string",
           "const": "fs:scope-data"
         },
@@ -4538,7 +4588,7 @@
           "const": "fs:scope-data-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$DESKTOP`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$DESKTOP` folder.",
           "type": "string",
           "const": "fs:scope-desktop"
         },
@@ -4553,7 +4603,7 @@
           "const": "fs:scope-desktop-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$DOCUMENT`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$DOCUMENT` folder.",
           "type": "string",
           "const": "fs:scope-document"
         },
@@ -4568,7 +4618,7 @@
           "const": "fs:scope-document-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$DOWNLOAD`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$DOWNLOAD` folder.",
           "type": "string",
           "const": "fs:scope-download"
         },
@@ -4583,7 +4633,7 @@
           "const": "fs:scope-download-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$EXE`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$EXE` folder.",
           "type": "string",
           "const": "fs:scope-exe"
         },
@@ -4598,7 +4648,7 @@
           "const": "fs:scope-exe-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$FONT`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$FONT` folder.",
           "type": "string",
           "const": "fs:scope-font"
         },
@@ -4613,7 +4663,7 @@
           "const": "fs:scope-font-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$HOME`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$HOME` folder.",
           "type": "string",
           "const": "fs:scope-home"
         },
@@ -4628,7 +4678,7 @@
           "const": "fs:scope-home-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$LOCALDATA`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$LOCALDATA` folder.",
           "type": "string",
           "const": "fs:scope-localdata"
         },
@@ -4643,7 +4693,7 @@
           "const": "fs:scope-localdata-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$LOG`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$LOG` folder.",
           "type": "string",
           "const": "fs:scope-log"
         },
@@ -4658,7 +4708,7 @@
           "const": "fs:scope-log-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$PICTURE`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$PICTURE` folder.",
           "type": "string",
           "const": "fs:scope-picture"
         },
@@ -4673,7 +4723,7 @@
           "const": "fs:scope-picture-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$PUBLIC`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$PUBLIC` folder.",
           "type": "string",
           "const": "fs:scope-public"
         },
@@ -4688,7 +4738,7 @@
           "const": "fs:scope-public-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$RESOURCE`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$RESOURCE` folder.",
           "type": "string",
           "const": "fs:scope-resource"
         },
@@ -4703,7 +4753,7 @@
           "const": "fs:scope-resource-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$RUNTIME`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$RUNTIME` folder.",
           "type": "string",
           "const": "fs:scope-runtime"
         },
@@ -4718,7 +4768,7 @@
           "const": "fs:scope-runtime-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$TEMP`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$TEMP` folder.",
           "type": "string",
           "const": "fs:scope-temp"
         },
@@ -4733,7 +4783,7 @@
           "const": "fs:scope-temp-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$TEMPLATE`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$TEMPLATE` folder.",
           "type": "string",
           "const": "fs:scope-template"
         },
@@ -4748,7 +4798,7 @@
           "const": "fs:scope-template-recursive"
         },
         {
-          "description": "This scope permits access to all files and list content of top level directories in the `$VIDEO`folder.",
+          "description": "This scope permits access to all files and list content of top level directories in the `$VIDEO` folder.",
           "type": "string",
           "const": "fs:scope-video"
         },
@@ -4963,6 +5013,11 @@
           "const": "store:allow-clear"
         },
         {
+          "description": "Enables the create_store command without any pre-configured scope.",
+          "type": "string",
+          "const": "store:allow-create-store"
+        },
+        {
           "description": "Enables the delete command without any pre-configured scope.",
           "type": "string",
           "const": "store:allow-delete"
@@ -5021,6 +5076,11 @@
           "description": "Denies the clear command without any pre-configured scope.",
           "type": "string",
           "const": "store:deny-clear"
+        },
+        {
+          "description": "Denies the create_store command without any pre-configured scope.",
+          "type": "string",
+          "const": "store:deny-create-store"
         },
         {
           "description": "Denies the delete command without any pre-configured scope.",
@@ -5253,7 +5313,7 @@
         }
       ]
     },
-    "ShellAllowedArg": {
+    "ShellScopeEntryAllowedArg": {
       "description": "A command argument allowed to be executed by the webview API.",
       "anyOf": [
         {
@@ -5267,8 +5327,13 @@
             "validator"
           ],
           "properties": {
+            "raw": {
+              "description": "Marks the validator as a raw regex, meaning the plugin should not make any modification at runtime.\n\nThis means the regex will not match on the entire string by default, which might be exploited if your regex allow unexpected input to be considered valid. When using this option, make sure your regex is correct.",
+              "default": false,
+              "type": "boolean"
+            },
             "validator": {
-              "description": "[regex] validator to require passed values to conform to an expected input.\n\nThis will require the argument value passed to this variable to match the `validator` regex before it will be executed.\n\n[regex]: https://docs.rs/regex/latest/regex/#syntax",
+              "description": "[regex] validator to require passed values to conform to an expected input.\n\nThis will require the argument value passed to this variable to match the `validator` regex before it will be executed.\n\nThe regex string is by default surrounded by `^...$` to match the full string. For example the `https?://\\w+` regex would be registered as `^https?://\\w+$`.\n\n[regex]: <https://docs.rs/regex/latest/regex/#syntax>",
               "type": "string"
             }
           },
@@ -5276,18 +5341,18 @@
         }
       ]
     },
-    "ShellAllowedArgs": {
-      "description": "A set of command arguments allowed to be executed by the webview API.\n\nA value of `true` will allow any arguments to be passed to the command. `false` will disable all arguments. A list of [`ShellAllowedArg`] will set those arguments as the only valid arguments to be passed to the attached command configuration.",
+    "ShellScopeEntryAllowedArgs": {
+      "description": "A set of command arguments allowed to be executed by the webview API.\n\nA value of `true` will allow any arguments to be passed to the command. `false` will disable all arguments. A list of [`ShellScopeEntryAllowedArg`] will set those arguments as the only valid arguments to be passed to the attached command configuration.",
       "anyOf": [
         {
           "description": "Use a simple boolean to allow all or disable all arguments to this command configuration.",
           "type": "boolean"
         },
         {
-          "description": "A specific set of [`ShellAllowedArg`] that are valid to call for the command configuration.",
+          "description": "A specific set of [`ShellScopeEntryAllowedArg`] that are valid to call for the command configuration.",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ShellAllowedArg"
+            "$ref": "#/definitions/ShellScopeEntryAllowedArg"
           }
         }
       ]
