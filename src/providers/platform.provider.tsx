@@ -49,6 +49,8 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
     const p = obtainPlatform();
     setPlatform(p);
 
+    console.log("Platform: ", p);
+
     if (p === "windows") {
       appStore.isDefenderExclusionEnabled.get().then((isDefenderExclusionEnabled) => {
         if (!isDefenderExclusionEnabled) setIsShowExclusionModal(true);
@@ -59,9 +61,10 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
       setAppHeader({
         paddingLeft: 72,
         paddingTop: 4,
-        onHeaderAreaClick: () => {
+        onHeaderAreaClick: async () => {
           const window = getCurrentWebviewWindow();
-          window.startDragging();
+
+          await window.startDragging();
         },
       });
 
