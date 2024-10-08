@@ -17,6 +17,8 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
 
     let os_plugin = tauri_plugin_os::init();
 
+    let decorum_plugin = tauri_plugin_decorum::init();
+
     let single_instance_plugin = tauri_plugin_single_instance::init(|app, _argv, _cwd| {
         let window = app.get_webview_window("main").unwrap();
         if window.is_visible().unwrap() {
@@ -46,6 +48,7 @@ pub fn setup_plugins(app: &mut App) -> anyhow::Result<()> {
     handle.plugin(process_plugin)?;
     handle.plugin(log_plugin.build())?;
     handle.plugin(tauri_plugin_shell::init())?;
+    handle.plugin(decorum_plugin)?;
 
     Ok(())
 }

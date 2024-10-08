@@ -19,14 +19,7 @@ pub fn compressed_size(path: &Path) -> Result<u64, Box<dyn Error>> {
     if low == INVALID_FILE_SIZE {
         let err = unsafe { GetLastError() };
 
-        match err {
-            Ok(_) => {
-                println!("No error")
-            }
-            Err(e) => {
-                return Err(e.into());
-            }
-        }
+        return Err(format!("GetCompressedFileSizeW failed with error code {:?}", err).into());
     }
 
     Ok(u64::from(high) << 32 | u64::from(low))

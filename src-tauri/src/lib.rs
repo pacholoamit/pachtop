@@ -22,6 +22,8 @@ mod tray;
 mod utils;
 
 use app::AppState;
+use tauri::Manager;
+use tauri_plugin_decorum::WebviewWindowExt;
 
 use std::time::Duration;
 
@@ -50,18 +52,38 @@ fn build_and_run_app(app: AppState) {
             });
 
             //  CONFIGURE WINDOW
-            if cfg!(target_os = "macos") {
-                #[cfg(target_os = "macos")]
-                use mac::window::setup_mac_window;
+            // if cfg!(target_os = "macos") {
+            //     #[cfg(target_os = "macos")]
+            //     use mac::window::setup_mac_window;
 
-                #[cfg(target_os = "macos")]
-                setup_mac_window(app);
-            } else if cfg!(target_os = "windows") {
-                #[cfg(target_os = "windows")]
-                use win::window::setup_win_window;
+            //     #[cfg(target_os = "macos")]
+            //     setup_mac_window(app);
+            // } else if cfg!(target_os = "windows") {
+            //     #[cfg(target_os = "windows")]
+            //     use win::window::setup_win_window;
 
-                #[cfg(target_os = "windows")]
-                setup_win_window(app);
+            //     #[cfg(target_os = "windows")]
+            //     setup_win_window(app);
+            // }
+
+            // Create a custom titlebar for main window
+            // On Windows this hides decoration and creates custom window controls
+            // On macOS it needs hiddenTitle: true and titleBarStyle: overlay
+            let main_window = app.get_webview_window("main").unwrap();
+            main_window.create_overlay_titlebar().unwrap();
+
+            // Some macOS-specific helpers
+            #[cfg(target_os = "macos")]
+            {
+                // Set a custom inset to the traffic lights
+                main_window.set_traffic_lights_inset(12.0, 16.0).unwrap();
+
+                // Make window transparent without privateApi
+                main_window.make_transparent().unwrap();
+
+                // Set window level
+                // NSWindowLevel: https://developer.apple.com/documentation/appkit/nswindowlevel
+                main_window.set_window_level(25).unwrap()
             }
 
             // BUILD TRAY - TODO MOVE TO DIFFERENT FILE
