@@ -46,16 +46,13 @@ fn build_and_run_app(app: AppState) {
                 }
             });
 
-            // Create a custom titlebar for main window
-            // On Windows this hides decoration and creates custom window controls
-            // On macOS it needs hiddenTitle: true and titleBarStyle: overlay
             let main_window = app.get_webview_window("main").unwrap();
             main_window.create_overlay_titlebar().unwrap();
 
             // Some macOS-specific helpers
             #[cfg(target_os = "macos")]
             {
-                main_window.set_traffic_lights_inset(12.0, 32.0).unwrap();
+                main_window.set_traffic_lights_inset(12.0, 24.0).unwrap();
             }
 
             // BUILD TRAY - TODO MOVE TO DIFFERENT FILE
