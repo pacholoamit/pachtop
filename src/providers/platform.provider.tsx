@@ -6,7 +6,9 @@ import useIsFirstRun from '@/hooks/useIsFirstRun';
 import { streams } from '@/lib';
 import store from '@/lib/store';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { Platform, platform as obtainPlatform } from '@tauri-apps/plugin-os';
+import { Platform } from '@tauri-apps/plugin-os';
+
+const { platform: obtainPlatform } = window.__TAURI__.os;
 
 interface PlatformProviderProps {
   children: React.ReactNode;
@@ -49,6 +51,8 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
     const p = obtainPlatform();
     setPlatform(p);
 
+    console.log("Platform: ", p);
+
     if (p === "windows") {
       appStore.isDefenderExclusionEnabled.get().then((isDefenderExclusionEnabled) => {
         if (!isDefenderExclusionEnabled) setIsShowExclusionModal(true);
@@ -59,9 +63,10 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
       setAppHeader({
         paddingLeft: 72,
         paddingTop: 4,
-        onHeaderAreaClick: () => {
+        onHeaderAreaClick: async () => {
           const window = getCurrentWebviewWindow();
-          window.startDragging();
+
+          await window.startDragging();
         },
       });
 

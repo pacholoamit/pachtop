@@ -53,6 +53,7 @@
     }
   },
   "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "fullscreen": false,
@@ -61,7 +62,9 @@
         "title": "pachtop",
         "alwaysOnTop": false,
         "width": 800,
-        "decorations": true
+        "decorations": true,
+        "hiddenTitle": true,
+        "titleBarStyle": "Overlay"
       }
     ],
     "security": {
