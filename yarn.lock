@@ -3231,7 +3231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/plugin-os@npm:^2.0.0":
+"@tauri-apps/plugin-os@npm:~2":
   version: 2.0.0
   resolution: "@tauri-apps/plugin-os@npm:2.0.0"
   dependencies:
@@ -6797,7 +6797,7 @@ __metadata:
     "@tauri-apps/cli": 2.0.2
     "@tauri-apps/plugin-fs": ^2.0.0
     "@tauri-apps/plugin-log": ^2.0.0
-    "@tauri-apps/plugin-os": ^2.0.0
+    "@tauri-apps/plugin-os": ~2
     "@tauri-apps/plugin-process": ^2.0.0
     "@tauri-apps/plugin-shell": ^2.0.0
     "@tauri-apps/plugin-updater": ^2.0.0

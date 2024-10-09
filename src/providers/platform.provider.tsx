@@ -6,7 +6,9 @@ import useIsFirstRun from '@/hooks/useIsFirstRun';
 import { streams } from '@/lib';
 import store from '@/lib/store';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { Platform, platform as obtainPlatform } from '@tauri-apps/plugin-os';
+import { Platform } from '@tauri-apps/plugin-os';
+
+const { platform: obtainPlatform } = window.__TAURI__.os;
 
 interface PlatformProviderProps {
   children: React.ReactNode;
