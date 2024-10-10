@@ -11,7 +11,21 @@ import formatBytes from "@/features/metrics/utils/format-bytes";
 import { commands, DiskAnalysisProgress, DiskItem, streams } from "@/lib";
 import logger from "@/lib/logger";
 import notification from "@/utils/notification";
-import { Box, Center, Grid, LoadingOverlay, Progress, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Center,
+  Grid,
+  Group,
+  LoadingOverlay,
+  Progress,
+  Stack,
+  Text,
+  Title,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
+import { IconFolderOpen, IconTerminal, IconTerminal2 } from "@tabler/icons-react";
 
 interface AnalysisProgressIndicatorProps {
   enableStatus?: boolean;
@@ -157,6 +171,26 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
     }
   }, [disk.mountPoint, colors.dark, setChartOptions]);
 
+  const showDirectory = React.useCallback(async () => {
+    await commands.open(disk.mountPoint).catch((err) => {
+      notification.error({
+        title: "Error opening directory",
+        message: "An error occurred while trying to open the directory.",
+      });
+      logger.error("Error opening directory: ", err);
+    });
+  }, []);
+
+  const openInTerminal = React.useCallback(async () => {
+    await commands.showInTerminal(disk.mountPoint).catch((err) => {
+      notification.error({
+        title: "Error opening in terminal",
+        message: "An error occurred while trying to open the terminal.",
+      });
+      logger.error("Error opening terminal: ", err);
+    });
+  }, []);
+
   return (
     <PageWrapper name={id}>
       <Grid>
@@ -165,7 +199,19 @@ const DiskAnalyticsPage: React.FC<DiskAnalyticsPageProps> = () => {
         </Grid.Col>
         <Grid.Col md={12} lg={8} xl={9}>
           <Card height="400px">
-            <Title order={4}>File Explorer</Title>
+            <Group>
+              <Title order={4}>File Explorer</Title>
+              <Tooltip label="Open in File Explorer" color="gray">
+                <ActionIcon size={"sm"} variant="light" onClick={showDirectory}>
+                  <IconFolderOpen stroke={1.5} />
+                </ActionIcon>
+              </Tooltip>
+              <Tooltip label="Open in Terminal" color="gray">
+                <ActionIcon size={"sm"} variant="light" onClick={openInTerminal}>
+                  <IconTerminal2 stroke={1.5} />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
             {isDiskScanEmpty ? (
               <AnalysisIndicator progress={progress} enableStatus={true} pt="86px" />
             ) : (

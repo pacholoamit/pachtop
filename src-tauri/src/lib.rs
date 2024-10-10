@@ -6,12 +6,6 @@ extern crate cocoa;
 #[macro_use]
 extern crate objc;
 
-#[cfg(target_os = "macos")]
-mod mac;
-
-#[cfg(target_os = "windows")]
-mod win;
-
 mod app;
 mod commands;
 mod dirstat;
@@ -22,11 +16,14 @@ mod tray;
 mod utils;
 
 use app::AppState;
+use tauri::Manager;
+use tauri_plugin_decorum::WebviewWindowExt;
 
 use std::time::Duration;
 
 fn build_and_run_app(app: AppState) {
     tauri::Builder::default()
+        .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(|app| {
             let handle = app.handle().clone();
@@ -49,20 +46,12 @@ fn build_and_run_app(app: AppState) {
                 }
             });
 
-            //  CONFIGURE WINDOW
-            if cfg!(target_os = "macos") {
-                #[cfg(target_os = "macos")]
-                use mac::window::setup_mac_window;
+            let main_window = app.get_webview_window("main").unwrap();
+            main_window.create_overlay_titlebar().unwrap();
 
-                #[cfg(target_os = "macos")]
-                setup_mac_window(app);
-            } else if cfg!(target_os = "windows") {
-                #[cfg(target_os = "windows")]
-                use win::window::setup_win_window;
-
-                #[cfg(target_os = "windows")]
-                setup_win_window(app);
-            }
+            // Some macOS-specific helpers
+            #[cfg(target_os = "macos")]
+            main_window.set_traffic_lights_inset(12.0, 24.0).unwrap();
 
             // BUILD TRAY - TODO MOVE TO DIFFERENT FILE
 

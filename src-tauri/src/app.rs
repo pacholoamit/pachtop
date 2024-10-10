@@ -4,7 +4,7 @@ use std::sync::{Arc, Mutex};
 use crate::dirstat::DiskItem;
 use crate::metrics::Metrics;
 use crate::models::*;
-use tauri::Manager;
+use tauri::Emitter;
 
 pub struct AppState(pub Arc<Mutex<App>>);
 

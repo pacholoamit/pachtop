@@ -42,7 +42,7 @@
     }
   },
   "productName": "pachtop",
-  "version": "1.0.0-1",
+  "version": "1.1.0",
   "identifier": "com.pachtop.dev",
   "plugins": {
     "updater": {
@@ -53,6 +53,7 @@
     }
   },
   "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "fullscreen": false,
@@ -61,7 +62,9 @@
         "title": "pachtop",
         "alwaysOnTop": false,
         "width": 800,
-        "decorations": true
+        "decorations": true,
+        "hiddenTitle": true,
+        "titleBarStyle": "Overlay"
       }
     ],
     "security": {
