@@ -108,9 +108,9 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       titlebar: commonColors.slate.titlebar,
       charts: {
         statsRing: {
-          cpu: "blue",
+          cpu: "red",
           memory: "cyan",
-          swap: "red",
+          swap: "blue",
           disk: "grape",
         },
         area: {
@@ -185,9 +185,9 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       titlebar: commonColors.midnight.titlebar,
       charts: {
         statsRing: {
-          cpu: "blue",
+          cpu: "red",
           memory: "cyan",
-          swap: "red",
+          swap: "blue",
           disk: "grape",
         },
         area: {

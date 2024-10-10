@@ -35,17 +35,19 @@ export const useAreaChartState = (
     accessibility: {
       enabled: false,
     },
-    title: {
-      text: opts.title.text,
-      style: {
-        fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
-        fontWeight: "bold",
-        fontSize: "16px",
-        color: "#dce1e8",
-      },
-    },
+    // title: {
+
+    //   text: opts.title.text,
+    //   style: {
+    //     fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
+    //     fontWeight: "bold",
+    //     fontSize: "16px",
+    //     color: "#dce1e8",
+    //   },
+    // },
     // This is the rectangle box that u can use to navigate
     navigator: {
+      enabled: false,
       adaptToUpdatedData: true,
       maskFill: other.charts.area.default.navigator.maskFill,
       handles: {
@@ -129,6 +131,8 @@ export const useAreaChartState = (
     // This is the calendar thing on the top right
     rangeSelector: {
       inputEnabled: false,
+      allButtonsEnabled: false,
+      enabled: false,
       floating: true,
 
       labelStyle: {
@@ -176,8 +180,7 @@ export const useAreaChartState = (
     },
     boost: {
       enabled: true,
-      useGPUTranslations: false,
-      allowForce: true,
+      useGPUTranslations: true,
     },
     chart: {
       ignoreHiddenSeries: true,
