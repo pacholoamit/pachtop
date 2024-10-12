@@ -35,24 +35,19 @@ interface StatsRingProps {
 
 const StatsRing: React.FC<StatsRingProps> = (props) => {
   return (
-    <Group noWrap>
-      <RingProgress
-        size={60}
-        roundCaps
-        thickness={6.5}
-        sections={[{ value: props.progress, color: props.color }]}
-        label={
-          <Center>
-            <props.Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
-          </Center>
-        }
-      />
-      <Box sx={{ flex: 1, minWidth: 0 }}>
-        <Text fw={700} size={"lg"} sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
-          {props.stats}
-        </Text>
-      </Box>
-    </Group>
+    <RingProgress
+      size={120}
+      roundCaps
+      thickness={6.5}
+      sections={[{ value: props.progress, color: props.color }]}
+      label={
+        <Center>
+          <Text fw={700} size={"lg"} sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
+            {props.stats}
+          </Text>
+        </Center>
+      }
+    />
   );
 };
 
