@@ -55,7 +55,7 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
     <Card style={{ height: "196px" }}>
       <Grid justify="center" align="stretch">
         <Grid.Col
-          span={3}
+          span={2}
           h={"190px"}
           style={{
             backgroundColor: "transparent",
@@ -72,7 +72,7 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
           />
         </Grid.Col>
 
-        <Grid.Col span={9} h={"190px"}>
+        <Grid.Col span={10} h={"190px"}>
           <AreaChart options={chartOptions} />
         </Grid.Col>
       </Grid>
