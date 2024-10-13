@@ -3,6 +3,7 @@ import { useShallow } from "zustand/react/shallow";
 import PageWrapper from "@/components/page-wrapper";
 import SystemInformationWidget from "@/components/system-information-widget";
 import CpusBarChart from "@/features/metrics/components/cpus/cpus.bar-charts";
+import DiskAreaChart from "@/features/metrics/components/disks/disk.area-chart";
 import DiskStatsRing from "@/features/metrics/components/disks/disk.stats-ring";
 import GlobalCpuAreaChart from "@/features/metrics/components/global-cpu/global-cpu.area-chart";
 import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
@@ -12,6 +13,7 @@ import NetworksReceivedAreaChart from "@/features/metrics/components/networks/ne
 import NetworksTransmittedAreaChart from "@/features/metrics/components/networks/networks-transmitted.area-chart";
 import SwapAreaChart from "@/features/metrics/components/swap/swap.area-chart";
 import SwapStatsRing from "@/features/metrics/components/swap/swap.stats-ring";
+import useDisksSelectors from "@/features/metrics/stores/disk.store";
 import useSystemStoreSelectors from "@/features/metrics/stores/system.store";
 import useRandomGreeting from "@/hooks/useRandomGreeting";
 import { Grid } from "@mantine/core";
@@ -41,9 +43,6 @@ const MemorySection = () => {
       <Grid.Col md={6} sm={12}>
         <SwapAreaChart />
       </Grid.Col>
-      <Grid.Col md={6} sm={12}>
-        <SwapAreaChart />
-      </Grid.Col>
     </>
   );
 };
@@ -62,7 +61,7 @@ const CpuSection = () => {
   );
 };
 
-const DisksSection = () => {
+const NetworksSection = () => {
   return (
     <>
       <Grid.Col md={6} sm={12}>
@@ -71,6 +70,20 @@ const DisksSection = () => {
       <Grid.Col md={6} sm={12}>
         <NetworksTransmittedAreaChart />
       </Grid.Col>
+    </>
+  );
+};
+
+const DiskSection = () => {
+  const disks = useDisksSelectors.use.disks();
+
+  return (
+    <>
+      {disks.map((disk) => (
+        <Grid.Col key={disk.mountPoint} md={6} sm={12}>
+          <DiskAreaChart disk={disk} />
+        </Grid.Col>
+      ))}
     </>
   );
 };
@@ -84,7 +97,8 @@ const DashboardPage = () => {
         <StatsRings />
         <CpuSection />
         <MemorySection />
-        <DisksSection />
+        <DiskSection />
+        <NetworksSection />
       </Grid>
     </PageWrapper>
   );

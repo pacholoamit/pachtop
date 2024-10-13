@@ -97,10 +97,13 @@ export const useAreaChartState = (
 
     yAxis: {
       max: opts.yAxis.max,
+
       title: {
         text: null,
       },
-      startOnTick: true,
+
+      endOnTick: true,
+
       gridLineColor: other.charts.area.default.gridLineColor,
       lineColor: other.charts.area.default.lineColor,
       labels: {
@@ -123,6 +126,7 @@ export const useAreaChartState = (
     },
     // Scrollbar at the bottom of the chart
     scrollbar: {
+      enabled: false,
       rifleColor: other.charts.area.default.scrollbar.rifleColor,
       barBackgroundColor: other.charts.area.default.scrollbar.barBackgroundColor,
       buttonBackgroundColor: other.charts.area.default.scrollbar.buttonBackgroundColor,

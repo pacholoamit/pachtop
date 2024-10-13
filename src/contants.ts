@@ -84,6 +84,15 @@ const areaChartThemeOptions = {
       ],
     },
   },
+  disk: {
+    color: {
+      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+      stops: [
+        [0, "rgba(116, 52, 235, 0.75)"],
+        [1, "rgba(116, 52, 235, 0)"],
+      ],
+    },
+  },
 };
 
 export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
