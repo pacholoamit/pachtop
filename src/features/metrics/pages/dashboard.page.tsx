@@ -64,10 +64,10 @@ const CpuSection = () => {
 const NetworksSection = () => {
   return (
     <>
-      <Grid.Col md={6} sm={12}>
+      <Grid.Col md={6} sm={12} offset={6}>
         <NetworksReceivedAreaChart />
       </Grid.Col>
-      <Grid.Col md={6} sm={12}>
+      <Grid.Col md={6} sm={12} offset={6}>
         <NetworksTransmittedAreaChart />
       </Grid.Col>
     </>
@@ -92,9 +92,12 @@ const DashboardPage = () => {
   const hostname = useSystemStoreSelectors(useShallow((state) => state.info.hostname));
   const greeting = useRandomGreeting(hostname);
   return (
-    <PageWrapper name={greeting} widget={<SystemInformationWidget />}>
+    <PageWrapper name={greeting}>
       <Grid gutter="sm">
-        <StatsRings />
+        <Grid.Col span={12}>
+          <SystemInformationWidget />
+        </Grid.Col>
+        {/* <StatsRings /> */}
         <CpuSection />
         <MemorySection />
         <DiskSection />
