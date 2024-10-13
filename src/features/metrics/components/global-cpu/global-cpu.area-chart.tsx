@@ -2,54 +2,15 @@ import React, { useEffect } from "react";
 
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import Card from "@/components/card";
-import GlobalCpuStatsRing from "@/features/metrics/components/global-cpu/global-cpu.stats-ring";
+import StatsRing from "@/components/stats-ring2";
 import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
 import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
-import {
-  Box,
-  Center,
-  DefaultMantineColor,
-  Divider,
-  Grid,
-  Group,
-  rem,
-  RingProgress,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Grid, useMantineTheme } from "@mantine/core";
 import { IconCpu, TablerIconsProps } from "@tabler/icons-react";
 
 // TODO: Remove Luxon and ChartJS
 // TODO: Make timestamp work automatically
 // TODO: fix time
-
-interface StatsRingProps {
-  label: string;
-  stats: string;
-  progress: number;
-  color: DefaultMantineColor;
-  Icon: (props: TablerIconsProps) => JSX.Element;
-}
-
-const StatsRing: React.FC<StatsRingProps> = (props) => {
-  return (
-    <RingProgress
-      size={120}
-      roundCaps
-      thickness={6.5}
-      sections={[{ value: props.progress, color: props.color }]}
-      label={
-        <Center>
-          <Text fw={700} size={"lg"} sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
-            {props.stats}
-          </Text>
-        </Center>
-      }
-    />
-  );
-};
 
 const GlobalCpuAreaChart: React.FC = ({}) => {
   const metrics = useGlobalCpuSelectors.use.metrics();
@@ -102,28 +63,13 @@ const GlobalCpuAreaChart: React.FC = ({}) => {
             WebkitBackdropFilter: "blur(15px)",
           }}
         >
-          <Center>
-            <Group>
-              <Stack align="center">
-                <Text
-                  c="dimmed"
-                  size="xs"
-                  tt="uppercase"
-                  fw={700}
-                  sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}
-                >
-                  CPU Usage
-                </Text>
-                <StatsRing
-                  color={other.charts.statsRing.cpu}
-                  Icon={IconCpu}
-                  stats={stats}
-                  label="CPU"
-                  progress={progress}
-                />
-              </Stack>
-            </Group>
-          </Center>
+          <StatsRing
+            color={other.charts.statsRing.cpu}
+            Icon={IconCpu}
+            stats={stats}
+            label="CPU USAGE"
+            progress={progress}
+          />
         </Grid.Col>
 
         <Grid.Col span={9} h={"190px"}>
