@@ -39,7 +39,7 @@ const MemorySection = () => {
   return (
     <>
       <Grid.Col md={6} sm={12}>
-        <MemoryAreaChart />
+        <SwapAreaChart />
       </Grid.Col>
       <Grid.Col md={6} sm={12}>
         <SwapAreaChart />
@@ -51,11 +51,12 @@ const MemorySection = () => {
 const CpuSection = () => {
   return (
     <>
-      <Grid.Col xl={7.5} lg={6} md={12}>
+      <Grid.Col md={6} sm={12}>
         <GlobalCpuAreaChart />
       </Grid.Col>
-      <Grid.Col xl={4.5} lg={6} md={12}>
-        <CpusBarChart />
+      <Grid.Col md={6} sm={12}>
+        {/* <CpusBarChart /> */}
+        <MemoryAreaChart />
       </Grid.Col>
     </>
   );

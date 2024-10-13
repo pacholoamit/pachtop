@@ -1,17 +1,4 @@
-import {
-  Box,
-  Center,
-  DefaultMantineColor,
-  Divider,
-  Grid,
-  Group,
-  rem,
-  RingProgress,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Center, DefaultMantineColor, RingProgress, Stack, Text } from "@mantine/core";
 import { IconCpu, TablerIconsProps } from "@tabler/icons-react";
 
 interface StatsRingProps {
