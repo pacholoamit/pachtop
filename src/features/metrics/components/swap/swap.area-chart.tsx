@@ -6,6 +6,7 @@ import StatsRing from "@/components/stats-ring2";
 import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
+import formatStats from "@/features/metrics/utils/format-stats";
 import { Grid, useMantineTheme } from "@mantine/core";
 import { IconFile } from "@tabler/icons-react";
 
@@ -19,7 +20,7 @@ const SwapAreaChart: React.FC = ({}) => {
   const used = latestSwap.used;
   const progress = latestSwap.usedPercentage;
 
-  const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
+  const stats = React.useMemo(() => formatStats(used), [used]);
 
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {

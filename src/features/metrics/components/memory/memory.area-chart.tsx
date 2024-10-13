@@ -6,6 +6,7 @@ import StatsRing from "@/components/stats-ring2";
 import useMemorySelectors from "@/features/metrics/stores/memory.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
 import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
+import formatStats from "@/features/metrics/utils/format-stats";
 import { Grid, useMantineTheme } from "@mantine/core";
 import { IconChartArea } from "@tabler/icons-react";
 
@@ -35,7 +36,7 @@ const MemoryAreaChart: React.FC = ({}) => {
   const used = latestMemory.used;
   const progress = latestMemory.usedPercentage;
 
-  const stats = React.useMemo(() => formatOverallStats(used, available), [used, available]);
+  const stats = React.useMemo(() => formatStats(used), [used]);
 
   useEffect(() => {
     setChartOptions({
