@@ -1,8 +1,9 @@
-import { Store } from "tauri-plugin-store";
+import { Store } from 'tauri-plugin-store';
 
-import logger from "@/lib/logger";
-import { appDataDir } from "@tauri-apps/api/path";
-import { platform } from "@tauri-apps/plugin-os";
+import logger from '@/lib/logger';
+import { appDataDir } from '@tauri-apps/api/path';
+
+const { platform } = window.__TAURI__.os;
 
 // Generic function to create get/set operations
 const createStoreItem = <T>(store: Store, key: string, defaultValue: T) => ({

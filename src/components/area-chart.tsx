@@ -1,11 +1,11 @@
-import HighchartsReact from "highcharts-react-official";
-import * as Highcharts from "highcharts/highstock";
-import HighchartsBoost from "highcharts/modules/boost";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import HighchartsReact from 'highcharts-react-official';
+import * as Highcharts from 'highcharts/highstock';
+import HighchartsBoost from 'highcharts/modules/boost';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import useSettings from "@/hooks/useSettings";
-import { useMantineTheme } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import useSettings from '@/hooks/useSettings';
+import { useMantineTheme } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 
 HighchartsBoost(Highcharts);
 
@@ -101,7 +101,7 @@ export const useAreaChartState = (
       title: {
         text: null,
       },
-
+      startOnTick: true,
       endOnTick: true,
 
       gridLineColor: other.charts.area.default.gridLineColor,
@@ -191,6 +191,9 @@ export const useAreaChartState = (
       alignTicks: false,
       backgroundColor: "transparent",
       animation: settings.isPerformanceModeEnabled ? false : true,
+      zooming: {
+        mouseWheel: true,
+      },
     },
   });
 
