@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import AreaChart, { useAreaChartState } from "@/components/area-chart";
-import Card from "@/components/card";
-import StatsRing from "@/components/stats-ring2";
-import useGlobalCpuSelectors from "@/features/metrics/stores/global-cpu.store";
-import fromNumberToPercentageString from "@/features/metrics/utils/from-number-to-percentage-string";
-import { Grid, useMantineTheme } from "@mantine/core";
-import { IconCpu, TablerIconsProps } from "@tabler/icons-react";
+import AreaChart, { useAreaChartState } from '@/components/area-chart';
+import Card from '@/components/card';
+import StatsRing from '@/components/stats-ring2';
+import useGlobalCpuSelectors from '@/features/metrics/stores/global-cpu.store';
+import fromNumberToPercentageString from '@/features/metrics/utils/from-number-to-percentage-string';
+import { Grid, useMantineTheme } from '@mantine/core';
+import { IconCpu, TablerIconsProps } from '@tabler/icons-react';
 
 // TODO: Remove Luxon and ChartJS
 // TODO: Make timestamp work automatically

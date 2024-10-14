@@ -23,6 +23,7 @@ use std::time::Duration;
 
 fn build_and_run_app(app: AppState) {
     tauri::Builder::default()
+        .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(|app| {
