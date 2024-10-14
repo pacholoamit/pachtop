@@ -101,7 +101,7 @@ export const useAreaChartState = (
       title: {
         text: null,
       },
-      startOnTick: true,
+      // startOnTick: true,
       endOnTick: true,
 
       gridLineColor: other.charts.area.default.gridLineColor,

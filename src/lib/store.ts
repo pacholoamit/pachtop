@@ -1,8 +1,7 @@
 import logger from '@/lib/logger';
 import { appDataDir } from '@tauri-apps/api/path';
+import { platform } from '@tauri-apps/plugin-os';
 import { createStore as createTauriStore } from '@tauri-apps/plugin-store';
-
-const { platform } = window.__TAURI__.os;
 
 // Generic function to create get/set operations
 const createStoreItem = <T>(store: Awaited<ReturnType<typeof createTauriStore>>, key: string, defaultValue: T) => ({
@@ -36,7 +35,7 @@ const isFirstRun = (store: Awaited<ReturnType<typeof createTauriStore>>) => ({
 });
 
 const createStore = async (name: string) => {
-  const currentPlatform = await platform();
+  const currentPlatform = platform();
   const path = await appDataDir();
   const storePath = currentPlatform === "windows" ? `${path}\\${name}` : `${path}/${name}`;
   const store = await createTauriStore(storePath);
