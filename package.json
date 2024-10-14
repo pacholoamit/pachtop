@@ -21,8 +21,9 @@
     "@mantine/notifications": "^6.0.22",
     "@tabler/icons-react": "^2.47.0",
     "@tauri-apps/api": "^2.0.2",
+    "@tauri-apps/plugin-autostart": "~2",
     "@tauri-apps/plugin-fs": "^2.0.0",
-    "@tauri-apps/plugin-log": "^2.0.0",
+    "@tauri-apps/plugin-log": "~2",
     "@tauri-apps/plugin-os": "~2.0.0",
     "@tauri-apps/plugin-process": "^2.0.0",
     "@tauri-apps/plugin-shell": "^2.0.0",
@@ -30,7 +31,7 @@
     "@tauri-apps/plugin-updater": "^2.0.0",
     "ag-grid-react": "^32.2.2",
     "classnames": "^2.5.1",
-    "highcharts": "^11.4.8",
+    "highcharts": "^11.4.6",
     "highcharts-react-official": "^3.2.1",
     "immer": "^10.1.1",
     "non.geist": "^1.0.4",
@@ -43,8 +44,6 @@
     "react-router-dom": "^6.27.0",
     "react-text-gradients": "^1.0.2",
     "styled-components": "^6.1.13",
-    "tauri-plugin-autostart-api": "https://github.com/tauri-apps/tauri-plugin-autostart#v2",
-    "tauri-plugin-log-api": "https://github.com/tauri-apps/tauri-plugin-log#v2",
     "zustand": "^4.5.5"
   },
   "devDependencies": {

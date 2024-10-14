@@ -5175,7 +5175,8 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-autostart"
 version = "2.0.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#00585835834c6ddbf89e8d159804211ceba4bcfb"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bba6bb936e0fd0a58ed958b49e2e423dd40949c9d9425cc991be996959e3838e"
 dependencies = [
  "auto-launch",
  "log",
@@ -5226,7 +5227,8 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-log"
 version = "2.0.1"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v2#00585835834c6ddbf89e8d159804211ceba4bcfb"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a49f2c05d15e6375ab7f7e528b3049150ba4dfafdf61f85e5178d0aef18e3f5"
 dependencies = [
  "android_logger",
  "byte-unit",

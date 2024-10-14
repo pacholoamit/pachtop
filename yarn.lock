@@ -3107,13 +3107,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/api@npm:2.0.0-beta.13":
-  version: 2.0.0-beta.13
-  resolution: "@tauri-apps/api@npm:2.0.0-beta.13"
-  checksum: 2716878dedbae061740bde23b5ee9f5e8fffc6e4bf26d0b0babb3412a83ff295fe2fe4e22b4505de7ef845a0745d679bf15d7078b3dc26784002bd638abacff0
-  languageName: node
-  linkType: hard
-
 "@tauri-apps/api@npm:^2.0.0, @tauri-apps/api@npm:^2.0.2":
   version: 2.0.2
   resolution: "@tauri-apps/api@npm:2.0.2"
@@ -3232,6 +3225,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tauri-apps/plugin-autostart@npm:~2":
+  version: 2.0.0
+  resolution: "@tauri-apps/plugin-autostart@npm:2.0.0"
+  dependencies:
+    "@tauri-apps/api": ^2.0.0
+  checksum: 9cdbe185e8da83e3831c31d016a0f65088fb32e93c809631088a051ac8f1c0c4a19f3bd06da062a145e5d734f69aa198cab5f222c5284e23e80014a7d17d8af4
+  languageName: node
+  linkType: hard
+
 "@tauri-apps/plugin-fs@npm:^2.0.0":
   version: 2.0.0
   resolution: "@tauri-apps/plugin-fs@npm:2.0.0"
@@ -3241,7 +3243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/plugin-log@npm:^2.0.0":
+"@tauri-apps/plugin-log@npm:~2":
   version: 2.0.0
   resolution: "@tauri-apps/plugin-log@npm:2.0.0"
   dependencies:
@@ -5799,7 +5801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highcharts@npm:^11.4.8":
+"highcharts@npm:^11.4.6":
   version: 11.4.8
   resolution: "highcharts@npm:11.4.8"
   checksum: 92d3563573502dbb3f6facef5608590e8f32dd839106febfb62635851bbbc8e66ba88bcc4c90b497a2150d268aa735d5549da7bf8f2a621394171f3d396777c5
@@ -6881,8 +6883,9 @@ __metadata:
     "@tabler/icons-react": ^2.47.0
     "@tauri-apps/api": ^2.0.2
     "@tauri-apps/cli": 2.0.3
+    "@tauri-apps/plugin-autostart": ~2
     "@tauri-apps/plugin-fs": ^2.0.0
-    "@tauri-apps/plugin-log": ^2.0.0
+    "@tauri-apps/plugin-log": ~2
     "@tauri-apps/plugin-os": ~2.0.0
     "@tauri-apps/plugin-process": ^2.0.0
     "@tauri-apps/plugin-shell": ^2.0.0
@@ -6902,7 +6905,7 @@ __metadata:
     eslint-plugin-react: ^7.37.1
     eslint-plugin-unused-imports: ^4.1.4
     globals: ^15.11.0
-    highcharts: ^11.4.8
+    highcharts: ^11.4.6
     highcharts-react-official: ^3.2.1
     husky: ^9.1.6
     immer: ^10.1.1
@@ -6916,8 +6919,6 @@ __metadata:
     react-router-dom: ^6.27.0
     react-text-gradients: ^1.0.2
     styled-components: ^6.1.13
-    tauri-plugin-autostart-api: "https://github.com/tauri-apps/tauri-plugin-autostart#v2"
-    tauri-plugin-log-api: "https://github.com/tauri-apps/tauri-plugin-log#v2"
     typescript: ^5.6.3
     typescript-eslint: ^7.18.0
     vite: ^5.4.8
@@ -8057,24 +8058,6 @@ __metadata:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: f1322768c9741a25356c11373bce918483f40fa9a25c69c59410c8a1247632487edef5fe76c5f12ac51a6356d2f1829e96d2bc34098668a2fc34d76050ac2b6c
-  languageName: node
-  linkType: hard
-
-"tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart#v2":
-  version: 2.0.0-beta.5
-  resolution: "tauri-plugin-autostart-api@https://github.com/tauri-apps/tauri-plugin-autostart.git#commit=41d58532b5741ebb0d155dd3a1bd276910cb20d1"
-  dependencies:
-    "@tauri-apps/api": 2.0.0-beta.13
-  checksum: fc149788844a88c2a70cce8735757a538202f80941b4f9d8f8ab93a06c5df4058d43aeb1487c5a03a8ce712fb9fe26d0ce90f640c863551cf5ba5b0715c70d4f
-  languageName: node
-  linkType: hard
-
-"tauri-plugin-log-api@https://github.com/tauri-apps/tauri-plugin-log#v2":
-  version: 2.0.0-beta.6
-  resolution: "tauri-plugin-log-api@https://github.com/tauri-apps/tauri-plugin-log.git#commit=ed1570339878d2fc8d36729dc581f3a18f8db3c3"
-  dependencies:
-    "@tauri-apps/api": 2.0.0-beta.13
-  checksum: bd78b4b4474e058e6e1b7b3df4be68446c11fddcfdf416800551918017da164f2b126569321def825f99b420884f9dcb8e6d086cb86b099ba97ef66f02adbe39
   languageName: node
   linkType: hard
 
