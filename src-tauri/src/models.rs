@@ -89,6 +89,8 @@ pub struct SysInfo {
     pub hostname: String,
     #[ts(type = "number")]
     pub core_count: usize,
+    pub uptime: String,
+    pub arch: String,
 }
 
 pub trait SystemInformationTrait {

@@ -1,6 +1,7 @@
 use crate::models::*;
 use crate::utils::{current_time, get_percentage};
 use base64::prelude::*;
+use chrono::prelude::*;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::str::{self};
@@ -29,6 +30,12 @@ impl SystemInformationTrait for Metrics {
         let hostname = System::host_name().unwrap_or("Unknown".to_string());
         let core_count = System::physical_core_count(&self.sys).unwrap_or(0);
         let os = System::long_os_version().unwrap_or("Unknown".to_string());
+        let uptime = Utc
+            .timestamp(System::uptime() as i64, 0)
+            .format("%H:%M:%S")
+            .to_string();
+
+        let arch = System::cpu_arch().unwrap_or("Unknown".to_string());
 
         SysInfo {
             kernel_version,
@@ -36,6 +43,8 @@ impl SystemInformationTrait for Metrics {
             os_version,
             hostname,
             core_count,
+            uptime,
+            arch,
         }
     }
 }

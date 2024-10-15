@@ -1,5 +1,6 @@
 import { useShallow } from 'zustand/react/shallow';
 
+import DashboardSectionsDivider from '@/components/dashboard-section-divider';
 import PageWrapper from '@/components/page-wrapper';
 import SystemInformationWidget from '@/components/system-information-widget';
 import CpusBarChart from '@/features/metrics/components/cpus/cpus.bar-charts';
@@ -16,26 +17,7 @@ import SwapStatsRing from '@/features/metrics/components/swap/swap.stats-ring';
 import useDisksSelectors from '@/features/metrics/stores/disk.store';
 import useSystemStoreSelectors from '@/features/metrics/stores/system.store';
 import useRandomGreeting from '@/hooks/useRandomGreeting';
-import { Divider, Grid, Text } from '@mantine/core';
-
-// const StatsRings = () => {
-//   return (
-//     <>
-//       <Grid.Col sm={6} md={6} lg={3} xl={3}>
-//         <GlobalCpuStatsRing />
-//       </Grid.Col>
-//       <Grid.Col sm={6} md={6} lg={3} xl={3}>
-//         <MemoryStatsRing />
-//       </Grid.Col>
-//       <Grid.Col sm={6} md={6} lg={3} xl={3}>
-//         <SwapStatsRing />
-//       </Grid.Col>
-//       <Grid.Col sm={6} md={6} lg={3} xl={3}>
-//         <DiskStatsRing />
-//       </Grid.Col>
-//     </>
-//   );
-// };
+import { Box, Center, Divider, Grid, Text } from '@mantine/core';
 
 const MemorySection = () => {
   return (
@@ -79,6 +61,10 @@ const NetworksSection = () => {
 const DiskSection = () => {
   const disks = useDisksSelectors.use.disks();
 
+  if (disks.length === 0) {
+    return <DashboardNoDataAvailable message="No disk data available" />;
+  }
+
   return (
     <>
       {disks.map((disk) => (
@@ -90,25 +76,24 @@ const DiskSection = () => {
   );
 };
 
-interface DashboardSectionsDividerProps {
-  label: string;
+const TempsSection = () => {
+  const temps = [];
+
+  if (temps.length === 0) {
+    return <DashboardNoDataAvailable message="No temperature data available" />;
+  }
+};
+
+interface DashboardNoDataAvailableProps {
+  message: string;
 }
-const DashboardSectionsDivider = ({ label }: DashboardSectionsDividerProps) => {
+const DashboardNoDataAvailable = ({ message }: DashboardNoDataAvailableProps) => {
   return (
-    <>
-      <Grid.Col span={12}>
-        <Divider
-          my="xs"
-          label={
-            <>
-              <Text c="dimmed" size="sm" tt="uppercase" weight={700}>
-                {label}
-              </Text>
-            </>
-          }
-        />
-      </Grid.Col>
-    </>
+    <Center maw={400} h={190} mx="auto">
+      <Text c="dimmed" size="sm" tt="uppercase" fw={700}>
+        {message}
+      </Text>
+    </Center>
   );
 };
 
@@ -126,8 +111,9 @@ const DashboardPage = () => {
         <MemorySection />
         <DashboardSectionsDivider label="Disks" />
         <DiskSection />
-        <DashboardSectionsDivider label="Networks" />
-        <NetworksSection />
+        <DashboardSectionsDivider label="Temps" />
+        <TempsSection />
+        {/* <NetworksSection /> */}
       </Grid>
     </PageWrapper>
   );
