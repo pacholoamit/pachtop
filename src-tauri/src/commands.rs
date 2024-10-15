@@ -181,7 +181,7 @@ pub fn delete_file(path: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn add_pachtop_exclusion(window: tauri::Window) -> Result<(), String> {
+pub fn add_pachtop_exclusion(_: tauri::Window) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
         let shell = window.app_handle().shell();
