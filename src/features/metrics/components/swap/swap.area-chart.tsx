@@ -1,15 +1,27 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import AreaChart, { useAreaChartState } from "@/components/area-chart";
 import Card from "@/components/card";
+import StatsRing from "@/components/stats-ring2";
 import useSwapSelectors from "@/features/metrics/stores/swap.store";
 import formatBytes from "@/features/metrics/utils/format-bytes";
-import { useMantineTheme } from "@mantine/core";
+import formatOverallStats from "@/features/metrics/utils/format-overall-stats";
+import formatStats from "@/features/metrics/utils/format-stats";
+import { Grid, useMantineTheme } from "@mantine/core";
+import { IconFile } from "@tabler/icons-react";
 
 const SwapAreaChart: React.FC = ({}) => {
   const swap = useSwapSelectors.use.metrics();
+  const latestSwap = useSwapSelectors.use.latest();
 
   const { other } = useMantineTheme();
+
+  const available = latestSwap.total;
+  const used = latestSwap.used;
+  const progress = latestSwap.usedPercentage;
+
+  const stats = React.useMemo(() => formatStats(used), [used]);
+
   const [chartOptions, setChartOptions] = useAreaChartState({
     title: {
       text: "SWAP Usage",
@@ -42,8 +54,21 @@ const SwapAreaChart: React.FC = ({}) => {
   }, [swap]);
 
   return (
-    <Card style={{ height: "380px" }}>
-      <AreaChart options={chartOptions} />
+    <Card style={{ height: "190px" }}>
+      <Grid justify="center" align="stretch">
+        <Grid.Col span={2} h={"190px"}>
+          <StatsRing
+            color={other.charts.statsRing.swap}
+            stats={stats}
+            label="SWAP USAGE"
+            Icon={IconFile}
+            progress={progress}
+          />
+        </Grid.Col>
+        <Grid.Col span={10} style={{ height: "190px" }}>
+          <AreaChart options={chartOptions} />
+        </Grid.Col>
+      </Grid>
     </Card>
   );
 };

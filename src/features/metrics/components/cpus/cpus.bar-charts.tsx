@@ -52,7 +52,7 @@ const CpusBarChart: React.FC = () => {
     }));
   }, [cpus]);
   return (
-    <Card style={{ height: "380px" }}>
+    <Card style={{ height: "195px" }}>
       <BarChart options={chartOptions} />
     </Card>
   );

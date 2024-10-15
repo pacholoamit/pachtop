@@ -1,11 +1,11 @@
-import HighchartsReact from "highcharts-react-official";
-import * as Highcharts from "highcharts/highstock";
-import HighchartsBoost from "highcharts/modules/boost";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import HighchartsReact from 'highcharts-react-official';
+import * as Highcharts from 'highcharts/highstock';
+import HighchartsBoost from 'highcharts/modules/boost';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import useSettings from "@/hooks/useSettings";
-import { useMantineTheme } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import useSettings from '@/hooks/useSettings';
+import { useMantineTheme } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 
 HighchartsBoost(Highcharts);
 
@@ -35,17 +35,19 @@ export const useAreaChartState = (
     accessibility: {
       enabled: false,
     },
-    title: {
-      text: opts.title.text,
-      style: {
-        fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
-        fontWeight: "bold",
-        fontSize: "16px",
-        color: "#dce1e8",
-      },
-    },
+    // title: {
+
+    //   text: opts.title.text,
+    //   style: {
+    //     fontFamily: "Geist Variable, Roboto, Arial, sans-serif",
+    //     fontWeight: "bold",
+    //     fontSize: "16px",
+    //     color: "#dce1e8",
+    //   },
+    // },
     // This is the rectangle box that u can use to navigate
     navigator: {
+      enabled: false,
       adaptToUpdatedData: true,
       maskFill: other.charts.area.default.navigator.maskFill,
       handles: {
@@ -95,10 +97,13 @@ export const useAreaChartState = (
 
     yAxis: {
       max: opts.yAxis.max,
+
       title: {
         text: null,
       },
-      startOnTick: true,
+      // startOnTick: true,
+      endOnTick: true,
+
       gridLineColor: other.charts.area.default.gridLineColor,
       lineColor: other.charts.area.default.lineColor,
       labels: {
@@ -121,6 +126,7 @@ export const useAreaChartState = (
     },
     // Scrollbar at the bottom of the chart
     scrollbar: {
+      enabled: false,
       rifleColor: other.charts.area.default.scrollbar.rifleColor,
       barBackgroundColor: other.charts.area.default.scrollbar.barBackgroundColor,
       buttonBackgroundColor: other.charts.area.default.scrollbar.buttonBackgroundColor,
@@ -129,6 +135,8 @@ export const useAreaChartState = (
     // This is the calendar thing on the top right
     rangeSelector: {
       inputEnabled: false,
+      allButtonsEnabled: false,
+      enabled: false,
       floating: true,
 
       labelStyle: {
@@ -176,14 +184,16 @@ export const useAreaChartState = (
     },
     boost: {
       enabled: true,
-      useGPUTranslations: false,
-      allowForce: true,
+      useGPUTranslations: true,
     },
     chart: {
       ignoreHiddenSeries: true,
       alignTicks: false,
       backgroundColor: "transparent",
       animation: settings.isPerformanceModeEnabled ? false : true,
+      zooming: {
+        mouseWheel: true,
+      },
     },
   });
 

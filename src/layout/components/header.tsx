@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import { Badge, Group, Header as MantineHeader } from "@mantine/core";
-import { getVersion } from "@tauri-apps/api/app";
+import usePlatform from '@/hooks/usePlatform';
+import { Badge, Group, Header as MantineHeader } from '@mantine/core';
+import { getVersion } from '@tauri-apps/api/app';
 
-import NavigationHistory from "./navigation-history";
-import usePlatform from "@/hooks/usePlatform";
+import NavigationHistory from './navigation-history';
 
+//TODO: Fix navigation history
 const Header = () => {
   const { appHeader } = usePlatform();
   const [version, setVersion] = React.useState<string>("");
@@ -21,8 +22,9 @@ const Header = () => {
       style={{ backgroundColor: "transparent", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(15px)" }}
       onMouseDown={onClick}
     >
-      <Group position="apart" align="center" pl={8} pr={8} pt={8}>
-        <NavigationHistory />
+      <Group position="center" align="" pl={8} pr={8} pt={14}>
+        {/* <NavigationHistory /> */}
+        <div />
         <Badge color="teal" variant="dot">
           Pachtop {version && `v${version}`}
         </Badge>

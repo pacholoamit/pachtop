@@ -8,7 +8,7 @@ use crate::models::*;
 use crate::{app::AppState, dirstat::FileInfo};
 
 use serde::{Deserialize, Serialize};
-use tauri::{Emitter, Listener, Manager, State};
+use tauri::{Emitter, Manager, State};
 
 use log::info;
 use tauri_plugin_shell::ShellExt;
