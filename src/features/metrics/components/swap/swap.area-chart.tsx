@@ -65,7 +65,7 @@ const SwapAreaChart: React.FC = ({}) => {
             progress={progress}
           />
         </Grid.Col>
-        <Grid.Col span={10} h={"190px"}>
+        <Grid.Col span={10} style={{ height: "190px" }}>
           <AreaChart options={chartOptions} />
         </Grid.Col>
       </Grid>
