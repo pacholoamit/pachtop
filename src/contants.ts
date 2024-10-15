@@ -1,6 +1,6 @@
 import { MantineThemeOverride } from "@mantine/core";
 
-export const VIEWABLE_ELEMENT_COUNT = 60 * 30; // Viewable elements in the chart (60 seconds * 30 )
+export const VIEWABLE_ELEMENT_COUNT = 60; // Viewable elements in the chart (60 seconds * 30 )
 
 export const DEFAULT_TITLEBAR_COLOR = "#09090b";
 
@@ -84,6 +84,15 @@ const areaChartThemeOptions = {
       ],
     },
   },
+  disk: {
+    color: {
+      linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+      stops: [
+        [0, "rgba(116, 52, 235, 0.75)"],
+        [1, "rgba(116, 52, 235, 0)"],
+      ],
+    },
+  },
 };
 
 export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
@@ -108,9 +117,9 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       titlebar: commonColors.slate.titlebar,
       charts: {
         statsRing: {
-          cpu: "blue",
+          cpu: "red",
           memory: "cyan",
-          swap: "red",
+          swap: "blue",
           disk: "grape",
         },
         area: {
@@ -185,9 +194,9 @@ export const themes: Record<THEME_OPTION, MantineThemeOverride> = {
       titlebar: commonColors.midnight.titlebar,
       charts: {
         statsRing: {
-          cpu: "blue",
+          cpu: "red",
           memory: "cyan",
-          swap: "red",
+          swap: "blue",
           disk: "grape",
         },
         area: {

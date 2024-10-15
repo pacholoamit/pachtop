@@ -6,9 +6,7 @@ import useIsFirstRun from '@/hooks/useIsFirstRun';
 import { streams } from '@/lib';
 import store from '@/lib/store';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { Platform } from '@tauri-apps/plugin-os';
-
-const { platform: obtainPlatform } = window.__TAURI__.os;
+import { Platform, platform } from '@tauri-apps/plugin-os';
 
 interface PlatformProviderProps {
   children: React.ReactNode;
@@ -48,7 +46,7 @@ const PlatformProvider: React.FC<PlatformProviderProps> = ({ children }) => {
 
   useEffectAsync(async () => {
     const appStore = await store;
-    const p = obtainPlatform();
+    const p = platform();
     setPlatform(p);
 
     console.log("Platform: ", p);

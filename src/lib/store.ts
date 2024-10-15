@@ -1,11 +1,10 @@
-import { Store } from "tauri-plugin-store";
-
-import logger from "@/lib/logger";
-import { appDataDir } from "@tauri-apps/api/path";
-import { platform } from "@tauri-apps/plugin-os";
+import logger from '@/lib/logger';
+import { appDataDir } from '@tauri-apps/api/path';
+import { platform } from '@tauri-apps/plugin-os';
+import { createStore as createTauriStore } from '@tauri-apps/plugin-store';
 
 // Generic function to create get/set operations
-const createStoreItem = <T>(store: Store, key: string, defaultValue: T) => ({
+const createStoreItem = <T>(store: Awaited<ReturnType<typeof createTauriStore>>, key: string, defaultValue: T) => ({
   get: async () => {
     const value = await store.get<T>(key);
     logger.info(`Store item ${key} value: `, value);
@@ -19,7 +18,7 @@ const createStoreItem = <T>(store: Store, key: string, defaultValue: T) => ({
 });
 
 // Specialized function for sessions
-const sessions = (store: Store) => ({
+const sessions = (store: Awaited<ReturnType<typeof createTauriStore>>) => ({
   get: async () => await store.get<number>("sessions"),
   increment: async () => {
     const currentSessions = (await store.get<number>("sessions")) ?? 0;
@@ -28,7 +27,7 @@ const sessions = (store: Store) => ({
 });
 
 // Specialized function for first run check
-const isFirstRun = (store: Store) => ({
+const isFirstRun = (store: Awaited<ReturnType<typeof createTauriStore>>) => ({
   get: async () => {
     const count = (await store.get<number>("sessions")) || 0;
     return count === 0;
@@ -36,10 +35,10 @@ const isFirstRun = (store: Store) => ({
 });
 
 const createStore = async (name: string) => {
-  const currentPlatform = await platform();
+  const currentPlatform = platform();
   const path = await appDataDir();
   const storePath = currentPlatform === "windows" ? `${path}\\${name}` : `${path}/${name}`;
-  const store = new Store(storePath);
+  const store = await createTauriStore(storePath);
 
   logger.info("Store path: ", storePath);
 

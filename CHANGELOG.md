@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. This projec
 ## 1.1.0
 - Upgraded to tauri v2
 - Improved windows for Macos
+- Improved Dashboard UI
+
 ## 1.0.0-1
 - Added option for Windows users to enable microsoft defender exclusions for better performance
 - Set midnight to original theme
