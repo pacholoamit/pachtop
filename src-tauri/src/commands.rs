@@ -8,7 +8,7 @@ use crate::models::*;
 use crate::{app::AppState, dirstat::FileInfo};
 
 use serde::{Deserialize, Serialize};
-use tauri::{Emitter, Listener, Manager, State};
+use tauri::{Emitter, Manager, State};
 
 use log::info;
 use tauri_plugin_shell::ShellExt;
@@ -181,7 +181,7 @@ pub fn delete_file(path: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn add_pachtop_exclusion(_: tauri::Window) -> Result<(), String> {
+pub fn add_pachtop_exclusion(window: tauri::Window) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
         let shell = window.app_handle().shell();
